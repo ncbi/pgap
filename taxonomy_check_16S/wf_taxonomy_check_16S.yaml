@@ -1,0 +1,22 @@
+# User input
+#
+#   Generic input section
+#      sequence_cache - former build-wide resource
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+#
+#    Inputs, visible in Web GUI for buildruns 
+#       Input to Format 16S rRNA 
+#
+Format_16S_rRNA___entry:
+    class: File
+    location: input/annotation_text.mft
+
+#
+#   Hidden inputs, via passthroughs and const nodes
+#
+blastdb_dir:
+    class: Directory
+    # location: '$(GP_HOME)/third-party/data/BacterialPipeline/16S_rRNA/blastdb'
+    location: input/16S_rRNA

@@ -1,0 +1,16 @@
+# User input
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+seqids:
+  class: File
+  location: input/sequences.seq_id
+model_path:
+  class: File
+  location: ../input/Rfam.selected1.cm
+rfam_amendments:
+  class: File
+  location: ../input/rfam-amendments.xml
+rfam_stockholm:
+  class: File
+  location: ../input/Rfam.seed

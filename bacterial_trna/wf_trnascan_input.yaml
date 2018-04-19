@@ -1,0 +1,11 @@
+# User input
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+seqids:
+  class: File
+  location: input/sequences.seq_id
+taxid: 1208324
+jobs:
+  class: File
+  location: jobs.xml

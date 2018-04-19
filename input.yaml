@@ -1,0 +1,48 @@
+# User input
+submit_block_template:
+  class: File
+  #location: input/L103_PRJNA170415.template
+  location: input/ASM2732v1.1.template
+fasta:
+  class: File
+  #location: input/L103_PRJNA170415.fasta
+  location: input/ASM2732v1.annotation.nucleotide.1.fa
+taxid: 1208324
+gc_assm_name: L103
+
+# Cached computational steps
+hmm_hits:
+  class: File
+  location: output/hmm_hits.asn
+
+# pipeline data files
+hmms_tab:
+  class: File
+  location: input/real_hmms.tab
+hmm_path:
+  class: Directory
+  location: input/real_hmms
+uniColl_cache:
+  class: Directory
+  location: input/uniColl_cache
+gene_master_ini:
+  class: File
+  location: input/gene_master.ini  
+5s_model_path:
+  class: File
+  location: input/RF00001.cm
+rfam_model_path:
+  class: File
+  location: input/Rfam.selected1.cm
+rfam_amendments:
+  class: File
+  location: input/rfam-amendments.xml
+rfam_stockholm:
+  class: File
+  location: input/Rfam.seed
+16s_blastdb_dir:
+  class: Directory
+  location: input/16S_rRNA
+23s_blastdb_dir:
+  class: Directory
+  location: input/23S_rRNA
