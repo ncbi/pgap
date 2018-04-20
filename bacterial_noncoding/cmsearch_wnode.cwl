@@ -29,7 +29,7 @@ inputs:
       prefix: -input-jobs
   cmsearch_path:
     type: string?
-    default: /gpipe/bin
+    default: /gpipe/third-party/bin
     inputBinding:
       prefix: -cmsearch-path
   model_path:

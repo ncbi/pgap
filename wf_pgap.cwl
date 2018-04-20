@@ -6,6 +6,8 @@ class: Workflow
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
+  - class: DockerRequirement
+    dockerPull: ncbi/pgap:2018-04-16.build2734
     
 inputs:
   fasta: File
