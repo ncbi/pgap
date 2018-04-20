@@ -3,7 +3,7 @@ label: "Run tRNAScan, transform"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_trna:pgap4.4
+    dockerPull: ncbi/pgap:latest
     
 # trnascan_dump -input intermediate.asn -oasn trnascan.asn -ostruc struc.tar.gz -X 20
 baseCommand: trnascan_dump

@@ -3,7 +3,7 @@ label: "Cache FASTA Sequences"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/genomic_source:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 #baseCommand: /usr/bin/strace 
 #arguments: [ -ostrace.txt, /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/slottad/gpipe-devel/CMake-DebugDLL/bin/prime_cache, -biosource, genomic, -ifmt, fasta, -inst-mol, dna, -molinfo, genomic ]

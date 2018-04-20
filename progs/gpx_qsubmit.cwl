@@ -3,17 +3,17 @@ label: "gpx_qsubmit"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/spurious_annot:pgap4.5
-    dockerPull: ncbi/bacterial_mobile_elem:pgap4.5
-    dockerPull: ncbi/AMR_naming:pgap4.5
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/bacterial_annot:pgap4.5
-    dockerPull: ncbi/bacterial_kmer:pgap4.5
-    dockerPull: ncbi/bacterial_trna:pgap4.5
-    dockerPull: ncbi/bacterial_ncrna:pgap4.5
-    dockerPull: ncbi/clade_assign:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 #
 # You might need something like this:
 #

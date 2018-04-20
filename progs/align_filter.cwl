@@ -3,9 +3,9 @@ label: "align_filter"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_annot:pgap4.5
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 #
 # You might need something like this:
 #

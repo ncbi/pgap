@@ -3,8 +3,8 @@ label: "align_merge_sas"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 inputs:
   blastdb: File
   blastdb_dir: Directory

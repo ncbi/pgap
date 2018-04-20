@@ -3,7 +3,7 @@ label: "Get off-frame ORFs"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_annot:pgap4.4
+    dockerPull: ncbi/pgap:latest
     
 #get_off_frame_orfs -aligns-manifest aligns.mft -o prot.ids -seq_entries-manifest seq_entries.mft
 baseCommand: get_off_frame_orfs

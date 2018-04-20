@@ -3,8 +3,8 @@ label: "align_filter_sa"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 inputs:
   asn_cache: Directory
   prosplign_align: File

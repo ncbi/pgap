@@ -3,7 +3,7 @@ label: "Extract ORF Proteins"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_annot:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 #protein_extract -input-manifest models.mft -o proteins.asn -olds2 LDS2 -oseqids proteins.seq_ids -nogenbank
 baseCommand: protein_extract

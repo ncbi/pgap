@@ -3,7 +3,7 @@ label: "Run genomic CMsearch (Rfam rRNA), gather"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_ncrna:pgap4.4
+    dockerPull: ncbi/pgap:latest
     
 #gpx_qdump -output cmsearch.asn -output-manifest placements.mft -unzip '*' 
 baseCommand: gpx_qdump
