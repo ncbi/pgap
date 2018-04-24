@@ -1,10 +1,6 @@
 cwlVersion: v1.0 
 label: "blastn_wnode"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #
@@ -101,51 +97,52 @@ inputs:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: 
   evalue:
     type: float
     default: 0.01
     inputBinding:
       prefix: -evalue
-      valueFrom: 
   max_target_seqs:
     type: int
     default: 250
     inputBinding:
       prefix: -max_target_seqs
-      valueFrom: 
   input_jobs:
     type: File
     inputBinding:
       prefix: -input-jobs
   soft_masking:
-    type: boolean
+    type: string
     default: true
     inputBinding:
       prefix: -soft_masking
-      valueFrom: 
   swap_rows:
     type: boolean
     inputBinding:
       prefix: -swap-rows
-      valueFrom: 
   task:
     type: string?
     default: blastn
     inputBinding:
       prefix: -task
-      valueFrom: 
   word_size:
     type: int
     default: 12
     inputBinding:
       prefix: -word_size
-      valueFrom: 
+  output_dir:
+    type: string?
+    default: output
+    inputBinding:
+      prefix: -O
+  blastdb_dir:
+    type: Directory?
+  blastdb:
+    type: string?
+    inputBinding:
+      prefix: -blastdb
+      valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   outdir:
     type: Directory
     outputBinding:

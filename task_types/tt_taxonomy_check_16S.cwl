@@ -1,9 +1,6 @@
 cwlVersion: v1.0
 label: "taxonomy_check_16S"
 class: Workflow # task type
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 inputs:
   blastdb: string
   blastdb_dir: Directory

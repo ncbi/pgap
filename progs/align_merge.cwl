@@ -1,10 +1,6 @@
 cwlVersion: v1.0 
 label: "align_merge"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #

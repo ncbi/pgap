@@ -1,9 +1,6 @@
 cwlVersion: v1.0 
 label: "format_rrnas"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #
@@ -42,36 +39,31 @@ inputs:
     default: seq-entry
     inputBinding:
       prefix: -ifmt
-      valueFrom: 
   input_manifest:
     type: File?
     inputBinding:
       prefix: -input-manifest
-      valueFrom: 
   input:
     type: File?
     inputBinding:
       prefix: -input
-      valueFrom: 
   rrna_class:
     type: string?
     default: 16S
     inputBinding:
       prefix: -rrna-class
-      valueFrom: 
   tmpinput:
     type: File
     inputBinding:
       prefix: -tmpinput
-      valueFrom: 
   o_name:
-        type: string
-        default: rrna.asn
-        inputBinding:
-            prefix: -o
+    type: string
+    default: rrna.asn
+    inputBinding:
+       prefix: -o
 outputs:
     o:
-        type: File
-        outputBinding:
-            glob: $(inputs.o_name)
+      type: File
+      outputBinding:
+         glob: $(inputs.o_name)
             

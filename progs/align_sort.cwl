@@ -1,12 +1,6 @@
 cwlVersion: v1.0 
 label: "align_sort"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/clade_assign:pgap4.5
-    dockerPull: ncbi/AMR_naming:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #

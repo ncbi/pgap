@@ -1,13 +1,6 @@
 cwlVersion: v1.0 
 label: "gpx_make_outputs"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/bacterial_kmer:pgap4.5
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/clade_assign:pgap4.5
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #
@@ -86,26 +79,22 @@ inputs:
     default: 32
     inputBinding:
       prefix: -num-partitions
-      valueFrom: 
   output:
     type: string?
     # this needs to match outputs/blast_align/outputBinding/glob
     default: "blast.#.asn"
     inputBinding:
       prefix: -output
-      valueFrom: 
   output_manifest:
-    type: File
-    default: ${GP_qdump_omanifest}
+    type: string
+    default: blastn.mft
     inputBinding:
       prefix: -output-manifest
-      valueFrom: 
   unzip:
     type: string?
     default: "*"
     inputBinding:
       prefix: -unzip
-      valueFrom: 
 outputs:
   blast_align:
     type: File

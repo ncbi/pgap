@@ -1,9 +1,6 @@
 cwlVersion: v1.0
 label: "cache_asnb_entries"
 class: Workflow # task type
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 inputs:
   rna: File
   cache: Directory
@@ -13,14 +10,14 @@ outputs:
   ids_out:
     type: File
     outputSource: prime_cache/oseq_ids
-  asn_cache:
+  asncache:
     type: Directory
     outputSource: prime_cache/asn_cache
 steps:
   prime_cache:
     run: ../progs/prime_cache.cwl
     in:
+      input: rna
       cache: cache
       ifmt: ifmt
-      taxid: taxid
     out: [oseq_ids, asn_cache]

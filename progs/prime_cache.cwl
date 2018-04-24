@@ -1,22 +1,13 @@
 cwlVersion: v1.0 
-label: "prime_cache"
+label: "prime_cache label"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/genomic_source:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
-#      - entry: $(inputs.asn_cache)
-#        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
-
 baseCommand: prime_cache
+requirements:
+  - class: InitialWorkDirRequirement
+    listing:
+      - entry: $(inputs.cache)
+        writable: True
+
 # this is only one example
 # 
 # 
@@ -43,46 +34,42 @@ baseCommand: prime_cache
 # 
 # 
 # 
+
 inputs:
+  input:
+    type: File
+    inputBinding:
+        prefix: -i
   biosource:
     type: string?
-    default: genomic
     inputBinding:
       prefix: -biosource
-      valueFrom: 
   cache:
     type: Directory
     inputBinding:
       prefix: -cache
-      valueFrom: 
   ifmt:
     type: string?
     default: fasta
     inputBinding:
       prefix: -ifmt
-      valueFrom: 
   inst_mol:
     type: string?
-    default: dna
     inputBinding:
       prefix: -inst-mol
-      valueFrom: 
   molinfo:
     type: string?
-    default: genomic
     inputBinding:
       prefix: -molinfo
-      valueFrom: 
   taxid:
-    type: int
+    type: int?
     inputBinding:
       prefix: -taxid
-      valueFrom: 
   seq_ids_name:
-     type: string
-     default: oseq-ids.seqids
-     inputBinding:
-      prefix: -oseq-ids
+    type: string
+    default: "oseq-ids.seqids"
+    inputBinding:
+        prefix: -oseq-ids
 outputs:
   oseq_ids:
      type: File
@@ -91,6 +78,4 @@ outputs:
   asn_cache:
     type: Directory
     outputBinding:
-        glob: $(inputs.cache)
-   
-    
+        glob: $(inputs.cache.basename)

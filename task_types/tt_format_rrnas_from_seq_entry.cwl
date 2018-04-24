@@ -1,9 +1,6 @@
 cwlVersion: v1.0
 label: "format_rrnas_from_seq_entry"
 class: Workflow # task type
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 inputs:
   entry: File
 outputs:
@@ -18,6 +15,5 @@ steps:
         default: seq-entry
       rrna_class: 
         default: 16S
-      tmpinput: 
-        default: $(inputs.entry)
+      tmpinput: entry
     out: [o]

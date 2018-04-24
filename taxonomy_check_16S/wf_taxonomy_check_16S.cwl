@@ -4,6 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 requirements: 
     - class: SubworkflowFeatureRequirement    
+hints:
+  DockerRequirement:
+    dockerPull: ncbi/taxonomy_check_16s:pgap4.4
 inputs:
   Format_16S_rRNA___entry: File
   asn_cache: Directory
@@ -30,7 +33,7 @@ steps:
       ifmt: 
         default: asnb-seq-entry
       taxid: taxid
-    out: [ids_out, asn_cache]
+    out: [ids_out, asncache]
   BLAST_against_16S_rRNA_db_for_taxonomic_consistency_check:
     run: ../task_types/tt_blastn_wnode.cwl
     in:
@@ -45,13 +48,13 @@ steps:
         default: 250
       word_size: 
         default: 12
-      asn_cache: Cache_Genomic_16S_Sequences/asn_cache
+      asn_cache: Cache_Genomic_16S_Sequences/asncache
       affinity: 
         default: subject
       max_batch_length:
         default: 50000
       soft_masking:
-        default: true
+        default: 'true'
     out: [blast_align]
   Consolidate_alignments_for_taxonomic_consistency_check:
     run: ../task_types/tt_align_merge_sas.cwl
@@ -60,7 +63,7 @@ steps:
       blastdb: 
         default: "blastdb"
       blast_align: BLAST_against_16S_rRNA_db_for_taxonomic_consistency_check/blast_align
-      asn_cache: Cache_Genomic_16S_Sequences/asn_cache
+      asn_cache: Cache_Genomic_16S_Sequences/asncache
       allow_intersection: 
         default: true
       collated:
@@ -75,10 +78,12 @@ steps:
   Well_covered_alignments_for_taxonomic_consistency_check:
     run: ../task_types/tt_align_filter_sa.cwl
     in:
-      prosplign_align: ""
-      align_full: ""
+      prosplign_align: 
+        default: ""
+      align_full: 
+        default: ""
       align: Consolidate_alignments_for_taxonomic_consistency_check/align
-      asn_cache: Cache_Genomic_16S_Sequences/asn_cache
+      asn_cache: Cache_Genomic_16S_Sequences/asncache
       filter: 
         default: "pct_coverage >= 20"
       nogenbank:
@@ -88,7 +93,7 @@ steps:
     run: ../task_types/tt_align_sort_sa.cwl
     in:
       align: Well_covered_alignments_for_taxonomic_consistency_check/out_align
-      asn_cache: Cache_Genomic_16S_Sequences/asn_cache
+      asn_cache: Cache_Genomic_16S_Sequences/asncache
       group: 
         default: 1
       k: 
@@ -102,6 +107,6 @@ steps:
       blastdb_dir: blastdb_dir
       blastdb: 
         default: "blastdb"
-      asn_cache: Cache_Genomic_16S_Sequences/asn_cache
+      asn_cache: Cache_Genomic_16S_Sequences/asncache
       align: Pick_tops_for_taxonomic_consistency_check/out_align
     out: [report]

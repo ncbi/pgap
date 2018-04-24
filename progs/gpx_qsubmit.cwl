@@ -1,19 +1,6 @@
 cwlVersion: v1.0 
 label: "gpx_qsubmit"
 class: CommandLineTool
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/spurious_annot:pgap4.5
-    dockerPull: ncbi/bacterial_mobile_elem:pgap4.5
-    dockerPull: ncbi/AMR_naming:pgap4.5
-    dockerPull: ncbi/bacterial_noncoding:pgap4.5
-    dockerPull: ncbi/bacterial_annot:pgap4.5
-    dockerPull: ncbi/bacterial_kmer:pgap4.5
-    dockerPull: ncbi/bacterial_trna:pgap4.5
-    dockerPull: ncbi/bacterial_ncrna:pgap4.5
-    dockerPull: ncbi/clade_assign:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 #
 # You might need something like this:
 #
@@ -129,58 +116,49 @@ baseCommand: gpx_qsubmit
 # 
 # 
 inputs:
+  ids:
+    type: File
+    inputBinding: 
+        prefix: -ids
   NxM_threshold:
-    type: int
-    default: 10000
+    type: int?
     inputBinding:
       prefix: -NxM-threshold
-      valueFrom: 
   affinity:
     type: string?
     default: subject
     inputBinding:
       prefix: -affinity
-      valueFrom: 
   asn_cache:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: 
   batch_size:
-    type: int
-    default: 1
+    type: int?
     inputBinding:
       prefix: -batch-size
-      valueFrom: 
   max_batch_length:
-    type: int
+    type: int?
     default: 50000
     inputBinding:
       prefix: -max-batch-length
-      valueFrom: 
   nogenbank:
     type: boolean
     inputBinding:
       prefix: -nogenbank
-      valueFrom: 
   overlap:
-    type: int
-    default: 100
+    type: int?
     inputBinding:
       prefix: -overlap
-      valueFrom: 
   subseq_size:
-    type: int
-    default: 200
+    type: int?
     inputBinding:
       prefix: -subseq-size
-      valueFrom: 
   xml_jobs:
-    type: File
+    type: string
     default: jobs.xml
     inputBinding:
-      prefix: -xml-jobs
-      valueFrom: 
+      prefix: -o
   blastdb_dir:
     type: Directory?
   blastdb:
@@ -189,10 +167,10 @@ inputs:
       prefix: -db
       valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
+#  asncache:
+#    type: Directory
+#    outputBinding:
+#      glob: $(inputs.asn_cache.basename)
   jobs:
     type: File
     outputBinding:

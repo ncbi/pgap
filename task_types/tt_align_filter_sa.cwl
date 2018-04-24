@@ -1,10 +1,6 @@
 cwlVersion: v1.0
 label: "align_filter_sa"
 class: Workflow # task type
-hints:
-  DockerRequirement:
-    dockerPull: ncbi/protein_alignment:pgap4.5
-    dockerPull: ncbi/taxonomy_check_16S:pgap4.5
 inputs:
   asn_cache: Directory
   prosplign_align: File
