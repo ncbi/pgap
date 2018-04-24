@@ -3,7 +3,7 @@ label: "Search All HMMs I, gather"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_annot:pgap4.4
+    dockerPull: ncbi/pgap:latest
     
 #gpx_qdump -output hmm_hits.asn -unzip '*' -input-path output/
 baseCommand: gpx_qdump

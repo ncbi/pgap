@@ -1,0 +1,16 @@
+/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/projects/PacBio/CWL-tutorial/cwltool-git/venv/bin/cwl-runner 1.0.20180330141240
+Resolved 'wf_taxonomy_check_16S.cwl' to 'file:///home/badrazat/bitbucket/repos/cloud/pipelines/pgap/taxonomy_check_16S/wf_taxonomy_check_16S.cwl'
+Tool definition failed validation:
+wf_taxonomy_check_16S.cwl:13:1: checking field `steps`
+wf_taxonomy_check_16S.cwl:28:3:   checking object `wf_taxonomy_check_16S.cwl#BLAST_against_16S_rRNA_db_for_taxonomic_consistency_check`
+wf_taxonomy_check_16S.cwl:30:5:     checking field `in`
+wf_taxonomy_check_16S.cwl:33:7:       checking object `wf_taxonomy_check_16S.cwl#BLAST_against_16S_rRNA_db_for_taxonomic_consistency_check/blastdb`
+wf_taxonomy_check_16S.cwl:33:7:         Field `source` references unknown identifier `blastdb`, tried file:///home/badrazat/bitbucket/repos/cloud/pipelines/pgap/taxonomy_check_16S/wf_taxonomy_check_16S.cwl#blastdb
+wf_taxonomy_check_16S.cwl:37:3:   checking object `wf_taxonomy_check_16S.cwl#Consolidate_alignments_for_taxonomic_consistency_check`
+wf_taxonomy_check_16S.cwl:39:5:     checking field `in`
+wf_taxonomy_check_16S.cwl:41:7:       checking object `wf_taxonomy_check_16S.cwl#Consolidate_alignments_for_taxonomic_consistency_check/blastdb`
+wf_taxonomy_check_16S.cwl:41:7:         Field `source` references unknown identifier `blastdb`, tried file:///home/badrazat/bitbucket/repos/cloud/pipelines/pgap/taxonomy_check_16S/wf_taxonomy_check_16S.cwl#blastdb
+wf_taxonomy_check_16S.cwl:59:3:   checking object `wf_taxonomy_check_16S.cwl#Taxonomic_consistency_check_based_on_16S_Analysis`
+wf_taxonomy_check_16S.cwl:61:5:     checking field `in`
+wf_taxonomy_check_16S.cwl:63:7:       checking object `wf_taxonomy_check_16S.cwl#Taxonomic_consistency_check_based_on_16S_Analysis/blastdb`
+wf_taxonomy_check_16S.cwl:63:7:         Field `source` references unknown identifier `blastdb`, tried file:///home/badrazat/bitbucket/repos/cloud/pipelines/pgap/taxonomy_check_16S/wf_taxonomy_check_16S.cwl#blastdb

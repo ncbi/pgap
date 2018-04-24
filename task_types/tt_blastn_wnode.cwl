@@ -1,6 +1,10 @@
 cwlVersion: v1.0
 label: "blastn_wnode"
 class: Workflow # task type
+hints:
+  DockerRequirement:
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 inputs:
   asn_cache: Directory
   ids_out: File

@@ -3,7 +3,7 @@ label: "Preserve Product Accessions"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/dbcallers:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement

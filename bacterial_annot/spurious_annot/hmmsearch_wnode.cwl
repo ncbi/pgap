@@ -3,7 +3,7 @@ label: "HMM Searchers"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_annot:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement

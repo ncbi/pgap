@@ -1,6 +1,21 @@
 cwlVersion: v1.0 
 label: "prime_cache label"
 class: CommandLineTool
+hints:
+  DockerRequirement:
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
+#
+# You might need something like this:
+#
+# requirements:
+#  - class: InitialWorkDirRequirement
+#    listing:
+#      - entry: $(inputs.asn_cache)
+#        writable: True
+#      - entry: $(inputs.blastdb_dir)
+#        writable: False
+
 baseCommand: prime_cache
 requirements:
   - class: InitialWorkDirRequirement

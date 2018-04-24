@@ -3,7 +3,7 @@ label: "Create Assembly From Sequences"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/genomic_source:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement

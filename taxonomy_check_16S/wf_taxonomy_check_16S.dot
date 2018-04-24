@@ -1,0 +1,37 @@
+digraph {compound=true
+subgraph "cluster_tt_align_filter_sa.cwl" { label="tt_align_filter_sa.cwl"
+"tt_align_filter_sa.cwl#align_filter" [label="align_filter"]
+}
+subgraph "cluster_tt_align_merge_sas.cwl" { label="tt_align_merge_sas.cwl"
+"tt_align_merge_sas.cwl#align_merge" [label="align_merge"]
+}
+subgraph "cluster_tt_align_sort_sa.cwl" { label="tt_align_sort_sa.cwl"
+"tt_align_sort_sa.cwl#align_sort" [label="align_sort"]
+}
+subgraph "cluster_tt_blastn_wnode.cwl" { label="tt_blastn_wnode.cwl"
+"tt_blastn_wnode.cwl#gpx_qsubmit" [label="gpx_qsubmit"]
+"tt_blastn_wnode.cwl#gpx_make_outputs" [label="gpx_make_outputs"]
+"tt_blastn_wnode.cwl#blastn_wnode" [label="blastn_wnode"]
+}
+subgraph "cluster_tt_cache_asnb_entries.cwl" { label="tt_cache_asnb_entries.cwl"
+"tt_cache_asnb_entries.cwl#prime_cache" [label="prime_cache"]
+}
+subgraph "cluster_tt_format_rrnas_from_seq_entry.cwl" { label="tt_format_rrnas_from_seq_entry.cwl"
+"tt_format_rrnas_from_seq_entry.cwl#format_rrnas" [label="format_rrnas"]
+}
+subgraph "cluster_tt_taxonomy_check_16S.cwl" { label="tt_taxonomy_check_16S.cwl"
+"tt_taxonomy_check_16S.cwl#taxonomy_check_16S" [label="taxonomy_check_16S"]
+}
+"tt_format_rrnas_from_seq_entry.cwl#format_rrnas" -> "tt_cache_asnb_entries.cwl#prime_cache" [ltail="cluster_tt_format_rrnas_from_seq_entry.cwl" lhead="cluster_tt_cache_asnb_entries.cwl"]
+"tt_align_sort_sa.cwl#align_sort" -> "tt_taxonomy_check_16S.cwl#taxonomy_check_16S" [ltail="cluster_tt_align_sort_sa.cwl" lhead="cluster_tt_taxonomy_check_16S.cwl"]
+"tt_cache_asnb_entries.cwl#prime_cache" -> "tt_blastn_wnode.cwl#gpx_qsubmit" [ltail="cluster_tt_cache_asnb_entries.cwl" lhead="cluster_tt_blastn_wnode.cwl"]
+"tt_cache_asnb_entries.cwl#prime_cache" -> "tt_align_merge_sas.cwl#align_merge" [ltail="cluster_tt_cache_asnb_entries.cwl" lhead="cluster_tt_align_merge_sas.cwl"]
+"tt_align_merge_sas.cwl#align_merge" -> "tt_align_filter_sa.cwl#align_filter" [ltail="cluster_tt_align_merge_sas.cwl" lhead="cluster_tt_align_filter_sa.cwl"]
+"tt_blastn_wnode.cwl#gpx_qsubmit" -> "tt_align_merge_sas.cwl#align_merge" [ltail="cluster_tt_blastn_wnode.cwl" lhead="cluster_tt_align_merge_sas.cwl"]
+"tt_cache_asnb_entries.cwl#prime_cache" -> "tt_align_filter_sa.cwl#align_filter" [ltail="cluster_tt_cache_asnb_entries.cwl" lhead="cluster_tt_align_filter_sa.cwl"]
+"tt_cache_asnb_entries.cwl#prime_cache" -> "tt_taxonomy_check_16S.cwl#taxonomy_check_16S" [ltail="cluster_tt_cache_asnb_entries.cwl" lhead="cluster_tt_taxonomy_check_16S.cwl"]
+"tt_blastn_wnode.cwl#gpx_qsubmit" -> "tt_blastn_wnode.cwl#blastn_wnode" []
+"tt_cache_asnb_entries.cwl#prime_cache" -> "tt_align_sort_sa.cwl#align_sort" [ltail="cluster_tt_cache_asnb_entries.cwl" lhead="cluster_tt_align_sort_sa.cwl"]
+"tt_align_filter_sa.cwl#align_filter" -> "tt_align_sort_sa.cwl#align_sort" [ltail="cluster_tt_align_filter_sa.cwl" lhead="cluster_tt_align_sort_sa.cwl"]
+"tt_blastn_wnode.cwl#blastn_wnode" -> "tt_blastn_wnode.cwl#gpx_make_outputs" []
+}

@@ -3,7 +3,7 @@ label: "Execute CRISPR, execution"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_mobile_elem:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement

@@ -1,6 +1,10 @@
 cwlVersion: v1.0 
 label: "blastn_wnode"
 class: CommandLineTool
+hints:
+  DockerRequirement:
+    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/pgap:latest
 #
 # You might need something like this:
 #

@@ -3,7 +3,7 @@ label: "Run tRNAScan, scatter"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_trna:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement

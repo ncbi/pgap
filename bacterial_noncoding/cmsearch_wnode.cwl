@@ -3,7 +3,7 @@ label: "Run genomic CMsearch (5S rRNA), execution"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/bacterial_noncoding:pgap4.4
+    dockerPull: ncbi/pgap:latest
 
 requirements:
   - class: InitialWorkDirRequirement
@@ -29,7 +29,7 @@ inputs:
       prefix: -input-jobs
   cmsearch_path:
     type: string?
-    default: /gpipe/bin
+    default: /gpipe/third-party/bin
     inputBinding:
       prefix: -cmsearch-path
   model_path:

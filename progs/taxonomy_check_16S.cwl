@@ -1,6 +1,9 @@
 cwlVersion: v1.0 
 label: "taxonomy_check_16S"
 class: CommandLineTool
+hints:
+  DockerRequirement:
+    dockerPull: ncbi/pgap:latest
 #
 # You might need something like this:
 #
