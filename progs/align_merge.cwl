@@ -4,16 +4,13 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
+requirements:
+  - class: InitialWorkDirRequirement
+    listing:
 #      - entry: $(inputs.asn_cache)
 #        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
+      - entry: $(inputs.blastdb_dir)
+        writable: False
 
 baseCommand: align_merge
 # this is only one example
@@ -58,65 +55,61 @@ inputs:
     type: boolean
     inputBinding:
       prefix: -allow-intersection
-      valueFrom: 
   asn_cache:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: 
   collated:
     type: boolean
     inputBinding:
       prefix: -collated
-      valueFrom: 
   compart:
     type: boolean
     inputBinding:
       prefix: -compart
-      valueFrom: 
   fill_gaps:
     type: boolean
     inputBinding:
       prefix: -fill-gaps
-      valueFrom: 
   filter:
     type: string?
     inputBinding:
       prefix: -filter
-      valueFrom: 
   ifmt:
     type: string?
     inputBinding:
       prefix: -ifmt
-      valueFrom: 
   input_manifest:
     type: File?
     inputBinding:
       prefix: -input-manifest
-      valueFrom: 
   input:
     type: File?
     inputBinding:
       prefix: -input
-      valueFrom: 
   max_discontinuity:
     type: int?
     default: 20
     inputBinding:
       prefix: -max-discontinuity
-      valueFrom: 
   top_compartment_only:
     type: boolean
     inputBinding:
       prefix: -top-compartment-only
-      valueFrom: 
   align_name:
-    type: string
+    type: string?
     default: align.asn
     inputBinding:
         prefix: -o
+  blastdb_dir:
+    type: Directory?
+  blastdb:
+    type: string?
+    inputBinding:
+      prefix: -blastdb
+      valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
 outputs:
    align:
         type: File
         outputBinding:
-            glob: $(input.align_name)
+            glob: $(inputs.align_name)

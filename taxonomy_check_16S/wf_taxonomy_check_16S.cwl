@@ -6,14 +6,14 @@ requirements:
     - class: SubworkflowFeatureRequirement    
 hints:
   DockerRequirement:
-    dockerPull: ncbi/taxonomy_check_16s:pgap4.4
+    dockerPull: ncbi/pgap:latest
 inputs:
   Format_16S_rRNA___entry: File
   asn_cache: Directory
   blastdb_dir: Directory
   taxid: int
 outputs:
-  Taxonomic_consistency_check_based_on_16S_Analysis___report:
+  report:
     type: File
     outputSource: Taxonomic_consistency_check_based_on_16S_Analysis/report
 steps:
@@ -78,10 +78,10 @@ steps:
   Well_covered_alignments_for_taxonomic_consistency_check:
     run: ../task_types/tt_align_filter_sa.cwl
     in:
-      prosplign_align: 
-        default: ""
-      align_full: 
-        default: ""
+      # prosplign_align: 
+      #  default: ""
+      # align_full: 
+      #  default: ""
       align: Consolidate_alignments_for_taxonomic_consistency_check/align
       asn_cache: Cache_Genomic_16S_Sequences/asncache
       filter: 

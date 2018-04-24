@@ -4,17 +4,7 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
-#      - entry: $(inputs.asn_cache)
-#        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
-
+    
 baseCommand: align_filter
 # this is only one example
 # 
@@ -53,27 +43,22 @@ inputs:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: 
   filter:
     type: string?
     inputBinding:
       prefix: -filter
-      valueFrom: 
   ifmt:
     type: string?
     inputBinding:
       prefix: -ifmt
-      valueFrom: 
   input:
     type: File?
     inputBinding:
-      prefix: -input-manifest
-      valueFrom: 
+      prefix: -input
   nogenbank:
     type: boolean
     inputBinding:
       prefix: -nogenbank
-      valueFrom: 
   onon_match_name: 
     type: string
     default: align-nomatch.asn

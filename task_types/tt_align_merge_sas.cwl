@@ -5,7 +5,7 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
 inputs:
-  blastdb: File
+  blastdb: string
   blastdb_dir: Directory
   asn_cache: Directory
   blast_align: File
@@ -32,8 +32,8 @@ steps:
       filter: filter
       ifmt: 
         default: seq-align-set
-      input: 
-        default: $(inputs.blast_align)
+      input: blast_align
+#        default: $(inputs.blast_align)
       max_discontinuity: max_discontinuity
       top_compartment_only: top_compartment_only
       blastdb: blastdb

@@ -1,5 +1,5 @@
 cwlVersion: v1.0 
-label: "gpx_make_outputs"
+label: "gpx_make_outputs program"
 class: CommandLineTool
 hints:
   DockerRequirement:
@@ -88,11 +88,11 @@ inputs:
     default: "blast.#.asn"
     inputBinding:
       prefix: -output
-  output_manifest:
-    type: string
-    default: blastn.mft
-    inputBinding:
-      prefix: -output-manifest
+#  output_manifest:
+#    type: string
+#    default: blastn.mft
+#    inputBinding:
+#      prefix: -output-manifest
   unzip:
     type: string?
     default: "*"

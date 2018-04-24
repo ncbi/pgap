@@ -6,9 +6,9 @@ hints:
     dockerPull: ncbi/pgap:latest
 inputs:
   asn_cache: Directory
-  prosplign_align: File
-  align_full: File
-  align: File
+  prosplign_align: File?
+  align_full: File?
+  align: File?
   nogenbank: boolean
   filter: string
 outputs:

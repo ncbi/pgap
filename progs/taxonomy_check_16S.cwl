@@ -4,16 +4,13 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
+requirements:
+  - class: InitialWorkDirRequirement
+    listing:
 #      - entry: $(inputs.asn_cache)
 #        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
+      - entry: $(inputs.blastdb_dir)
+        writable: False
 
 baseCommand: taxonomy_check_16S
 # this is only one example
@@ -43,32 +40,34 @@ inputs:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: 
   ifmt:
     type: string?
     inputBinding:
       prefix: -ifmt
-      valueFrom: 
   input_manifest:
     type: File?
     inputBinding:
       prefix: -input-manifest
-      valueFrom: 
   input:
     type: File?
     inputBinding:
       prefix: -input
-      valueFrom: 
   top:
-    type: string?
+    type: int?
     inputBinding:
       prefix: -top
-      valueFrom: 
   report_name:
     type: string
     default: taxonomy_check_16S.xml
     inputBinding:
         prefix: -report
+  blastdb_dir:
+    type: Directory?
+  blastdb:
+    type: string?
+    inputBinding:
+      prefix: -blastdb
+      valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
 outputs:
     report:
         type: File
