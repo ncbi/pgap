@@ -18,6 +18,8 @@ outputs:
     outputSource: Taxonomic_consistency_check_based_on_16S_Analysis/report
 steps:
   Format_16S_rRNA:
+    label: Format 16S rRNA
+    doc: finds 16S in input annotations and makes a seq-entry
     run: ../task_types/tt_format_rrnas_from_seq_entry.cwl
     in:
       entry: Format_16S_rRNA___entry
@@ -26,6 +28,7 @@ steps:
   #  run: ../task_types/tt_const_blastdb.cwl
   #  out: [blastdb]
   Cache_Genomic_16S_Sequences:
+    label: Cache Genomic 16S Sequences
     run: ../task_types/tt_cache_asnb_entries.cwl
     in:
       rna: Format_16S_rRNA/rna
@@ -35,6 +38,7 @@ steps:
       taxid: taxid
     out: [ids_out, asncache]
   BLAST_against_16S_rRNA_db_for_taxonomic_consistency_check:
+    label: BLAST against 16S rRNA db for taxonomic consistency check
     run: ../task_types/tt_blastn_wnode.cwl
     in:
       ids_out: Cache_Genomic_16S_Sequences/ids_out
@@ -57,6 +61,7 @@ steps:
         default: 'true'
     out: [blast_align]
   Consolidate_alignments_for_taxonomic_consistency_check:
+    label: Consolidate alignments for taxonomic consistency check
     run: ../task_types/tt_align_merge_sas.cwl
     in:
       blastdb_dir: blastdb_dir
@@ -76,6 +81,7 @@ steps:
         default: true
     out: [align]
   Well_covered_alignments_for_taxonomic_consistency_check:
+    label: Well covered alignments for taxonomic consistency check
     run: ../task_types/tt_align_filter_sa.cwl
     in:
       # prosplign_align: 
@@ -90,6 +96,7 @@ steps:
         default: false
     out: [out_align]
   Pick_tops_for_taxonomic_consistency_check:
+    label: Pick tops for taxonomic consistency check
     run: ../task_types/tt_align_sort_sa.cwl
     in:
       align: Well_covered_alignments_for_taxonomic_consistency_check/out_align
@@ -102,6 +109,7 @@ steps:
         default: 20
     out: [out_align]
   Taxonomic_consistency_check_based_on_16S_Analysis:
+    label: Taxonomic consistency check based on 16S Analysis
     run: ../task_types/tt_taxonomy_check_16S.cwl
     in: 
       blastdb_dir: blastdb_dir
