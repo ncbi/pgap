@@ -4,7 +4,6 @@ class: Workflow # task type
 hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
-    dockerPull: ncbi/pgap:latest
 inputs:
   asn_cache: Directory
   prosplign_align: File

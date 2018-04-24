@@ -4,8 +4,6 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
-    dockerPull: ncbi/pgap:latest
-    dockerPull: ncbi/pgap:latest
 #
 # You might need something like this:
 #
