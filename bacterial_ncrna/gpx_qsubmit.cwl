@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
     
 #gpx_qsubmit -asn-cache sequence_cache -ids-manifest seqids.mft
 baseCommand: gpx_qsubmit
@@ -28,10 +28,6 @@ inputs:
     inputBinding:
       prefix: -output
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   jobs:
     type: File
     outputBinding:

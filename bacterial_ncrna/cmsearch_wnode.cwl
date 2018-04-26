@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
 
 #cmsearch_wnode -asn-cache sequence_cache -cmsearch-cpu 0 -input-jobs jobs.xml\
 #-cmsearch-path /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/infernal/arch/x86_64/bin/
@@ -56,10 +56,6 @@ inputs:
     inputBinding:
       prefix: -O
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   outdir:
     type: Directory
     outputBinding:
