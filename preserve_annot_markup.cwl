@@ -5,13 +5,13 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
 
-requirements:
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry: $(inputs.seq_cache)
-        writable: True
-      - entry: $(inputs.unicoll_cache)
-        writable: False
+# requirements:
+#   - class: InitialWorkDirRequirement
+#     listing:
+#       - entry: $(inputs.seq_cache)
+#         writable: False
+#       - entry: $(inputs.unicoll_cache)
+#         writable: False
 
 
 #preserve_annot_markup -asn-cache sequence_cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe_id_cache/full_id_cache
@@ -22,10 +22,10 @@ requirements:
 baseCommand: cache_entrez_gene
 arguments: [-locus-tag-prefix, NoSubmit, -ltp-table, vLTPs, -create-missing-LTPs, -preserve-product-ID, -submission-mode-genbank]
 inputs:
-  seq_cache:
-    type: Directory
-  unicoll_cache:
-    type: Directory
+  # seq_cache:
+  #   type: Directory
+  # unicoll_cache:
+  #   type: Directory
   full_id_cache:
     type: Directory?
   asn_cache:
@@ -56,10 +56,10 @@ inputs:
       prefix: -o
 
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.seq_cache.basename)
+  # asncache:
+  #   type: Directory
+  #   outputBinding:
+  #     glob: $(inputs.seq_cache.basename)
   annotations:
     type: File
     outputBinding:

@@ -37,6 +37,9 @@ outputs:
   prok_entrez_gene_stuff: 
     type: File
     outputSource: cache_entrez_gene/prok_entrez_gene_stuff
+  annotations:
+    type: File
+    outputSource: preserve_annot_markup/annotations
   # annotations_5s:
   #   type: File
   #   outputSource: bacterial_noncoding/annotations_5s
@@ -93,15 +96,15 @@ steps:
   # preserve_annot_markup:
   #   run: preserve_annot_markup.cwl
   #   in:
-  #     seq_cache: bacterial_prepare_unannotated/asncache
-  #     unicoll_cache: uniColl_cache
-  #     asn_cache: [bacterial_prepare_unannotated/asncache, uniColl_cache]
+  #     #seq_cache: genobacterial_prepare_unannotated/asncache
+  #     #unicoll_cache: uniColl_cache
+  #     asn_cache: [genomic_source/asncache, uniColl_cache]
   #     egene_ini: gene_master_ini
   #     gc_assembly: genomic_source/gencoll_asn
       
   #     prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
-  #   out: [asncache, annotations]
-    
+  #   out: [annotations]
+      
   # bacterial_trna:
   #   run: bacterial_trna/wf_trnascan.cwl
   #   in:
