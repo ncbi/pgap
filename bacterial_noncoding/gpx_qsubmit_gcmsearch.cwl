@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
     
 #gpx_qsubmit -affinity subject -asn-cache sequence_cache -max-batch-length 50000 -o jobs.xml -db ../../input/16S_rRNA/blastdb -ids sequences.seq_id
 #gpx_qsubmit -asn-cache sequence_cache -o jobs.xml -ids sequences.seq_ids
@@ -29,10 +29,6 @@ inputs:
     inputBinding:
       prefix: -output
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   jobs:
     type: File
     outputBinding:

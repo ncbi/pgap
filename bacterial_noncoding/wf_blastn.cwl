@@ -14,9 +14,6 @@ inputs:
   outname: string
   
 outputs:
-  asncache:
-    type: Directory
-    outputSource: ribosomal_align2annot/asncache
   annotations:
     type: File
     outputSource: ribosomal_align2annot/annotations
@@ -29,15 +26,15 @@ steps:
       seqids: seqids
       blastdb_dir: blastdb_dir
       blastdb: blastdb
-    out: [asncache, jobs]
+    out: [jobs]
   
   blastn_wnode:
     run: blastn_wnode.cwl
     in:
-      asn_cache: gpx_qsubmit/asncache
+      asn_cache: asn_cache
       input_jobs: gpx_qsubmit/jobs
       blastdb_dir: blastdb_dir
-    out: [asncache, outdir]
+    out: [outdir]
 
   gpx_make_outputs:
     run: gpx_make_outputs.cwl
@@ -48,19 +45,19 @@ steps:
   align_merge:
     run: align_merge.cwl
     in:
-      asn_cache: blastn_wnode/asncache
+      asn_cache: asn_cache
       blastdb_dir: blastdb_dir
       blastdb: blastdb
       alignments: gpx_make_outputs/blast_align
-    out: [asncache, aligns]
+    out: [aligns]
 
   ribosomal_align2annot:
     run: ribosomal_align2annot.cwl
     in:
-      asn_cache: align_merge/asncache
+      asn_cache: asn_cache
       blastdb_dir: blastdb_dir
       blastdb: blastdb
       product_name: product_name
       alignments: align_merge/aligns
       annotation: outname
-    out: [asncache, annotations]
+    out: [annotations]

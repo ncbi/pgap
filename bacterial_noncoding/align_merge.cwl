@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
       - entry: $(inputs.blastdb_dir)
         writable: False
     
@@ -38,10 +38,6 @@ inputs:
     inputBinding:
       prefix: -o
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   aligns:
     type: File
     outputBinding:

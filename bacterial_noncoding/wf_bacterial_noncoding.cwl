@@ -52,7 +52,7 @@ steps:
         default: "16S ribosomal RNA"
       outname:
         default: annotations_16s.asn
-    out: [asncache, annotations]
+    out: [annotations]
 
   generate_23s:
     run: wf_blastn.cwl
@@ -66,6 +66,6 @@ steps:
         default: "23S ribosomal RNA"
       outname:
         default: annotations_23s.asn
-    out: [asncache, annotations]
+    out: [annotations]
 
     
