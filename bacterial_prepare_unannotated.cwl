@@ -6,12 +6,6 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
 
-requirements:
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry: $(inputs.asn_cache)
-        writable: True
-
 #bacterial_prepare_unannotated -asn-cache sequence_cache -gc-assembly-manifest gencoll_asn.mft -ids-manifest ids.mft -master-desc master_desc.asn -o sequences.asn -submit-block-manifest submit_block_template.mft -submission-mode-genbank
 baseCommand: bacterial_prepare_unannotated
 arguments: [ -submission-mode-genbank ]
@@ -44,10 +38,6 @@ inputs:
       prefix: -o
 
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   master_desc:
     type: File
     outputBinding:
