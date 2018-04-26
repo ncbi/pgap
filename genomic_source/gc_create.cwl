@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
 
 #gc_create -unplaced-manifest sequences.mft -asn-cache sequence_cache -gc-assm-name L103 -o gencoll.asn
 baseCommand: gc_create
@@ -37,7 +37,3 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outfile)
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)

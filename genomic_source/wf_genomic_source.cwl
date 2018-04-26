@@ -16,6 +16,9 @@ outputs:
   ids_out:
     type: File
     outputSource: prime_cache/ids_out
+  asncache:
+    type: Directory
+    outputSource: prime_cache/asncache
   gencoll_asn:
     type: File
     outputSource: gc_create/gencoll_asn
@@ -26,9 +29,6 @@ outputs:
   stats_report:
     type: File
     outputSource: gc_asm_xml_description/stats_report
-  asncache:
-    type: Directory
-    outputSource: gc_create/asncache
   
     
 steps:
@@ -47,7 +47,7 @@ steps:
       asn_cache: prime_cache/asncache
       gc_assm_name: gc_assm_name
 
-    out: [gencoll_asn, asncache]
+    out: [gencoll_asn]
 
   gc_get_molecules:
     run: gc_get_molecules.cwl
