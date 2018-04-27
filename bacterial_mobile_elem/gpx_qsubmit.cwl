@@ -5,11 +5,11 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
 
-requirements:
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry: $(inputs.asn_cache)
-        writable: True
+# requirements:
+#   - class: InitialWorkDirRequirement
+#     listing:
+#       - entry: $(inputs.asn_cache)
+#         writable: False
     
 #gpx_qsubmit -asn-cache sequence_cache -batch-size 1 -ids-manifest seqids.mft
 baseCommand: gpx_qsubmit
@@ -29,10 +29,10 @@ inputs:
     inputBinding:
       prefix: -output
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
+  # asncache:
+  #   type: Directory
+  #   outputBinding:
+  #     glob: $(inputs.asn_cache.basename)
   jobs:
     type: File
     outputBinding:

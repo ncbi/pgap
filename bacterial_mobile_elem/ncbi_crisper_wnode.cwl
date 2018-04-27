@@ -5,12 +5,6 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/pgap:latest
 
-requirements:
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry: $(inputs.asn_cache)
-        writable: True
-
 #ncbi_crisper_wnode -asn-cache sequence_cache -ncbi-crisper-path /opt/crispr/1.0/bin/ -input-jobs jobs.xml
 baseCommand: ncbi_crisper_wnode
 inputs:
@@ -33,10 +27,6 @@ inputs:
     inputBinding:
       prefix: -O
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.asn_cache.basename)
   outdir:
     type: Directory
     outputBinding:

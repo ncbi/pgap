@@ -23,18 +23,18 @@ steps:
     in:
       asn_cache: asn_cache
       seqids: seqids
-    out: [asncache, jobs]
+    out: [jobs]
   
   ncbi_crisper_wnode:
     run: ncbi_crisper_wnode.cwl
     in:
-      asn_cache: gpx_qsubmit/asncache
+      asn_cache: asn_cache
       input_jobs: gpx_qsubmit/jobs
-    out: [ asncache, outdir ]
+    out: [outdir]
 
   gpx_qdump:
     run: gpx_qdump.cwl
     in:
       input_path: ncbi_crisper_wnode/outdir
-    out: [ annots ]
+    out: [annots]
 
