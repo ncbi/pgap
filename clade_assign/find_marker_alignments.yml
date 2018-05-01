@@ -1,0 +1,13 @@
+# User input
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+blastdb_dir:
+  class: Directory
+  location: input/genomic_blastdb
+CladeMarkers_asn_cache:
+  class: Directory
+  location: ../input/cache
+seqids:
+  class: File
+  location: ../input/markers.seqid
