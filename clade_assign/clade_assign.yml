@@ -5,10 +5,6 @@ asn_cache:
 CladeMarkers_asn_cache:
   class: Directory
   location: ../input/cache
-hits:
-  #should come from "Find Marker Alignments" in the complete workflow
-  class: File
-  location: blast.1.asn
 ani:
   class: File
   location: input/ani-tax-report.xml
