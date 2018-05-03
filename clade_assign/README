@@ -1,3 +1,6 @@
 CWL for clade_assign plane
 
 
+top workflow: wf_clade_assign.cwl
+input:        clade_assign.yml
+
