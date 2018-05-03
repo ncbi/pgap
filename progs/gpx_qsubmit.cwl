@@ -118,7 +118,7 @@ baseCommand: gpx_qsubmit
 # 
 inputs:
   ids:
-    type: File
+    type: File?
     inputBinding: 
         prefix: -ids
   NxM_threshold:
@@ -144,7 +144,7 @@ inputs:
     inputBinding:
       prefix: -max-batch-length
   nogenbank:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: -nogenbank
   overlap:
