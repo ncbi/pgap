@@ -19,6 +19,10 @@ inputs:
         type: boolean?
         inputBinding:
             prefix: -retrieve 
+      store: 
+        type: boolean?
+        inputBinding:
+            prefix: -store 
       onew:
         type: string
         default: new.list
