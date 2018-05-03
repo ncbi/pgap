@@ -20,9 +20,7 @@ requirements:
         writable: False
     
 baseCommand: gpx_qsubmit
-arguments: [ -affinity, "subject" ]
-arguments: [ -max-batch-length, "10000" ]
-arguments: [ -nogenbank ]
+arguments: [ -affinity, "subject", -max-batch-length, "10000", -nogenbank ]
 
 inputs:
   asn_cache:

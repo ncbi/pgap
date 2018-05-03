@@ -10,8 +10,7 @@ hints:
     dockerPull: ncbi/pgap:latest
     
 baseCommand: gpx_make_outputs
-arguments: [ -unzip, '*']
-arguments: [ -num-partitions, "1" ]
+arguments: [ -unzip, '*', -num-partitions, "1" ]
 
 inputs:
   input_path:
