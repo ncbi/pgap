@@ -1,0 +1,6 @@
+input/*
+output/*
+*.asn
+*.xml
+pgap.*
+output.txt
