@@ -4,7 +4,7 @@ label: "ani_top_identification"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 baseCommand: ani_top_identification
 inputs:
       ANI_cutoff:   

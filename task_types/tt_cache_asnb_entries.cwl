@@ -3,7 +3,7 @@ label: "cache_asnb_entries"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   rna: File
   cache: Directory

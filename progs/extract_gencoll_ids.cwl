@@ -4,7 +4,7 @@ label: "extract_gencoll_ids"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 baseCommand: extract_gencoll_ids
 inputs:
     assemblies: 

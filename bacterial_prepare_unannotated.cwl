@@ -4,7 +4,7 @@ doc: "Note that this implementation skips asn validation steps. Please fix"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

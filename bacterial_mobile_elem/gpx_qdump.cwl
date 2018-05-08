@@ -3,7 +3,7 @@ label: "Execute CRISPR, gather"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
     
 #gpx_qdump -output ncbi_crispr.out -output-manifest annots.mft -unzip '*'
 baseCommand: gpx_qdump

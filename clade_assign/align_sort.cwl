@@ -7,7 +7,7 @@ label: "Assign Clade, align_sort"
 
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 baseCommand: align_sort
 arguments: [ -ifmt, seq-align-set,  -k, "query,subject", -nogenbank ]

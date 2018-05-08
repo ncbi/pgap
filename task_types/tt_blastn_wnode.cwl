@@ -3,7 +3,7 @@ label: "blastn_wnode"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   asn_cache: Directory
   ids_out: File

@@ -3,7 +3,7 @@ label: "align_filter"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
     
 baseCommand: align_filter
 # this is only one example
