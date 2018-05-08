@@ -5,7 +5,7 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
-baseCommand: extract_gencoll_ids
+baseCommand: gc_extract_ids
 inputs:
     assemblies: 
         type: File
