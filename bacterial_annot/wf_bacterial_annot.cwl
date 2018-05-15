@@ -46,7 +46,8 @@ steps:
     in:
       asn_cache: asn_cache
       input: inseq
-    out: [asncache, outseqs]
+    #out: [asncache, outseqs]
+    out: [outseqs]
 
   protein_extract:
     run: protein_extract.cwl
@@ -71,18 +72,20 @@ steps:
   bacterial_hit_mapping:
     run: bacterial_hit_mapping.cwl
     in:
-      seq_cache: gp_getorf/asncache
+      #seq_cache: gp_getorf/asncache
+      seq_cache: asn_cache
       unicoll_cache: uniColl_cache
-      asn_cache: [gp_getorf/asncache, uniColl_cache]
+      #asn_cache: [gp_getorf/asncache, uniColl_cache]
+      asn_cache: [asn_cache, uniColl_cache]
       hmm_hits: hmm_hits # Should be from hmmsearch
       #hmm_hits: hmmsearch/hmm_hits
       sequences: gp_getorf/outseqs
     out: [asncache, aligns]
 
-  get_off_frame_orfs:
-    run: get_off_frame_orfs.cwl
-    in:
-      aligns: bacterial_hit_mapping/aligns
-      seq_entries: gp_getorf/outseqs
-    out: [prot_ids]
+  # get_off_frame_orfs:
+  #   run: get_off_frame_orfs.cwl
+  #   in:
+  #     aligns: bacterial_hit_mapping/aligns
+  #     seq_entries: gp_getorf/outseqs
+  #   out: [prot_ids]
     

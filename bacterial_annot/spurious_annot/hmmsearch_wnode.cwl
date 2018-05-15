@@ -17,7 +17,7 @@ requirements:
       - entry: $(inputs.workdir)
         writable: False
       - entry: $(inputs.asn_cache)
-        writable: True
+        writable: False
       - entryname: fam.mft
         entry: |
           $(inputs.hmms_tab.path)

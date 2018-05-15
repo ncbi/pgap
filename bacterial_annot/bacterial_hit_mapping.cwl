@@ -9,7 +9,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.seq_cache)
-        writable: True
+        writable: False
       - entry: $(inputs.unicoll_cache)
         writable: False
     
