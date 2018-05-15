@@ -37,9 +37,9 @@ outputs:
   prok_entrez_gene_stuff: 
     type: File
     outputSource: cache_entrez_gene/prok_entrez_gene_stuff
-  annotations:
-    type: File
-    outputSource: preserve_annot_markup/annotations
+  # annotations:
+  #   type: File
+  #   outputSource: preserve_annot_markup/annotations
   # annotations_5s:
   #   type: File
   #   outputSource: bacterial_noncoding/annotations_5s
@@ -105,41 +105,41 @@ steps:
   #     prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
   #   out: [annotations]
       
-  # bacterial_trna:
-  #   run: bacterial_trna/wf_trnascan.cwl
-  #   in:
-  #     asn_cache: genomic_source/asncache
-  #     seqids: genomic_source/seqid_list
-  #     taxid: taxid
-  #   out: [annots]
+  bacterial_trna:
+    run: bacterial_trna/wf_trnascan.cwl
+    in:
+      asn_cache: genomic_source/asncache
+      seqids: genomic_source/seqid_list
+      taxid: taxid
+    out: [annots]
 
-  # bacterial_ncrna:
-  #   run: bacterial_ncrna/wf_gcmsearch.cwl
-  #   in:
-  #     asn_cache: genomic_source/asncache
-  #     seqids: genomic_source/seqid_list
-  #     model_path: rfam_model_path
-  #     rfam_amendments: rfam_amendments
-  #     rfam_stockholm: rfam_stockholm
-  #   out: [annots]
+  bacterial_ncrna:
+    run: bacterial_ncrna/wf_gcmsearch.cwl
+    in:
+      asn_cache: genomic_source/asncache
+      seqids: genomic_source/seqid_list
+      model_path: rfam_model_path
+      rfam_amendments: rfam_amendments
+      rfam_stockholm: rfam_stockholm
+    out: [annots]
     
-  # bacterial_annot:
-  #   run: bacterial_annot/wf_bacterial_annot.cwl
-  #   in:
-  #     asn_cache: bacterial_prepare_unannotated/asncache
-  #     inseq: bacterial_prepare_unannotated/sequences
-  #     hmm_path: hmm_path
-  #     hmms_tab: hmms_tab
-  #     uniColl_cache: uniColl_cache
-  #     hmm_hits: hmm_hits
-  #     trna_annots: bacterial_trna/annots
-  #     ncrna_annots: bacterial_ncrna/annots
-
-  #   out:
-  #     #[lds2,seqids]
-  #     #[strace]
-  #     #[hmm_hits]
-  #     [aligns]
+  bacterial_annot:
+    run: bacterial_annot/wf_bacterial_annot.cwl
+    in:
+      #asn_cache: bacterial_prepare_unannotated/asncache
+      asn_cache: genomic_source/asncache
+      inseq: bacterial_prepare_unannotated/sequences
+      hmm_path: hmm_path
+      hmms_tab: hmms_tab
+      uniColl_cache: uniColl_cache
+      hmm_hits: hmm_hits
+      trna_annots: bacterial_trna/annots
+      ncrna_annots: bacterial_ncrna/annots
+    out:
+      #[lds2,seqids]
+      #[strace]
+      #[hmm_hits]
+      [aligns]
 
   # bacterial_noncoding:
   #   run: bacterial_noncoding/wf_bacterial_noncoding.cwl
