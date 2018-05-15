@@ -4,7 +4,7 @@ doc: "Note that this implementation skips asn validation steps. Please fix"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 #bacterial_prepare_unannotated -asn-cache sequence_cache -gc-assembly-manifest gencoll_asn.mft -ids-manifest ids.mft -master-desc master_desc.asn -o sequences.asn -submit-block-manifest submit_block_template.mft -submission-mode-genbank
 baseCommand: bacterial_prepare_unannotated

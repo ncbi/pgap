@@ -3,7 +3,7 @@ label: "Execute CRISPR, execution"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 #ncbi_crisper_wnode -asn-cache sequence_cache -ncbi-crisper-path /opt/crispr/1.0/bin/ -input-jobs jobs.xml
 baseCommand: ncbi_crisper_wnode

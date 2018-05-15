@@ -3,7 +3,7 @@ label: "blastn_wnode"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   asn_cache: Directory
   ids_out: File
@@ -57,4 +57,8 @@ steps:
       input_path: blastn_wnode/outdir
       num_partitions: 
         default: 1
-    out: [blast_align]
+      output:
+        default: "blast.#.asn"
+      output_glob:
+        default: "blast.*.asn"
+    out: [output_file]

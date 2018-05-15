@@ -3,7 +3,7 @@ label: "Create Assembly From Sequences"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

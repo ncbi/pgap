@@ -3,7 +3,7 @@ label: "Preserve Product Accessions"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 #preserve_annot_markup -asn-cache sequence_cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe_id_cache/full_id_cache
 #-bypass-annots-manifest bypass_annots.mft -comparisons-manifest comparisons.mft

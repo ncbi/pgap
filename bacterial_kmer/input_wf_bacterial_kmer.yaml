@@ -1,0 +1,17 @@
+Extract_Kmers_From_Input___entry: # take this from Prepare Unannotated Sequences/out/sequences.asn
+    class: File
+    location: input/sequences.asn
+gencoll_asn: # take this from Create Assembly From Sequences
+    class: File
+    location: input/gencoll.asn
+asn_cache:
+    class: Directory
+    location: input/sequence_cache
+ref_assembly_taxid: 243273
+    # Mycoplasma genitalium G37, corresponding to the input gencoll_asn file.
+ANI_cutoff: 
+    class: File
+    location: input/ANI_cutoff.xml
+kmer_cache_path:
+    class: Directory
+    location: input/kmer-cache-minhash

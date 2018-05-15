@@ -3,7 +3,7 @@ label: "gpx_qsubmit"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 requirements:
   - class: InitialWorkDirRequirement
     listing:
@@ -118,7 +118,7 @@ baseCommand: gpx_qsubmit
 # 
 inputs:
   ids:
-    type: File
+    type: File?
     inputBinding: 
         prefix: -ids
   NxM_threshold:
@@ -144,7 +144,7 @@ inputs:
     inputBinding:
       prefix: -max-batch-length
   nogenbank:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: -nogenbank
   overlap:

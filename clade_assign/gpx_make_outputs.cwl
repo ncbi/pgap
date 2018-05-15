@@ -7,11 +7,10 @@ label: "Find Marker Alignments, gather"
 
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
     
 baseCommand: gpx_make_outputs
-arguments: [ -unzip, '*']
-arguments: [ -num-partitions, "1" ]
+arguments: [ -unzip, '*', -num-partitions, "1" ]
 
 inputs:
   input_path:

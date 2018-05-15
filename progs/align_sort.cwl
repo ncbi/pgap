@@ -3,7 +3,7 @@ label: "align_sort"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 
 baseCommand: align_sort

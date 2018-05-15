@@ -3,7 +3,7 @@ label: "format_rrnas_from_seq_entry"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   entry: File
 outputs:

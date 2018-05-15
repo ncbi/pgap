@@ -3,7 +3,7 @@ label: "Run genomic CMsearch (Rfam rRNA), scatter"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

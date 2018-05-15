@@ -3,7 +3,7 @@ label: "align_sort_sa"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   align: File
   asn_cache: Directory

@@ -3,7 +3,7 @@ label: "align_filter_sa"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   asn_cache: Directory
   prosplign_align: File?

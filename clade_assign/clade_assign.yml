@@ -1,0 +1,20 @@
+# User input
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+CladeMarkers_asn_cache:
+  class: Directory
+  location: ../input/cache
+ani:
+  class: File
+  location: input/ani-tax-report.xml
+reference_set:
+  class: File
+  location: ../input/markers.xml
+assembly_id: "243273"
+blastdb_dir:
+  class: Directory
+  location: input/genomic_blastdb
+seqids:
+  class: File
+  location: ../input/markers.seqid

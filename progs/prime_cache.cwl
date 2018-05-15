@@ -3,7 +3,7 @@ label: "prime_cache label"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
 #

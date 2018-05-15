@@ -3,7 +3,7 @@ label: "gpx_make_outputs program"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
 #
@@ -84,10 +84,10 @@ inputs:
       prefix: -num-partitions
   output:
     type: string?
-    # this needs to match outputs/blast_align/outputBinding/glob
-    default: "blast.#.asn"
     inputBinding:
       prefix: -output
+  output_glob:
+    type: string?
 #  output_manifest:
 #    type: string
 #    default: blastn.mft
@@ -99,8 +99,7 @@ inputs:
     inputBinding:
       prefix: -unzip
 outputs:
-  blast_align:
+  output_file:
     type: File
     outputBinding:
-        # this needs to match inputs/output_name/default
-      glob: blast.*.asn
+      glob: $(inputs.output_glob)

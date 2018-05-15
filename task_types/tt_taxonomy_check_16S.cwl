@@ -3,7 +3,7 @@ label: "taxonomy_check_16S"
 class: Workflow # task type
 hints:
   DockerRequirement:
-    dockerPull: ncbi/pgap:latest
+    dockerPull: ncbi/gpdev:latest
 inputs:
   blastdb: string
   blastdb_dir: Directory
