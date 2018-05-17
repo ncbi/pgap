@@ -22,3 +22,7 @@ blastdb_dir:
     location: input/16S_rRNA
     
 taxid: 1208324
+
+taxon_db: 
+    class: File
+    location: input/taxonomy.sqlite3

@@ -68,6 +68,10 @@ inputs:
     inputBinding:
       prefix: -blastdb
       valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
 outputs:
     report:
         type: File

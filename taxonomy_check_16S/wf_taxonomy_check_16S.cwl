@@ -12,6 +12,7 @@ inputs:
   asn_cache: Directory
   blastdb_dir: Directory
   taxid: int
+  taxon_db: File
 outputs:
   report:
     type: File
@@ -24,7 +25,7 @@ steps:
     in:
       entry: Format_16S_rRNA___entry
     out: [rna]
-  # Get_16S_rRNA_BLASTdb_for_taxonomic_consistency_check:
+  # Get_16S_rRNA_BLASTdb_for_taxonomic_consistency_check: 
   #  run: ../task_types/tt_const_blastdb.cwl
   #  out: [blastdb]
   Cache_Genomic_16S_Sequences:
@@ -117,4 +118,5 @@ steps:
         default: "blastdb"
       asn_cache: Cache_Genomic_16S_Sequences/asncache
       align: Pick_tops_for_taxonomic_consistency_check/out_align
+      taxon_db: taxon_db
     out: [report]

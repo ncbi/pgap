@@ -9,6 +9,7 @@ inputs:
   blastdb_dir: Directory
   asn_cache: Directory
   align: File
+  taxon_db: File
 outputs:
   report:
     type: File
@@ -25,5 +26,6 @@ steps:
       input: align
       top:
         default: 10
+      taxon_db: taxon_db
     out: [report]
         
