@@ -7,12 +7,31 @@ hints:
 
 #gp_getorf -allowable-starts from-stop-to-stop -asn-cache sequence_cache -ifmt seq-entries-b -input-manifest inseq.mft -max-seq-gap 10000 -minsize 45 -seq-output entries.asnb
 baseCommand: gp_getorf
-arguments: [ -allowable-starts, from-stop-to-stop, -ifmt, seq-entries-b, -max-seq-gap, "10000", -minsize, "45" ]
 inputs:
+  allowable_starts:
+    type: string?
+    default: from-stop-to-stop
+    inputBinding:
+      prefix: -allowable-starts
   asn_cache:
     type: Directory
     inputBinding:
       prefix: -asn-cache
+  ifmt:
+    type: string?
+    default: seq-entries-b
+    inputBinding:
+      prefix: -ifmt
+  max_seq_gap:
+    type: int?
+    default: 10000
+    inputBinding:
+      prefix: -max-seq-gap
+  minsize:
+    type: int?
+    default: 45
+    inputBinding:
+      prefix: -minsize
   input:
     type: File
     inputBinding:
@@ -27,3 +46,4 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outfile)
+

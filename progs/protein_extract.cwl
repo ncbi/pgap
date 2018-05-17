@@ -7,12 +7,15 @@ hints:
 
 #protein_extract -input-manifest models.mft -o proteins.asn -olds2 LDS2 -oseqids proteins.seq_ids -nogenbank
 baseCommand: protein_extract
-arguments: [ -nogenbank ]
 inputs:
   input:
     type: File
     inputBinding:
       prefix: -input
+  nogenbank:
+    type: boolean
+    inputBinding:
+      prefix: -nogenbank
   oproteins:
     type: string?
     default: "proteins.asn"
