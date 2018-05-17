@@ -105,7 +105,7 @@ steps:
       group: 
         default: 1
       k: 
-        default: "query subject"
+        default: "query -score subject"
       top:
         default: 20
     out: [out_align]
