@@ -21,8 +21,7 @@ baseCommand: align_sort
 #     -input-manifest \
 #     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/align_sort_sas.455674242/inp/align.mft \
 #     -k \
-#     'query \
-#     subject' \
+#     'query -score subject' \
 #     -logfile \
 #     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/align_sort_sas.455674242/log/align_sort.log \
 #     -o \

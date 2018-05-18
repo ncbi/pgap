@@ -20,7 +20,7 @@ inputs:
 outputs:
   blast_align:
     type: File
-    outputSource: gpx_make_outputs/blast_align
+    outputSource: gpx_make_outputs/output_file
 steps:
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
