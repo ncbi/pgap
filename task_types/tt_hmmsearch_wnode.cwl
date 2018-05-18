@@ -1,9 +1,7 @@
 #!/usr/bin/env cwl-runner
-label: "Search All HMMs I"
 cwlVersion: v1.0
 class: Workflow
 
-#requirements:
     
 inputs:
   hmm_path: Directory
@@ -16,14 +14,11 @@ inputs:
 outputs:
   hmm_hits: 
     type: File
-    outputSource: gpx_qdump/hmm_hits
-  # strace:
-  #   type: File
-  #   outputSource: hmmsearch_wnode/strace
+    outputSource: gpx_qdump/output
     
 steps:
   hmmsearch_create_jobs:
-    run: hmmsearch_create_jobs.cwl
+    run: ../progs/hmmsearch_create_jobs.cwl
     in:
       hmm_path: hmm_path
       seqids: seqids
@@ -31,7 +26,7 @@ steps:
       [jobs, workdir]
 
   hmmsearch_wnode:
-    run: hmmsearch_wnode.cwl
+    run: ../progs/hmmsearch_wnode.cwl
     in:
       hmm_path: hmm_path
       workdir: hmmsearch_create_jobs/workdir
@@ -40,11 +35,12 @@ steps:
       asn_cache: asn_cache
       hmms_tab: hmms_tab
       input_jobs: hmmsearch_create_jobs/jobs
-    #out: [output, strace]
     out: [output]
 
   gpx_qdump:
-    run: gpx_qdump.cwl
+    run: ../progs/gpx_qdump.cwl
     in:
       input_path: hmmsearch_wnode/output
-    out: [hmm_hits]
+      output_name:
+        default: hmm_hits.asn
+    out: [output]

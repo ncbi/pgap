@@ -23,9 +23,6 @@ requirements:
           $(inputs.hmms_tab.path)
           
 #hmmsearch_wnode -lds2 LDS2 -asn-cache sequence_cache -backlog 1 -fam fam.mft -hmmsearch-path ./bin/ -cut_ga -input-jobs jobs.xml -O output
-
-#baseCommand: /usr/bin/ltrace
-#arguments: [ -oltrace.txt, hmmsearch_wnode, -backlog, "1", -cut_ga ]
 baseCommand: hmmsearch_wnode
 arguments: [ -backlog, "1", -cut_ga ]
 inputs:
@@ -70,9 +67,5 @@ outputs:
     type: Directory
     outputBinding:
       glob: $(inputs.output_dir)
-  # strace:
-  #   type: File
-  #   outputBinding:
-  #     glob: strace.txt
   
   

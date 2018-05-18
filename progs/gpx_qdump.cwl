@@ -85,7 +85,7 @@ inputs:
       prefix: -input-path
   output_name:
     type: string?
-    default: "blast_align.asn"
+    default: "output.asn"
     inputBinding:
       prefix: -output
   unzip:
@@ -93,7 +93,8 @@ inputs:
     inputBinding:
       prefix: -unzip
 outputs:
-  blast_align:
+  # blast_align: This needs to be more generic, lots of wnodes call this
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_name)

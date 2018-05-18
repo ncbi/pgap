@@ -1,0 +1,34 @@
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+
+inseq:
+  class: File
+  location: input/sequences.asn
+
+nogenbank: True
+  
+# Cached computational steps
+hmm_hits:
+  class: File
+  location: input/hmm_hits.asn
+
+# pipeline data files
+hmms_tab:
+  class: File
+  location: input/real_hmms.tab
+hmm_path:
+  class: Directory
+  location: input/real_hmms
+uniColl_cache:
+  class: Directory
+  location: input/uniColl_cache
+
+trna_annots:
+  class: File
+  location: input/trnascan.asn
+ncrna_annots:
+  class: File
+  location: input/annots.asn
+
+  
