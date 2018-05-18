@@ -124,7 +124,7 @@ steps:
     out: [annots]
     
   bacterial_annot:
-    run: bacterial_annot/wf_bacterial_annot.cwl
+    run: bacterial_annot/wf_bacterial_annot_pass1.cwl
     in:
       #asn_cache: bacterial_prepare_unannotated/asncache
       asn_cache: genomic_source/asncache
