@@ -67,7 +67,7 @@ outputs:
   #   outputSource: bacterial_prepare_unannotated/asncache
     
 steps:
-  genomic_source:
+  genomic_source: # PLANE
     run: genomic_source/wf_genomic_source.cwl
     in:
       fasta: fasta
@@ -76,7 +76,7 @@ steps:
       gc_assm_name: gc_assm_name
     out: [gencoll_asn, seqid_list, stats_report, asncache]
     
-  bacterial_prepare_unannotated:
+  bacterial_prepare_unannotated: # ORIGINAL TASK NAME: Prepare Unannotated Sequences
     run: bacterial_prepare_unannotated.cwl
     in:
       asn_cache: genomic_source/asncache
@@ -84,17 +84,17 @@ steps:
       ids: genomic_source/seqid_list
       submit_block: submit_block_template
     out: [master_desc, sequences]
-
-  cache_entrez_gene:
+    
+  cache_entrez_gene: # ORIGINAL TASK NAME: Cache Entrez Gene
     run: cache_entrez_gene.cwl
     in:
       asn_cache: [genomic_source/asncache, uniColl_cache]
       egene_ini: gene_master_ini
       input: bacterial_prepare_unannotated/sequences
     out: [prok_entrez_gene_stuff]
-
+    
   # preserve_annot_markup:
-  #   run: preserve_annot_markup.cwl
+  #   run: preserve_annot_markup.cwl # Preserve Product Accessions
   #   in:
   #     #seq_cache: genobacterial_prepare_unannotated/asncache
   #     #unicoll_cache: uniColl_cache
@@ -105,7 +105,7 @@ steps:
   #     prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
   #   out: [annotations]
       
-  bacterial_trna:
+  bacterial_trna: # PLANE
     run: bacterial_trna/wf_trnascan.cwl
     in:
       asn_cache: genomic_source/asncache
@@ -113,7 +113,7 @@ steps:
       taxid: taxid
     out: [annots]
 
-  bacterial_ncrna:
+  bacterial_ncrna: # PLANE
     run: bacterial_ncrna/wf_gcmsearch.cwl
     in:
       asn_cache: genomic_source/asncache
@@ -123,7 +123,7 @@ steps:
       rfam_stockholm: rfam_stockholm
     out: [annots]
     
-  bacterial_annot:
+  bacterial_annot: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass1.cwl
     in:
       #asn_cache: bacterial_prepare_unannotated/asncache
@@ -140,8 +140,26 @@ steps:
       #[strace]
       #[hmm_hits]
       [aligns]
+      
+      
+#
+#   This step takes input from bacterial_annot 4/Bacterial Annot Filter, see GP-23942
+#   Status: 
+#     tasktype coded, input/output matches
+#     application not coded
+#
+#  Preserve_Annotations:
+#    run: task_types/tt_preserve_annot.cwl
+#    in:
+#      asn_cache: [genomic_source/asncache]
+#      input_annotation: bacterial_annot/bact_annot_filter_annotations
+#      rfam_amendments: rfam_amendments
+#      no_ncRNA: 
+#        default: true
+#    out: [annotations]
 
-  # bacterial_noncoding:
+
+  # bacterial_noncoding: # PLANE
   #   run: bacterial_noncoding/wf_bacterial_noncoding.cwl
   #   in:
   #     asn_cache: genomic_source/asncache
