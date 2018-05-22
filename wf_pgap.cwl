@@ -74,7 +74,7 @@ steps:
       submit_block_template: submit_block_template
       taxid: taxid
       gc_assm_name: gc_assm_name
-    out: [gencoll_asn, seqid_list, stats_report, asncache]
+    out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
     
   bacterial_prepare_unannotated: # ORIGINAL TASK NAME: Prepare Unannotated Sequences
     run: bacterial_prepare_unannotated.cwl
@@ -92,6 +92,20 @@ steps:
       egene_ini: gene_master_ini
       input: bacterial_prepare_unannotated/sequences
     out: [prok_entrez_gene_stuff]
+    
+  Create_Genomic_BLASTdb: 
+    label: "Create Genomic BLASTdb"
+    run: progs/gp_makeblastdb.cwl
+    in:
+        ids: genomic_source/ids_out
+        title: 
+            default: 'BLASTdb  created by GPipe'
+        # stupid YAML can't create an array of one object when it's a reference to a step output
+        # had to dupe
+        asn_cache: [ genomic_source/asncache, genomic_source/asncache]
+        dbtype: 
+            default: 'nucl'
+    out: [dbdir,dbname]
     
   # preserve_annot_markup:
   #   run: preserve_annot_markup.cwl # Preserve Product Accessions
@@ -132,14 +146,16 @@ steps:
       hmm_path: hmm_path
       hmms_tab: hmms_tab
       uniColl_cache: uniColl_cache
-      hmm_hits: hmm_hits
+      # hmm_hits: hmm_hits
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
+      nogenbank:
+        default: true
     out:
       #[lds2,seqids]
       #[strace]
       #[hmm_hits]
-      [aligns]
+      [hmm_hits]
       
       
 #
