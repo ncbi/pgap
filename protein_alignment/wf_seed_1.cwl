@@ -32,7 +32,6 @@ steps:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       input_jobs: gpx_qsubmit/jobs
-      blastdb_dir: blastdb_dir
     out: [outdir]
 
   gpx_make_outputs:

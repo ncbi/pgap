@@ -13,7 +13,6 @@ inputs:
   uniColl_asn_cache: Directory
   uniColl_path: Directory
   blastdb_dir: Directory
-  seqids: File
   clade: File
   taxid: string
   gc_assembly: File
@@ -34,10 +33,10 @@ steps:
   bacterial_prot_src:
     run: bacterial_prot_src.cwl
     in:
-      asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      taxid: taxid
       uniColl_path: uniColl_path
+      clade: clade
+      taxid: taxid
     out: [ universal_clusters, all_prots ]
 
   wf_seed:
@@ -53,7 +52,7 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      seqids: seqids
+      seqids: bacterial_prot_src/all_prots
       blastdb_dir: blastdb_dir
     out: [ blast_align ]
 
