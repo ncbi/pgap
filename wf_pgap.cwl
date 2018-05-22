@@ -94,22 +94,19 @@ steps:
       input: bacterial_prepare_unannotated/sequences
     out: [prok_entrez_gene_stuff]
     
-  Create_Genomic_BLASTdb: 
-    label: "Create Genomic BLASTdb"
-    run: progs/gp_makeblastdb.cwl
-    in:
-        ids: genomic_source/ids_out
-        title: 
-            default: 'BLASTdb  created by GPipe'
-        # stupid YAML can't create an array of one object when it's a reference to a step output
-        # had to dupe
-        # asn_cache: [ genomic_source/asncache, genomic_source/asncache]
-        asn_cache: 
-          source: [ genomic_source/asncache ]
-          linkMerge: merge_flattened
-        dbtype: 
-            default: 'nucl'
-    out: [dbdir,dbname]
+#  Create_Genomic_BLASTdb: 
+#    label: "Create Genomic BLASTdb"
+#    run: progs/gp_makeblastdb.cwl
+#    in:
+#        ids: genomic_source/ids_out
+#        title: 
+#            default: 'BLASTdb  created by GPipe'
+#        asn_cache: 
+#          source: [ genomic_source/asncache ]
+#          linkMerge: merge_flattened
+#        dbtype: 
+#            default: 'nucl'
+#    out: [dbdir,dbname]
     
   # ### GP-23940: almost ready need testing
   # protein_alignment: # PLANE
