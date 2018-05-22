@@ -1,0 +1,26 @@
+# User input
+asn_cache:
+  class: Directory
+  location: input/sequence_cache
+uniColl_asn_cache:
+  class: Directory
+  location: ../input/uniColl_cache
+uniColl_path:
+  class: Directory
+  location: ../input/uniColl_path
+taxid: "243273"
+blastdb_dir:
+  class: Directory
+  location: input/genomic_blastdb
+seqids:
+  class: File
+  location: ../input/all_prots.seqid
+clade:
+  class: File
+  location: input/clade_assignment.xml
+gc_assembly:
+  class: File
+  location: input/gencoll.asn
+asn:
+  class: File
+  location: input/mapped-aligns.asn
