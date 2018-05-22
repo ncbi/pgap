@@ -22,6 +22,7 @@ inputs:
   hmm_path: Directory
   hmms_tab: File
   uniColl_cache: Directory
+  uniColl_path: Directory
   gene_master_ini: File
   16s_blastdb_dir: Directory
   23s_blastdb_dir: Directory
@@ -107,6 +108,21 @@ steps:
             default: 'nucl'
     out: [dbdir,dbname]
     
+  # ### GP-23940: almost ready need testing
+  # protein_alignment: # PLANE
+  #   run: protein_alignment/wf_protein_alignment.cwl
+  #   in:
+  #       asn_cache: genomic_source/asncache
+  #       uniColl_asn_cache: uniColl_cache
+  #       uniColl_path: uniColl_path
+  #       blastdb_dir: Create_Genomic_BLASTdb/dbdir
+  #       seqids: File
+  #       clade: File
+  #       taxid: string
+  #       gc_assembly: File
+  #       asn: File
+  #   out: 
+    
   # preserve_annot_markup:
   #   run: preserve_annot_markup.cwl # Preserve Product Accessions
   #   in:
@@ -136,7 +152,7 @@ steps:
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
     out: [annots]
-    
+
   bacterial_annot: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass1.cwl
     in:
