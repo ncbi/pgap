@@ -12,8 +12,6 @@ hints:
 requirements:
   - class: InitialWorkDirRequirement
     listing:
-      - entry: $(inputs.asn_cache)
-        writable: False
       - entry: $(inputs.uniColl_asn_cache)
         writable: False
       - entry: $(inputs.uniColl_path)
@@ -23,13 +21,10 @@ baseCommand: bacterial_prot_src
 arguments: [ -no-phage, -nogenbank ]
 
 inputs:
-  asn_cache:
+  uniColl_asn_cache:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-      valueFrom: $(inputs.asn_cache.basename),$(inputs.uniColl_asn_cache.basename)
-  uniColl_asn_cache:
-    type: Directory
   clade:
     type: File
     inputBinding:
