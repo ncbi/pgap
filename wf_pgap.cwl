@@ -7,7 +7,7 @@ requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: DockerRequirement
-    dockerPull: ncbi/pgap:2018-04-16.build2734
+    dockerPull: ncbi/pgap:latest
     
 inputs:
   fasta: File
@@ -103,7 +103,10 @@ steps:
             default: 'BLASTdb  created by GPipe'
         # stupid YAML can't create an array of one object when it's a reference to a step output
         # had to dupe
-        asn_cache: [ genomic_source/asncache, genomic_source/asncache]
+        # asn_cache: [ genomic_source/asncache, genomic_source/asncache]
+        asn_cache: 
+          source: [ genomic_source/asncache ]
+          linkMerge: merge_flattened
         dbtype: 
             default: 'nucl'
     out: [dbdir,dbname]
@@ -152,26 +155,26 @@ steps:
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
     out: [annots]
-
-  bacterial_annot: # PLANE
-    run: bacterial_annot/wf_bacterial_annot_pass1.cwl
-    in:
-      #asn_cache: bacterial_prepare_unannotated/asncache
-      asn_cache: genomic_source/asncache
-      inseq: bacterial_prepare_unannotated/sequences
-      hmm_path: hmm_path
-      hmms_tab: hmms_tab
-      uniColl_cache: uniColl_cache
-      # hmm_hits: hmm_hits
-      trna_annots: bacterial_trna/annots
-      ncrna_annots: bacterial_ncrna/annots
-      nogenbank:
-        default: true
-    out:
-      #[lds2,seqids]
-      #[strace]
-      #[hmm_hits]
-      [hmm_hits]
+    
+  # bacterial_annot: # PLANE
+  #   run: bacterial_annot/wf_bacterial_annot_pass1.cwl
+  #   in:
+  #     #asn_cache: bacterial_prepare_unannotated/asncache
+  #     asn_cache: genomic_source/asncache
+  #     inseq: bacterial_prepare_unannotated/sequences
+  #     hmm_path: hmm_path
+  #     hmms_tab: hmms_tab
+  #     uniColl_cache: uniColl_cache
+  #     # hmm_hits: hmm_hits
+  #     trna_annots: bacterial_trna/annots
+  #     ncrna_annots: bacterial_ncrna/annots
+  #     nogenbank:
+  #       default: true
+  #   out:
+  #     #[lds2,seqids]
+  #     #[strace]
+  #     #[hmm_hits]
+  #     [hmm_hits]
       
       
 #
