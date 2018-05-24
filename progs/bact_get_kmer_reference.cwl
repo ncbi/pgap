@@ -10,6 +10,18 @@ inputs:
         type: string
         inputBinding:
             prefix: -o
+    prokrs_db_url:
+        type: string
+        # temporary setting, we need to get data from sqlite
+        default: dbapi://anyone:allowed@GPIPE_BCT/ProkRefseqTracking
+        inputBinding:
+            prefix: -prokrs-db-url
+    gencoll_db_url:
+        type: string
+        # temporary setting, we need to get data from sqlite
+        default: dbapi://anyone:allowed@GPIPE_BCT/GenomeColl_Master
+        inputBinding:
+            prefix: -gencoll-db-url
 outputs:
     gc_id_list:
         type: File
