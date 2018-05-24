@@ -17,6 +17,7 @@ inputs:
   kmer_cache_path: Directory
   ref_assembly_taxid: int
   ANI_cutoff: File
+  kmer_reference_assemblies: File
 outputs:
   Identify_Top_N_ANI_annot:
     type: File
@@ -29,14 +30,10 @@ outputs:
     outputSource: Extract_Top_Assemblies/tax_report
 steps:
 # order manually set to match the order of display on the GPC graph for the plane in the buildrun
-  Get_Reference_Assemblies:
-    run: ../task_types/tt_bact_get_kmer_reference.cwl
-    in: []
-    out: [gc_id_list]
   Query_Kmer_Cache:
     run: ../task_types/tt_kmer_cache_retrieve.cwl
     in:
-      gc_id_list: Get_Reference_Assemblies/gc_id_list
+      gc_id_list: kmer_reference_assemblies
       kmer_cache_path: kmer_cache_path
     out: [new_gc_id_list, out_kmer_file_list, out_kmer_cache_path]
   Extract_Kmer_List:
