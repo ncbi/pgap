@@ -38,12 +38,12 @@ inputs:
     inputBinding:
       prefix: -gc-assembly
   output:
-    type string?
+    type: string?
     default: compartments.asn   
     inputBinding:
       prefix: -o
     
-output:
+outputs:
   compartments:
     type: File
     outputBinding:

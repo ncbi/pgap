@@ -25,8 +25,8 @@ steps:
       seed_hits: seed_hits
     out: [unfilt_comp]
   
-  compart_filter_prosplign:
-    run: wf_compart_filter_prosplign.cwl
+  prosplign_compart_filter:
+    run: prosplign_compart_filter.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
@@ -39,7 +39,7 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      asn: compart_filter_prosplign/compartments
+      asn: prosplign_compart_filter/compartments
     out: [jobs]
   
   prosplign_wnode:
@@ -55,6 +55,3 @@ steps:
     in:
       input_path: prosplign_wnode/outdir
     out: [prosplign_align]
-
-
-

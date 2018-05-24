@@ -13,14 +13,14 @@ inputs:
 outputs: 
   blast_align:
     type: File
-    outputSource: gpx_dump/blast_align
+    outputSource: gpx_dump/seed_align
 
 steps:
   gpx_qsubmit:
     run: gpx_qsubmit.cwl
     in:
       asn_cache: asn_cache
-      uniColl_asn_cache:uniColl _asn_cache
+      uniColl_asn_cache: uniColl_asn_cache
       asn: asn
     out: [jobs]
   
@@ -30,13 +30,13 @@ steps:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       input_jobs: gpx_qsubmit/jobs
-      blastdb_dir: blastdb_dir
+      #blastdb_dir: blastdb_dir
     out: [outdir]
 
   gpx_dump:
-    run: gpx_dump.cwl
+    run: gpx_qdump.cwl
     in:
       input_path: tblastn_wnode/outdir
-    out: [blast_align]
+    out: [seed_align]
 
 

@@ -30,10 +30,7 @@ inputs:
   uniColl_asn_cache:
     type: Directory
   input_jobs:
-    type: File?
-    default: 
-      class: File 
-      location: jobs.xml
+    type: File
     inputBinding:
       prefix: -input-jobs
   output_dir:

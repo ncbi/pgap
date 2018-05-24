@@ -18,25 +18,32 @@ inputs:
   nogenbank: boolean
   
   # Cached computational steps
-  #hmm_hits: File
+  hmm_hits: File
   
 outputs:
+  outseqs:
+    type: File
+    outputSource: gp_getorf/outseqs
   # aligns: 
   #   type: File
   #   outputSource: bacterial_hit_mapping/aligns
-  hmm_hits: 
-    type: File
-    outputSource: hmmsearch/hmm_hits
+  # hmm_hits: 
+  #   type: File
+  #   outputSource: hmmsearch/hmm_hits
     
-  # proteins:
+  proteins:
+    type: File
+    outputSource: protein_extract/proteins
+  lds2:
+    type: File
+    outputSource: protein_extract/lds2
+  seqids:
+    type: File
+    outputSource: protein_extract/seqids
+  # prot_ids:
   #   type: File
-  #   outputSource: protein_extract/proteins
-  # lds2:
-  #   type: File
-  #   outputSource: protein_extract/lds2
-  # seqids:
-  #   type: File
-  #   outputSource: protein_extract/seqids
+  #   outputSource: get_off_frame_orfs/prot_ids
+
 
 steps:
   gp_getorf:
@@ -55,18 +62,18 @@ steps:
     out: [proteins, lds2, seqids]
 
   # Skipped due to compute cost, for now
-  hmmsearch:
-    label: "Search All HMMs I"
-    run: ../task_types/tt_hmmsearch_wnode.cwl
-    in:
-      proteins: protein_extract/proteins
-      hmm_path: hmm_path
-      seqids: protein_extract/seqids
-      lds2: protein_extract/lds2
-      hmms_tab: hmms_tab
-      asn_cache: asn_cache
-    out:
-      [hmm_hits]
+  # hmmsearch:
+  #   label: "Search All HMMs I"
+  #   run: ../task_types/tt_hmmsearch_wnode.cwl
+  #   in:
+  #     proteins: protein_extract/proteins
+  #     hmm_path: hmm_path
+  #     seqids: protein_extract/seqids
+  #     lds2: protein_extract/lds2
+  #     hmms_tab: hmms_tab
+  #     asn_cache: asn_cache
+  #   out:
+  #     [hmm_hits]
 
   # bacterial_hit_mapping:
   #   run: bacterial_hit_mapping.cwl

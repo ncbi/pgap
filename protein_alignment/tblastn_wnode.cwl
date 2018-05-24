@@ -19,7 +19,7 @@ requirements:
     
 baseCommand: tblastn_wnode
 
-arguments: [  -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1" -gapextend "2" -gapopen "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "21", -word_size, "6", -nogenbank ]
+arguments: [ -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "21", -word_size, "6", -nogenbank ]
 
 inputs:
   asn_cache:
@@ -30,10 +30,7 @@ inputs:
   uniColl_asn_cache:
     type: Directory
   input_jobs:
-    type: File?
-    default: 
-      class: File 
-      location: jobs.xml
+    type: File
     inputBinding:
       prefix: -input-jobs
   output_dir:

@@ -46,7 +46,7 @@ inputs:
     type: string?
     default: universal_clusters.inf
     inputBinding:
-      prefix: -ouniversal_clusters
+      prefix: -ouniversal-clusters
 
 outputs:
   universal_clusters:

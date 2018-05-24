@@ -21,7 +21,7 @@ steps:
     run: gpx_qsubmit_1.cwl
     in:
       asn_cache: asn_cache
-      uniColl_asn_cache:uniColl _asn_cache
+      uniColl_asn_cache: uniColl_asn_cache
       seqids: seqids
       blastdb_dir: blastdb_dir
     out: [jobs]

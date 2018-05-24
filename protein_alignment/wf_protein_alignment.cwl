@@ -19,15 +19,18 @@ inputs:
   asn: File
 
 outputs:
-  universal_clusters:  
+  cat_out:
     type: File
-    outputSource: bacterial_prot_src/universal_clusters
-  align:  
-    type: File
-    outputSource: align_filter/align
-  align_non_match:  
-    type: File
-    outputSource: align_filter/align_non_match
+    outputSource: cat/file_out
+  # universal_clusters:  
+  #   type: File
+  #   outputSource: bacterial_prot_src/universal_clusters
+  # align:  
+  #   type: File
+  #   outputSource: align_filter/align
+  # align_non_match:  
+  #   type: File
+  #   outputSource: align_filter/align_non_match
 
 steps:
   bacterial_prot_src:
@@ -61,14 +64,14 @@ steps:
     in:
       file_in_1: wf_seed_1/blast_align
       file_in_2: wf_seed/blast_align
-    out: [ blast_all ]
+    out: [ file_out ]
 
   align_sort:
     run: align_sort.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      blast_aligns: cat/blast_all
+      blast_aligns: cat/file_out
     out: [ sorted_aligns ]
 
   bacterial_protalign_filter:
@@ -96,4 +99,3 @@ steps:
       blast_full: bacterial_protalign_filter/blast_full_cov
       prosplign: compart_filter_prosplign/prosplign_align
     out: [ align, align_non_match ]
-

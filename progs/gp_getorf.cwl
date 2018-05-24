@@ -22,6 +22,10 @@ inputs:
     default: seq-entries-b
     inputBinding:
       prefix: -ifmt
+  input:
+    type: File
+    inputBinding:
+      prefix: -input
   max_seq_gap:
     type: int?
     default: 10000
@@ -32,10 +36,6 @@ inputs:
     default: 45
     inputBinding:
       prefix: -minsize
-  input:
-    type: File
-    inputBinding:
-      prefix: -input
   outfile:
     type: string?
     default: "entries.asnb"

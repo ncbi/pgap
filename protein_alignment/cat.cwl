@@ -12,11 +12,11 @@ inputs:
   file_in_1:
     type: File
     inputBinding:
-      prefix:
+      position: 1
   file_in_2:
     type: File
     inputBinding:
-      prefix:
+      position: 2
   
 outputs: 
   file_out:

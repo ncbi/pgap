@@ -30,7 +30,7 @@ inputs:
     type: Directory
   asn:
     type: File
-    inputBinding
+    inputBinding:
       prefix: -asn
   output:
     type: string?

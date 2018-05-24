@@ -34,12 +34,12 @@ inputs:
     inputBinding:
       prefix: -input
   output:
-    type string?
+    type: string?
     default: unfiltered_compartments.asn   
     inputBinding:
       prefix: -o
     
-output:
+outputs:
   unfilt_comp:
     type: File
     outputBinding:
