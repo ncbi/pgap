@@ -6,6 +6,7 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 requirements:
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.kmer_cache_path)
@@ -59,26 +60,26 @@ outputs:
     out_kmer_cache_path: 
         type: Directory
         outputBinding:
-            glob: $(input.kmer_cache_path) 
+            glob: $(inputs.kmer_cache_path.basename) 
     new_gc_id_list:
         type: File
         outputBinding:
-            glob: $(inputs.onew)
+            glob: $(inputs.onew) 
+    ofull_file:
+        type: File
+        outputBinding:
+            glob: $(inputs.ofull)
     out_kmer_file_list:
         type: File[]
+        
         outputBinding:
-            glob: |
+            outputEval: |
                 ${
-                    List<File> fileList new ArrayList<>();
-                    File manifests = new File(inputs.ofull);
-                    manifests.open("r");
-                    while (!manifests.eof) {
-                        // read each line of text
-                        var str;
-                        str = file.readln();
-                        if ( str[0] == '#' ) continue; 
-                        fileList.add(new File(str));
+                    var fileList = [];
+                    var lines = outputs.ofull_file.contents.split('\\n');
+                    var nblines = lines.length;
+                    for(var i=0; i < nblines; i++) {
+                        fileList.push(new File(lines[i]));
                     }
-                    file.close();
                     return fileList;
                 }

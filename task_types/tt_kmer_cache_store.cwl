@@ -19,4 +19,6 @@ steps:
       kmer_cache_path: kmer_cache_path
       store: 
         default: true
+      onew:
+        default: onew.list
     out: [out_kmer_file_list]
