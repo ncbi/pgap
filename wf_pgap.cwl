@@ -22,7 +22,7 @@ inputs:
   hmm_path: Directory
   hmms_tab: File
   uniColl_cache: Directory
-  uniColl_path: Directory
+  # uniColl_path: Directory
   gene_master_ini: File
   16s_blastdb_dir: Directory
   23s_blastdb_dir: Directory

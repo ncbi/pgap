@@ -4,6 +4,9 @@ class: Workflow
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
+requirements:
+- class: StepInputExpressionRequirement
+    
 inputs:
   asn_cache: Directory[]
   asnb: File?
@@ -99,12 +102,6 @@ steps:
                 inputBinding:
                     prefix: -ids
             outputs:
-                  # output blastdb role (blastdb) is implemented in CWL
-                  # as combination of Directory/string
-                  dbdir:
-                    type: Directory
-                    outputBinding:
-                        glob: ${outdir} ?????
                   dbname: 
                     type: string
                     outputBinding: 
@@ -157,7 +154,7 @@ steps:
                 glob: $(inputs.blastdir)
         in:
           blastfiles: makeblastdb/blastfiles
-          blastdir:
+          blastdir: 
             default: blastdir
         out: [blastdb]    
     
