@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-label: "Bacterial Annotation (two-pass)"
+label: "Bacterial Annotation (two-pass) pass 1"
 cwlVersion: v1.0
 class: Workflow
 
@@ -86,6 +86,15 @@ steps:
   #     hmm_hits: hmm_hits # Should be from hmmsearch
   #     #hmm_hits: hmmsearch/hmm_hits
   #     sequences: gp_getorf/outseqs
+  #### this guys below not tested yet
+  #     align_fmt: 
+  #        default: seq-align
+  #     expansion_ratio:
+  #        default: 0.0
+  #     no_compart:
+  #        default: true
+  #     nogenbank:
+  #        default: true
   #   out: [asncache, aligns]
 
   # get_off_frame_orfs:
