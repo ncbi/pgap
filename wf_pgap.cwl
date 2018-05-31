@@ -60,12 +60,12 @@ outputs:
   #strace: 
   #  type: File
   #  outputSource: bacterial_annot/strace
-  # sequences:
-  #   type: File
-  #   outputSource: bacterial_prepare_unannotated/sequences
-  # asncache:
-  #   type: Directory
-  #   outputSource: bacterial_prepare_unannotated/asncache
+  sequences:
+    type: File
+    outputSource: bacterial_prepare_unannotated/sequences
+  asncache:
+    type: Directory
+    outputSource: genomic_source/asncache
     
 steps:
   genomic_source: # PLANE
@@ -135,23 +135,23 @@ steps:
   #     prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
   #   out: [annotations]
       
-  bacterial_trna: # PLANE
-    run: bacterial_trna/wf_trnascan.cwl
-    in:
-      asn_cache: genomic_source/asncache
-      seqids: genomic_source/seqid_list
-      taxid: taxid
-    out: [annots]
+  # bacterial_trna: # PLANE
+  #   run: bacterial_trna/wf_trnascan.cwl
+  #   in:
+  #     asn_cache: genomic_source/asncache
+  #     seqids: genomic_source/seqid_list
+  #     taxid: taxid
+  #   out: [annots]
 
-  bacterial_ncrna: # PLANE
-    run: bacterial_ncrna/wf_gcmsearch.cwl
-    in:
-      asn_cache: genomic_source/asncache
-      seqids: genomic_source/seqid_list
-      model_path: rfam_model_path
-      rfam_amendments: rfam_amendments
-      rfam_stockholm: rfam_stockholm
-    out: [annots]
+  # bacterial_ncrna: # PLANE
+  #   run: bacterial_ncrna/wf_gcmsearch.cwl
+  #   in:
+  #     asn_cache: genomic_source/asncache
+  #     seqids: genomic_source/seqid_list
+  #     model_path: rfam_model_path
+  #     rfam_amendments: rfam_amendments
+  #     rfam_stockholm: rfam_stockholm
+  #   out: [annots]
     
   # bacterial_annot: # PLANE
   #   run: bacterial_annot/wf_bacterial_annot_pass1.cwl

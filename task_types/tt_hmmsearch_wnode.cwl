@@ -15,7 +15,13 @@ outputs:
   hmm_hits: 
     type: File
     outputSource: gpx_qdump/output
-    
+  jobs: 
+    type: File
+    outputSource: hmmsearch_create_jobs/jobs
+  workdir:
+    type: Directory
+    outputSource: hmmsearch_create_jobs/workdir
+
 steps:
   hmmsearch_create_jobs:
     run: ../progs/hmmsearch_create_jobs.cwl

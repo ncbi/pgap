@@ -18,18 +18,25 @@ inputs:
   nogenbank: boolean
   
   # Cached computational steps
-  hmm_hits: File
+  #hmm_hits: File
   
 outputs:
-  outseqs:
-    type: File
-    outputSource: gp_getorf/outseqs
+  # outseqs:
+  #   type: File
+  #   outputSource: gp_getorf/outseqs
   # aligns: 
   #   type: File
   #   outputSource: bacterial_hit_mapping/aligns
-  # hmm_hits: 
+  # jobs:
   #   type: File
-  #   outputSource: hmmsearch/hmm_hits
+  #   outputSource: hmmsearch/jobs
+  # workdir:
+  #   type: Directory
+  #   outputSource: hmmsearch/workdir
+
+  hmm_hits: 
+    type: File
+    outputSource: hmmsearch/hmm_hits
     
   proteins:
     type: File
@@ -51,7 +58,6 @@ steps:
     in:
       asn_cache: asn_cache
       input: inseq
-    #out: [asncache, outseqs]
     out: [outseqs]
 
   protein_extract:
@@ -74,6 +80,7 @@ steps:
       asn_cache: asn_cache
     out:
       [hmm_hits]
+      #[hmm_hits, jobs, workdir]
 
   bacterial_hit_mapping:
     run: bacterial_hit_mapping.cwl

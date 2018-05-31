@@ -13,7 +13,7 @@ requirements:
     
 #hmmsearch_create_jobs -hmm-manifest real_hmms_combined.mft -output jobs.xml -seqids proteins.seq_ids -workpath workpath -no-merge-hmms
 baseCommand: hmmsearch_create_jobs
-#arguments: [ -no-merge-hmms ]
+arguments: [ -no-merge-hmms ]
 inputs:
   hmm_path:
     type: Directory
