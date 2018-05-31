@@ -43,4 +43,6 @@ steps:
       input_path: hmmsearch_wnode/output
       output_name:
         default: hmm_hits.asn
+      unzip:
+        default: '*'
     out: [output]

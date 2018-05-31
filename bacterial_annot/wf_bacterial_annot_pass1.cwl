@@ -62,45 +62,43 @@ steps:
     out: [proteins, lds2, seqids]
 
   # Skipped due to compute cost, for now
-  # hmmsearch:
-  #   label: "Search All HMMs I"
-  #   run: ../task_types/tt_hmmsearch_wnode.cwl
-  #   in:
-  #     proteins: protein_extract/proteins
-  #     hmm_path: hmm_path
-  #     seqids: protein_extract/seqids
-  #     lds2: protein_extract/lds2
-  #     hmms_tab: hmms_tab
-  #     asn_cache: asn_cache
-  #   out:
-  #     [hmm_hits]
+  hmmsearch:
+    label: "Search All HMMs I"
+    run: ../task_types/tt_hmmsearch_wnode.cwl
+    in:
+      proteins: protein_extract/proteins
+      hmm_path: hmm_path
+      seqids: protein_extract/seqids
+      lds2: protein_extract/lds2
+      hmms_tab: hmms_tab
+      asn_cache: asn_cache
+    out:
+      [hmm_hits]
 
-  # bacterial_hit_mapping:
-  #   run: bacterial_hit_mapping.cwl
-  #   in:
-  #     #seq_cache: gp_getorf/asncache
-  #     seq_cache: asn_cache
-  #     unicoll_cache: uniColl_cache
-  #     #asn_cache: [gp_getorf/asncache, uniColl_cache]
-  #     asn_cache: [asn_cache, uniColl_cache]
-  #     hmm_hits: hmm_hits # Should be from hmmsearch
-  #     #hmm_hits: hmmsearch/hmm_hits
-  #     sequences: gp_getorf/outseqs
-  #### this guys below not tested yet
-  #     align_fmt: 
-  #        default: seq-align
-  #     expansion_ratio:
-  #        default: 0.0
-  #     no_compart:
-  #        default: true
-  #     nogenbank:
-  #        default: true
-  #   out: [asncache, aligns]
+  bacterial_hit_mapping:
+    run: bacterial_hit_mapping.cwl
+    in:
+      seq_cache: asn_cache
+      unicoll_cache: uniColl_cache
+      asn_cache: [asn_cache, uniColl_cache]
+      # hmm_hits: hmm_hits # Should be from hmmsearch
+      hmm_hits: hmmsearch/hmm_hits
+      sequences: gp_getorf/outseqs
+      ### this guys below not tested yet
+      align_fmt: 
+         default: seq-align
+      expansion_ratio:
+         default: 0.0
+      no_compart:
+         default: true
+      nogenbank:
+         default: true
+    out: [aligns]
 
-  # get_off_frame_orfs:
-  #   run: get_off_frame_orfs.cwl
-  #   in:
-  #     aligns: bacterial_hit_mapping/aligns
-  #     seq_entries: gp_getorf/outseqs
-  #   out: [prot_ids]
+  get_off_frame_orfs:
+    run: get_off_frame_orfs.cwl
+    in:
+      aligns: bacterial_hit_mapping/aligns
+      seq_entries: gp_getorf/outseqs
+    out: [prot_ids]
     
