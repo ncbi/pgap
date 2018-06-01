@@ -43,13 +43,13 @@ inputs:
 #    type: File
 #      inputBinding:
 #      prefix: -clade-tree 
-  clade_tree_manifest:
-    type: File?
-    default:
-      class: File
-      location: ../input/dummy.mft
-    inputBinding:
-      prefix: -clade-tree-manifest
+#  clade_tree_manifest:
+#    type: File?
+#    default:
+#      class: File
+#      location: ../input/dummy.mft
+#    inputBinding:
+#      prefix: -clade-tree-manifest
   reference_set:
     type: File
     inputBinding:

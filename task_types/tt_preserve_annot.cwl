@@ -1,5 +1,4 @@
 cwlVersion: v1.0
-label: "Preserve Annotations"
 class: CommandLineTool
 hints:
   DockerRequirement:

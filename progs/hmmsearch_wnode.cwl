@@ -54,7 +54,7 @@ inputs:
       prefix: -input-jobs
   hmmsearch_path:
     type: string?
-    default: /hmmer/bin
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/third-party/bin
     inputBinding:
       prefix: -hmmsearch-path
   output_dir:

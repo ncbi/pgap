@@ -1,0 +1,44 @@
+lds2: 
+    class: File
+    # label: "Extract ORF Proteins/lds2"
+    location: input/Extract_ORF_Proteins.lds2
+proteins: 
+    class: File
+    # label: "Extract ORF Proteins/lds2"
+    location: input/proteins.asn
+cluster_blastp_wnode_output: # shortcut to bypass cluster_blastp
+    class: Directory
+    location: input/cluster_blastp_wnode.output
+prot_ids_A: 
+    class: File
+    # label: "Extract ORF Proteins/prot_ids"
+    location: input/Extract_ORF_Proteins.prot_ids
+prot_ids_B1: 
+    class: File
+    # label: "Get off-frame ORFs/prot_ids"
+    location: input/Get_off-frame_ORFs.prot_ids
+prot_ids_B2: 
+    class: File
+    # label: "AntiFam tainted proteins I/oseqids"
+    location: input/AntiFam_tainted_proteins_I.oseqids
+blast_rules_db_dir: 
+    class: Directory
+    # label: "Get BLAST Rules db const"
+    location: input/blast_rules_db_dir
+identification_db_dir:
+    class: Directory
+    # label: "Create identification BLASTdb"
+    location: input/Create_identification_BLASTdb_dir
+annotation:
+    class: File
+    # label: "Get ORFs/outseq"
+    location: input/Get_ORFs.outseq.asnb
+sequence_cache: 
+    class: Directory
+    # label: "build sequence_cache"
+    location: input/sequence_cache
+unicoll_cache: 
+    class: Directory
+    # label: "unicoll cache from third party"
+    location: input/cache # BacterialPipeline/uniColl/ver-3.2/cache
+    

@@ -16,13 +16,13 @@ hmm_hits:
 # pipeline data files
 hmms_tab:
   class: File
-  location: input/real_hmms.tab
+  location: ../input/real_hmms.tab
 hmm_path:
   class: Directory
-  location: input/real_hmms
+  location: ../input/real_hmms
 uniColl_cache:
   class: Directory
-  location: input/uniColl_cache
+  location: ../input/uniColl_cache
 
 trna_annots:
   class: File

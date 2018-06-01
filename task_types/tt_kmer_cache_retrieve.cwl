@@ -26,4 +26,6 @@ steps:
       kmer_cache_path: kmer_cache_path
       retrieve: 
         default: true
+      onew:
+        default: onew.list
     out: [new_gc_id_list, out_kmer_file_list,out_kmer_cache_path]

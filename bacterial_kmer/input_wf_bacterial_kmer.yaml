@@ -15,3 +15,6 @@ ANI_cutoff:
 kmer_cache_path:
     class: Directory
     location: input/kmer-cache-minhash
+kmer_reference_assemblies:    
+    class: File
+    location: input/kmer-reference-assms

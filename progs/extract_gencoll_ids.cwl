@@ -10,7 +10,7 @@ inputs:
     assemblies: 
         type: File
         inputBinding:
-            prefix: -assemblies
+            prefix: -input
     o:
         type: string
         inputBinding:

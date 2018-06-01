@@ -5,23 +5,29 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 
-requirements:
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry: $(inputs.seq_cache)
-        writable: False
-      - entry: $(inputs.unicoll_cache)
-        writable: False
-    
-
 #bacterial_hit_mapping -align-fmt seq-align -aligns-manifest hits.mft -asn-cache sequence_cache,cache_uniColl -expansion-ratio 0.0 -o mapped-hmm-hits.asn -sequences-manifest annotation.mft -no-compart -nogenbank
 baseCommand: bacterial_hit_mapping
-arguments: [ -align-fmt, seq-align, -expansion-ratio, "0.0", -no-compart, -nogenbank ]
 inputs:
+  align_fmt:
+    type: string
+    inputBinding:
+      prefix: -align-fmt
+  expansion_ratio:
+    type: float
+    inputBinding:
+      prefix: -expansion-ratio
+  no_compart:
+    type: boolean
+    inputBinding:
+      prefix: -no-compart
+  nogenbank:
+    type: boolean
+    inputBinding:
+      prefix: -nogenbank
   seq_cache:
-    type: Directory
+    type: Directory?
   unicoll_cache:
-    type: Directory
+    type: Directory?
   asn_cache:
     type: Directory[]
     inputBinding:
@@ -40,11 +46,9 @@ inputs:
     default: "mapped-hmm-hits.asn"
     inputBinding:
       prefix: -o
+  # bogus:
+  proteins: File?
 outputs:
-  asncache:
-    type: Directory
-    outputBinding:
-      glob: $(inputs.seq_cache.basename)
   aligns:
     type: File
     outputBinding:

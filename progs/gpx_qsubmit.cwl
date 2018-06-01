@@ -5,148 +5,79 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 requirements:
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-#      - entry: $(inputs.asn_cache)
-#        writable: True
-      - entry: $(inputs.blastdb_dir)
+      - entry:  $(inputs.proteins)
         writable: False
-
+      - entry:  ${ var cs=0; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
+        writable: False
+      - entry:  ${ var cs=1; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
+        writable: False
+      - entry:  ${ var cs=0; var s=inputs.asn_cache.length-1; var as = cs; if(as >= s) {as = s }; return inputs.asn_cache[as]; }
+        writable: False
+      - entry:  ${ var cs=1; var s=inputs.asn_cache.length-1; var as = cs; if(as >= s) {as = s }; return inputs.asn_cache[as]; }
+        writable: False
+      - entryname: ids.mft
+        entry:  ${var blob = '';for (var i = 0; i < inputs.ids.length; i++) {blob += inputs.ids[i].path  + '\n';}return blob;}
 
 baseCommand: gpx_qsubmit
-# this is only one example
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/gpx_qsubmit \
-#     -affinity \
-#     subject \
-#     -asn-cache \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/sequence_cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache \
-#     -max-batch-length \
-#     10000 \
-#     -nogenbank \
-#     -S \
-#     GPIPE_SCHED1 \
-#     -D \
-#     GPipeSched_Prod1 \
-#     -U \
-#     gpipe_prod \
-#     -P \
-#     gpipe2007 \
-#     -queue \
-#     GPIPE_BCT.tblastn_wnode.455674222.1521226579 \
-#     -db-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/tblastn_wnode.455674222/inp/blastdb.mft \
-#     -ids-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/tblastn_wnode.455674222/inp/gilist.mft
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/tblastn_wnode \
-#     -align_filter \
-#     'pct_identity_gapopen_only \
-#     >= \
-#     75' \
-#     -asn-cache \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/sequence_cache,/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache \
-#     -backlog \
-#     1 \
-#     -comp_based_stats \
-#     F \
-#     -db_gencode \
-#     4 \
-#     -dbsize \
-#     6000000000 \
-#     -delay \
-#     0 \
-#     -evalue \
-#     0.1 \
-#     -gapextend \
-#     2 \
-#     -gapopen \
-#     9 \
-#     -matrix \
-#     BLOSUM62 \
-#     -max-jobs \
-#     1 \
-#     -seg \
-#     no \
-#     -service \
-#     GPipeExec_Prod \
-#     -soft_masking \
-#     true \
-#     -threshold \
-#     21 \
-#     -word_size \
-#     6 \
-#     -nogenbank \
-#     -queue \
-#     GPIPE_BCT.tblastn_wnode.455674222.1521226579
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/gpx_make_outputs \
-#     -output \
-#     '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/tblastn_wnode.455674222/out/blast.#.asn' \
-#     -output-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/tblastn_wnode.455674222/out/blast_align.mft \
-#     -unzip \
-#     '*' \
-#     -S \
-#     GPIPE_SCHED1 \
-#     -D \
-#     GPipeSched_Prod1 \
-#     -U \
-#     gpipe_prod \
-#     -P \
-#     gpipe2007 \
-#     -queue \
-#     GPIPE_BCT.tblastn_wnode.455674222.1521226579 \
-#     -num-partitions \
-#     1
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/gp_register_stats \
-#     -ifmt \
-#     seq-align-set \
-#     -input-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/tblastn_wnode.455674222/out/blast_align.mft
-# 
-# 
-# 
 inputs:
-  ids:
-    type: File?
-    inputBinding: 
-        prefix: -ids
-  NxM_threshold:
-    type: int?
-    inputBinding:
-      prefix: -NxM-threshold
   affinity:
     type: string?
     default: subject
     inputBinding:
       prefix: -affinity
   asn_cache:
-    type: Directory
+    type: Directory[]?
     inputBinding:
       prefix: -asn-cache
+      itemSeparator: ","
   batch_size:
     type: int?
     inputBinding:
       prefix: -batch-size
+  blastdb:
+    type: string?
+    # this part for testing only, it is not compatible with -db-manifest setting below
+    inputBinding:
+      prefix: -db
+      valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb_dir.length; i++) { blob += inputs.blastdb_dir[i].path + '/' + inputs.blastdb; if(i != inputs.blastdb_dir.length-1) blob += ','; } return blob; }
+  blastdb_dir:
+    type: Directory[]
+  # this won't work because we create manifest in requirement: section simultaneously with declaring input directories "stable"
+  # and "stability" is not achieved until we are done with requirements part (I guess)
+  # blastdb_manifest:
+  #   type: string?
+  #   inputBinding:
+  #     prefix: -db-manifest
+  #     valueFrom: blastdb.mft
+  # same here:
+  ids:
+    type: File[]
+  ids_manifest:
+    type: string?
+    default: ids.mft
+    inputBinding: 
+        prefix: -ids-manifest
+  lds2:
+    type: File?
+    inputBinding:
+      prefix: -lds2
+  proteins: # companion to lds2
+    type: File?
   max_batch_length:
     type: int?
-    default: 50000
     inputBinding:
       prefix: -max-batch-length
   nogenbank:
     type: boolean?
     inputBinding:
-      prefix: -nogenbank
+      # prefix: -nogenbank # commenting this as a hail mary
+  NxM_threshold:
+    type: int?
+    inputBinding:
+      prefix: -NxM-threshold
   overlap:
     type: int?
     inputBinding:
@@ -160,18 +91,8 @@ inputs:
     default: jobs.xml
     inputBinding:
       prefix: -o
-  blastdb_dir:
-    type: Directory?
-  blastdb:
-    type: string?
-    inputBinding:
-      prefix: -db
-      valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
+      
 outputs:
-#  asncache:
-#    type: Directory
-#    outputBinding:
-#      glob: $(inputs.asn_cache.basename)
   jobs:
     type: File
     outputBinding:
