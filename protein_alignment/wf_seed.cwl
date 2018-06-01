@@ -24,12 +24,19 @@ steps:
       asn: asn
     out: [jobs]
   
+  cut_job_path:
+    run: cut_job_path.cwl
+    in:
+      file_in: gpx_qsubmit/jobs
+    out: [ file_out ]
+
   tblastn_wnode:
     run: tblastn_wnode.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      input_jobs: gpx_qsubmit/jobs
+      asn: asn
+      input_jobs: cut_job_path/file_out
       #blastdb_dir: blastdb_dir
     out: [outdir]
 
