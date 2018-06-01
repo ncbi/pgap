@@ -17,7 +17,7 @@ requirements:
 inputs:
   blastdb_dir: Directory[]
   blastdb: string
-  cluster_blastp_wnode_output: Directory # shortcut to bypass cluster_blastp
+  cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
   lds2: File
   proteins: File
   affinity: string
@@ -30,7 +30,7 @@ inputs:
   compart: boolean
   dbsize: string # can't int, because too large
   evalue: float?
-  extra_coverage: int
+  extra_coverage: int?
   max_jobs: int
   max_target_seqs: int
   no_merge: boolean

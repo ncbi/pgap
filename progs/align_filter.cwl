@@ -40,9 +40,10 @@ baseCommand: align_filter
 # 
 inputs:
   asn_cache:
-    type: Directory
+    type: Directory[]
     inputBinding:
       prefix: -asn-cache
+      itemSeparator: ","
   filter:
     type: string?
     inputBinding:
