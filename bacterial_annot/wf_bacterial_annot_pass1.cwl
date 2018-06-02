@@ -47,9 +47,9 @@ outputs:
   seqids:
     type: File
     outputSource: protein_extract/seqids
-  # prot_ids:
-  #   type: File
-  #   outputSource: get_off_frame_orfs/prot_ids
+  prot_ids:
+    type: File
+    outputSource: get_off_frame_orfs/prot_ids
 
 
 steps:

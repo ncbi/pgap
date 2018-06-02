@@ -6,8 +6,8 @@ class: Workflow
 #requirements:
     
 inputs:
-  hmm_path: Directory
   proteins: File
+  hmm_path: Directory
   seqids: File
   lds2: File
   hmms_tab: File
@@ -17,16 +17,17 @@ outputs:
   hmm_hits: 
     type: File
     outputSource: gpx_qdump/hmm_hits
-  # strace:
-  #   type: File
-  #   outputSource: hmmsearch_wnode/strace
     
 steps:
   hmmsearch_antifam_I:
-    run: wf_hmmsearch.cwl
+    run: ../task_types/tt_hmmsearch_wnode.cwl
     in:
+      proteins: proteins
       hmm_path: hmm_path
       seqids: seqids
+      lds2: lds2
+      hmms_tab: hmms_tab
+      asn_cache: asn_cache
     out:
       [hmmhits]
 
