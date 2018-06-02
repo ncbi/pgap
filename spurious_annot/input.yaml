@@ -1,3 +1,5 @@
+# input for both passes: 1 and 2
+
 sequence_cache:
   class: Directory
   location: input/sequence_cache
@@ -8,6 +10,16 @@ Extract_ORF_Proteins_seqids:
   class: File
   location: input/proteins.seq_ids
 Extract_ORF_Proteins_lds2: 
+  class: File
+  location: input/LDS2
+# just a copy  
+Extract_Model_Proteins_proteins: 
+  class: File
+  location: input/proteins.asn
+Extract_Model_Proteins_seqids: 
+  class: File
+  location: input/proteins.seq_ids
+Extract_Model_Proteins_lds2: 
   class: File
   location: input/LDS2
 AntiFamLib: 

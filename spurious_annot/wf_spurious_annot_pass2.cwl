@@ -1,67 +1,49 @@
 #!/usr/bin/env cwl-runner
-label: spurious_annot
+label: "spurious_annot pass2"
 cwlVersion: v1.0
 class: Workflow    
+requirements:
+    - class: SubworkflowFeatureRequirement
+    
 inputs:
-  Search_AntiFam___lds2: File
-  Good__AntiFam_filtered_annotations___models: File
-  Pass_Input_Proteins___prot_ids: File
-  Pass_Input_Proteins_I___prot_ids: File
-  Search_AntiFam_I___lds2: File
+  Extract_Model_Proteins_proteins: File
+  Extract_Model_Proteins_seqids: File
+  Extract_Model_Proteins_lds2: File
+  AntiFamLib: Directory
+  sequence_cache: Directory
 outputs:
-  Good__AntiFam_filtered_proteins___gilist:
+  AntiFam_tainted_proteins___oseqids:
     type: File
-    outputSource:
-  Good__AntiFam_filtered_annotations___annotation:
-    type: File
-    outputSource:
-  AntiFam_tainted_proteins_I___oseqids:
-    type: File
-    outputSource:
-  Good__AntiFam_filtered_annotations___annotation:
-    type: File
-    outputSource:
+    outputSource: AntiFam_tainted_proteins/oseqids
+  
 steps:
-  AntiFam_tainted_proteins:
-    run: ../task_types/tt_reduce.cwl:
-    in:
-      entry: entry
-      hmm_hits: hmm_hits
-    out: [oseqids]
-  AntiFam_tainted_proteins_I:
-    run: ../task_types/tt_reduce.cwl:
-    in:
-      entry: entry
-      hmm_hits: hmm_hits
-    out: [oseqids]
-  Good__AntiFam_filtered_proteins:
-    run: ../task_types/tt_set_op_gilist.cwl:
-    in:
-      gilist: gilist
-      prot_ids: prot_ids
-      oseqids: oseqids
-    out: [gilist]
-  Search_AntiFam_I:
-    run: ../task_types/tt_hmmsearch_wnode.cwl:
-    in:
-      models: models
-      text: text
-      gilist: gilist
-      prot_ids: prot_ids
-      lds2: lds2
-    out: [hmm_hits]
-  Get_AntiFam_Models:
-    run: ../task_types/tt_const_hmmer_hmm_library_v3.cwl:
-    out: [models]
-  Get_AntiFam_Models:
-    run: ../task_types/tt_const_hmmer_hmm_library_v3.cwl:
-    out: [models]
-  Search_AntiFam:
-    run: ../task_types/tt_hmmsearch_wnode.cwl:
-    in:
-      models: models
-      text: text
-      gilist: gilist
-      prot_ids: prot_ids
-      lds2: lds2
-    out: [hmm_hits]
+    Search_AntiFam:
+        label: "Search AntiFam"
+        run: ../task_types/tt_hmmsearch_wnode.cwl  
+        in:
+            proteins: Extract_Model_Proteins_proteins
+            hmm_path: AntiFamLib
+            seqids: Extract_Model_Proteins_seqids
+            lds2: Extract_Model_Proteins_lds2
+            # hmms_tab: hmms_tab # goes eventually to -fam parameter -fam is empty here
+            asn_cache: sequence_cache
+        out: [hmm_hits]
+    AntiFam_tainted_proteins:
+        label: "AntiFam tainted proteins"
+        run: ../progs/reduce.cwl
+        in:
+            aligns: Search_AntiFam/hmm_hits
+        out: [oseqids] # this goes out as well
+    Good,_AntiFam_filtered_proteins:
+        label: "Good, AntiFam filtered proteins"
+        run: ../progs/set_operation.cwl
+        in:
+            A: 
+                source: [Extract_Model_Proteins_seqids]
+                linkMerge: merge_flattened
+            B: 
+                source: [AntiFam_tainted_proteins/oseqids]
+                linkMerge: merge_flattened
+            operation:
+                default: '-' # subracts B from A
+        out: [output] 
