@@ -11,10 +11,14 @@ inputs:
   Extract_Model_Proteins_lds2: File
   AntiFamLib: Directory
   sequence_cache: Directory
+  Run_GeneMark_models: File
 outputs:
   AntiFam_tainted_proteins___oseqids:
     type: File
     outputSource: AntiFam_tainted_proteins/oseqids
+  Good_AntiFam_filtered_annotations_out:
+    type: File
+    outputSource: Good_AntiFam_filtered_annotations/out_annotation
   
 steps:
     Search_AntiFam:
@@ -34,7 +38,7 @@ steps:
         in:
             aligns: Search_AntiFam/hmm_hits
         out: [oseqids] # this goes out as well
-    Good,_AntiFam_filtered_proteins:
+    Good_AntiFam_filtered_proteins:
         label: "Good, AntiFam filtered proteins"
         run: ../progs/set_operation.cwl
         in:
@@ -47,3 +51,18 @@ steps:
             operation:
                 default: '-' # subracts B from A
         out: [output] 
+    Good_AntiFam_filtered_annotations:
+        label: "Good, AntiFam filtered annotations"
+        run: ../progs/bact_filter_preserved.cwl
+        in:
+            # Run GeneMark 	bacterial_annot 	models 	ASNB_SEQ_ENTRY 	annotation
+            annotation: Run_GeneMark_models # -input
+            ifmt:  # -ifmt
+                default: seq-entry
+            # Good, AntiFam filtered proteins 	spurious_annot 	gilist 	SEQID_LIST 	only_those_ids
+            only_those_ids: Good_AntiFam_filtered_proteins/output # -only-those-ids
+            nogenbank:
+                default: true
+        out: [out_annotation] # goes out -o
+        
+            

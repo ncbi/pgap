@@ -15,16 +15,19 @@ Extract_ORF_Proteins_lds2:
 # just a copy  
 Extract_Model_Proteins_proteins: 
   class: File
-  location: input/proteins.asn
+  location: input/Extract_Model_Proteins.asn
 Extract_Model_Proteins_seqids: 
   class: File
-  location: input/proteins.seq_ids
+  location: input/Extract_Model_Proteins.seq_ids
 Extract_Model_Proteins_lds2: 
   class: File
-  location: input/LDS2
+  location: input/Extract_Model_Proteins.LDS2
 AntiFamLib: 
   class: Directory
   location: input/AntiFamLib
                 # ${GP_HOME}/third-party/data/AntiFam/
                 # source: [AntiFam_Unidentified.hmm,${GP_HOME}/third-party/data/AntiFam/AntiFam_Bacteria.hmm]
+Run_GeneMark_models:
+  class: File
+  location: input/models.asn
 
