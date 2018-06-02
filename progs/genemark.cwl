@@ -5,26 +5,27 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 requirements:
-        - class: InitialWorkDirRequirement
-          listing:
-            - entryname: annotation.mft
-              entry: $(inputs.annotation.path)
-            - entryname: sequences.mft
-              entry: $(inputs.sequences.path)
-            - entryname: alignments.mft
-              entry: $(inputs.alignments.path)
+    - class: InlineJavascriptRequirement
+    - class: InitialWorkDirRequirement
+      listing:
+        - entryname: annotation.mft
+          entry: ${ if ( inputs.annotation == null ) { return ''; } else { return inputs.annotation.path; } }
+        - entryname: sequences.mft
+          entry: ${ if ( inputs.sequences == null) { return ''; }  else { return inputs.sequences.path; } }
+        - entryname: alignments.mft
+          entry: ${ if ( inputs.alignments == null ) { return ''; }  else { return inputs.alignments.path; } }
           
 baseCommand: genemark
 inputs:
   alignments:
-    type: File
+    type: File?
   alignments_manifest:
     type: string
     default: alignments.mft
     inputBinding:
       prefix: -alignments
   annotation:
-    type: File
+    type: File?
   annotation_manifest:
     type: string
     default: annotation.mft
@@ -40,9 +41,12 @@ inputs:
     inputBinding:
       prefix: -genemark-path
   hmm_params:
-    type: File
+    type: File?
     inputBinding:
       prefix: -hmm-params
+  out_hmm_params_name:
+    type: string
+    default: GeneMark_hmm_combined.mod
   min_seq_len:
     type: int?
     inputBinding:
@@ -86,3 +90,8 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.preliminary_models_name)
+    out_hmm_params:
+        type: File
+        outputBinding:
+            glob: $(inputs.tmp)/$(inputs.out_hmm_params_name)
+    

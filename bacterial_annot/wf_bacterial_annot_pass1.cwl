@@ -16,28 +16,24 @@ inputs:
   trna_annots: File
   ncrna_annots: File
   nogenbank: boolean
-  
+  Execute_CRISPRs_annots: File
+  Generate_16S_rRNA_Annotation_annotation: File
+  Generate_23S_rRNA_Annotation_annotation: File
+  Post_process_CMsearch_annotations_annots_5S: File
+  thresholds: File
+  genemark_path: Directory
   # Cached computational steps
   #hmm_hits: File
-  
 outputs:
-  # outseqs:
-  #   type: File
-  #   outputSource: gp_getorf/outseqs
-  # aligns: 
-  #   type: File
-  #   outputSource: bacterial_hit_mapping/aligns
-  # jobs:
-  #   type: File
-  #   outputSource: hmmsearch/jobs
-  # workdir:
-  #   type: Directory
-  #   outputSource: hmmsearch/workdir
-
+  outseqs:
+    type: File
+    outputSource: gp_getorf/outseqs
+  aligns: 
+    type: File
+    outputSource: bacterial_hit_mapping/aligns
   hmm_hits: 
     type: File
     outputSource: hmmsearch/hmm_hits
-    
   proteins:
     type: File
     outputSource: protein_extract/proteins
@@ -50,8 +46,15 @@ outputs:
   prot_ids:
     type: File
     outputSource: get_off_frame_orfs/prot_ids
-
-
+  protein_aligns: 
+    type: File
+    outputSource: Resolve_Annotation_Conflicts/protein_aligns
+  annotation: 
+    type: File
+    outputSource: Resolve_Annotation_Conflicts/annotation
+  out_hmm_params: 
+    type: File
+    outputSource: Run_GeneMark_Training/out_hmm_params
 steps:
   gp_getorf:
     run: ../progs/gp_getorf.cwl
@@ -108,4 +111,47 @@ steps:
       aligns: bacterial_hit_mapping/aligns
       seq_entries: gp_getorf/outseqs
     out: [prot_ids]
-    
+  Resolve_Annotation_Conflicts:
+    label: "Resolve Annotation Conflicts"
+    run: ../progs/bacterial_resolve_conflicts.cwl
+    in:
+        features: # all external to this node
+            - Execute_CRISPRs_annots # Execute CRISPR/annots
+            - ncrna_annots # Post-process CMsearch Rfam annotations/annots
+            - Generate_16S_rRNA_Annotation_annotation # Generate 16S rRNA Annotation/annotation
+            - Generate_23S_rRNA_Annotation_annotation # Generate 23S rRNA Annotation/annotation
+            - Post_process_CMsearch_annotations_annots_5S # Post-process CMsearch annotations/annots
+            - trna_annots # Run tRNAScan/annot
+        # input_annotation: mft not used
+        # prot: mft not used
+        # mapped-regions: mft not used
+        thr: thresholds
+        asn_cache: 
+            source: [asn_cache]
+            linkMerge: merge_flattened
+    out: 
+        - protein_aligns
+        - annotation
+ 
+  Run_GeneMark_Training:
+    label: "Run GeneMark Training, genemark"
+    run: ../progs/genemark.cwl
+    in:
+        asn_cache: 
+            source: [asn_cache, uniColl_cache]
+            linkMerge: merge_flattened
+        sequences: inseq
+        genemark_path: genemark_path # ${GP_HOME}/third-party/GeneMark 
+        marked_annotation_name:
+                default: marked-annotation.asn
+        min_seq_len:
+            default: 200
+        preliminary_models_name: # -out
+            default: preliminary-models.asn
+        thr:  thresholds
+        tmp_dir_name: 
+            default: workdir  
+            # type: Directory
+        nogenbank: 
+            default: true
+    out: [out_hmm_params] # export

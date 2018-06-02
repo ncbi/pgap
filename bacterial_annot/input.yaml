@@ -8,11 +8,6 @@ inseq:
 
 nogenbank: True
   
-# Cached computational steps
-hmm_hits:
-  class: File
-  location: input/hmm_hits.asn
-
 # pipeline data files
 hmms_tab:
   class: File
@@ -30,5 +25,28 @@ trna_annots:
 ncrna_annots:
   class: File
   location: input/annots.asn
+Execute_CRISPRs_annots: 
+  class: File
+  location: input/ncbi_crispr.out # it's supposed to be empty for Mycoplasma g.
+Generate_16S_rRNA_Annotation_annotation: 
+  class: File
+  location: input/annotations_16.asn
+Generate_23S_rRNA_Annotation_annotation: 
+  class: File
+  location: input/annotations_23.asn
+Post_process_CMsearch_annotations_annots_5S: 
+  class: File
+  location: input/annots_5.asn
+thresholds: 
+  class: File
+  location: input/thresholds.xml
+genemark_path:
+  class: Directory 
+  location: input/GeneMark
 
   
+####### Cached computational steps
+hmm_hits:
+  class: File
+  location: input/hmm_hits.asn
+
