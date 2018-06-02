@@ -6,12 +6,13 @@ hints:
     dockerPull: ncbi/gpdev:latest
 
 requirements:
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.hmm_path)
         writable: False
-      - entry: $(inputs.hmms_tab)
-        writable: False
+      #- entry: $(inputs.hmms_tab)
+      #  writable: False
       - entry: $(inputs.proteins)
         writable: False
       - entry: $(inputs.workdir)
@@ -19,8 +20,7 @@ requirements:
       - entry: $(inputs.asn_cache)
         writable: False
       - entryname: fam.mft
-        entry: |
-          $(inputs.hmms_tab.path)
+        entry: ${ if ( inputs.hmms_tab == null ) { return ''; }  else { return inputs.hmms_tab.path; } }
           
 #hmmsearch_wnode -lds2 LDS2 -asn-cache sequence_cache -backlog 1 -fam fam.mft -hmmsearch-path ./bin/ -cut_ga -input-jobs jobs.xml -O output
 baseCommand: hmmsearch_wnode
@@ -40,7 +40,7 @@ inputs:
   proteins:
     type: File
   hmms_tab:
-    type: File
+    type: File?
   fam:
     type: string?
     default: fam.mft

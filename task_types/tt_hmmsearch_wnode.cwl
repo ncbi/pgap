@@ -8,7 +8,7 @@ inputs:
   proteins: File
   seqids: File
   lds2: File
-  hmms_tab: File
+  hmms_tab: File?
   asn_cache: Directory
   
 outputs:

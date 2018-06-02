@@ -1,0 +1,18 @@
+sequence_cache:
+  class: Directory
+  location: input/sequence_cache
+Extract_ORF_Proteins_proteins: 
+  class: File
+  location: input/proteins.asn
+Extract_ORF_Proteins_seqids: 
+  class: File
+  location: input/proteins.seq_ids
+Extract_ORF_Proteins_lds2: 
+  class: File
+  location: input/LDS2
+AntiFamLib: 
+  class: Directory
+  location: input/AntiFamLib
+                # ${GP_HOME}/third-party/data/AntiFam/
+                # source: [AntiFam_Unidentified.hmm,${GP_HOME}/third-party/data/AntiFam/AntiFam_Bacteria.hmm]
+
