@@ -19,6 +19,9 @@ outputs:
   Good_AntiFam_filtered_annotations_out:
     type: File
     outputSource: Good_AntiFam_filtered_annotations/out_annotation
+  Good_AntiFam_filtered_proteins_output:
+    type: File
+    outputSource: Good_AntiFam_filtered_proteins/output
   
 steps:
     Search_AntiFam:
