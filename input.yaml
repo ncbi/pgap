@@ -19,6 +19,9 @@ hmm_hits:
 hmms_tab:
   class: File
   location: input/real_hmms.tab
+naming_hmms_tab:  
+  class: File
+  location: input/naming_hmms.tab
 hmm_path:
   class: Directory
   location: input/real_hmms
@@ -46,3 +49,50 @@ rfam_stockholm:
 23s_blastdb_dir:
   class: Directory
   location: input/23S_rRNA
+AntiFamLib:
+  class: Directory
+  location: input/AntiFamLib
+blast_rules_db_dir: 
+    class: Directory
+    # label: "Get BLAST Rules db const"
+    location: input/blast_rules_db_dir
+identification_db_dir:
+    class: Directory
+    # label: "Create identification BLASTdb"
+    location: input/Create_identification_BLASTdb_dir
+thresholds: 
+  class: File
+  location: input/thresholds.xml
+naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+    class: File
+    location: input/naming.sqlite
+selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
+    # it's blastdb
+    class: Directory
+    location: input/selenoproteins
+naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
+    class: Directory
+    location: input/naming_hmms_combined
+wp_hashes:
+    class: File 
+    location: input/wp-hashes.sqlite
+taxon_db:
+    class: File 
+    location: input/taxonomy.sqlite3
+genemark_path:
+    class: Directory 
+    location: input/GeneMark
+naming_blast_db: # NamingDatabase
+    class: Directory
+    # location: input/Create_identification_BLASTdb_dir # this one might have created problems for assign_cluster, let's try this:
+    location: input/Create_identification_BLASTdb_dir_full
+CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
+    class: Directory
+    location: input/cdd
+CDDdata2: # ${GP_HOME}/third-party/data/cdd_add 
+    class: Directory
+    location: input/cdd_add
+defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+    class: File    
+    location: input/product_rules.prt
+
