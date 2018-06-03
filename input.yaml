@@ -95,4 +95,10 @@ CDDdata2: # ${GP_HOME}/third-party/data/cdd_add
 defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
     class: File    
     location: input/product_rules.prt
-
+univ_prot_xml:
+    class: File    
+    location: input/universal.xml
+val_res_den_xml:
+    class: File    
+    location: input/validation-results.xml
+    

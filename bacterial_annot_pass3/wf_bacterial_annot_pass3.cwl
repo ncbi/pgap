@@ -159,7 +159,7 @@ steps:
             # blast_hits: blast_hits # not used here
             expose_conflicts:
                 default: true
-        out: [assignments] #  -out-xml # bunch of other outputs are not used here
+        out: [assignments, annotation] #  -out-xml # bunch of other outputs are not used here
     Name_by_WPs:
         label: "Name by WPs"
         run: ../progs/identify_wp.cwl  
@@ -201,6 +201,9 @@ outputs:
     Assign_Naming_HMM_to_Proteins_assignments:
         type: File
         outputSource: Assign_Naming_HMM_to_Proteins/assignments
+    Assign_Naming_HMM_to_Proteins_annotation:
+        type: File
+        outputSource: Assign_Naming_HMM_to_Proteins/annotation
     Name_by_WPs_names:
         type: File
         outputSource: Name_by_WPs/out_names

@@ -45,6 +45,8 @@ inputs:
   CDDdata: Directory
   CDDdata2: Directory
   defline_cleanup_rules: File
+  univ_prot_xml: File
+  val_res_den_xml: File
 outputs:
   # aligns: 
   #   type: File
@@ -118,7 +120,7 @@ steps:
       input: bacterial_prepare_unannotated/sequences
     out: [prok_entrez_gene_stuff]
     
- Create_Genomic_BLASTdb: # default 1
+  Create_Genomic_BLASTdb: # default 1
    label: "Create Genomic BLASTdb" # default 1
    run: progs/gp_makeblastdb.cwl
    in:
@@ -197,7 +199,7 @@ steps:
       Extract_ORF_Proteins_lds2: bacterial_annot/lds2
       AntiFamLib: AntiFamLib
       sequence_cache: genomic_source/asncache
-    out:[AntiFam_tainted_proteins_I___oseqids]
+    out: [AntiFam_tainted_proteins_I___oseqids]
     
   bacterial_annot_2: # PLANE  
     run: bacterial_annot_pass2/wf_bacterial_annot_pass2.cwl
@@ -238,7 +240,7 @@ steps:
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/hmm_hits
         prot_aligns: protein_alignment/___aligns____ 
-            label: "Filter Protein Alignments I/align"
+            # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
         raw_seqs: bacterial_prepare_unannotated/sequences
         thresholds: thresholds # ${GP_HOME}/etc/thresholds.xml
@@ -279,6 +281,7 @@ steps:
         - Assign_Naming_HMM_to_Proteins_assignments:
             # type: File
             # outputSource: Assign_Naming_HMM_to_Proteins/assignments
+        - Assign_Naming_HMM_to_Proteins_annotation:
         - Name_by_WPs_names:
             # type: File
             # outputSource: Name_by_WPs/out_names    
@@ -334,7 +337,7 @@ steps:
    run: task_types/tt_preserve_annot.cwl
    in:
      asn_cache: [genomic_source/asncache]
-     input_annotation: bacterial_annot/bact_annot_filter_annotations
+     input_annotation: bacterial_annot/annotation
      rfam_amendments: rfam_amendments
      no_ncRNA: 
        default: true
@@ -373,25 +376,201 @@ steps:
   #
   Final_Bacterial_Package_asn_cleanup:
     run: progs/asn_cleanup.cwl
+    inp:
+      inp_annotation: bacterial_annot_pass3/Assign_Naming_HMM_to_Proteins_annotation
+      serial: 
+        default: binary
+    out: [annotation]
+
   Final_Bacterial_Package_final_bact_asn:
     run: progs/final_bact_asn.cwl
+    in:
+      annotation: 
+        - source: [Final_Bacterial_Package_asn_cleanup/annotation]
+          inkMerge: merge_flattened
+      asn_cache: 
+        source: [genomic_source/asncache]
+        linkMerge: merge_flattened
+      gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
+      master_desc: bacterial_prepare_unannotated/master_desc
+      submit_block_template: 
+        source: [submit_block_template]
+        linkMerge: merge_flattened
+      it:
+        default: true
+      submission_mode_genbank:
+        default: true
+      nogenbank:
+        default: true
+        
+    out: [outfull]
   Final_Bacterial_Package_dumb_down_as_required:
     run: progs/dumb_down_as_required.cwl
+    in: 
+      annotation:  Final_Bacterial_Package_final_bact_asn/outfull
+      asn_cache: 
+        source: [genomic_source/asncache]
+        linkMerge: merge_flattened
+      max_x_ratio: 
+        default: 0.1
+      max_x_run: 
+        default: 3
+      partial_cov_threshold:
+        default: 65
+      partial_len_threshold:
+        default: 30
+      drop_partial_in_the_middle:
+        default: true
+      submission_mode_genbank:
+        default: true
+      nogenbank:
+        default: true
+      it:
+        default: true
+    out: [outent]
   Final_Bacterial_Package_ent2sqn:
     run: progs/ent2sqn.cwl
+    in:
+      annotation: Final_Bacterial_Package_dumb_down_as_required/outent
+      asn_cache: 
+        source: [genomic_source/asncache]
+        linkMerge: merge_flattened
+      gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
+      submit_block_template: 
+        source: [submit_block_template]
+        linkMerge: merge_flattened
+      it:
+        default: true
+    out: [output]
   Final_Bacterial_Package_sqn2gbent:
     run: progs/sqn2gbent.cwl
+    inp:
+      input: Final_Bacterial_Package_ent2sqn/output
+      it:
+        default: true
+        inputBinding:
+          prefix: -it
+    out: [output]
   Final_Bacterial_Package_std_validation:
     run: progs/std_validation.cwl
+    inp:
+      annotation: dumb_down_as_required/outent
+      asn_cache: # sequence_cache
+        source: [genomic_source/asncache]
+        linkMerge: merge_flattened
+      exclude_asndisc_codes: # 
+        default: ['OVERLAPPING_CDS']
+      inent: dumb_down_as_required/outent
+      ingb: Final_Bacterial_Package_sqn2gbent/output
+      insqn: Final_Bacterial_Package_ent2sqn/output
+      master_desc: bacterial_prepare_unannotated/master_desc
+      submit_block_template:
+        source: [submit_block_template]
+        linkMerge: merge_flattened
+      it:
+        default: true
+      submission_mode_genbank:
+        default: true
+      nogenbank:
+        default: true
+    outp:
+      - outdisc
+      - outdiscxml
+      - outmetamaster
+      - outval
+      - tempdir
   Final_Bacterial_Package_val_stats:
     run: progs/val_stats.cwl  
+    inp:
+      annot_val: Final_Bacterial_Package_std_validation/outval
+      c_toolkit: 
+        default: true
+    outputs: [output, xml]
   #
   #  end of Final_Bacterial_Package task
   #
-  Prepare_Init_Refseq_Molecules:
-    run: progs/
-  Validate_Annotation:
-    run: progs/
+  
+  #### we do not need this
+  # Prepare_Init_Refseq_Molecules:
+  #  run: progs/
+  
+  #
+  #  Validate_Annotation task
+  #
+  
+  Validate_Annotation_bact_univ_prot_stats:
+    run: progs/bact_univ_prot_stats.cwl
+    inp:
+      annot_request_id: 
+        default: -1 # this is dummy annot_request_id
+      hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
+      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models # genemark models
+      input:  Final_Bacterial_Package_final_bact_asn/outfull
+      univ_prot_xml:  univ_prot_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/universal.xml 
+      val_res_den_xml:  val_res_den_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/etc/validation-results.xml
+      it:
+        default: true
+    outputs:
+      - bact_univ_prot_stats_old_xml
+      - var_bact_univ_prot_details_xml
+      - var_bact_univ_prot_stats_xml
+      
+  Validate_Annotation_proc_annot_stats:
+    run: progs/proc_annot_stats.cwl
+    in:
+      input: Final_Bacterial_Package_dumb_down_as_required/outent
+      max_unannotated_region: 
+        default: 5000
+      univ_prot_xml:  univ_prot_xml 
+      val_res_den_xml:  val_res_den_xml
+      it:
+        default: true
+    outputs:
+      - var_proc_annot_stats_xml
+      - var_proc_annot_details_xml
+  Validate_Annotation_xsltproc_asnvalidate:
+    run: progs/xsltproc.cwl
+    in:
+      xml: Final_Bacterial_Package_std_validation/outval # final_bacterial_package.10054022/out/annot.val.summary.xml
+    outputs: [output]
+  Validate_Annotation_xsltproc_asndisc:
+    run: progs/xsltproc.cwl
+    in:
+      xml: Final_Bacterial_Package_std_validation/outdiscxml # final_bacterial_package.10054022/out/annot.disc.xml
+    outputs: [output]
+  Validate_Annotation_collect_annot_stats:
+    run: progs/collect_annot_stats.cwl
+    in:
+      input:
+        source:  
+            - Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_stats_xml 
+            # '${work}/bact_univ_prot_stats.xml,
+            - Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml 
+            # ${work}/proc_annot_stats.xml,
+            - Validate_Annotation_xsltproc_asndisc/output 
+            # ${work}/proc_annot_stats.disc.xml,
+            - Validate_Annotation_xsltproc_asnvalidate/output 
+            # ${work}/proc_annot_stats.val.xml'
+        linkMerge: merge_flattened
+      output_name:
+        default: proc_annot_stats.xml
+    out: [output]
+  Validate_Annotation_collect_annot_details:
+    run: progs/collect_annot_stats.cwl
+    in:
+      input:
+        source: 
+            - Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_details_xml
+            # '${work}/bact_univ_prot_details.xml,
+            - Validate_Annotation_proc_annot_stats/var_proc_annot_details_xml
+            # ${work}/proc_annot_details.xml'
+        linkMerge: merge_flattened
+      output_name:
+        default: proc_annot_details.xml
+    out: [output]
+  #
+  #  end of Validate_Annotation task
+  #
   
   #
   # End of Pseudo plane default 3
@@ -405,8 +584,51 @@ steps:
   # Pseudo plane default 4
   # 
   
-  # step: Generate Annotation Reports
-  
+  # task: Generate Annotation Reports
+  # 
+  # Generate_Annotation_Reports_pgaap_prepare_review:
+    # run: progs/pgaap_prepare_review.cwl
+  # Generate_Annotation_Reports_lds2_indexer:
+    # run: progs/lds2_indexer.cwl
+  #
+  # comparisons only for pre-existing annotation, one of the next phases
+  #
+  # # Generate_Annotation_Reports_comparison_format_curr_comparison:
+    # # run: progs/comparison_format.cwl
+  # # Generate_Annotation_Reports_comparison_format_prev_comparison:
+    # # run: progs/comparison_format.cwl
+  # # Generate_Annotation_Reports_comparison_format_prev_assm_comparison:
+    # # run: progs/comparison_format.cwl
+  # # Generate_Annotation_Reports_comparison_format_ref_comparison:
+    # # run: progs/comparison_format.cwl
+  # Generate_Annotation_Reports_bact_asn_stats:
+    # run: progs/bact_asn_stats.cwl
+    # in:
+      # input_annotation: Final_Bacterial_Package_dumb_down_as_required/outent
+      # it:
+        # default: true
+    # out: [output,  xml_output]
+  # Generate_Annotation_Reports_val_format:
+    # run: progs/val_format.cwl
+  # Generate_Annotation_Reports_gbproject:
+    # run: progs/gbproject.cwl
+  # Generate_Annotation_Reports_asn2nucleotide_fasta:
+    # run: progs/asn2fasta.cwl
+  # Generate_Annotation_Reports_asn2all_protein_fasta:
+    # run: progs/asn2fasta.cwl
+  # Generate_Annotation_Reports_asn2protein_fasta:
+    # run: progs/asn2fasta.cwl
+  # Generate_Annotation_Reports_asn2flat:
+    # run: progs/asn2flat.cwl
+  # Generate_Annotation_Reports_format_rrnas:
+    # run: progs/format_rrnas.cwl
+  # Generate_Annotation_Reports_asn2rrna_fa:
+    # run: progs/asn2fasta.cwl
+  # Generate_Annotation_Reports_gp_annot_format:
+    # run: progs/gp_annot_format.cwl  
+  # end of task: Generate Annotation Reports
+  # 
+
   #
   # End of Pseudo plane default 4
   #
