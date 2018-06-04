@@ -3,7 +3,7 @@ label: "gc_get_molecules"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: ncbi/genomic_source:pgap4.5
+    # dockerPull: ncbi/genomic_source:pgap4.5
     dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
