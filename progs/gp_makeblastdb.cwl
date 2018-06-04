@@ -22,6 +22,9 @@ steps:
     actual:
         run:
             class: CommandLineTool
+            hints:
+              DockerRequirement:
+                dockerPull: ncbi/gpdev:latest
             baseCommand: gp_makeblastdb
             inputs:
               asn_cache:
@@ -89,7 +92,7 @@ steps:
                   found_ids:
                     type: File
                     outputBinding:
-                        glob: ${inputs.found_ids_output_file}
+                        glob: $(inputs.found_ids_output_file)
                   
                   blastfiles:
                     type: File[]
