@@ -42,6 +42,11 @@ inputs:
     default: output
     inputBinding:
       prefix: -O
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
+        
 outputs:
   # asncache:
   #   type: Directory

@@ -9,7 +9,7 @@ inputs:
   asn_cache: Directory
   seqids: File
   taxid: int
-  
+  taxon_db: File
 outputs:
   annots:
     type: File
@@ -32,6 +32,7 @@ steps:
       input_jobs: gpx_qsubmit/jobs
       #input_jobs: jobs
       taxid: taxid
+      taxon_db: taxon_db
     #out: [asncache, outdir]
     out: [outdir]
 

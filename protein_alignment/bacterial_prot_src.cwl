@@ -47,7 +47,10 @@ inputs:
     default: universal_clusters.inf
     inputBinding:
       prefix: -ouniversal-clusters
-
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
 outputs:
   universal_clusters:
     type: File

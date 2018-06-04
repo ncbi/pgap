@@ -6,8 +6,8 @@ class: Workflow
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-  - class: DockerRequirement
-    dockerPull: ncbi/pgap:latest
+#  - class: DockerRequirement
+#    dockerPull: ncbi/gpdev:latest
     
 inputs:
   fasta: File
@@ -48,6 +48,8 @@ inputs:
   univ_prot_xml: File
   val_res_den_xml: File
   protein_alignment_aligns_shortcut: File
+  sequence_cache_shortcut: Directory  # GP-24223
+  ids_out_shortcut: File # GP-24223
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -62,6 +64,8 @@ steps:
       submit_block_template: submit_block_template
       taxid: taxid
       gc_assm_name: gc_assm_name
+      sequence_cache_shortcut: sequence_cache_shortcut
+      ids_out_shortcut: ids_out_shortcut
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
 
   #
@@ -75,6 +79,7 @@ steps:
       gc_assembly: genomic_source/gencoll_asn
       ids: genomic_source/seqid_list
       submit_block: submit_block_template
+      taxon_db: taxon_db
     out: [master_desc, sequences]
     
   cache_entrez_gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
@@ -110,6 +115,7 @@ steps:
       model_path: rfam_model_path
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
+      taxon_db: taxon_db
     out: [annots]
    
   bacterial_mobile_elem: # PLANE
@@ -129,6 +135,7 @@ steps:
       model_path: 5s_model_path
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
+      taxon_db: taxon_db
     out: [ annotations_5s, annotations_16s, annotations_23s ]
 
   bacterial_trna: # PLANE
@@ -137,6 +144,7 @@ steps:
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
       taxid: taxid
+      taxon_db: taxon_db
     out: [annots]
 
   bacterial_annot: # PLANE

@@ -17,7 +17,7 @@ inputs:
   taxid: string
   gc_assembly: File
   asn: File
-
+  taxon_db: File   
 outputs:
   cat_out:
     type: File
@@ -40,6 +40,7 @@ steps:
       uniColl_path: uniColl_path
       clade: clade
       taxid: taxid
+      taxon_db: taxon_db
     out: [ universal_clusters, all_prots ]
 
   wf_seed:

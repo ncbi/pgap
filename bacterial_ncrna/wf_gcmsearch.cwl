@@ -11,6 +11,7 @@ inputs:
   model_path: File
   rfam_amendments: File
   rfam_stockholm: File
+  taxon_db: File
 
 outputs:
   annots:
@@ -33,6 +34,7 @@ steps:
       model_path: model_path
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
+      taxon_db: taxon_db
     out: [outdir]
 
   gpx_qdump:

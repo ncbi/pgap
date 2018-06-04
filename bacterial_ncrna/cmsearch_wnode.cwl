@@ -30,7 +30,7 @@ inputs:
       prefix: -input-jobs
   cmsearch_path:
     type: string?
-    default: /gpipe/third-party/bin
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/third-party/bin
     inputBinding:
       prefix: -cmsearch-path
   model_path:
@@ -55,6 +55,10 @@ inputs:
     default: output
     inputBinding:
       prefix: -O
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
 outputs:
   outdir:
     type: Directory

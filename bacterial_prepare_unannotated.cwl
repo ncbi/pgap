@@ -36,7 +36,11 @@ inputs:
     default: sequences.asn
     inputBinding:
       prefix: -o
-
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
+        
 outputs:
   master_desc:
     type: File

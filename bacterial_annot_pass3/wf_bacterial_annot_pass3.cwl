@@ -38,16 +38,12 @@ inputs:
         type: Directory
     hmms_tab:
         type: File
-    wp_hashes:
-        type: File #    input/wp-hashes.sqlite
-    taxon_db:
-        type: File # input/taxonomy.sqlite3
-    genemark_path:
-        type: Directory
-    sequence_cache:
-        type: Directory 
-    uniColl_cache:
-        type: Directory 
+    wp_hashes: File #    input/wp-hashes.sqlite
+    taxon_db: File # input/taxonomy.sqlite3
+    genemark_path: Directory
+    sequence_cache:  Directory 
+    uniColl_cache:  Directory 
+    taxon_db: File
 steps:
     Find_Best_Evidence_Alignments:
         label: "Find Best Evidence Alignments"
