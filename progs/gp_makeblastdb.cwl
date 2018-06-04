@@ -18,31 +18,11 @@ inputs:
   title: string
   ids:  File?
 
-outputs:
-  blastdb:
-    type: Directory
-        outputSource: mkdir/blastdb
-
 steps:
     actual:
         run:
             class: CommandLineTool
             baseCommand: gp_makeblastdb
-#gp_makeblastdb \
-#    -asn-cache \
-#    sequence_cache \
-#    -asnb-manifest  inp/asnb.mft \
-#    -asnt-manifest  inp/asnt.mft \
-#    -db  out/blastdb \
-#    -dbtype nucl \
-#    -fasta-manifest  inp/fasta.mft \
-#    -found-ids-output  out/found_ids.txt \
-#    -found-ids-output-manifest  out/found_ids.mft \
-#    -hardmask-manifest  inp/hardmask_data.mft \
-#    -ids-manifest  inp/ids.mft \
-#    -output-manifest  out/blastdb.mft \
-#    -softmask-manifest  inp/softmask_data.mft \
-#    -title  'BLASTdb  created by GPipe'
             inputs:
               asn_cache:
                 type: Directory[]
@@ -121,8 +101,6 @@ steps:
               asnt: asnt
               dbtype: dbtype
               fasta: fasta
-              found_ids_output_file:  found_ids_output_file #    -found-ids-output  out/found_ids.txt \
-              found_ids_output_manifest: found_ids_output_manifest  #    -found-ids-output-manifest  out/found_ids.mft \
               hardmask: hardmask #    -hardmask-manifest  inp/hardmask_data.mft 
               softmask: softmask #    -softmask-manifest  inp/softmask_data.mft \
               title:  title #    -title  'BLASTdb  created by GPipe'
@@ -153,8 +131,14 @@ steps:
               outputBinding:
                 glob: $(inputs.blastdir)
         in:
-          blastfiles: makeblastdb/blastfiles
+          blastfiles: actual/blastfiles
           blastdir: 
             default: blastdir
         out: [blastdb]    
+    
+outputs:
+  blastdb:
+    type: Directory
+    outputSource: mkdir/blastdb
+
     

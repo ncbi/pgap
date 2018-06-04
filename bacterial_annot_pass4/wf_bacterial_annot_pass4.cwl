@@ -44,8 +44,8 @@ inputs:
     identification_db_dir:
         type: Directory
     # cached for intermediate testing
-    cached_Find_Naming_Protein_Hits:
-        type: File
+    # cached_Find_Naming_Protein_Hits:
+    #    type: File
 steps:
     Find_Naming_Protein_Hits:
         label: "Find Naming Protein Hits"

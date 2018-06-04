@@ -17,7 +17,7 @@ requirements:
 inputs:
   blastdb_dir: Directory[]
   blastdb: string
-  cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
+  # cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
   lds2: File
   proteins: File
   affinity: string

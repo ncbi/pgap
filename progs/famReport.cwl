@@ -52,11 +52,21 @@ inputs:
     default: hmm-assignments.xml
     inputBinding:
       prefix: -out-xml
+  output_name:
+    type: string?
+    default: annotation.asn
+    inputBinding:
+      prefix: -output
     
 outputs:
     assignments:
         type: File
         outputBinding:
             glob: $(inputs.out_xml)
+    annotation:
+        type: File
+        outputBinding:
+            glob: $(inputs.output_name)
+            
         
 

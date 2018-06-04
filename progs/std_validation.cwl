@@ -1,5 +1,5 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "Standard validation"
 class: CommandLineTool
 hints:
   DockerRequirement:
@@ -70,7 +70,7 @@ inputs:
     inputBinding:
       prefix: -submit-block-template
   tempdir_name:
-    type: Direct
+    type: Directory
     default: var
     inputBinding:
       prefix:     -tempdir

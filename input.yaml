@@ -102,3 +102,6 @@ val_res_den_xml:
     class: File    
     location: input/validation-results.xml
     
+protein_alignment_aligns_shortcut: 
+    class: File
+    location: input/tmp_shortcuts/protein_alignment_aligns_shortcut.asn

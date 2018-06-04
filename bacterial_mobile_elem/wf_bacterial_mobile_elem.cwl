@@ -10,12 +10,9 @@ inputs:
   seqids: File
 
 outputs:
-  outdir:
-    type: Directory
-    outputSource: ncbi_crisper_wnode/outdir
-  # annots:
-  #   type: File
-  #   outputSource: gpx_qdump/annots 
+  annots:
+     type: File
+     outputSource: gpx_qdump/annots 
     
 steps:
   gpx_qsubmit:

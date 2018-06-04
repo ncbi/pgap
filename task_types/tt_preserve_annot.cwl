@@ -3,16 +3,7 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
-
-#  preserve_annot \
-#    -asn-cache sequence_cache \
-#    -gc-assembly-manifest inp/gencoll_asn.mft \
-#    -input-manifest  inp/annotation.mft \
-#    -o  out/annotation.asn \
-#    -rfam-amendments  /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/etc/bacterial_pipeline/rfam-amendments.xml \
-#    -no-ncRNA
-
-    baseCommand: preserve_annot
+baseCommand: preserve_annot
 inputs:
   asn_cache:
     type: Directory[]
@@ -37,7 +28,7 @@ inputs:
     inputBinding:
         prefix: -rfam-amendments
   no_ncRNA:
-    type: Boolean
+    type: boolean
     inputBinding:
         prefix: -no-ncRNA
 outputs:

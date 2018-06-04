@@ -36,6 +36,7 @@ inputs:
       prefix: -max-x-run
   outent_name:
     type: string
+    default: annot.ent
     inputBinding:
       prefix: -outent
   partial_cov_threshold:

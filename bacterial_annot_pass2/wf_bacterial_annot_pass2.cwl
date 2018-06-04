@@ -35,8 +35,8 @@ inputs:
         type: File
     sequence_cache: 
         type: Directory
-    cluster_blastp_wnode_output: # shortcut to bypass cluster_blastp
-        type: Directory
+    # cluster_blastp_wnode_output: # shortcut to bypass cluster_blastp
+    #    type: Directory
     unicoll_cache: 
         type: Directory
 outputs:
@@ -75,7 +75,7 @@ steps:
                 linkMerge: merge_flattened
             blastdb:
                 default: blastdb
-            cluster_blastp_wnode_output: cluster_blastp_wnode_output # shortcut
+            # cluster_blastp_wnode_output: cluster_blastp_wnode_output # shortcut
             affinity: 
                 default: subject
             asn_cache: [sequence_cache, unicoll_cache]
