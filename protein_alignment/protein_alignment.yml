@@ -9,12 +9,12 @@ uniColl_path:
   class: Directory
   location: ../input/uniColl_path
 taxid: "243273"
+tax_sql_file:
+  class: File
+  location: ../input/taxonomy.sqlite3
 blastdb_dir:
   class: Directory
   location: input/genomic_blastdb
-clade:
-  class: File
-  location: input/clade_assignment.xml
 gc_assembly:
   class: File
   location: input/gencoll.asn

@@ -25,14 +25,14 @@ inputs:
     type: Directory
     inputBinding:
       prefix: -asn-cache
-  clade:
-    type: File
-    inputBinding:
-      prefix: -clade
   taxid:
     type: string
     inputBinding:
       prefix: -taxid
+  tax_sql_file:
+    type: File
+    inputBinding:
+      prefix: -taxon-db
   uniColl_path:
     type: Directory
     inputBinding:
@@ -47,10 +47,7 @@ inputs:
     default: universal_clusters.inf
     inputBinding:
       prefix: -ouniversal-clusters
-  taxon_db:
-    type: File
-    inputBinding:
-        prefix: -taxon-db
+
 outputs:
   universal_clusters:
     type: File
