@@ -101,7 +101,18 @@ univ_prot_xml:
 val_res_den_xml:
     class: File    
     location: input/validation-results.xml
+
+#
+#   shortcuts
+#
     
 protein_alignment_aligns_shortcut: 
     class: File
     location: input/tmp_shortcuts/protein_alignment_aligns_shortcut.asn
+sequence_cache_shortcut: 
+    class: Directory
+    location: input/tmp_shortcuts/sequence_cache
+ids_out_shortcut:     
+    class: File
+    location: input/tmp_shortcuts/ids_out_shortcut
+  
