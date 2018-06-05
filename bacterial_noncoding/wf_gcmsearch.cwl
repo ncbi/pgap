@@ -16,36 +16,36 @@ inputs:
 outputs:
   annots:
     type: File
-    outputSource: annot_merge/annots 
+    outputSource: Post_process_CMsearch_annotations_5S_rRNA/annots 
     
 steps:
-  gpx_qsubmit:
+  Run_genomic_CMsearch_5S_rRNA_submit:
     run: gpx_qsubmit_gcmsearch.cwl
     in:
       asn_cache: asn_cache
       seqids: seqids
     out: [jobs]
   
-  cmsearch_wnode:
+  Run_genomic_CMsearch_5S_rRNA_wnode:
     run: cmsearch_wnode.cwl
     in:
       asn_cache: asn_cache
-      input_jobs: gpx_qsubmit/jobs
+      input_jobs: Run_genomic_CMsearch_5S_rRNA_submit/jobs
       model_path: model_path
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
       taxon_db: taxon_db
     out: [outdir]
 
-  gpx_qdump:
+  Run_genomic_CMsearch_5S_rRNA_dump:
     run: gpx_qdump.cwl
     in:
-      input_path: cmsearch_wnode/outdir
+      input_path: Run_genomic_CMsearch_5S_rRNA_wnode/outdir
     out: [annots]
 
-  annot_merge:
+  Post_process_CMsearch_annotations_5S_rRNA:
     run: annot_merge.cwl
     in:
       asn_cache: asn_cache
-      input: gpx_qdump/annots
+      input: Run_genomic_CMsearch_5S_rRNA_dump/annots
     out: [annots]

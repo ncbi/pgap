@@ -12,26 +12,26 @@ inputs:
 outputs:
   annots:
      type: File
-     outputSource: gpx_qdump/annots 
+     outputSource: Execute_CRISPR_dump/annots 
     
 steps:
-  gpx_qsubmit:
+  Execute_CRISPR_submit:
     run: gpx_qsubmit.cwl
     in:
       asn_cache: asn_cache
       seqids: seqids
     out: [jobs]
   
-  ncbi_crisper_wnode:
+  Execute_CRISPR_wnode:
     run: ncbi_crisper_wnode.cwl
     in:
       asn_cache: asn_cache
-      input_jobs: gpx_qsubmit/jobs
+      input_jobs: Execute_CRISPR_submit/jobs
     out: [outdir]
 
-  gpx_qdump:
+  Execute_CRISPR_dump:
     run: gpx_qdump.cwl
     in:
-      input_path: ncbi_crisper_wnode/outdir
+      input_path: Execute_CRISPR_wnode/outdir
     out: [annots]
 

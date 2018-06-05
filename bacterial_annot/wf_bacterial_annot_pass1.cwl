@@ -27,25 +27,25 @@ inputs:
 outputs:
   outseqs:
     type: File
-    outputSource: gp_getorf/outseqs
+    outputSource: Get_ORFs/outseqs
   aligns: 
     type: File
-    outputSource: bacterial_hit_mapping/aligns
+    outputSource: Map_HMM_Hits/aligns
   hmm_hits: 
     type: File
-    outputSource: hmmsearch/hmm_hits
+    outputSource: Search_All_HMMs_I/hmm_hits
   proteins:
     type: File
-    outputSource: protein_extract/proteins
+    outputSource: Extract_ORF_Proteins/proteins
   lds2:
     type: File
-    outputSource: protein_extract/lds2
+    outputSource: Extract_ORF_Proteins/lds2
   seqids:
     type: File
-    outputSource: protein_extract/seqids
+    outputSource: Extract_ORF_Proteins/seqids
   prot_ids:
     type: File
-    outputSource: get_off_frame_orfs/prot_ids
+    outputSource: Get_off_frame_ORFs/prot_ids
   protein_aligns: 
     type: File
     outputSource: Resolve_Annotation_Conflicts/protein_aligns
@@ -56,44 +56,44 @@ outputs:
     type: File
     outputSource: Run_GeneMark_Training/out_hmm_params
 steps:
-  gp_getorf:
+  Get_ORFs:
     run: ../progs/gp_getorf.cwl
     in:
       asn_cache: asn_cache
       input: inseq
     out: [outseqs]
 
-  protein_extract:
+  Extract_ORF_Proteins:
     run: ../progs/protein_extract.cwl
     in:
-      input: gp_getorf/outseqs
+      input: Get_ORFs/outseqs
       nogenbank: nogenbank
     out: [proteins, lds2, seqids]
 
   # Skipped due to compute cost, for now
-  hmmsearch:
+  Search_All_HMMs_I:
     label: "Search All HMMs I"
     run: ../task_types/tt_hmmsearch_wnode.cwl
     in:
-      proteins: protein_extract/proteins
+      proteins: Extract_ORF_Proteins/proteins
       hmm_path: hmm_path
-      seqids: protein_extract/seqids
-      lds2: protein_extract/lds2
+      seqids: Extract_ORF_Proteins/seqids
+      lds2: Extract_ORF_Proteins/lds2
       hmms_tab: hmms_tab
       asn_cache: asn_cache
     out:
       [hmm_hits]
       #[hmm_hits, jobs, workdir]
 
-  bacterial_hit_mapping:
+  Map_HMM_Hits:
     run: bacterial_hit_mapping.cwl
     in:
       seq_cache: asn_cache
       unicoll_cache: uniColl_cache
       asn_cache: [asn_cache, uniColl_cache]
       # hmm_hits: hmm_hits # Should be from hmmsearch
-      hmm_hits: hmmsearch/hmm_hits
-      sequences: gp_getorf/outseqs
+      hmm_hits: Search_All_HMMs_I/hmm_hits
+      sequences: Get_ORFs/outseqs
       ### this guys below not tested yet
       align_fmt: 
          default: seq-align
@@ -105,11 +105,11 @@ steps:
          default: true
     out: [aligns]
 
-  get_off_frame_orfs:
+  Get_off_frame_ORFs:
     run: get_off_frame_orfs.cwl
     in:
-      aligns: bacterial_hit_mapping/aligns
-      seq_entries: gp_getorf/outseqs
+      aligns: Map_HMM_Hits/aligns
+      seq_entries: Get_ORFs/outseqs
     out: [prot_ids]
   Resolve_Annotation_Conflicts:
     label: "Resolve Annotation Conflicts"
@@ -135,7 +135,7 @@ steps:
  
   Run_GeneMark_Training:
     label: "Run GeneMark Training, genemark"
-    run: ../progs/genemark.cwl
+    run: ../progs/genemark_training.cwl
     in:
         asn_cache: 
             source: [asn_cache, uniColl_cache]

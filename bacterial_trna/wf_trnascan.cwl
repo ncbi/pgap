@@ -13,10 +13,10 @@ inputs:
 outputs:
   annots:
     type: File
-    outputSource: trnascan_dump/outasn
+    outputSource: Run_tRNAScan_trnascan_dump/outasn
   
 steps:
-  gpx_qsubmit:
+  Run_tRNAScan_submit:
     run: gpx_qsubmit_trnascan.cwl
     in:
       asn_cache: asn_cache
@@ -24,26 +24,26 @@ steps:
     #out: [asncache, jobs]
     out: [jobs]
   
-  trnascan_wnode:
+  Run_tRNAScan_wnode:
     run: trnascan_wnode.cwl
     in:
-      #asn_cache: gpx_qsubmit/asncache
+      #asn_cache: Run_tRNAScan_submit/asncache
       asn_cache: asn_cache
-      input_jobs: gpx_qsubmit/jobs
+      input_jobs: Run_tRNAScan_submit/jobs
       #input_jobs: jobs
       taxid: taxid
       taxon_db: taxon_db
     #out: [asncache, outdir]
     out: [outdir]
 
-  gpx_qdump:
+  Run_tRNAScan_dump:
     run: gpx_qdump.cwl
     in:
-      input_path: trnascan_wnode/outdir
+      input_path: Run_tRNAScan_wnode/outdir
     out: [intermediate]
     
-  trnascan_dump:
+  Run_tRNAScan_trnascan_dump:
     run: trnascan_dump.cwl
     in:
-      input: gpx_qdump/intermediate
+      input: Run_tRNAScan_dump/intermediate
     out: [outasn, outstruct]

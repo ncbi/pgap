@@ -40,10 +40,10 @@ inputs:
     type: Directory
     inputBinding:
       prefix: -genemark-path
-  hmm_params:
-    type: File
-    inputBinding:
-      prefix: -hmm-params
+  out_hmm_params_name:
+    type: string
+    # this is hardcoded
+    default: GeneMark_hmm_combined.mod
   min_seq_len:
     type: int?
     inputBinding:
@@ -87,4 +87,8 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.preliminary_models_name)
+    out_hmm_params:
+        type: File
+        outputBinding:
+            glob: $(inputs.tmp)/$(inputs.out_hmm_params_name)
     

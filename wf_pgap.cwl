@@ -167,7 +167,7 @@ steps:
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: genemark_path
       thresholds: thresholds
-    out: [lds2,seqids,proteins, hmm_hits, annotation, out_hmm_params, outseqs, prot_ids]
+    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids]
 
   spurious_annot_1: # PLANE
     run: spurious_annot/wf_spurious_annot_pass1.cwl      
@@ -216,7 +216,7 @@ steps:
     in:
         uniColl_cache: uniColl_cache
         sequence_cache: genomic_source/asncache
-        hmm_aligns: bacterial_annot/hmm_hits
+        hmm_aligns: bacterial_annot/aligns
         # prot_aligns: protein_alignment/___aligns____ 
         prot_aligns: protein_alignment_aligns_shortcut
             # label: "Filter Protein Alignments I/align"
@@ -358,7 +358,7 @@ steps:
   Final_Bacterial_Package_asn_cleanup:
     run: progs/asn_cleanup.cwl
     in:
-      inp_annotation: bacterial_annot_3/Assign_Naming_HMM_to_Proteins_annotation
+      inp_annotation: bacterial_annot_4/out_annotation
       serial: 
         default: binary
     out: [annotation]
