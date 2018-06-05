@@ -5,7 +5,7 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 
-baseCommand: cache_entrez_gene
+baseCommand: preserve_annot_markup
 arguments: [-locus-tag-prefix, NoSubmit, -ltp-table, vLTPs, -create-missing-LTPs, -preserve-product-ID, -submission-mode-genbank]
 inputs:
   full_id_cache:
