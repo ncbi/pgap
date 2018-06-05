@@ -176,7 +176,7 @@ steps:
     out: [AntiFam_tainted_proteins_I___oseqids]
     
   bacterial_annot_2: # PLANE  
-    run: bacterial_annot_pass2/wf_bacterial_annot_pass2.cwl
+    run: bacterial_annot/wf_bacterial_annot_pass2.cwl
     in:
         # This LDS2 resource needs to be fixed by removing absolute path from files
         lds2: bacterial_annot/lds2
@@ -208,7 +208,7 @@ steps:
     # out: 
   
   bacterial_annot_3:
-    run: bacterial_annot_pass3/wf_bacterial_annot_pass3.cwl
+    run: bacterial_annot/wf_bacterial_annot_pass3.cwl
     in:
         uniColl_cache: uniColl_cache
         sequence_cache: genomic_source/asncache
@@ -280,7 +280,7 @@ steps:
       - Good_AntiFam_filtered_proteins_output
     
   bacterial_annot_4:
-    run: bacterial_annot_pass4/wf_bacterial_annot_pass4.cwl
+    run: bacterial_annot/wf_bacterial_annot_pass4.cwl
     in:
         lds2: bacterial_annot_3/Extract_Model_Proteins_lds2
         proteins: bacterial_annot_3/Extract_Model_Proteins_proteins
