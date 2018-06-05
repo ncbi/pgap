@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Standard Toolkit-wide cleanup"
+label: "asn_cleanup"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

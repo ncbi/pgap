@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 label: "submit_kmer_compare"
+
 class: CommandLineTool
 requirements:
   # - class: InlineJavascriptRequirement 

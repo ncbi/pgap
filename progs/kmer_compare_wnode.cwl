@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "kmer_compare_wnode"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "blastn_wnode"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

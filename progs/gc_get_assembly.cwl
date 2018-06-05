@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "gc_get_assembly"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

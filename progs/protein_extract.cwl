@@ -1,5 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
+label: "protein_extract"
 class: Workflow
 hints:
   DockerRequirement:

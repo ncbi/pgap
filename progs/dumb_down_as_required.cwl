@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "dumb_down_as_required"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

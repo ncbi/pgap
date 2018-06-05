@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "final_bact_asn"
+
 class: CommandLineTool
 hints:
   DockerRequirement:
@@ -42,7 +43,7 @@ inputs:
   submit_block_template:
     type: File[]
   submit_block_template_mft:
-    type: File
+    type: string
     default: submit_block_template.mft
     inputBinding:
       prefix: -submit-block-template

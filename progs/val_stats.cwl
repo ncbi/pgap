@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "val_stats"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

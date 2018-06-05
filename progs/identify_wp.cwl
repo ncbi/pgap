@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "identify_wp"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

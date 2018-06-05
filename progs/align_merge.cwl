@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "align_merge"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

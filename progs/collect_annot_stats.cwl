@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Collect annotation stats"
+label: "collect_annot_stats"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

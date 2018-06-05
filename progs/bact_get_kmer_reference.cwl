@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "bact_get_kmer_reference"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

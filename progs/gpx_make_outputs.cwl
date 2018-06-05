@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
-label: "gpx_make_outputs program"
+label: "gpx_make_outputs"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Search All HMMs I, scatter"
+label: "hmmsearch_create_jobs"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

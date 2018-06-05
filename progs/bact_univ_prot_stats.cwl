@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "bact_univ_prot_stats"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

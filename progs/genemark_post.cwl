@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "genemark_post"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "gp_fetch_sequences"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

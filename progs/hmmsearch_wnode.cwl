@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "HMM Searchers"
+label: "hmmsearch_wnode"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

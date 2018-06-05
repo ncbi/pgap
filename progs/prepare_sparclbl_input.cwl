@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "prepare_sparclbl_input"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

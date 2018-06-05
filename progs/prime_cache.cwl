@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
-label: "prime_cache label"
+label: "prime_cache"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

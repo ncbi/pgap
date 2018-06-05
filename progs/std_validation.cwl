@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Standard validation"
+label: "std_validation"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

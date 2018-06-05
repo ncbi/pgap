@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "gbproject"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

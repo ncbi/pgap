@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Set operations on sets of lines"
+label: "pgaap_prepare_review"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

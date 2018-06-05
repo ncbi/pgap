@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "genemark"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

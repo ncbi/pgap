@@ -1,5 +1,6 @@
 cwlVersion: v1.0
-label: "Get ORFs"
+label: "gp_getorf"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

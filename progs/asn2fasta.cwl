@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "asn2fasta"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "bact_filter_preserved"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

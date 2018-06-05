@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "gc_get_molecules"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

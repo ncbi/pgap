@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
-label: "genemark"
+label: "genemark_training"
+
 class: CommandLineTool
 hints:
   DockerRequirement:

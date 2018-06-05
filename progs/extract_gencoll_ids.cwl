@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "extract_gencoll_ids"
+
 # File: progs/extract_gencoll_ids.cwl
 class: CommandLineTool
 hints:

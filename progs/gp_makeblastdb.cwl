@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 label: "gp_makeblastdb"
+
 class: Workflow
 hints:
   DockerRequirement:

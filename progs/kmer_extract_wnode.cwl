@@ -1,5 +1,6 @@
 cwlVersion: v1.0 
 label: "kmer_extract_wnode"
+
 class: CommandLineTool
 hints:
   DockerRequirement:
