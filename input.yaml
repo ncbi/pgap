@@ -11,92 +11,89 @@ taxid: 1208324
 gc_assm_name: L103
 
 # pipeline data files
-hmms_tab:
-  class: File
-  location: input/real_hmms.tab
-naming_hmms_tab:  
-  class: File
-  location: input/naming_hmms.tab
-hmm_path:
-  class: Directory
-  location: input/real_hmms
-uniColl_cache:
-  class: Directory
-  location: input/uniColl_cache
-gene_master_ini:
-  class: File
-  location: input/gene_master.ini  
-5s_model_path:
-  class: File
-  location: input/RF00001.cm
-rfam_model_path:
-  class: File
-  location: input/Rfam.selected1.cm
-rfam_amendments:
-  class: File
-  location: input/rfam-amendments.xml
-rfam_stockholm:
-  class: File
-  location: input/Rfam.seed
 16s_blastdb_dir:
   class: Directory
   location: input/16S_rRNA
 23s_blastdb_dir:
   class: Directory
   location: input/23S_rRNA
+5s_model_path:
+  class: File
+  location: input/RF00001.cm
 AntiFamLib:
   class: Directory
   location: input/AntiFamLib
-blast_rules_db_dir: 
-    class: Directory
-    # label: "Get BLAST Rules db const"
-    location: input/blast_rules_db_dir
+blast_rules_db_dir:
+  class: Directory
+  location: input/blast_rules_db_dir
+CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
+  class: Directory
+  location: input/cdd
+CDDdata2: # ${GP_HOME}/third-party/data/cdd_add
+  class: Directory
+  location: input/cdd_add
+defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+  class: File
+  location: input/product_rules.prt
+gene_master_ini:
+  class: File
+  location: input/gene_master.ini
+genemark_path:
+  class: Directory
+  location: input/GeneMark
+hmm_path:
+  class: Directory
+  location: input/real_hmms
+hmms_tab:
+  class: File
+  location: input/real_hmms.tab
 identification_db_dir:
-    class: Directory
-    # label: "Create identification BLASTdb"
-    location: input/Create_identification_BLASTdb_dir
-thresholds: 
+  class: Directory
+  location: input/Create_identification_BLASTdb_dir
+naming_blast_db: # NamingDatabase
+  class: Directory
+  # location: input/Create_identification_BLASTdb_dir # this one might have created problems for assign_cluster, let's try this:
+  location: input/Create_identification_BLASTdb_dir_full
+naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
+  class: Directory
+  location: input/naming_hmms_combined
+naming_hmms_tab:
+  class: File
+  location: input/naming_hmms.tab
+naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+  class: File
+  location: input/naming.sqlite
+rfam_amendments:
+  class: File
+  location: input/rfam-amendments.xml
+rfam_model_path:
+  class: File
+  location: input/Rfam.selected1.cm
+rfam_stockholm:
+  class: File
+  location: input/Rfam.seed
+selenoproteins: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
+  class: Directory
+  location: input/selenoproteins
+taxon_db:
+  class: File
+  location: input/taxonomy.sqlite3
+thresholds:
   class: File
   location: input/thresholds.xml
-naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
-    class: File
-    location: input/naming.sqlite
-selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
-    # it's blastdb
-    class: Directory
-    location: input/selenoproteins
-naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
-    class: Directory
-    location: input/naming_hmms_combined
-wp_hashes:
-    class: File 
-    location: input/wp-hashes.sqlite
-taxon_db:
-    class: File 
-    location: input/taxonomy.sqlite3
-genemark_path:
-    class: Directory 
-    location: input/GeneMark
-naming_blast_db: # NamingDatabase
-    class: Directory
-    # location: input/Create_identification_BLASTdb_dir # this one might have created problems for assign_cluster, let's try this:
-    location: input/Create_identification_BLASTdb_dir_full
-CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
-    class: Directory
-    location: input/cdd
-CDDdata2: # ${GP_HOME}/third-party/data/cdd_add 
-    class: Directory
-    location: input/cdd_add
-defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
-    class: File    
-    location: input/product_rules.prt
+uniColl_cache:
+  class: Directory
+  location: input/uniColl_cache
 univ_prot_xml:
-    class: File    
-    location: input/universal.xml
+  class: File
+  location: input/universal.xml
 val_res_den_xml:
-    class: File    
-    location: input/validation-results.xml
-
+  class: File
+  location: input/validation-results.xml
+wp_hashes:
+  class: File
+  location: input/wp-hashes.sqlite
+ 
 #
 #   shortcuts
 #
