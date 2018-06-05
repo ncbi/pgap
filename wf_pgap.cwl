@@ -310,32 +310,32 @@ steps:
             # type: File
             # outputSource: Bacterial_Annot_Filter/out_annotation
   #
-  # Pseudo plane default 2
+  # Pseudo plane default 2, we do not need that for new submissions in off-NCBI environment
   #
-  Preserve_Annotations: # Pseudo plane default 2
-   run: task_types/tt_preserve_annot.cwl
-   in:
-     asn_cache: 
-        source: [genomic_source/asncache]
-        linkMerge: merge_flattened
-     input_annotation: bacterial_annot/annotation
-     rfam_amendments: rfam_amendments
-     no_ncRNA: 
-       default: true
-   out: [annotations]
-  preserve_annot_markup: # Pseudo plane default 2
-    # uncharted territory!!!
-    run: preserve_annot_markup.cwl # Preserve Product Accessions
-    in:
-      #seq_cache: genobacterial_prepare_unannotated/asncache
-      #unicoll_cache: uniColl_cache
-      input_annotation: Preserve_Annotations/annotations
-      asn_cache: [genomic_source/asncache, uniColl_cache]
-      egene_ini: gene_master_ini
-      gc_assembly: genomic_source/gencoll_asn
-      input: Preserve_Annotations/annotations
-      prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
-    out: [annotations]
+  # Preserve_Annotations: # Pseudo plane default 2
+   # run: task_types/tt_preserve_annot.cwl
+   # in:
+     # asn_cache: 
+        # source: [genomic_source/asncache]
+        # linkMerge: merge_flattened
+     # input_annotation: bacterial_annot/annotation
+     # rfam_amendments: rfam_amendments
+     # no_ncRNA: 
+       # default: true
+   # out: [annotations]
+  # preserve_annot_markup: # Pseudo plane default 2
+    # # uncharted territory!!!
+    # run: preserve_annot_markup.cwl # Preserve Product Accessions
+    # in:
+      # #seq_cache: genobacterial_prepare_unannotated/asncache
+      # #unicoll_cache: uniColl_cache
+      # input_annotation: Preserve_Annotations/annotations
+      # asn_cache: [genomic_source/asncache, uniColl_cache]
+      # egene_ini: gene_master_ini
+      # gc_assembly: genomic_source/gencoll_asn
+      # input: Preserve_Annotations/annotations
+      # prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
+    # out: [annotations]
       
   #
   # End of Pseudo plane default 2
