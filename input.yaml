@@ -10,11 +10,6 @@ fasta:
 taxid: 1208324
 gc_assm_name: L103
 
-# Cached computational steps
-hmm_hits:
-  class: File
-  location: output/hmm_hits.asn
-
 # pipeline data files
 hmms_tab:
   class: File
