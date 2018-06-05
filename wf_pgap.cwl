@@ -15,9 +15,6 @@ inputs:
   taxid: int
   gc_assm_name: string
 
-  # Cached computational steps
-  hmm_hits: File
-  
   # Auxillary files
   hmm_path: Directory
   hmms_tab: File
@@ -156,7 +153,6 @@ steps:
       hmm_path: hmm_path
       hmms_tab: hmms_tab
       uniColl_cache: uniColl_cache
-      # hmm_hits: hmm_hits
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
       nogenbank:
