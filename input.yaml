@@ -111,3 +111,18 @@ ids_out_shortcut:
     class: File
     location: input/tmp_shortcuts/ids_out_shortcut
   
+bacterial_annot_3_Run_GeneMark_Post_models_bypass:
+    class: File
+    location: input/tmp_shortcuts/bacterial_annot_3_Run_GeneMark_Post_models_bypass
+bacterial_prepare_unannotated_master_desc_bypass:
+    class: File
+    location: input/tmp_shortcuts/bacterial_prepare_unannotated_master_desc_bypass
+genomic_source_gencoll_asn_bypass:
+    class: File
+    location: input/tmp_shortcuts/genomic_source_gencoll_asn_bypass
+bacterial_annot_4_out_annotation_bypass:
+    class: File
+    location: input/tmp_shortcuts/bacterial_annot_4_out_annotation_bypass
+bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass:
+    class: File
+    location: input/tmp_shortcuts/bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass
