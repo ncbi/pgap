@@ -1,0 +1,16 @@
+submit_block_template:
+  class: File
+  location: input/ASM2732v1.1.template
+annotation: 
+  class: File
+  location: input/cleaned-annotation.asn
+sequence_cache: 
+  class: Directory
+  location: input/sequence_cache
+gencoll: 
+  class: File
+  location: input/gencoll_asn
+master_desc: 
+  class: File
+  location: input/master_desc.asn
+
