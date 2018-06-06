@@ -1,0 +1,4 @@
+# User input
+sqn:
+  class: File
+  location: input/annot.sqn
