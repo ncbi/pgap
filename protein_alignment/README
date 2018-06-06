@@ -1,2 +1,5 @@
 CWL for protein_alignment plane
 
+top workfolow: wf_protein_alignment.cwl
+input:         protein_alignment.yml
+

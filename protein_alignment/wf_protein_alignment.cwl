@@ -13,24 +13,21 @@ inputs:
   uniColl_asn_cache: Directory
   uniColl_path: Directory
   blastdb_dir: Directory
-  clade: File
   taxid: string
+  tax_sql_file: File
   gc_assembly: File
   asn: File
-  taxon_db: File   
+
 outputs:
-  cat_out:
+  universal_clusters:  
     type: File
-    outputSource: cat/file_out
-  # universal_clusters:  
-  #   type: File
-  #   outputSource: bacterial_prot_src/universal_clusters
-  # align:  
-  #   type: File
-  #   outputSource: align_filter/align
-  # align_non_match:  
-  #   type: File
-  #   outputSource: align_filter/align_non_match
+    outputSource: bacterial_prot_src/universal_clusters
+  align:  
+    type: File
+    outputSource: align_filter/align
+  align_non_match:  
+    type: File
+    outputSource: align_filter/align_non_match
 
 steps:
   bacterial_prot_src:
@@ -38,9 +35,8 @@ steps:
     in:
       uniColl_asn_cache: uniColl_asn_cache
       uniColl_path: uniColl_path
-      clade: clade
       taxid: taxid
-      taxon_db: taxon_db
+      tax_sql_file: tax_sql_file
     out: [ universal_clusters, all_prots ]
 
   wf_seed:

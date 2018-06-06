@@ -19,7 +19,7 @@ requirements:
     
 baseCommand: bacterial_protalign_filter 
 
-arguments: [  -filter, "-accept pct_coverage = 100 AND qframe = 0 AND sframe = 0 AND cds_internal_stops = 0", -nogenbank ]
+arguments: [  -filter-accept, "pct_coverage = 100 AND qframe = 0 AND sframe = 0 AND cds_internal_stops = 0", -nogenbank ]
 
 inputs:
   asn_cache:

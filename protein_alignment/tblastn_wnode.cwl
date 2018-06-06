@@ -19,7 +19,7 @@ requirements:
     
 baseCommand: tblastn_wnode 
 
-arguments: [ -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "21", -word_size, "6", -nogenbank ]
+arguments: [ -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "12", -word_size, "3", -nogenbank ]
 
 inputs:
   asn_cache:
@@ -35,6 +35,8 @@ inputs:
       prefix: -input-jobs
   asn:
     type: File
+    inputBinding:
+      prefix: -input-file
   output_dir:
     type: string?
     default: output
@@ -46,4 +48,3 @@ outputs:
     type: Directory
     outputBinding:
       glob: $(inputs.output_dir)
-

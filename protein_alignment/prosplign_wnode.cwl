@@ -33,6 +33,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -input-jobs
+  asn:
+    type: File
+    inputBinding:
+      prefix: -input-file
   output_dir:
     type: string?
     default: output

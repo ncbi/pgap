@@ -48,6 +48,7 @@ steps:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       input_jobs: gpx_qsubmit_pro/jobs
+      asn: prosplign_compart_filter/compartments
     out: [outdir]
 
   gpx_qdump_pro:
