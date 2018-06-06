@@ -30,7 +30,7 @@ inputs:
       prefix: -input-jobs
   cmsearch_path:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/third-party/bin
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/third-party/bin
     inputBinding:
       prefix: -cmsearch-path
   model_path:
