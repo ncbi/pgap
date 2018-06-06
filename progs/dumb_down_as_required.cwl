@@ -5,16 +5,6 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: A.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.A.length; i++) { blob += inputs.A[i].path + '\n'; } return blob; }
-      - entryname: B.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.B.length; i++) { blob += inputs.B[i].path + '\n'; } return blob; }
 
 baseCommand: dumb_down_as_required
 inputs:

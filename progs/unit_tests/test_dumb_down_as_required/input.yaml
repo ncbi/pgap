@@ -1,0 +1,6 @@
+annotation: 
+  class: File
+  location: input/annot-full.ent
+sequence_cache: 
+  class: Directory
+  location: input/sequence_cache
