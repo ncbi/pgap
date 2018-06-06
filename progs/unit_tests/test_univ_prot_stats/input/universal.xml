@@ -1,0 +1,544 @@
+<?xml version="1.0"?>
+<!DOCTYPE univ_prot_access PUBLIC "-//NCBI//univ prot access/EN" "univ_prot_access.dtd">
+<univ_prot_access>
+  <functionality id="rpmF" name="ribosomal protein L32">
+    <predicate op="OR">
+      <operand id="TIGR01031" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsF" name="ribosomal protein S6">
+    <predicate op="OR">
+      <operand id="TIGR00166" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="gmk" name="guanylate kinase">
+    <predicate op="OR">
+      <operand id="TIGR03263" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsS" name="ribosomal protein S19">
+    <predicate op="OR">
+      <operand id="TIGR01050" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplU" name="ribosomal protein L21">
+    <predicate op="OR">
+      <operand id="TIGR00061" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsD" name="ribosomal protein S4">
+    <predicate op="OR">
+      <operand id="TIGR01017" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="proS" name="prolyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00408" type="HMM"/>
+      <operand id="TIGR00409" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="gyrA" name="DNA gyrase, A subunit">
+    <predicate op="OR">
+      <operand id="TIGR01063" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ychF" name="GTP-binding protein YchF">
+    <predicate op="OR">
+      <operand id="TIGR00092" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsQ" name="ribosomal protein S17">
+    <predicate op="OR">
+      <operand id="PF00366.18" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsM" name="ribosomal protein S13">
+    <predicate op="OR">
+      <operand id="PF00416.20" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="thrS" name="threonyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00418" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpmH" name="ribosomal protein L34">
+    <predicate op="OR">
+      <operand id="TIGR01030" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplS" name="ribosomal protein L19">
+    <predicate op="OR">
+      <operand id="TIGR01024" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="aspS" name="aspartyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00459" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsP" name="ribosomal protein S16">
+    <predicate op="OR">
+      <operand id="TIGR00002" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="argS" name="arginyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="PF00750.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="mnmA" name="tRNA (5-methylaminomethyl-2-thiouridylate)-methyltransferase">
+    <predicate op="OR">
+      <operand id="TIGR00420" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpmA" name="ribosomal protein L27">
+    <predicate op="OR">
+      <operand id="TIGR00062" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="valS" name="valyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="NF000540.1" type="HMM"/>
+      <operand id="TIGR00422" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplX" name="ribosomal protein L24">
+    <predicate op="OR">
+      <operand id="TIGR01079" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="coaE" name="dephospho-CoA kinase">
+    <predicate op="OR">
+      <operand id="TIGR00152" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsH" name="ribosomal protein S8">
+    <predicate op="OR">
+      <operand id="PF00410.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplB" name="ribosomal protein L2">
+    <predicate op="OR">
+      <operand id="TIGR01171" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="prfA" name="peptide chain release factor 1">
+    <predicate op="OR">
+      <operand id="TIGR00019" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsB" name="ribosomal protein S2">
+    <predicate op="OR">
+      <operand id="TIGR01011" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="dnaX" name="DNA polymerase III, subunits gamma and tau">
+    <predicate op="OR">
+      <operand id="TIGR02397" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsL" name="ribosomal protein S12">
+    <predicate op="OR">
+      <operand id="TIGR00981" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplI" name="ribosomal protein L9">
+    <predicate op="OR">
+      <operand id="TIGR00158" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplN" name="ribosomal protein L14">
+    <predicate op="OR">
+      <operand id="TIGR01067" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="secE" name="preprotein translocase, SecE subunit">
+    <predicate op="OR">
+      <operand id="TIGR00964" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="nusA" name="transcription termination factor NusA">
+    <predicate op="OR">
+      <operand id="TIGR01953" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ligA" name="DNA ligase, NAD-dependent">
+    <predicate op="OR">
+      <operand id="TIGR00575" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="dnaG" name="DNA primase">
+    <predicate op="OR">
+      <operand id="TIGR01391" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplT" name="ribosomal protein L20">
+    <predicate op="OR">
+      <operand id="TIGR01032" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsG" name="ribosomal protein S7">
+    <predicate op="OR">
+      <operand id="TIGR01029" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsE" name="ribosomal protein S5">
+    <predicate op="OR">
+      <operand id="TIGR01021" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="engA" name="ribosome-associated GTPase EngA">
+    <predicate op="OR">
+      <operand id="TIGR03594" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ftsY" name="signal recognition particle-docking protein FtsY">
+    <predicate op="OR">
+      <operand id="TIGR00064" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplR" name="ribosomal protein L18">
+    <predicate op="OR">
+      <operand id="TIGR00060" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplL" name="ribosomal protein L7/L12">
+    <predicate op="OR">
+      <operand id="TIGR00855" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ileS" name="isoleucyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00392" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpoB" name="DNA-directed RNA polymerase, beta subunit">
+    <predicate op="OR">
+      <operand id="TIGR02013" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="lepA" name="GTP-binding protein LepA">
+    <predicate op="OR">
+      <operand id="TIGR01393" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplA" name="ribosomal protein L1">
+    <predicate op="OR">
+      <operand id="TIGR01169" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="pgk" name="phosphoglycerate kinase">
+    <predicate op="OR">
+      <operand id="PF00162.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplM" name="ribosomal protein L13">
+    <predicate op="OR">
+      <operand id="TIGR01066" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplW" name="ribosomal protein L23">
+    <predicate op="OR">
+      <operand id="PF00276.18" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="leuS" name="leucyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00396" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpoC" name="DNA-directed RNA polymerase, beta&apos; or beta&apos;&apos; subunit">
+    <predicate op="OR">
+      <operand id="TIGR02386" type="HMM"/>
+      <operand id="TIGR02387" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="smpB" name="SmpB protein">
+    <predicate op="OR">
+      <operand id="TIGR00086" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpmC" name="ribosomal protein L29">
+    <predicate op="OR">
+      <operand id="TIGR00012" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="tyrS" name="tyrosyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00234" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsT" name="ribosomal protein S20">
+    <predicate op="OR">
+      <operand id="TIGR00029" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rnc" name="ribonuclease III">
+    <predicate op="OR">
+      <operand id="TIGR02191" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="tsaD" name="tRNA threonylcarbamoyladenosine modification protein TsaD">
+    <predicate op="OR">
+      <operand id="TIGR03723" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="secG" name="preprotein translocase, SecG subunit">
+    <predicate op="OR">
+      <operand id="TIGR00810" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="secA" name="preprotein translocase, SecA subunit">
+    <predicate op="OR">
+      <operand id="TIGR00963" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplQ" name="ribosomal protein L17">
+    <predicate op="OR">
+      <operand id="TIGR00059" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="pheS" name="phenylalanyl-tRNA synthetase, alpha subunit">
+    <predicate op="OR">
+      <operand id="TIGR00468" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="pheT" name="phenylalanyl-tRNA synthetase, beta subunit">
+    <predicate op="OR">
+      <operand id="TIGR00471" type="HMM"/>
+      <operand id="TIGR00472" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="alaS" name="alanyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00344" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="grpE" name="co-chaperone GrpE">
+    <predicate op="OR">
+      <operand id="PF01025.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsJ" name="ribosomal protein S10">
+    <predicate op="OR">
+      <operand id="TIGR01049" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="tilS" name="tRNA(Ile)-lysidine synthetase">
+    <predicate op="OR">
+      <operand id="TIGR02432" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsO" name="ribosomal protein S15">
+    <predicate op="OR">
+      <operand id="TIGR00952" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplD" name="ribosomal protein L4">
+    <predicate op="OR">
+      <operand id="PF00573.20" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplV" name="ribosomal protein L22">
+    <predicate op="OR">
+      <operand id="TIGR01044" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="hisS" name="histidyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00442" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplC" name="ribosomal protein L3">
+    <predicate op="OR">
+      <operand id="PF00297.20" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplP" name="ribosomal protein L16">
+    <predicate op="OR">
+      <operand id="TIGR01164" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsK" name="ribosomal protein S11">
+    <predicate op="OR">
+      <operand id="PF00411.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ffh" name="signal recognition particle protein">
+    <predicate op="OR">
+      <operand id="TIGR00959" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="recA" name="recA protein">
+    <predicate op="OR">
+      <operand id="TIGR02012" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ybeY" name="16S rRNA maturation RNase YgeY">
+    <predicate op="OR">
+      <operand id="TIGR00043" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsC" name="ribosomal protein S3">
+    <predicate op="OR">
+      <operand id="TIGR01009" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="glyS" name="glycyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00388" type="HMM"/>
+      <operand id="TIGR00389" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplE" name="ribosomal protein L5">
+    <predicate op="OR">
+      <operand id="PF00281.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplO" name="ribosomal protein L15">
+    <predicate op="OR">
+      <operand id="TIGR01071" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="infB" name="translation initiation factor IF-2">
+    <predicate op="OR">
+      <operand id="TIGR00487" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpoA" name="DNA-directed RNA polymerase, alpha subunit">
+    <predicate op="OR">
+      <operand id="TIGR02027" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="dnaK" name="chaperone protein DnaK">
+    <predicate op="OR">
+      <operand id="TIGR02350" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="cgtA" name="Obg family GTPase CgtA">
+    <predicate op="OR">
+      <operand id="TIGR02729" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="mraW" name="MraW methylase family">
+    <predicate op="OR">
+      <operand id="PF01795.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="pyrG" name="CTP synthase">
+    <predicate op="OR">
+      <operand id="TIGR00337" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="nusG" name="transcription termination/antitermination factor NusG">
+    <predicate op="OR">
+      <operand id="TIGR00922" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplJ" name="ribosomal protein L10">
+    <predicate op="OR">
+      <operand id="PF00466.18" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="tig" name="trigger factor">
+    <predicate op="OR">
+      <operand id="TIGR00115" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="serS" name="seryl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00414" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rfbA" name="ribosome-binding factor A">
+    <predicate op="OR">
+      <operand id="TIGR00082" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="frr" name="ribosome recycling factor">
+    <predicate op="OR">
+      <operand id="TIGR00496" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="cysS" name="cysteinyl-tRNA synthetase">
+    <predicate op="OR">
+      <operand id="TIGR00435" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="fmt" name="methionyl-tRNA formyltransferase">
+    <predicate op="OR">
+      <operand id="TIGR00460" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="secY" name="preprotein translocase, SecY subunit">
+    <predicate op="OR">
+      <operand id="TIGR00967" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpmI" name="ribosomal protein L35">
+    <predicate op="OR">
+      <operand id="TIGR00001" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="gyrB" name="DNA gyrase, B subunit">
+    <predicate op="OR">
+      <operand id="TIGR01059" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpmB" name="ribosomal protein L28">
+    <predicate op="OR">
+      <operand id="TIGR00009" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsI" name="ribosomal protein S9">
+    <predicate op="OR">
+      <operand id="PF00380.17" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="dnaA" name="chromosomal replication initiator protein DnaA">
+    <predicate op="OR">
+      <operand id="TIGR00362" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="infC" name="translation initiation factor IF-3">
+    <predicate op="OR">
+      <operand id="TIGR00168" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="uvrB" name="excinuclease ABC, B subunit">
+    <predicate op="OR">
+      <operand id="TIGR00631" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rpsR" name="ribosomal protein S18">
+    <predicate op="OR">
+      <operand id="TIGR00165" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="dnaN" name="DNA polymerase III, beta subunit">
+    <predicate op="OR">
+      <operand id="TIGR00663" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplF" name="ribosomal protein L6">
+    <predicate op="OR">
+      <operand id="PF00347.21" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="tsf" name="translation elongation factor Ts">
+    <predicate op="OR">
+      <operand id="TIGR00116" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="ksgA" name="dimethyladenosine transferase">
+    <predicate op="OR">
+      <operand id="TIGR00755" type="HMM"/>
+    </predicate>
+  </functionality>
+  <functionality id="rplK" name="ribosomal protein L11">
+    <predicate op="OR">
+      <operand id="TIGR01632" type="HMM"/>
+    </predicate>
+  </functionality>
+</univ_prot_access>

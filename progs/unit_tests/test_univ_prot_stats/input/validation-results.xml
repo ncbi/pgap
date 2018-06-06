@@ -1,0 +1,5 @@
+<validation-results result="pass">
+  <stat key="Gene" subkey="gene_ratio" value="1.1" min="0.8" max="0.9" result="pass">
+     <denominator key="Bases" subkey="genome_size_in_1000" value="1234.000"/>
+  </stat>
+</validation-results>

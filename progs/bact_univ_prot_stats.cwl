@@ -5,16 +5,7 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: A.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.A.length; i++) { blob += inputs.A[i].path + '\n'; } return blob; }
-      - entryname: B.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.B.length; i++) { blob += inputs.B[i].path + '\n'; } return blob; }
+
 
 baseCommand: bact_univ_prot_stats
 inputs:
@@ -35,7 +26,7 @@ inputs:
     inputBinding:
       prefix: -input
   bact_univ_prot_stats_old_xml_name:  # annot-full.ent
-    type: File
+    type: string
     default: bact_univ_prot_stats_old.xml
     inputBinding:
       prefix: -o
@@ -48,12 +39,12 @@ inputs:
     inputBinding:
       prefix: -val-res-den-xml
   var_bact_univ_prot_details_xml_name:
-    type: File
+    type: string
     default: var_bact_univ_prot_details.xml
     inputBinding:
       prefix: -xml-pgap-details
   var_bact_univ_prot_stats_xml_name:
-    type: File
+    type: string
     default: var_bact_univ_prot_stats.xml
     inputBinding:
       prefix: -xml-pgap-output

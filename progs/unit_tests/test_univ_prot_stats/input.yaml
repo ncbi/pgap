@@ -1,0 +1,15 @@
+hmm_hits: 
+  class: File
+  location: input/hmm_hits.asn
+hmm_search_proteins: 
+  class: File
+  location: input/models.asn
+outfull: 
+  class: File
+  location: input/annot-full.ent
+univ_prot_xml: 
+  class: File
+  location: input/universal.xml
+val_res_den_xml:
+  class: File
+  location: input/validation-results.xml
