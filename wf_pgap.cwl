@@ -212,11 +212,11 @@ steps:
         # # uniColl_path: uniColl_path
         # # blastdb_dir: Create_Genomic_BLASTdb/blastdb
         # # seqids: File
-        # # clade: File
+        # # taxon???: File
         # # taxid: string
         # # gc_assembly: File
         # # asn: File
-    # # out: 
+    # # out: [1,2,3]
   
   # bacterial_annot_3:
     # run: bacterial_annot/wf_bacterial_annot_pass3.cwl
