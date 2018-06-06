@@ -1,0 +1,16 @@
+# User input
+gencoll: 
+  class: File
+  location: input/gencoll_asn
+
+sequence_cache: 
+  class: Directory
+  location: input/sequence_cache
+annotation: 
+  class: File
+  location: input/annot.ent
+submit_block_template:
+  class: File
+  location: input/ASM2732v1.1.template
+
+  

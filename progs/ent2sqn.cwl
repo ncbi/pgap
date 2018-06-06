@@ -35,7 +35,7 @@ inputs:
   submit_block_template:
     type: File[]
   submit_block_template_mft:
-    type: File
+    type: string
     default: submit_block_template.mft
     inputBinding:
       prefix: -submit-block-template
