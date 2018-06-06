@@ -202,21 +202,19 @@ steps:
         # unicoll_cache: uniColl_cache
     # out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
   
-  # # ### GP-23940: almost ready need testing
-  # # protein_alignment: # PLANE
-    # # run: protein_alignment/wf_protein_alignment.cwl
-    # # in:
-        # # ___aligns___: bacterial_annot_2/aligns
-        # # asn_cache: genomic_source/asncache
-        # # uniColl_asn_cache: uniColl_cache
-        # # uniColl_path: uniColl_path
-        # # blastdb_dir: Create_Genomic_BLASTdb/blastdb
-        # # seqids: File
-        # # taxon???: File
-        # # taxid: string
-        # # gc_assembly: File
-        # # asn: File
-    # # out: [1,2,3]
+  # # ### GP-23940: ready 
+  protein_alignment: # PLANE
+    run: protein_alignment/wf_protein_alignment.cwl
+    in:
+      asn_cache: genomic_source/asncache
+      uniColl_asn_cache: uniColl_cache
+      uniColl_path: uniColl_path
+      blastdb_dir: Create_Genomic_BLASTdb/blastdb
+      taxid: taxid
+      tax_sql_file: taxon_db 
+      gc_assembly: genomic_source_gencoll_asn_bypass 
+      asn: bacterial_annot_2/aligns
+    out: [universal_clusters, align, align_non_match]
   
   # bacterial_annot_3:
     # run: bacterial_annot/wf_bacterial_annot_pass3.cwl
