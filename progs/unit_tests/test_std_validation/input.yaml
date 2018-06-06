@@ -1,0 +1,23 @@
+annotation: 
+  class: File
+  location: input/annot.ent
+sequence_cache: 
+  class: Directory
+  location: input/sequence_cache
+ent: 
+  class: File
+  location: input/annot.ent
+gb: 
+  class: File
+  location: input/annot-gb.ent
+
+sqn: 
+  class: File
+  location: input/annot.sqn
+master_desc: 
+  class: File
+  location: input/master_desc.asn
+
+submit_block_template:
+  class: File
+  location: input/ASM2732v1.1.template
