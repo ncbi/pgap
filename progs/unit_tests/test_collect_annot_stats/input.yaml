@@ -1,0 +1,22 @@
+# for test_stats
+
+var_bact_univ_prot_stats_xml:
+  class: File
+  location: input/var_bact_univ_prot_stats_xml
+var_proc_annot_stats_xml:
+  class: File
+  location: input/var_proc_annot_stats_xml
+xsltproc_asndisc:
+  class: File
+  location: input/xsltproc_asndisc
+xsltproc_asnvalidate:  
+  class: File
+  location: input/xsltproc_asnvalidate
+
+# for test_details  
+var_bact_univ_prot_details_xml:  # Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_details_xml
+  class: File
+  location: input/var_bact_univ_prot_details_xml # '${work}/bact_univ_prot_details.xml,
+var_proc_annot_details_xml:  # Validate_Annotation_proc_annot_stats/var_proc_annot_details_xml
+  class: File
+  location: input/var_proc_annot_details_xml  
