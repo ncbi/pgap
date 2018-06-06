@@ -117,9 +117,14 @@ bacterial_prepare_unannotated_master_desc_bypass:
 genomic_source_gencoll_asn_bypass:
     class: File
     location: input/tmp_shortcuts/genomic_source_gencoll_asn_bypass
-bacterial_annot_4_out_annotation_bypass:
+bacterial_annot_4_out_annotation_bypass:  # does not work SQD-4522
     class: File
     location: input/tmp_shortcuts/bacterial_annot_4_out_annotation_bypass
+fam_report_bypass: # this is replacement bypass-for-bypass ( for bacterial_annot_4_out_annotation_bypass) SQD-4522
+    class: File
+    location: input/tmp_shortcuts/fam_report_bypass
+
 bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass:
     class: File
     location: input/tmp_shortcuts/bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass
+    
