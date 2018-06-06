@@ -1,0 +1,9 @@
+validation_xml: # final_bacterial_package.10054022/out/annot.val.summary.xml
+  class: File
+  location: input/annot.val.summary.xml 
+asndisc_xml: # final_bacterial_package.10054022/out/annot.disc.xml
+  class: File
+  location: input/annot.disc.xml
+asn2pas_xsl:   
+  class: File
+  location: input/asn2pas.xsl
