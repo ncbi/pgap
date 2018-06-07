@@ -11,6 +11,9 @@ requirements:
     listing:
       - entryname: submit_block_template.mft
         entry: ${var blob = ''; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
+      - entryname: master_desc_mft.mft
+        entry: ${var blob = ''; for (var i = 0; i < inputs.master_desc.length; i++) { blob += inputs.master_desc[i].path + '\n'; } return blob; }
+        
 
 baseCommand: std_validation
 inputs:
@@ -39,10 +42,6 @@ inputs:
     type: File
     inputBinding:
       prefix:     -insqn
-  master_desc:
-    type: File
-    inputBinding:
-      prefix:     -master-desc
   outdisc_name:
     type: string
     default: annot.disc
@@ -70,6 +69,13 @@ inputs:
     default: submit_block_template.mft
     inputBinding:
       prefix: -submit-block-template
+  master_desc:
+    type: File[]
+  master_desc_mft:
+    type: string
+    default: master_desc_mft.mft
+    inputBinding:
+      prefix:     -master-desc-manifest
   tempdir_name:
     type: string
     default: var
@@ -104,10 +110,13 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outval_name)
-  tempdir:
-    type: File
-    outputBinding:
-      glob: $(inputs.tempdir_name)
+  # this is a standard gpipe parameter
+  # we are passing it to called applications (asnvalidate, etc) as tmpdir
+  # we do not need it after execution of std_validation
+  # tempdir:
+  # type: File
+  # outputBinding:
+  #   glob: $(inputs.tempdir_name)
 
   
   

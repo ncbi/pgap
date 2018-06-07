@@ -24,7 +24,9 @@ steps:
       inent: ent
       ingb: gb
       insqn: sqn
-      master_desc: master_desc # bacterial_prepare_unannotated_master_desc_bypass
+      master_desc: 
+        source: [master_desc]  # bacterial_prepare_unannotated_master_desc_bypass
+        linkMerge: merge_flattened
       submit_block_template:
         source: [submit_block_template]
         linkMerge: merge_flattened
@@ -39,7 +41,6 @@ steps:
       - id: outdiscxml
       - id: outmetamaster
       - id: outval
-      - id: tempdir
    
 outputs:
   gbent:

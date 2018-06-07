@@ -222,7 +222,7 @@ steps:
         # uniColl_cache: uniColl_cache
         # sequence_cache: genomic_source/asncache
         # hmm_aligns: bacterial_annot/aligns
-        # # prot_aligns: protein_alignment/___aligns____ 
+        # # prot_aligns: protein_alignment/align 
         # prot_aligns: protein_alignment_aligns_shortcut
             # # label: "Filter Protein Alignments I/align"
         # annotation: bacterial_annot/annotation
@@ -457,8 +457,10 @@ steps:
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
-      # master_desc: bacterial_prepare_unannotated/master_desc
-      master_desc: bacterial_prepare_unannotated_master_desc_bypass
+      master_desc: 
+        # source: [bacterial_prepare_unannotated/master_desc]
+        source: [bacterial_prepare_unannotated_master_desc_bypass]
+        linkMerge: merge_flattened
       submit_block_template:
         source: [submit_block_template]
         linkMerge: merge_flattened
@@ -473,7 +475,6 @@ steps:
       - id: outdiscxml
       - id: outmetamaster
       - id: outval
-      - id: tempdir
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
     run: progs/val_stats.cwl  
     in:
