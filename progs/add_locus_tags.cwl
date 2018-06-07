@@ -1,5 +1,5 @@
 cwlVersion: v1.0
-label: "ent2sqn"
+label: "add_locus_tags"
 
 class: CommandLineTool
 hints:
