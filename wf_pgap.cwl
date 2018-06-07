@@ -353,7 +353,14 @@ steps:
   # ###############################################
   # # AMR plane is for later stages skipping
   # ###############################################
-  
+  Add_Locus_Tags:
+    run: progs/add_locus_tags.cwl
+    in:
+        input: bacterial_annot_4/out_annotation
+        locus_tag_prefix:
+            default: "extpgap_"
+    out: [output]
+    
   #
   # Pseudo plane default 3
   # 
@@ -367,7 +374,8 @@ steps:
       # inp_annotation: bacterial_annot_4/out_annotation 
       # inp_annotation: bacterial_annot_4_out_annotation_bypass # , this bypass does not work: SQD-4522
       # using oroginal input from official buildrun template (that is from fam_report output)
-      inp_annotation: fam_report_bypass
+      # inp_annotation: fam_report_bypass
+      inp_annotation: Add_Locus_Tags/output # production
       serial: 
         default: binary
     out: [annotation]

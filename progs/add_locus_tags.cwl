@@ -11,6 +11,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -input
+  locus_tag_prefix:
+    type: string
+    inputBinding:
+      prefix: -locus-tag-prefix
   output_impl:
     type: string
     default: annotation.asn
