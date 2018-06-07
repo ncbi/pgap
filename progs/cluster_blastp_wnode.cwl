@@ -33,6 +33,10 @@ inputs:
     type: string
     inputBinding:
       prefix: -align_filter
+  allow_intersection:
+    type: boolean?
+    inputBinding:
+      prefix: -allow-intersection
   backlog:
     type: int?
     inputBinding:
@@ -45,6 +49,10 @@ inputs:
     type: string
     inputBinding:
       prefix: -comp_based_stats
+  compart:
+    type: boolean?
+    inputBinding:
+      prefix: -compart
   dbsize:
     type: string?
     inputBinding:
@@ -57,7 +65,7 @@ inputs:
     type: float?
     inputBinding:
       prefix: -evalue
-  extra-coverage:
+  extra_coverage:
     type: int?
     inputBinding:
       prefix: -extra-coverage
@@ -71,7 +79,7 @@ inputs:
       prefix: -lds2
   proteins: # companion to lds2
     type: File?
-  max-jobs:
+  max_jobs:
     type: int?
     inputBinding:
       prefix: -max-jobs
@@ -83,7 +91,7 @@ inputs:
     type: string?
     inputBinding:
       prefix: -ofmt
-  no-merge:    
+  no_merge:    
     type: boolean?
     inputBinding:
       prefix: -no-merge
@@ -103,7 +111,7 @@ inputs:
     type: int?
     inputBinding:
       prefix: -threshold
-  top-by-score:
+  top_by_score:
     type: int?
     inputBinding:
       prefix: -top-by-score
