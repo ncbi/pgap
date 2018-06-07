@@ -11,17 +11,18 @@ inputs:
   submit_block_template: File
   taxid: int
   gc_assm_name: string
-  sequence_cache_shortcut: Directory
-  ids_out_shortcut: File
+  taxon_db: File
+  # sequence_cache_shortcut: Directory
+  # ids_out_shortcut: File
 outputs:
   ids_out:
     type: File
-    # outputSource: Cache_FASTA_Sequences/ids_out
-    outputSource: ids_out_shortcut
+    outputSource: Cache_FASTA_Sequences/ids_out
+    # outputSource: ids_out_shortcut
   asncache:
     type: Directory
-    # outputSource: Cache_FASTA_Sequences/asncache # waiting for GP-24223
-    outputSource: sequence_cache_shortcut # this is over when GP-24223 is resolved
+    outputSource: Cache_FASTA_Sequences/asncache # waiting for GP-24223
+    # outputSource: sequence_cache_shortcut # this is over when GP-24223 is resolved
     
   gencoll_asn:
     type: File
@@ -34,25 +35,27 @@ outputs:
     type: File
     outputSource: Extract_Assembly_Information_XML/stats_report
   
+  
     
 steps:
   #### waiting for GP-24223
   #### commented out
-  # Cache_FASTA_Sequences:
-    # run: prime_cache.cwl
-    # in:
-      # fasta: fasta
-      # submit_block_template: submit_block_template
-      # taxid: taxid
-    # out: [ids_out, asncache]
+  Cache_FASTA_Sequences:
+    run: prime_cache.cwl
+    in:
+      fasta: fasta
+      submit_block_template: submit_block_template
+      taxon_db: taxon_db
+      taxid: taxid
+    out: [ids_out, asncache]
 
   Create_Assembly_From_Sequences:
     run: gc_create.cwl
     in:
-      # unplaced: Cache_FASTA_Sequences/ids_out # waiting for GP-24223
-      unplaced: ids_out_shortcut  # waiting for GP-24223
-      # asn_cache: Cache_FASTA_Sequences/asncache # waiting for GP-24223
-      asn_cache: sequence_cache_shortcut  # waiting for GP-24223
+      unplaced: Cache_FASTA_Sequences/ids_out # waiting for GP-24223
+      # unplaced: ids_out_shortcut  # waiting for GP-24223
+      asn_cache: Cache_FASTA_Sequences/asncache # waiting for GP-24223
+      # asn_cache: sequence_cache_shortcut  # waiting for GP-24223
       
       gc_assm_name: gc_assm_name
 

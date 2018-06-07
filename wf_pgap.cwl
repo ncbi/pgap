@@ -73,8 +73,9 @@ steps:
       submit_block_template: submit_block_template
       taxid: taxid
       gc_assm_name: gc_assm_name
-      sequence_cache_shortcut: sequence_cache_shortcut
-      ids_out_shortcut: ids_out_shortcut
+      taxon_db: taxon_db
+      # sequence_cache_shortcut: sequence_cache_shortcut
+      # ids_out_shortcut: ids_out_shortcut
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
 
   #

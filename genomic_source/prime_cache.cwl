@@ -10,6 +10,10 @@ hints:
 baseCommand: prime_cache
 arguments: [ -biosource, genomic, -ifmt, fasta, -inst-mol, dna, -molinfo, genomic ]
 inputs:
+  taxon_db:
+    type: File
+    inputBinding:
+      prefix: -taxon-db
   fasta:
     type: File
     inputBinding:
