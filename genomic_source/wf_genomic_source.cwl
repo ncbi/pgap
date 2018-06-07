@@ -17,11 +17,11 @@ inputs:
 outputs:
   ids_out:
     type: File
-    outputSource: Cache_FASTA_Sequences/ids_out
+    outputSource: Cache_FASTA_Sequences/oseq_ids
     # outputSource: ids_out_shortcut
   asncache:
     type: Directory
-    outputSource: Cache_FASTA_Sequences/asncache # waiting for GP-24223
+    outputSource: Cache_FASTA_Sequences/asn_cache 
     # outputSource: sequence_cache_shortcut # this is over when GP-24223 is resolved
     
   gencoll_asn:
@@ -47,14 +47,14 @@ steps:
       submit_block_template: submit_block_template
       taxon_db: taxon_db
       taxid: taxid
-    out: [ids_out, asncache]
+    out: [oseq_ids, asn_cache]
 
   Create_Assembly_From_Sequences:
     run: gc_create.cwl
     in:
-      unplaced: Cache_FASTA_Sequences/ids_out # waiting for GP-24223
+      unplaced: Cache_FASTA_Sequences/oseq_ids # waiting for GP-24223
       # unplaced: ids_out_shortcut  # waiting for GP-24223
-      asn_cache: Cache_FASTA_Sequences/asncache # waiting for GP-24223
+      asn_cache: Cache_FASTA_Sequences/asn_cache # waiting for GP-24223
       # asn_cache: sequence_cache_shortcut  # waiting for GP-24223
       
       gc_assm_name: gc_assm_name

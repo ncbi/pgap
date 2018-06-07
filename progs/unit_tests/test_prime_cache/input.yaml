@@ -1,0 +1,11 @@
+submit_block_template:
+  class: File
+  location: input/ASM2732v1.1.template
+fasta:
+  class: File
+  location: input/ASM2732v1.annotation.nucleotide.1.fa
+taxid: 1208324
+gc_assm_name: L103
+taxon_db:
+  class: File
+  location: input/taxonomy.sqlite3
