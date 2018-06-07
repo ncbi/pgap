@@ -202,19 +202,19 @@ steps:
         unicoll_cache: uniColl_cache
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
   
-  # ### GP-23940: ready 
-  # protein_alignment: # PLANE
-    # run: protein_alignment/wf_protein_alignment.cwl
-    # in:
-      # asn_cache: genomic_source/asncache
-      # uniColl_asn_cache: uniColl_cache
-      # uniColl_path: uniColl_path
-      # blastdb_dir: Create_Genomic_BLASTdb/blastdb
-      # taxid: taxid
-      # tax_sql_file: taxon_db 
-      # gc_assembly: genomic_source_gencoll_asn_bypass 
-      # asn: bacterial_annot_2/aligns
-    # out: [universal_clusters, align, align_non_match]
+  ### GP-23940: ready 
+  protein_alignment: # PLANE
+    run: protein_alignment/wf_protein_alignment.cwl
+    in:
+      asn_cache: genomic_source/asncache
+      uniColl_asn_cache: uniColl_cache
+      uniColl_path: uniColl_path
+      blastdb_dir: Create_Genomic_BLASTdb/blastdb
+      taxid: taxid
+      tax_sql_file: taxon_db 
+      gc_assembly: genomic_source_gencoll_asn_bypass 
+      compartments: bacterial_annot_2/aligns
+    out: [universal_clusters, align, align_non_match]
   
   bacterial_annot_3:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
@@ -222,9 +222,8 @@ steps:
         uniColl_cache: uniColl_cache
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
-        # prot_aligns: protein_alignment/align 
-        prot_aligns: protein_alignment_aligns_shortcut
-            # label: "Filter Protein Alignments I/align"
+        prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
+        # prot_aligns: protein_alignment_aligns_shortcut
         annotation: bacterial_annot/annotation
         raw_seqs: bacterial_prepare_unannotated/sequences
         thresholds: thresholds # ${GP_HOME}/etc/thresholds.xml
