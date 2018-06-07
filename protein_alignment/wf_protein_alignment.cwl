@@ -16,7 +16,7 @@ inputs:
   taxid: string
   tax_sql_file: File
   gc_assembly: File
-  asn: File
+  compartments: File
 
 outputs:
   universal_clusters:  
@@ -44,7 +44,7 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      asn: asn
+      compartments: compartments
     out: [ blast_align ]
 
   wf_seed_1:
