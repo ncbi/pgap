@@ -24,6 +24,8 @@ baseCommand: tblastn_wnode
 arguments: [ -align_filter, "pct_identity_gapopen_only >= 75", -backlog, "1", -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -max-jobs, "1", -seg, "no", -soft_masking, "true", -threshold, "21", -word_size, "6", -nogenbank ]
 
 inputs:
+  blastdb_dir:
+    type: Directory
   asn_cache:
     type: Directory
     inputBinding:
