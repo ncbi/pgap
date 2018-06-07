@@ -1,0 +1,3 @@
+submit_block_template:
+  class: File
+  location: input/ASM2732v1.1.template
