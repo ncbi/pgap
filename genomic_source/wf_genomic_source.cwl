@@ -41,9 +41,9 @@ steps:
   #### waiting for GP-24223
   #### commented out
   Cache_FASTA_Sequences:
-    run: prime_cache.cwl
+    run: ../progs/prime_cache.cwl
     in:
-      fasta: fasta
+      input: fasta
       submit_block_template: submit_block_template
       taxon_db: taxon_db
       taxid: taxid
