@@ -8,7 +8,7 @@ label: "Seed Search Compartments"
 inputs:
   asn_cache: Directory
   uniColl_asn_cache: Directory
-  asn: File
+  compartments: File
 
 outputs: 
   blast_align:
@@ -21,7 +21,7 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      asn: asn
+      asn: compartments
     out: [jobs]
 
   tblastn_wnode:
@@ -29,7 +29,7 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      asn: asn
+      asn: compartments
       input_jobs: gpx_qsubmit/jobs
     out: [outdir]
 
