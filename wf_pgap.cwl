@@ -20,6 +20,7 @@ inputs:
   hmms_tab: File
   naming_hmms_tab: File
   uniColl_cache: Directory
+  uniColl_path: Directory
   # uniColl_path: Directory
   gene_master_ini: File
   16s_blastdb_dir: Directory

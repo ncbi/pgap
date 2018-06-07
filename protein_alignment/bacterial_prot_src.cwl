@@ -26,7 +26,7 @@ inputs:
     inputBinding:
       prefix: -asn-cache
   taxid:
-    type: string
+    type: int
     inputBinding:
       prefix: -taxid
   tax_sql_file:

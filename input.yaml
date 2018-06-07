@@ -84,6 +84,9 @@ thresholds:
 uniColl_cache:
   class: Directory
   location: input/uniColl_cache
+uniColl_path:
+  class: Directory
+  location: input/uniColl_path
 univ_prot_xml:
   class: File
   location: input/universal.xml

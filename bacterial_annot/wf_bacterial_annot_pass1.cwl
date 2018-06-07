@@ -107,6 +107,7 @@ steps:
 
   Get_off_frame_ORFs:
     run: get_off_frame_orfs.cwl
+    label: "Get_off_frame_ORFs task node"
     in:
       aligns: Map_HMM_Hits/aligns
       seq_entries: Get_ORFs/outseqs

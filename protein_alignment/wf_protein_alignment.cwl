@@ -13,7 +13,7 @@ inputs:
   uniColl_asn_cache: Directory
   uniColl_path: Directory
   blastdb_dir: Directory
-  taxid: string
+  taxid: int
   tax_sql_file: File
   gc_assembly: File
   compartments: File
