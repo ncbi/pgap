@@ -93,7 +93,9 @@ val_res_den_xml:
 wp_hashes:
   class: File
   location: input/wp-hashes.sqlite
- 
+asn2pas_xsl:   
+  class: File
+  location: input/asn2pas.xsl
 #
 #   shortcuts
 #
