@@ -148,7 +148,7 @@ steps:
             proteins: Extract_Model_Proteins/proteins
             fam: hmms_tab # -fam
             # fam2: not used
-            annotation: Run_GeneMark_Post/models # -entries
+            entries: Run_GeneMark_Post/models # -entries
             hmm_hits: Search_Naming_HMMs/hmm_hits
             blastdb:
                 default: ''
