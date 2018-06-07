@@ -11,6 +11,8 @@ steps:
         run: ../../add_locus_tags.cwl
         in:
             input: input
+            locus_tag_prefix:
+                default: "extpgap_"
         out: [output]
 outputs:
   gbent:
