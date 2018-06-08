@@ -50,15 +50,15 @@ inputs:
 # Shortcuts
 #
   
-  protein_alignment_aligns_shortcut: File
-  sequence_cache_shortcut: Directory  # GP-24223
-  ids_out_shortcut: File # GP-24223
-  bacterial_annot_3_Run_GeneMark_Post_models_bypass: File
-  bacterial_prepare_unannotated_master_desc_bypass: File
-  genomic_source_gencoll_asn_bypass: File # for genomic_source/gencoll_asn
-  bacterial_annot_4_out_annotation_bypass: File
-  fam_report_bypass: File
-  bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass: File
+#  protein_alignment_aligns_shortcut: File
+#  sequence_cache_shortcut: Directory  # GP-24223
+#  ids_out_shortcut: File # GP-24223
+#  bacterial_annot_3_Run_GeneMark_Post_models_bypass: File
+#  bacterial_prepare_unannotated_master_desc_bypass: File
+#  genomic_source_gencoll_asn_bypass: File # for genomic_source/gencoll_asn
+#  bacterial_annot_4_out_annotation_bypass: File
+#  fam_report_bypass: File
+#  bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass: File
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -214,7 +214,8 @@ steps:
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
       tax_sql_file: taxon_db 
-      gc_assembly: genomic_source_gencoll_asn_bypass 
+      # gc_assembly: genomic_source_gencoll_asn_bypass 
+      gc_assembly: genomic_source/gencoll_asn
       compartments: bacterial_annot_2/aligns
     out: [universal_clusters, align, align_non_match]
   
@@ -386,12 +387,12 @@ steps:
       annotation: 
         source: [Final_Bacterial_Package_asn_cleanup/annotation]
         linkMerge: merge_flattened
-      # asn_cache: genomic_source/asncache
-      asn_cache: sequence_cache_shortcut
-      # gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
-      gc_assembly: genomic_source_gencoll_asn_bypass # gc_create_from_sequences
-      # master_desc: bacterial_prepare_unannotated/master_desc
-      master_desc: bacterial_prepare_unannotated_master_desc_bypass
+      asn_cache: genomic_source/asncache
+      # asn_cache: sequence_cache_shortcut
+      gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
+      # gc_assembly: genomic_source_gencoll_asn_bypass # gc_create_from_sequences
+      master_desc: bacterial_prepare_unannotated/master_desc
+      # master_desc: bacterial_prepare_unannotated_master_desc_bypass
       submit_block_template: 
         source: [submit_block_template]
         linkMerge: merge_flattened
@@ -408,8 +409,8 @@ steps:
     in: 
       annotation:  Final_Bacterial_Package_final_bact_asn/outfull
       asn_cache: 
-        # source: [genomic_source/asncache]
-        source: [sequence_cache_shortcut]
+        source: [genomic_source/asncache]
+        # source: [sequence_cache_shortcut]
         linkMerge: merge_flattened
       max_x_ratio: 
         default: 0.1
@@ -433,13 +434,13 @@ steps:
     in:
       annotation: Final_Bacterial_Package_dumb_down_as_required/outent
       asn_cache: 
-        # source: [genomic_source/asncache]
-        source: [sequence_cache_shortcut]
+        source: [genomic_source/asncache]
+        # source: [sequence_cache_shortcut]
 
         linkMerge: merge_flattened
         
-      # gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
-      gc_assembly: genomic_source_gencoll_asn_bypass # gc_create_from_sequences
+      gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
+      # gc_assembly: genomic_source_gencoll_asn_bypass # gc_create_from_sequences
       submit_block_template: 
         source: [submit_block_template]
         linkMerge: merge_flattened
@@ -459,16 +460,16 @@ steps:
     in:
       annotation: Final_Bacterial_Package_dumb_down_as_required/outent
       asn_cache:
-        # source: [genomic_source/asncache]
-        source: [sequence_cache_shortcut]
+        source: [genomic_source/asncache]
+        # source: [sequence_cache_shortcut]
       exclude_asndisc_codes: # 
         default: ['OVERLAPPING_CDS']
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
       master_desc: 
-        # source: [bacterial_prepare_unannotated/master_desc]
-        source: [bacterial_prepare_unannotated_master_desc_bypass]
+        source: [bacterial_prepare_unannotated/master_desc]
+        # source: [bacterial_prepare_unannotated_master_desc_bypass]
         linkMerge: merge_flattened
       submit_block_template:
         source: [submit_block_template]
@@ -508,10 +509,10 @@ steps:
     in:
       annot_request_id: 
         default: -1 # this is dummy annot_request_id
-      # hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
-      hmm_search: bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass # for bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
-      # hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models # genemark models
-      hmm_search_proteins: bacterial_annot_3_Run_GeneMark_Post_models_bypass # for bacterial_annot_3/Run_GeneMark_Post_models # genemark models
+      hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
+      # hmm_search: bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass # for bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
+      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models # genemark models
+      # hmm_search_proteins: bacterial_annot_3_Run_GeneMark_Post_models_bypass # for bacterial_annot_3/Run_GeneMark_Post_models # genemark models
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  univ_prot_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/universal.xml 
       val_res_den_xml:  val_res_den_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/etc/validation-results.xml
