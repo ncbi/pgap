@@ -535,7 +535,7 @@ steps:
   Validate_Annotation_xsltproc_asnvalidate: # TESTED (unit test)
     run: progs/xsltproc.cwl
     in:
-      xml: Final_Bacterial_Package_std_validation/outval 
+      xml: Final_Bacterial_Package_val_stats/xml 
       xslt: asn2pas_xsl 
       output_name: 
         default: 'var_proc_annot_stats.val.xml'

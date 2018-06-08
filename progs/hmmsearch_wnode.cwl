@@ -55,7 +55,7 @@ inputs:
       prefix: -input-jobs
   hmmsearch_path:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/third-party/bin
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/bin
     inputBinding:
       prefix: -hmmsearch-path
   output_dir:

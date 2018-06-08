@@ -25,12 +25,12 @@ inputs:
       prefix: -input-jobs
   gcode_othmito:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/1.21-patched-4/lib/tRNAscan-SE/gcode.othmito
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode.othmito
     inputBinding:
       prefix: -g
   binary:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/1.21-patched-4/arch/x86_64/bin/tRNAscan-SE
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/arch/x86_64/bin/tRNAscan-SE
     inputBinding:
       prefix: -tRNAscan
   taxid:
