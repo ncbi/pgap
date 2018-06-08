@@ -21,6 +21,9 @@ gc_assm_name: MG37
 AntiFamLib:
   class: Directory
   location: input/AntiFamLib
+asn2pas_xsl:
+  class: File
+  location: input/asn2pas.xsl
 blast_rules_db_dir:
   class: Directory
   location: input/blast_rules_db_dir
@@ -94,6 +97,3 @@ val_res_den_xml:
 wp_hashes:
   class: File
   location: input/wp-hashes.sqlite
-asn2pas_xsl:   
-  class: File
-  location: input/asn2pas.xsl
