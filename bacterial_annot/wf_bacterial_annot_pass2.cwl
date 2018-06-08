@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-label: "Bacterial Annotation, pass 2, blastp-based functional annotation (first pass)""
+label: "Bacterial Annotation, pass 2, blastp-based functional annotation (first pass)"
 cwlVersion: v1.0
 class: Workflow
 requirements:
