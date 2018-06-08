@@ -1,14 +1,12 @@
 # User input
 submit_block_template:
   class: File
-  #location: input/L103_PRJNA170415.template
   location: input/ASM2732v1.1.template
 fasta:
   class: File
-  #location: input/L103_PRJNA170415.fasta
   location: input/ASM2732v1.annotation.nucleotide.1.fa
-taxid: 1208324
-gc_assm_name: L103
+taxid: 243273
+gc_assm_name: MG37
 
 # pipeline data files
 16s_blastdb_dir:
