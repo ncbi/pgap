@@ -1,0 +1,1543 @@
+Discrepancy Report Results
+
+Summary
+FATAL: MISSING_PROTEIN_ID:589 proteins have invalid IDs.
+DISC_SOURCE_QUALS_ASNDISC:strain (all present, all same)
+DISC_SOURCE_QUALS_ASNDISC:taxname (all present, all same)
+DISC_SOURCE_QUALS_ASNDISC:taxid (all present, all same)
+DISC_FEATURE_COUNT:gene: 633 present
+DISC_FEATURE_COUNT:CDS: 596 present
+DISC_FEATURE_COUNT:tRNA: 31 present
+DISC_FEATURE_COUNT:rRNA: 3 present
+DISC_FEATURE_COUNT:ncRNA: 2 present
+DISC_FEATURE_COUNT:tmRNA: 1 present
+DISC_COUNT_NUCLEOTIDES:3 nucleotide Bioseqs are present
+DUPLICATE_GENE_LOCUS:4 genes have the same locus as another gene on the same Bioseq.
+OVERLAPPING_GENES:95 genes overlap another gene on the same strand.
+RNA_CDS_OVERLAP:1 coding regions overlap RNA features
+SUSPECT_PRODUCT_NAMES:7 cds comments or protein descriptions contain suspect phrases
+	7 cds comments or protein descriptions contain 'frameshift'
+SUSPECT_PRODUCT_NAMES:2 product_names contain suspect phrase or characters
+	May contain database identifier more appropriate in note; remove from product name
+		2 features contains three or more numbers together that may be identifiers more appropriate in note
+DISC_QUALITY_SCORES:Quality scores are missing on all sequences.
+ONCALLER_COMMENT_PRESENT:1 comment descriptors were found (all same)
+SHORT_PROT_SEQUENCES:2 protein sequences are shorter than 50 aa.
+MISSING_GENOMEASSEMBLY_COMMENTS:3 bioseqs are missing GenomeAssembly structured comments
+TEST_DEFLINE_PRESENT:1 Bioseqs have definition line
+MOLTYPE_NOT_MRNA:3 molecule types are not set as mRNA.
+TECHNIQUE_NOT_TSA:3 technique are not set as TSA
+MISSING_PROJECT:592 sequences do not include project.
+DISC_INCONSISTENT_STRUCTURED_COMMENTS:Structured Comment Report (some missing, all same)
+DISC_INCONSISTENT_MOLINFO_TECH:Molinfo Technique Report (some missing, all same)
+
+
+Detailed Report
+
+FATAL: DiscRep_ALL:MISSING_PROTEIN_ID::589 proteins have invalid IDs.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000001 (length 521)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000002 (length 200)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000003 (length 59)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000005 (length 200)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000006 (length 283)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000007 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000008 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000009 (length 519)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000010 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000011 (length 475)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000012 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000013 (length 628)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000014 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000015 (length 79)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000016 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000017 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000018 (length 512)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000019 (length 290)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000020 (length 465)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000021 (length 138)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000022 (length 803)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000023 (length 366)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000024 (length 454)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000026 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000027 (length 532)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000028 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000029 (length 96)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000030 (length 548)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000031 (length 203)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000032 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000033 (length 164)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000034 (length 191)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000035 (length 378)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000036 (length 284)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000037 (length 609)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000038 (length 459)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000039 (length 189)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000040 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000041 (length 758)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000042 (length 525)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000043 (length 92)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000044 (length 81)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000045 (length 1407)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000046 (length 1342)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000047 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000048 (length 165)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000049 (length 231)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000050 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000051 (length 181)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000052 (length 127)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000053 (length 356)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000054 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000055 (length 381)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000056 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000057 (length 257)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000058 (length 403)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000059 (length 459)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000060 (length 144)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000061 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000062 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000063 (length 612)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000064 (length 577)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000065 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000066 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000067 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000068 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000069 (length 414)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000070 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000071 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000072 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000073 (length 85)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000074 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000075 (length 675)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000076 (length 467)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000078 (length 98)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000079 (length 545)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000080 (length 331)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000081 (length 220)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000082 (length 467)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000084 (length 112)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000085 (length 235)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000086 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000087 (length 133)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000088 (length 379)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000089 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000090 (length 258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000091 (length 55)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000092 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000094 (length 970)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000095 (length 182)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000096 (length 446)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000097 (length 282)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000098 (length 406)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000099 (length 316)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000100 (length 665)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000101 (length 375)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000102 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000103 (length 294)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000104 (length 354)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000106 (length 186)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000107 (length 299)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000108 (length 435)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000109 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000110 (length 353)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000111 (length 196)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000112 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000113 (length 258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000114 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000115 (length 468)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000116 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000117 (length 547)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000118 (length 440)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000119 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000120 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000121 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000123 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000124 (length 347)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000126 (length 164)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000127 (length 227)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000128 (length 210)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000129 (length 726)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000130 (length 422)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000131 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000132 (length 360)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000133 (length 348)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000134 (length 642)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000135 (length 179)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000136 (length 65)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000137 (length 118)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000138 (length 329)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000139 (length 795)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000140 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000141 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000142 (length 370)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000143 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000144 (length 690)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000145 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000146 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000147 (length 95)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000148 (length 256)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000149 (length 430)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000151 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000152 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000153 (length 1079)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000154 (length 387)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000155 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000156 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000157 (length 160)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000158 (length 940)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000159 (length 313)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000161 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000162 (length 377)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000163 (length 637)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000164 (length 134)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000165 (length 224)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000166 (length 600)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000167 (length 162)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000168 (length 444)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000169 (length 906)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000170 (length 322)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000171 (length 180)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000172 (length 170)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000173 (length 100)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000174 (length 614)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000175 (length 505)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000176 (length 486)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000177 (length 411)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000178 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000179 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000180 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000181 (length 294)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000182 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000183 (length 277)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000184 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000185 (length 268)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000187 (length 708)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000188 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000189 (length 376)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000191 (length 830)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000192 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000193 (length 197)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000195 (length 188)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000196 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000197 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000198 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000199 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000200 (length 203)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000202 (length 362)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000203 (length 429)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000204 (length 309)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000205 (length 816)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000206 (length 166)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000207 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000208 (length 263)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000209 (length 151)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000210 (length 266)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000211 (length 760)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000212 (length 875)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000213 (length 124)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000214 (length 217)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000215 (length 349)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000216 (length 887)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000217 (length 405)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000218 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000219 (length 62)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000220 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000221 (length 286)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000222 (length 232)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000223 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000224 (length 384)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000225 (length 418)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000227 (length 484)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000228 (length 354)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000229 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000230 (length 440)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000231 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000232 (length 455)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000233 (length 497)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000234 (length 579)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000236 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000238 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000239 (length 199)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000240 (length 478)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000241 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000242 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000243 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000244 (length 268)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000245 (length 242)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000246 (length 185)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000247 (length 398)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000248 (length 251)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000249 (length 617)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000250 (length 1161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000251 (length 572)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000252 (length 383)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000254 (length 574)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000255 (length 251)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000256 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000257 (length 97)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000258 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000259 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000260 (length 158)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000261 (length 194)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000262 (length 99)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000263 (length 162)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000264 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000265 (length 126)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000266 (length 283)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000267 (length 226)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000268 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000269 (length 610)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000271 (length 211)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000272 (length 456)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000273 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000274 (length 260)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000275 (length 649)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000276 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000277 (length 211)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000278 (length 323)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000279 (length 236)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000281 (length 194)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000283 (length 486)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000284 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000285 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000286 (length 247)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000287 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000288 (length 388)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000289 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000290 (length 342)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000291 (length 307)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000292 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000294 (length 861)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000295 (length 266)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000296 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000297 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000298 (length 423)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000299 (length 417)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000300 (length 224)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000301 (length 343)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000302 (length 428)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000303 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000304 (length 812)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000305 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000306 (length 228)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000308 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000309 (length 171)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000310 (length 483)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000311 (length 247)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000312 (length 909)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000313 (length 420)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000314 (length 231)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000315 (length 320)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000316 (length 263)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000317 (length 255)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000318 (length 94)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000319 (length 558)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000320 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000321 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000322 (length 427)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000323 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000324 (length 427)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000325 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000326 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000327 (length 586)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000328 (length 262)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000329 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000330 (length 480)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000331 (length 491)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000332 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000333 (length 69)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000335 (length 521)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000336 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000337 (length 83)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000338 (length 270)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000339 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000340 (length 58)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000341 (length 280)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000342 (length 349)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000343 (length 511)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000344 (length 350)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000349 (length 136)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000350 (length 236)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000351 (length 408)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000352 (length 252)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000353 (length 260)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000354 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000355 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000356 (length 99)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000357 (length 543)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000358 (length 902)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000359 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000360 (length 54)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000361 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000363 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000364 (length 80)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000366 (length 326)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000367 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000368 (length 477)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000369 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000370 (length 175)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000371 (length 382)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000372 (length 466)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000373 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000375 (length 287)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000376 (length 701)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000377 (length 596)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000378 (length 324)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000379 (length 955)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000380 (length 499)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000382 (length 338)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000383 (length 310)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000384 (length 154)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000385 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000386 (length 601)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000387 (length 707)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000388 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000389 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000390 (length 120)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000391 (length 864)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000392 (length 496)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000393 (length 109)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000395 (length 444)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000396 (length 611)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000397 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000398 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000399 (length 80)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000400 (length 416)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000401 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000402 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000403 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000404 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000405 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000406 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000407 (length 451)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000408 (length 79)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000409 (length 176)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000410 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000411 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000412 (length 483)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000414 (length 150)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000415 (length 98)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000416 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000417 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000418 (length 878)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000419 (length 57)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000420 (length 518)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000421 (length 378)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000423 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000424 (length 253)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000425 (length 223)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000426 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000428 (length 434)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000429 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000430 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000431 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000432 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000433 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000434 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000435 (length 302)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000436 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000438 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000439 (length 569)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000440 (length 601)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000441 (length 802)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000442 (length 212)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000443 (length 286)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000444 (length 205)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000445 (length 607)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000447 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000448 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000449 (length 506)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000450 (length 415)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000451 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000452 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000453 (length 439)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000455 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000456 (length 291)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000457 (length 859)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000458 (length 331)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000459 (length 214)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000460 (length 76)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000461 (length 371)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000462 (length 196)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000463 (length 390)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000464 (length 358)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000465 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000466 (length 1070)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000467 (length 1174)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000468 (length 602)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000469 (length 442)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000471 (length 160)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000472 (length 323)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000473 (length 141)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000474 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000475 (length 143)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000476 (length 608)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000477 (length 282)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000478 (length 390)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000479 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000480 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000481 (length 105)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000482 (length 205)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000483 (length 662)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000485 (length 104)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000486 (length 442)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000487 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000488 (length 429)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000489 (length 777)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000490 (length 623)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000491 (length 589)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000492 (length 590)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000493 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000494 (length 109)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000496 (length 624)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000497 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000498 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000499 (length 464)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000500 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000501 (length 69)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000503 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000505 (length 157)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000506 (length 173)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000507 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000508 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000509 (length 329)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000510 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000511 (length 131)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000512 (length 118)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000513 (length 38)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000514 (length 437)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000515 (length 144)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000516 (length 59)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000517 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000518 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000520 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000521 (length 101)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000522 (length 179)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000523 (length 104)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000524 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000525 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000526 (length 65)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000527 (length 136)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000528 (length 233)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000529 (length 110)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000530 (length 92)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000531 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000532 (length 100)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000533 (length 201)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000534 (length 209)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000535 (length 103)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000537 (length 702)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000538 (length 156)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000539 (length 124)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000540 (length 95)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000541 (length 119)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000542 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000544 (length 408)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000545 (length 388)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000546 (length 335)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000547 (length 228)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000548 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000549 (length 173)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000550 (length 234)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000551 (length 407)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000552 (length 526)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000553 (length 192)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000554 (length 171)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000555 (length 465)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000556 (length 320)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000557 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000558 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000559 (length 376)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000560 (length 239)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000561 (length 350)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000562 (length 93)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000563 (length 262)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000565 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000567 (length 213)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000568 (length 154)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000569 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000570 (length 150)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000571 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000572 (length 113)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000573 (length 745)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000574 (length 433)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000576 (length 406)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000577 (length 302)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000578 (length 584)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000579 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000580 (length 632)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000581 (length 549)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000583 (length 184)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000585 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000586 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000588 (length 85)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000589 (length 176)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000590 (length 443)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000591 (length 157)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000592 (length 252)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000593 (length 324)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000594 (length 165)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000595 (length 367)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000596 (length 112)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000597 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000598 (length 490)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000599 (length 410)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000601 (length 116)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000602 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000603 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000604 (length 149)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000605 (length 419)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000606 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000607 (length 645)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000608 (length 490)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000609 (length 617)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000610 (length 404)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000611 (length 127)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000612 (length 174)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000613 (length 611)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000614 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000615 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000616 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000617 (length 47)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000618 (length 145)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000619 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000620 (length 405)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000621 (length 761)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000622 (length 220)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000623 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000624 (length 158)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000625 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000626 (length 696)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000627 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000628 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000629 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000630 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000631 (length 226)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000632 (length 163)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000633 (length 212)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000634 (length 545)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000635 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000636 (length 359)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000637 (length 296)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000638 (length 175)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000639 (length 178)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000640 (length 394)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000641 (length 241)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000642 (length 310)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000644 (length 284)
+
+DiscRep_ALL:DISC_SOURCE_QUALS_ASNDISC::strain (all present, all same)
+DiscRep_SUB:DISC_SOURCE_QUALS_ASNDISC::3 sources have 'APS (Acyrthosiphon pisum)' for strain
+DiscRep_ALL:DISC_SOURCE_QUALS_ASNDISC::taxname (all present, all same)
+DiscRep_SUB:DISC_SOURCE_QUALS_ASNDISC::3 sources have 'Buchnera aphidicola str. APS (Acyrthosiphon pisum)' for taxname
+DiscRep_ALL:DISC_SOURCE_QUALS_ASNDISC::taxid (all present, all same)
+DiscRep_SUB:DISC_SOURCE_QUALS_ASNDISC::3 sources have '107806' for taxid
+DiscRep_ALL:DISC_FEATURE_COUNT::gene: 633 present
+DiscRep_ALL:DISC_FEATURE_COUNT::CDS: 596 present
+DiscRep_ALL:DISC_FEATURE_COUNT::tRNA: 31 present
+DiscRep_ALL:DISC_FEATURE_COUNT::rRNA: 3 present
+DiscRep_ALL:DISC_FEATURE_COUNT::ncRNA: 2 present
+DiscRep_ALL:DISC_FEATURE_COUNT::tmRNA: 1 present
+DiscRep_ALL:DISC_COUNT_NUCLEOTIDES::3 nucleotide Bioseqs are present
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+
+DiscRep_ALL:DUPLICATE_GENE_LOCUS::4 genes have the same locus as another gene on the same Bioseq.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	grpE	BA000003.2:279317-279901	extpgap_000272
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	grpE	BA000003.2:c201135-200569	extpgap_000200
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	ribD	BA000003.2:507446-508069	extpgap_000484
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	ribD	BA000003.2:506978-507403	extpgap_000483
+
+DiscRep_ALL:OVERLAPPING_GENES::95 genes overlap another gene on the same strand.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	leuB	AP001071.1:4652-5743	extpgap_000010
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	leuC	AP001071.1:5733-7160	extpgap_000011
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000016	BA000003.2:3497-3982	extpgap_000016
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000017	BA000003.2:3982-4515	extpgap_000017
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000033	BA000003.2:c22354-21614	extpgap_000033
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000034	BA000003.2:c22848-22354	extpgap_000034
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000040	BA000003.2:29403-29972	extpgap_000040
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000041	BA000003.2:29957-30220	extpgap_000041
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000086	BA000003.2:77074-78711	extpgap_000086
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fliG	BA000003.2:78708-79703	extpgap_000087
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000088	BA000003.2:79696-80358	extpgap_000088
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000089	BA000003.2:80316-81719	extpgap_000089
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000093	BA000003.2:83392-84339	extpgap_000093
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fliN	BA000003.2:84332-84733	extpgap_000094
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fliQ	BA000003.2:85956-86225	extpgap_000096
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fliR	BA000003.2:86225-87001	extpgap_000097
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000109	BA000003.2:c100486-100232	extpgap_000109
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000110	BA000003.2:c101348-100464	extpgap_000110
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	hisD	BA000003.2:105077-106384	extpgap_000115
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000116	BA000003.2:106381-107487	extpgap_000116
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000117	BA000003.2:107477-108538	extpgap_000117
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	hisH	BA000003.2:108538-109128	extpgap_000118
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	hisA	BA000003.2:109133-109873	extpgap_000119
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000120	BA000003.2:109852-110628	extpgap_000120
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000121	BA000003.2:110622-111269	extpgap_000121
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000132	BA000003.2:121778-122272	extpgap_000132
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000133	BA000003.2:122247-122930	extpgap_000133
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000150	BA000003.2:c142260-140188	extpgap_000150
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	glyQ	BA000003.2:c143173-142235	extpgap_000151
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	lspA	BA000003.2:c156645-156163	extpgap_000163
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000164	BA000003.2:c159467-156645	extpgap_000164
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000172	BA000003.2:167482-167970	extpgap_000172
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000173	BA000003.2:167967-169301	extpgap_000173
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000178	BA000003.2:174215-174517	extpgap_000178
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000179	BA000003.2:174514-176358	extpgap_000179
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	prfA	BA000003.2:184538-185623	extpgap_000187
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	prmC	BA000003.2:185620-186453	extpgap_000188
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000232	BA000003.2:c236220-235298	extpgap_000232
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000233	BA000003.2:c237671-236217	extpgap_000233
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	murG	BA000003.2:c238778-237714	extpgap_000234
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000235	BA000003.2:c239974-238775	extpgap_000235
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000236	BA000003.2:c241293-239971	extpgap_000236
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000237	BA000003.2:c242366-241293	extpgap_000237
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000238	BA000003.2:c243727-242360	extpgap_000238
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000239	BA000003.2:c245217-243724	extpgap_000239
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000245	BA000003.2:c251284-250805	extpgap_000245
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000246	BA000003.2:c251880-251281	extpgap_000246
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000259	BA000003.2:268530-269681	extpgap_000259
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	flhA	BA000003.2:269674-271764	extpgap_000260
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000266	BA000003.2:c276809-276591	extpgap_000266
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000267	BA000003.2:c277060-276767	extpgap_000267
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000277	BA000003.2:c282712-281861	extpgap_000277
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000278	BA000003.2:c283389-282709	extpgap_000278
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000299	BA000003.2:c305325-303964	extpgap_000299
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	trpD	BA000003.2:c306334-305306	extpgap_000300
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000315	BA000003.2:325561-326760	extpgap_000315
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	lolD	BA000003.2:326753-327439	extpgap_000316
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000320	BA000003.2:330827-332278	extpgap_000320
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000321	BA000003.2:332275-333018	extpgap_000321
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000349	BA000003.2:363490-363666	extpgap_000349
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000350	BA000003.2:363663-364505	extpgap_000350
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000365	BA000003.2:375942-377099	extpgap_000365
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000366	BA000003.2:377099-377398	extpgap_000366
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000371	BA000003.2:383914-384393	extpgap_000371
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000372	BA000003.2:384381-384872	extpgap_000372
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fabG	BA000003.2:384859-385593	extpgap_000373
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000375	BA000003.2:385983-386621	extpgap_000375
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000376	BA000003.2:386618-387598	extpgap_000376
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000431	BA000003.2:446639-447391	extpgap_000431
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000432	BA000003.2:447363-448124	extpgap_000432
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000449	BA000003.2:c464376-462667	extpgap_000449
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000450	BA000003.2:c466181-464376	extpgap_000450
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	cyoD	BA000003.2:c514189-513872	extpgap_000491
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	cyoC	BA000003.2:c514806-514189	extpgap_000492
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	cyoB	BA000003.2:c516791-514803	extpgap_000493
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000501	BA000003.2:527423-529192	extpgap_000501
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000502	BA000003.2:529164-530936	extpgap_000502
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000516	BA000003.2:c543659-542838	extpgap_000516
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000517	BA000003.2:c544179-543652	extpgap_000517
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	rpsQ	BA000003.2:c555463-555209	extpgap_000538
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000539	BA000003.2:c555657-555460	extpgap_000539
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000540	BA000003.2:c556067-555657	extpgap_000540
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000545	BA000003.2:c558612-558310	extpgap_000545
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000546	BA000003.2:c559214-558609	extpgap_000546
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000575	BA000003.2:587804-588856	extpgap_000575
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000576	BA000003.2:588828-589109	extpgap_000576
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	cysQ	BA000003.2:c594151-593354	extpgap_000584
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000585	BA000003.2:c594590-594138	extpgap_000585
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000608	BA000003.2:c618295-617192	extpgap_000608
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000609	BA000003.2:c618626-618288	extpgap_000609
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000615	BA000003.2:624014-624958	extpgap_000615
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000616	BA000003.2:624955-625302	extpgap_000616
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	extpgap_000617	BA000003.2:625263-625712	extpgap_000617
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	hscA	BA000003.2:636239-638074	extpgap_000630
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Gene	fdx	BA000003.2:638074-638409	extpgap_000631
+
+DiscRep_ALL:RNA_CDS_OVERLAP::1 coding regions overlap RNA features
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	hydroxyacylglutathione hydrolase	BA000003.2:c276550-275795	extpgap_000265
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:tRNA	Ala	BA000003.2:275731-275803	extpgap_000264
+
+DiscRep_ALL:SUSPECT_PRODUCT_NAMES::7 cds comments or protein descriptions contain suspect phrases
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	hypothetical protein	AP001070.1:3629-5196	extpgap_000004
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	hypothetical protein	BA000003.2:103050-103254	extpgap_000112
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	hypothetical protein	BA000003.2:c236220-235298	extpgap_000232
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	cell division protein FtsL	BA000003.2:c247275-247022	extpgap_000241
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	hypothetical protein	BA000003.2:327457-328694	extpgap_000317
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	flagellar basal body rod protein FlgB	BA000003.2:370568-370968	extpgap_000358
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	exodeoxyribonuclease I	BA000003.2:c591504-589988	extpgap_000578
+
+DiscRep_ALL:SUSPECT_PRODUCT_NAMES::2 product_names contain suspect phrase or characters
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	23S rRNA pseudouridine(955/2504/2580) synthase RluC	BA000003.2:382339-383283	extpgap_000369
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:CDS	23S rRNA pseudouridine(1911/1915/1917) synthase RluD	BA000003.2:c439033-438095	extpgap_000423
+
+DiscRep_ALL:DISC_QUALITY_SCORES::Quality scores are missing on all sequences.
+
+DiscRep_ALL:ONCALLER_COMMENT_PRESENT::1 comment descriptors were found (all same)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:Annotation was added by the NCBI Prokaryotic Genome Annotation Pipeline (released 2013). Information about the Pipeline can be found here: https://www.ncbi.nlm.nih.gov/genome/annotation_prok/
+
+DiscRep_ALL:SHORT_PROT_SEQUENCES::2 protein sequences are shorter than 50 aa.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000513 (length 38)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000617 (length 47)
+
+DiscRep_ALL:MISSING_GENOMEASSEMBLY_COMMENTS::3 bioseqs are missing GenomeAssembly structured comments
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+
+DiscRep_ALL:TEST_DEFLINE_PRESENT::1 Bioseqs have definition line
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+
+DiscRep_ALL:MOLTYPE_NOT_MRNA::3 molecule types are not set as mRNA.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+
+DiscRep_ALL:TECHNIQUE_NOT_TSA::3 technique are not set as TSA
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+
+DiscRep_ALL:MISSING_PROJECT::592 sequences do not include project.
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000001 (length 521)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000002 (length 200)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000003 (length 59)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000005 (length 200)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000006 (length 283)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000007 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000008 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000009 (length 519)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000010 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000011 (length 475)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000012 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000013 (length 628)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000014 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000015 (length 79)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000016 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000017 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000018 (length 512)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000019 (length 290)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000020 (length 465)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000021 (length 138)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000022 (length 803)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000023 (length 366)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000024 (length 454)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000026 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000027 (length 532)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000028 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000029 (length 96)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000030 (length 548)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000031 (length 203)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000032 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000033 (length 164)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000034 (length 191)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000035 (length 378)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000036 (length 284)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000037 (length 609)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000038 (length 459)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000039 (length 189)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000040 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000041 (length 758)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000042 (length 525)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000043 (length 92)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000044 (length 81)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000045 (length 1407)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000046 (length 1342)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000047 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000048 (length 165)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000049 (length 231)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000050 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000051 (length 181)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000052 (length 127)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000053 (length 356)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000054 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000055 (length 381)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000056 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000057 (length 257)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000058 (length 403)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000059 (length 459)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000060 (length 144)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000061 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000062 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000063 (length 612)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000064 (length 577)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000065 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000066 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000067 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000068 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000069 (length 414)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000070 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000071 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000072 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000073 (length 85)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000074 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000075 (length 675)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000076 (length 467)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000078 (length 98)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000079 (length 545)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000080 (length 331)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000081 (length 220)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000082 (length 467)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000084 (length 112)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000085 (length 235)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000086 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000087 (length 133)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000088 (length 379)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000089 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000090 (length 258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000091 (length 55)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000092 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000094 (length 970)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000095 (length 182)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000096 (length 446)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000097 (length 282)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000098 (length 406)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000099 (length 316)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000100 (length 665)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000101 (length 375)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000102 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000103 (length 294)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000104 (length 354)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000106 (length 186)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000107 (length 299)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000108 (length 435)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000109 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000110 (length 353)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000111 (length 196)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000112 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000113 (length 258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000114 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000115 (length 468)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000116 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000117 (length 547)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000118 (length 440)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000119 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000120 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000121 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000123 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000124 (length 347)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000126 (length 164)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000127 (length 227)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000128 (length 210)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000129 (length 726)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000130 (length 422)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000131 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000132 (length 360)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000133 (length 348)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000134 (length 642)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000135 (length 179)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000136 (length 65)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000137 (length 118)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000138 (length 329)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000139 (length 795)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000140 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000141 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000142 (length 370)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000143 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000144 (length 690)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000145 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000146 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000147 (length 95)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000148 (length 256)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000149 (length 430)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000151 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000152 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000153 (length 1079)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000154 (length 387)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000155 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000156 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000157 (length 160)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000158 (length 940)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000159 (length 313)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000161 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000162 (length 377)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000163 (length 637)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000164 (length 134)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000165 (length 224)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000166 (length 600)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000167 (length 162)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000168 (length 444)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000169 (length 906)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000170 (length 322)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000171 (length 180)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000172 (length 170)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000173 (length 100)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000174 (length 614)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000175 (length 505)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000176 (length 486)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000177 (length 411)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000178 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000179 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000180 (length 315)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000181 (length 294)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000182 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000183 (length 277)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000184 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000185 (length 268)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000187 (length 708)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000188 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000189 (length 376)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000191 (length 830)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000192 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000193 (length 197)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000195 (length 188)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000196 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000197 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000198 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000199 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000200 (length 203)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000202 (length 362)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000203 (length 429)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000204 (length 309)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000205 (length 816)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000206 (length 166)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000207 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000208 (length 263)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000209 (length 151)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000210 (length 266)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000211 (length 760)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000212 (length 875)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000213 (length 124)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000214 (length 217)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000215 (length 349)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000216 (length 887)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000217 (length 405)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000218 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000219 (length 62)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000220 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000221 (length 286)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000222 (length 232)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000223 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000224 (length 384)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000225 (length 418)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000227 (length 484)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000228 (length 354)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000229 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000230 (length 440)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000231 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000232 (length 455)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000233 (length 497)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000234 (length 579)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000236 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000238 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000239 (length 199)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000240 (length 478)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000241 (length 274)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000242 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000243 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000244 (length 268)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000245 (length 242)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000246 (length 185)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000247 (length 398)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000248 (length 251)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000249 (length 617)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000250 (length 1161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000251 (length 572)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000252 (length 383)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000254 (length 574)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000255 (length 251)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000256 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000257 (length 97)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000258 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000259 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000260 (length 158)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000261 (length 194)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000262 (length 99)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000263 (length 162)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000264 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000265 (length 126)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000266 (length 283)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000267 (length 226)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000268 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000269 (length 610)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000271 (length 211)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000272 (length 456)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000273 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000274 (length 260)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000275 (length 649)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000276 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000277 (length 211)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000278 (length 323)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000279 (length 236)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000281 (length 194)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000283 (length 486)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000284 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000285 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000286 (length 247)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000287 (length 269)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000288 (length 388)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000289 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000290 (length 342)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000291 (length 307)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000292 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000294 (length 861)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000295 (length 266)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000296 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000297 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000298 (length 423)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000299 (length 417)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000300 (length 224)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000301 (length 343)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000302 (length 428)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000303 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000304 (length 812)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000305 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000306 (length 228)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000308 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000309 (length 171)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000310 (length 483)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000311 (length 247)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000312 (length 909)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000313 (length 420)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000314 (length 231)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000315 (length 320)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000316 (length 263)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000317 (length 255)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000318 (length 94)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000319 (length 558)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000320 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000321 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000322 (length 427)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000323 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000324 (length 427)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000325 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000326 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000327 (length 586)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000328 (length 262)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000329 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000330 (length 480)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000331 (length 491)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000332 (length 292)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000333 (length 69)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000335 (length 521)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000336 (length 221)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000337 (length 83)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000338 (length 270)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000339 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000340 (length 58)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000341 (length 280)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000342 (length 349)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000343 (length 511)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000344 (length 350)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000349 (length 136)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000350 (length 236)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000351 (length 408)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000352 (length 252)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000353 (length 260)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000354 (length 238)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000355 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000356 (length 99)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000357 (length 543)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000358 (length 902)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000359 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000360 (length 54)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000361 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000363 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000364 (length 80)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000366 (length 326)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000367 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000368 (length 477)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000369 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000370 (length 175)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000371 (length 382)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000372 (length 466)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000373 (length 399)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000375 (length 287)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000376 (length 701)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000377 (length 596)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000378 (length 324)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000379 (length 955)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000380 (length 499)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000382 (length 338)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000383 (length 310)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000384 (length 154)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000385 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000386 (length 601)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000387 (length 707)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000388 (length 89)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000389 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000390 (length 120)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000391 (length 864)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000392 (length 496)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000393 (length 109)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000395 (length 444)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000396 (length 611)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000397 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000398 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000399 (length 80)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000400 (length 416)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000401 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000402 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000403 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000404 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000405 (length 142)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000406 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000407 (length 451)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000408 (length 79)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000409 (length 176)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000410 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000411 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000412 (length 483)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000414 (length 150)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000415 (length 98)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000416 (length 312)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000417 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000418 (length 878)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000419 (length 57)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000420 (length 518)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000421 (length 378)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000423 (length 250)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000424 (length 253)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000425 (length 223)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000426 (length 571)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000428 (length 434)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000429 (length 334)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000430 (length 161)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000431 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000432 (length 71)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000433 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000434 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000435 (length 302)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000436 (length 473)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000438 (length 244)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000439 (length 569)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000440 (length 601)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000441 (length 802)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000442 (length 212)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000443 (length 286)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000444 (length 205)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000445 (length 607)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000447 (length 319)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000448 (length 357)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000449 (length 506)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000450 (length 415)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000451 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000452 (length 264)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000453 (length 439)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000455 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000456 (length 291)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000457 (length 859)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000458 (length 331)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000459 (length 214)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000460 (length 76)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000461 (length 371)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000462 (length 196)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000463 (length 390)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000464 (length 358)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000465 (length 281)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000466 (length 1070)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000467 (length 1174)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000468 (length 602)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000469 (length 442)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000471 (length 160)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000472 (length 323)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000473 (length 141)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000474 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000475 (length 143)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000476 (length 608)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000477 (length 282)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000478 (length 390)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000479 (length 114)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000480 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000481 (length 105)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000482 (length 205)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000483 (length 662)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000485 (length 104)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000486 (length 442)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000487 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000488 (length 429)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000489 (length 777)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000490 (length 623)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000491 (length 589)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000492 (length 590)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000493 (length 361)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000494 (length 109)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000496 (length 624)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000497 (length 215)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000498 (length 285)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000499 (length 464)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000500 (length 87)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000501 (length 69)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000503 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000505 (length 157)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000506 (length 173)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000507 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000508 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000509 (length 329)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000510 (length 206)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000511 (length 131)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000512 (length 118)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000513 (length 38)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000514 (length 437)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000515 (length 144)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000516 (length 59)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000517 (length 167)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000518 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000520 (length 130)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000521 (length 101)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000522 (length 179)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000523 (length 104)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000524 (length 122)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000525 (length 84)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000526 (length 65)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000527 (length 136)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000528 (length 233)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000529 (length 110)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000530 (length 92)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000531 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000532 (length 100)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000533 (length 201)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000534 (length 209)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000535 (length 103)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000537 (length 702)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000538 (length 156)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000539 (length 124)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000540 (length 95)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000541 (length 119)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000542 (length 128)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000544 (length 408)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000545 (length 388)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000546 (length 335)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000547 (length 228)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000548 (length 363)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000549 (length 173)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000550 (length 234)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000551 (length 407)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000552 (length 526)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000553 (length 192)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000554 (length 171)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000555 (length 465)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000556 (length 320)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000557 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000558 (length 208)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000559 (length 376)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000560 (length 239)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000561 (length 350)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000562 (length 93)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000563 (length 262)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000565 (length 102)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000567 (length 213)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000568 (length 154)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000569 (length 265)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000570 (length 150)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000571 (length 75)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000572 (length 113)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000573 (length 745)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000574 (length 433)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000576 (length 406)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000577 (length 302)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000578 (length 584)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000579 (length 385)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000580 (length 632)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000581 (length 549)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000583 (length 184)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000585 (length 237)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000586 (length 72)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000588 (length 85)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000589 (length 176)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000590 (length 443)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000591 (length 157)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000592 (length 252)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000593 (length 324)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000594 (length 165)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000595 (length 367)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000596 (length 112)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000597 (length 246)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000598 (length 490)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000599 (length 410)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000601 (length 116)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000602 (length 314)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000603 (length 115)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000604 (length 149)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000605 (length 419)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000606 (length 108)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000607 (length 645)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000608 (length 490)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000609 (length 617)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000610 (length 404)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000611 (length 127)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000612 (length 174)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000613 (length 611)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000614 (length 111)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000615 (length 453)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000616 (length 193)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000617 (length 47)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000618 (length 145)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000619 (length 273)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000620 (length 405)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000621 (length 761)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000622 (length 220)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000623 (length 177)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000624 (length 158)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000625 (length 159)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000626 (length 696)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000627 (length 368)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000628 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000629 (length 336)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000630 (length 135)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000631 (length 226)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000632 (length 163)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000633 (length 212)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000634 (length 545)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000635 (length 207)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000636 (length 359)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000637 (length 296)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000638 (length 175)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000639 (length 178)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000640 (length 394)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000641 (length 241)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000642 (length 310)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:GENEMARK_000644 (length 284)
+
+DiscRep_ALL:DISC_INCONSISTENT_STRUCTURED_COMMENTS::Structured Comment Report (some missing, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Annotation Date (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Annotation Date value '06/09/2018 00:53:26'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Annotation Method (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Annotation Method value 'Best-placed reference protein set; GeneMarkS+'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Annotation Pipeline (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Annotation Pipeline value 'NCBI Prokaryotic Genome Annotation Pipeline'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Annotation Provider (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Annotation Provider value 'NCBI'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Annotation Software revision (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Annotation Software revision value '55.11111123'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field CDS (coding) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field CDS (coding) value '589'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field CDS (total) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field CDS (total) value '596'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Features Annotated (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Features Annotated value 'Gene; CDS; rRNA; tRNA; ncRNA; repeat_region'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Genes (RNA) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Genes (RNA) value '37'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Genes (coding) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Genes (coding) value '589'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Genes (total) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Genes (total) value '633'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Pseudo Genes (ambiguous residues) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Pseudo Genes (ambiguous residues) value '0 of 7'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Pseudo Genes (frameshifted) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Pseudo Genes (frameshifted) value '7 of 7'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Pseudo Genes (incomplete) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Pseudo Genes (incomplete) value '0 of 7'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Pseudo Genes (internal stop) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Pseudo Genes (internal stop) value '0 of 7'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field Pseudo Genes (total) (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field Pseudo Genes (total) value '7'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field complete rRNAs (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field complete rRNAs value '1, 1, 1 (5S, 16S, 23S)'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field ncRNAs (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field ncRNAs value '3'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field partial rRNAs (all missing)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::3 ##Genome-Annotation-Data-START## structured comments are missing field structured comment field partial rRNAs
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field rRNAs (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field rRNAs value '1, 1, 1 (5S, 16S, 23S)'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::structured comment field tRNAs (all present, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_STRUCTURED_COMMENTS::All ##Genome-Annotation-Data-START## structured comments have field structured comment field tRNAs value '31'
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:StructuredComment
+
+DiscRep_ALL:DISC_INCONSISTENT_MOLINFO_TECH::Molinfo Technique Report (some missing, all same)
+
+DiscRep_SUB:DISC_INCONSISTENT_MOLINFO_TECH::technique (all missing)
+
+DiscRep_SUB:DISC_INCONSISTENT_MOLINFO_TECH::3 Molinfos are missing field technique
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001070.1 (length 7258)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:AP001071.1 (length 7786)
+/var/lib/cwl/stgef5de57e-cebc-4c75-923a-da51d01edb1a/annot.sqn:BA000003.2 (length 640681)
+
