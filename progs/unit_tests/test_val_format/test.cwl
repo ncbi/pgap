@@ -6,29 +6,34 @@ hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 inputs:
-    dummy:
-        type: File?
+    input: File
 steps:
     test: 
         run:
             label: "val_format"
-
             class: CommandLineTool
             hints:
               DockerRequirement:
                 dockerPull: ncbi/gpdev:latest
             baseCommand: val_format    
-            arguments: ['-i', 'annot.disc', '-ifmt', 'discrepancy', '-ofmt', 'xml', '-o', 'annot.disc.xml']
+            arguments: ['-ifmt', 'discrepancy', '-ofmt', 'xml']
             inputs:
-                dummy:
-                    type: File?
+                input:
+                    type: File
+                    inputBinding:
+                        prefix: -i
+                output_name:
+                    type: string
+                    default: annot.disc.xml
+                    inputBinding:
+                        prefix: -o
             outputs:
                 output:
                     type: File
                     outputBinding:
-                        glob: 'annot.disc.xml'
+                        glob: $(inputs.output_name)
         in:
-            dummy: dummy
+            input: input
         out: [output]
 outputs:
     output: 
