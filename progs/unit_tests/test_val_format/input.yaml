@@ -1,3 +1,6 @@
 input:
   class: File
   location: annot.disc
+inputMG:
+  class: File
+  location: MG.annot.disc

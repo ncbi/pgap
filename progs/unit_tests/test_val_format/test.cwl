@@ -7,36 +7,23 @@ hints:
     dockerPull: ncbi/gpdev:latest
 inputs:
     input: File
+    inputMG: File
 steps:
-    test: 
-        run:
-            label: "val_format"
-            class: CommandLineTool
-            hints:
-              DockerRequirement:
-                dockerPull: ncbi/gpdev:latest
-            baseCommand: val_format    
-            arguments: ['-ifmt', 'discrepancy', '-ofmt', 'xml']
-            inputs:
-                input:
-                    type: File
-                    inputBinding:
-                        prefix: -i
-                output_name:
-                    type: string
-                    default: annot.disc.xml
-                    inputBinding:
-                        prefix: -o
-            outputs:
-                output:
-                    type: File
-                    outputBinding:
-                        glob: $(inputs.output_name)
+    testMG: 
+        run: val_format.cwl
         in:
-            input: input
+            input: inputMG
         out: [output]
+    # test: 
+        # run: val_format.cwl
+        # in:
+            # input: input
+        # out: [output]
 outputs:
-    output: 
+    # output: 
+        # type: File
+        # outputSource: test/output
+    outputMG: 
         type: File
-        outputSource: test/output
+        outputSource: testMG/output
     
