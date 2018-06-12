@@ -309,7 +309,7 @@ steps:
         thresholds: thresholds
         defline_cleanup_rules: defline_cleanup_rules # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
         blast_rules_db_dir: blast_rules_db_dir
-        identification_db_dir: blast_rules_db_dir
+        identification_db_dir: identification_db_dir
         # cached for intermediate testing
         # cached_Find_Naming_Protein_Hits:
     out:
