@@ -1,4 +1,5 @@
 #!/usr/bin/env cwl-runner
+
 label: "PGAP Pipeline"
 cwlVersion: v1.0
 class: Workflow
