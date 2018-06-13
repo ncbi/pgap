@@ -31,8 +31,10 @@ inputs:
         type: File
     Extract_Model_Proteins_prot_ids: # pass 3
         type: File
-    CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd -
-        type: Directory
+    # this is for phase 3 (SPARCL)
+    # CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd -
+      #  type: Directory
+    # this is also for phase 3 SPARCL but we have it setup
     CDDdata2: # ${GP_HOME}/third-party/data/cdd_add 
         type: Directory
     thresholds:
