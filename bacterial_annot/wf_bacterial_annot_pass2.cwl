@@ -27,6 +27,9 @@ inputs:
     blast_rules_db_dir: 
         label: "Get BLAST Rules db const"
         type: Directory
+    blast_rules_db: 
+        label: "Name of blast_rules_db"
+        type: string
     identification_db_dir:
         label: "Create identification BLASTdb"
         type: Directory
@@ -74,7 +77,7 @@ steps:
                 source: [blast_rules_db_dir, identification_db_dir] # production
                 linkMerge: merge_flattened
             blastdb:
-                default: blastdb
+                default: [blastdb, blast_rules_db]
             # cluster_blastp_wnode_output: cluster_blastp_wnode_output # shortcut
             affinity: 
                 default: subject

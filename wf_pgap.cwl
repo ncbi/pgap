@@ -21,8 +21,6 @@ inputs:
   hmms_tab: File
   naming_hmms_tab: File
   uniColl_cache: Directory
-  uniColl_path: Directory
-  # uniColl_path: Directory
   gene_master_ini: File
   16s_blastdb_dir: Directory
   23s_blastdb_dir: Directory
@@ -32,7 +30,9 @@ inputs:
   rfam_stockholm: File
   AntiFamLib: Directory
   blast_rules_db_dir: Directory
-  identification_db_dir: Directory
+  blast_rules_db: 
+    type: string
+    default: blast_rules_db
   thresholds: File
   naming_sqlite: File # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
   selenoproteins: Directory
@@ -72,7 +72,6 @@ steps:
     run: genomic_source/wf_genomic_source.cwl
     in:
       fasta: fasta
-      submit_block_template: submit_block_template
       taxid: taxid
       gc_assm_name: gc_assm_name
       taxon_db: taxon_db
@@ -200,7 +199,8 @@ steps:
         prot_ids_B1: bacterial_annot/prot_ids
         prot_ids_B2: spurious_annot_1/AntiFam_tainted_proteins_I___oseqids
         blast_rules_db_dir: blast_rules_db_dir
-        identification_db_dir: identification_db_dir
+        blast_rules_db: blast_rules_db
+        identification_db_dir: naming_blast_db
         annotation: bacterial_annot/outseqs
         sequence_cache: genomic_source/asncache
         unicoll_cache: uniColl_cache
@@ -212,7 +212,7 @@ steps:
     in:
       asn_cache: genomic_source/asncache
       uniColl_asn_cache: uniColl_cache
-      uniColl_path: uniColl_path
+      naming_sqlite: naming_sqlite
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
       tax_sql_file: taxon_db 
@@ -312,7 +312,8 @@ steps:
         thresholds: thresholds
         defline_cleanup_rules: defline_cleanup_rules # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
         blast_rules_db_dir: blast_rules_db_dir
-        identification_db_dir: identification_db_dir
+        blast_rules_db: blast_rules_db
+        identification_db_dir: naming_blast_db
         # cached for intermediate testing
         # cached_Find_Naming_Protein_Hits:
     out:

@@ -14,8 +14,6 @@ requirements:
     listing:
       - entry: $(inputs.uniColl_asn_cache)
         writable: False
-      - entry: $(inputs.uniColl_path)
-        writable: False
 
 baseCommand: bacterial_prot_src
 arguments: [ -no-phage, -nogenbank ]
@@ -33,10 +31,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -taxon-db
-  uniColl_path:
-    type: Directory
+  naming_sqlite:
+    type: File
     inputBinding:
-      prefix: -unicoll_path
+      prefix: -unicoll_sqlite
   prot_output:
     type: string?
     default: all_prots.seqid

@@ -8,7 +8,6 @@ requirements:
 
 inputs:
   fasta: File
-  submit_block_template: File
   taxid: int
   gc_assm_name: string
   taxon_db: File
@@ -44,7 +43,6 @@ steps:
     run: ../progs/prime_cache.cwl
     in:
       input: fasta
-      submit_block_template: submit_block_template
       taxon_db: taxon_db
       taxid: taxid
     out: [oseq_ids, asn_cache]
