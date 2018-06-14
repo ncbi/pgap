@@ -11,7 +11,7 @@ requirements:
 inputs:
   asn_cache: Directory
   uniColl_asn_cache: Directory
-  uniColl_path: Directory
+  naming_sqlite: File
   blastdb_dir: Directory
   taxid: int
   tax_sql_file: File
@@ -34,7 +34,7 @@ steps:
     run: bacterial_prot_src.cwl
     in:
       uniColl_asn_cache: uniColl_asn_cache
-      uniColl_path: uniColl_path
+      naming_sqlite: naming_sqlite
       taxid: taxid
       tax_sql_file: tax_sql_file
     out: [ universal_clusters, all_prots ]

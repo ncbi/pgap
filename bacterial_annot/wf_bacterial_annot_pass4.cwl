@@ -43,6 +43,8 @@ inputs:
         type: File
     blast_rules_db_dir:
         type: Directory
+    blast_rules_db: 
+        type: string
     identification_db_dir:
         type: Directory
     # cached for intermediate testing
@@ -63,7 +65,7 @@ steps:
                 source: [blast_rules_db_dir, identification_db_dir] # production
                 linkMerge: merge_flattened
             blastdb:
-                default: blastdb
+                default: [blastdb, blast_rules_db]
             # cluster_blastp_wnode_output: cluster_blastp_wnode_output # shortcut
             # literal parameters
             affinity: 

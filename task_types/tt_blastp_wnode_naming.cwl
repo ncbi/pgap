@@ -16,7 +16,7 @@ requirements:
     
 inputs:
   blastdb_dir: Directory[]
-  blastdb: string
+  blastdb: string[]
   # cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
   lds2: File
   proteins: File
@@ -70,7 +70,6 @@ steps:
       allow_intersection: allow_intersection
       asn_cache: asn_cache
       blastdb_dir: blastdb_dir
-      blastdb: blastdb
       comp_based_stats: comp_based_stats
       compart: compart
       dbsize: dbsize

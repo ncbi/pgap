@@ -41,8 +41,6 @@ inputs:
     type: int?
     inputBinding:
       prefix: -backlog
-  blastdb:
-    type: string?
   blastdb_dir:
     type: Directory[]
   comp_based_stats:  # F/T

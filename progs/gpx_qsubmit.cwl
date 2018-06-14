@@ -39,11 +39,11 @@ inputs:
     inputBinding:
       prefix: -batch-size
   blastdb:
-    type: string?
+    type: string[]
     # this part for testing only, it is not compatible with -db-manifest setting below
     inputBinding:
       prefix: -db
-      valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb_dir.length; i++) { blob += inputs.blastdb_dir[i].path + '/' + inputs.blastdb; if(i != inputs.blastdb_dir.length-1) blob += ','; } return blob; }
+      valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb_dir.length; i++) { blob += inputs.blastdb_dir[i].path + '/' + inputs.blastdb[i]; if(i != inputs.blastdb_dir.length-1) blob += ','; } return blob; }
   blastdb_dir:
     type: Directory[]
   # this won't work because we create manifest in requirement: section simultaneously with declaring input directories "stable"
