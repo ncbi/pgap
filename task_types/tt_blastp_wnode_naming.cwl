@@ -87,6 +87,8 @@ steps:
       threshold: threshold
       top_by_score: top_by_score
       word_size: word_size
+      workers:
+        default: 1
     out: [outdir]
   gpx_qdump:
     run: ../progs/gpx_qdump.cwl
