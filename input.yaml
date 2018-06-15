@@ -1,12 +1,3 @@
-# User input
-submit_block_template:
-  class: File
-  location: input/ASM2732v1.1.template
-fasta:
-  class: File
-  location: input/ASM2732v1.annotation.nucleotide.1.fa
-taxid: 243273
-gc_assm_name: MG37
 
 # pipeline data files
 16s_blastdb_dir:
