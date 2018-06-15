@@ -25,23 +25,23 @@ inputs:
         prefix: -n
   b: 
     type: Directory
-    inputBinding:
-        prefix: -b
   d: 
     type: Directory
+    inputBinding:
+        prefix: -d
   blastdb:
     type: string
     default: cdd
     inputBinding:
-        prefix: -d
-        valueFrom: $(inputs.d)/$(inputs.blastdb)
+        prefix: -b
+        valueFrom: $(inputs.b.path)/$(inputs.blastdb)
   x: 
     type: int
     inputBinding:
         prefix: -x
   protein_assignments_name:
     type: string?
-    default: proteins.xml
+    default: ./proteins.xml
     inputBinding:
         prefix: -o
         
