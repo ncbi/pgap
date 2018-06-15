@@ -29,7 +29,7 @@ blast_rules_db_dir:
   location: input/uniColl_path/blast_dir
 CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
   class: Directory
-  location: input/cdd
+  location: input/CDD
 CDDdata2: # ${GP_HOME}/third-party/data/cdd_add
   class: Directory
   location: input/cdd_add
