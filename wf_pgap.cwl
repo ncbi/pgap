@@ -41,8 +41,7 @@ inputs:
   taxon_db: File   
   genemark_path: Directory
   naming_blast_db: Directory
-  # this is for phase 3 (SPARCL)
-  # CDDdata: Directory
+  CDDdata: Directory
   CDDdata2: Directory
   defline_cleanup_rules: File
   univ_prot_xml: File
@@ -305,8 +304,7 @@ steps:
         hmm_assignments:  bacterial_annot_3/Assign_Naming_HMM_to_Proteins_assignments # XML assignments
         wp_assignments:  bacterial_annot_3/Name_by_WPs_names # XML assignments
         Extract_Model_Proteins_prot_ids: bacterial_annot_3/Extract_Model_Proteins_seqids # pass 3
-        # this is for phase 3 (SPARCL)
-        # CDDdata: CDDdata # ${GP_HOME}/third-party/data/CDD/cdd -
+        CDDdata: CDDdata # ${GP_HOME}/third-party/data/CDD/cdd -
         CDDdata2: CDDdata2 # ${GP_HOME}/third-party/data/cdd_add 
         thresholds: thresholds
         defline_cleanup_rules: defline_cleanup_rules # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt

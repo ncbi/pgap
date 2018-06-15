@@ -19,8 +19,6 @@ inputs:
         type: Directory
     uniColl_cache:
         type: Directory
-    # full_id_cache: # what is this?
-    #    type: Directory
     naming_blast_db: # NamingDatabase
         type: Directory
     naming_sqlite: # see bacterial_annot_pass3
@@ -31,10 +29,8 @@ inputs:
         type: File
     Extract_Model_Proteins_prot_ids: # pass 3
         type: File
-    # this is for phase 3 (SPARCL)
-    # CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd -
-      #  type: Directory
-    # this is also for phase 3 SPARCL but we have it setup
+    CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd -
+       type: Directory
     CDDdata2: # ${GP_HOME}/third-party/data/cdd_add 
         type: Directory
     thresholds:
@@ -169,53 +165,52 @@ steps:
             nogenbank:
                 default: true
         out: [protein_assignments] # xml format does, not go out of the workflow
-    ### Phase 3 goodies stashed snugly for winter
-    # Prepare_SPARCLBL_input:
-        # label: "Prepare SPARCLBL input"
-        # run: ../progs/prepare_sparclbl_input.cwl
-        # in:
-            # other_assignments: 
-                # source: [Assign_Clusters_to_Proteins/protein_assignments, hmm_assignments, wp_assignments]
-                # linkMerge: merge_flattened
-            # input: Extract_Model_Proteins_prot_ids # pass 3
-            # unicoll_sqlite: naming_sqlite
-        # out: [prot_ids, precedences] # not go out of the workflow
-    # Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences:
-        # label: "Assign SPARCL Architecture Names to Proteins"
-        # run: ../progs/gp_fetch_sequences.cwl
-        # in:
-            # # not sure why do we have this in PGAP.
-            # # asn_cache: [full_id_cache]
-            # #    linkMerge: merge_flattened
-            # input: Prepare_SPARCLBL_input/prot_ids
-            # lds2: lds2
-            # proteins: proteins
-        # out: [out_proteins]
-    # Assign_SPARCL_Architecture_Names_to_Proteins_asn2fasta:
-        # label: "Assign SPARCL Architecture Names to Proteins"
-        # run: ../progs/asn2fasta.cwl
-        # in:
-            # i: Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences/out_proteins
-            # serial:
-                # default: binary
-            # prots_only:
-                # default: true
-        # out: [fasta]
-    # Assign_SPARCL_Architecture_Names_to_Proteins_sparclbl:
-        # label: "Assign SPARCL Architecture Names to Proteins"
-        # run: ../progs/sparclbl.cwl
-        # in:
-            # s: Assign_SPARCL_Architecture_Names_to_Proteins_asn2fasta/fasta
-            # p: Prepare_SPARCLBL_input/precedences
-            # m: # number_of_blast_processes
-                # default: 20 
-            # n: # max_files_per_proc
-                # default: 500
-            # b: CDDdata
-            # d: CDDdata2
-            # x:
-                # default: 1
-        # out: [protein_assignments] # not go out of the workflow
+    Prepare_SPARCLBL_input:
+        label: "Prepare SPARCLBL input"
+        run: ../progs/prepare_sparclbl_input.cwl
+        in:
+            other_assignments: 
+                source: [Assign_Clusters_to_Proteins/protein_assignments, hmm_assignments, wp_assignments]
+                linkMerge: merge_flattened
+            input: Extract_Model_Proteins_prot_ids # pass 3
+            unicoll_sqlite: naming_sqlite
+        out: [prot_ids, precedences] # not go out of the workflow
+    Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences:
+        label: "Assign SPARCL Architecture Names to Proteins"
+        run: ../progs/gp_fetch_sequences.cwl
+        in:
+            # not sure why do we have this in PGAP.
+            # asn_cache: [full_id_cache]
+            #    linkMerge: merge_flattened
+            input: Prepare_SPARCLBL_input/prot_ids
+            lds2: lds2
+            proteins: proteins
+        out: [out_proteins]
+    Assign_SPARCL_Architecture_Names_to_Proteins_asn2fasta:
+        label: "Assign SPARCL Architecture Names to Proteins"
+        run: ../progs/asn2fasta.cwl
+        in:
+            i: Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences/out_proteins
+            serial:
+                default: binary
+            prots_only:
+                default: true
+        out: [fasta]
+    Assign_SPARCL_Architecture_Names_to_Proteins_sparclbl:
+        label: "Assign SPARCL Architecture Names to Proteins"
+        run: ../progs/sparclbl.cwl
+        in:
+            s: Assign_SPARCL_Architecture_Names_to_Proteins_asn2fasta/fasta
+            p: Prepare_SPARCLBL_input/precedences
+            m: # number_of_blast_processes
+                default: 20 
+            n: # max_files_per_proc
+                default: 500
+            b: CDDdata
+            d: CDDdata2
+            x:
+                default: 1
+        out: [protein_assignments] # not go out of the workflow
     Add_Names_to_Proteins:
         label: "Add Names to Proteins"
         run: ../progs/add_prot_names_to_annot.cwl
@@ -228,7 +223,7 @@ steps:
             defline_cleanup_rules: defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
             proteins: 
                 - Assign_Clusters_to_Proteins/protein_assignments
-                # - Assign_SPARCL_Architecture_Names_to_Proteins_sparclbl/protein_assignments
+                - Assign_SPARCL_Architecture_Names_to_Proteins_sparclbl/protein_assignments
                 - hmm_assignments
                 - wp_assignments
             input: annotation #  Good, AntiFam filtered annotations

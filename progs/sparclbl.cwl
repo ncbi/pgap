@@ -29,8 +29,12 @@ inputs:
         prefix: -b
   d: 
     type: Directory
+  blastdb:
+    type: string
+    default: cdd
     inputBinding:
         prefix: -d
+        valueFrom: $(inputs.d)/$(inputs.blastdb)
   x: 
     type: int
     inputBinding:
