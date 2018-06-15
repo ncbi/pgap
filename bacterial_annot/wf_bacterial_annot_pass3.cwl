@@ -142,20 +142,11 @@ steps:
           [hmm_hits]    
     Assign_Naming_HMM_to_Proteins:
         label: "Assign Naming HMM to Proteins"
-        run: ../progs/famReport.cwl  
+        run: ../progs/assign_hmm.cwl  
         in: 
-            lds2: Extract_Model_Proteins/lds2
-            proteins: Extract_Model_Proteins/proteins
-            fam: hmms_tab # -fam
-            # fam2: not used
-            entries: Run_GeneMark_Post/models # -entries
-            hmm_hits: Search_Naming_HMMs/hmm_hits
-            blastdb:
-                default: ''
-            # blast_hits: blast_hits # not used here
-            expose_conflicts:
-                default: true
-        out: [assignments, annotation] #  -out-xml # bunch of other outputs are not used here
+            input: Search_Naming_HMMs/hmm_hits
+            db: naming_sqlite
+        out: [assignments]
     Name_by_WPs:
         label: "Name by WPs"
         run: ../progs/identify_wp.cwl  
@@ -197,9 +188,6 @@ outputs:
     Assign_Naming_HMM_to_Proteins_assignments:
         type: File
         outputSource: Assign_Naming_HMM_to_Proteins/assignments
-    Assign_Naming_HMM_to_Proteins_annotation:
-        type: File
-        outputSource: Assign_Naming_HMM_to_Proteins/annotation
     Name_by_WPs_names:
         type: File
         outputSource: Name_by_WPs/out_names

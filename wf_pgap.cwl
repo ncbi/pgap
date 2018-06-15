@@ -269,7 +269,6 @@ steps:
         - id: Assign_Naming_HMM_to_Proteins_assignments
             # type: File
             # outputSource: Assign_Naming_HMM_to_Proteins/assignments
-        - id: Assign_Naming_HMM_to_Proteins_annotation
         - id: Name_by_WPs_names
             # type: File
             # outputSource: Name_by_WPs/out_names    
