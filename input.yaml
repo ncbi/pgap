@@ -65,7 +65,7 @@ selenoproteins: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-i
   location: input/selenoproteins
 taxon_db:
   class: File
-  location: input/taxonomy.sqlite3
+  location: input/uniColl_path/taxonomy.sqlite3
 thresholds:
   class: File
   location: input/thresholds.xml
