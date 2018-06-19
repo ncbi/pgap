@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<DiscrepancyCounts>
+  <Counts Severity="WARNING">
+    <Total>1997</Total>
+    <Subcount Code="DISC_BACTERIAL_TAX_STRAIN_MISMATCH">1</Subcount>
+    <Subcount Code="DISC_COUNT_NUCLEOTIDES">1</Subcount>
+    <Subcount Code="DISC_FEATURE_COUNT">1132</Subcount>
+    <Subcount Code="DISC_INCONSISTENT_MOLINFO_TECH">3</Subcount>
+    <Subcount Code="DISC_INCONSISTENT_STRUCTURED_COMMENTS">45</Subcount>
+    <Subcount Code="DISC_QUALITY_SCORES">1</Subcount>
+    <Subcount Code="DISC_SOURCE_QUALS_ASNDISC">4</Subcount>
+    <Subcount Code="DUPLICATE_GENE_LOCUS">2</Subcount>
+    <Subcount Code="MISSING_GENOMEASSEMBLY_COMMENTS">1</Subcount>
+    <Subcount Code="MISSING_PROJECT">514</Subcount>
+    <Subcount Code="MOLTYPE_NOT_MRNA">1</Subcount>
+    <Subcount Code="ONCALLER_COMMENT_PRESENT">1</Subcount>
+    <Subcount Code="OVERLAPPING_GENES">276</Subcount>
+    <Subcount Code="RNA_CDS_OVERLAP">2</Subcount>
+    <Subcount Code="SHORT_PROT_SEQUENCES">3</Subcount>
+    <Subcount Code="SUSPECT_PRODUCT_NAMES">8</Subcount>
+    <Subcount Code="TECHNIQUE_NOT_TSA">1</Subcount>
+    <Subcount Code="TEST_DEFLINE_PRESENT">1</Subcount>
+  </Counts>
+</DiscrepancyCounts>
