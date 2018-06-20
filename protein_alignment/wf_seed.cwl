@@ -9,6 +9,7 @@ inputs:
   asn_cache: Directory
   uniColl_asn_cache: Directory
   compartments: File
+  db_gencode: int
 
 outputs: 
   blast_align:
@@ -27,6 +28,7 @@ steps:
   tblastn_wnode:
     run: tblastn_wnode.cwl
     in:
+      db_gencode: db_gencode
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       asn: compartments

@@ -21,16 +21,16 @@ inputs:
 outputs:
   universal_clusters:  
     type: File
-    outputSource: bacterial_prot_src/universal_clusters
+    outputSource: Get_Proteins/universal_clusters
   align:  
     type: File
-    outputSource: align_filter/align
+    outputSource: Filter_Protein_Alignments_I/align
   align_non_match:  
     type: File
-    outputSource: align_filter/align_non_match
+    outputSource: Filter_Protein_Alignments_I/align_non_match
 
 steps:
-  bacterial_prot_src:
+  Get_Proteins:
     run: bacterial_prot_src.cwl
     in:
       uniColl_asn_cache: uniColl_asn_cache
@@ -38,32 +38,44 @@ steps:
       taxid: taxid
       tax_sql_file: tax_sql_file
     out: [ universal_clusters, all_prots ]
-
-  wf_seed:
+  
+  Compute_Gencode:
+    run: ../progs/compute_gencode.cwl
+    in:
+        taxid: taxid
+    out: [ db_gencode ]
+  Compute_Gencode_int:
+    run: ../progs/file2int.cwl
+    in:
+        input: Compute_Gencode/db_gencode
+    out: [ value ]
+  Seed_Search_Compartments:
     run: wf_seed.cwl
     in:
+      db_gencode: Compute_Gencode_int/db_gencode
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       compartments: compartments
     out: [ blast_align ]
 
-  wf_seed_1:
+  Seed_Protein_Alignments:
     run: wf_seed_1.cwl
     in:
+      db_gencode: Compute_Gencode_int/db_gencode
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      seqids: bacterial_prot_src/all_prots
+      seqids: Get_Proteins/all_prots
       blastdb_dir: blastdb_dir
     out: [ blast_align ]
 
   cat:
     run: cat.cwl
     in:
-      file_in_1: wf_seed_1/blast_align
-      file_in_2: wf_seed/blast_align
+      file_in_1: Seed_Protein_Alignments/blast_align
+      file_in_2: Seed_Search_Compartments/blast_align
     out: [ file_out ]
 
-  align_sort:
+  Sort_Seed_Hits:
     run: align_sort.cwl
     in:
       asn_cache: asn_cache
@@ -71,12 +83,12 @@ steps:
       blast_aligns: cat/file_out
     out: [ sorted_aligns ]
 
-  bacterial_protalign_filter:
+  Filter_Full_Coverage_Alignments_I:
     run: bacterial_protalign_filter.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      sorted_seeds: align_sort/sorted_aligns
+      sorted_seeds: Sort_Seed_Hits/sorted_aligns
     out: [ blast_full_cov, blast_partial_cov ]
 
   compart_filter_prosplign:
@@ -84,15 +96,15 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      seed_hits: bacterial_protalign_filter/blast_partial_cov
+      seed_hits: Filter_Full_Coverage_Alignments_I/blast_partial_cov
       gc_assembly: gc_assembly
     out: [ prosplign_align ]
 
-  align_filter:
+  Filter_Protein_Alignments_I:
     run: wf_align_filter.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      blast_full: bacterial_protalign_filter/blast_full_cov
+      blast_full: Filter_Full_Coverage_Alignments_I/blast_full_cov
       prosplign: compart_filter_prosplign/prosplign_align
     out: [ align, align_non_match ]

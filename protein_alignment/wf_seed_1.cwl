@@ -10,6 +10,7 @@ inputs:
   uniColl_asn_cache: Directory
   seqids: File
   blastdb_dir: Directory
+  db_gencode: int
 
 outputs: 
   blast_align:
@@ -29,6 +30,7 @@ steps:
   tblastn_wnode:
     run: tblastn_wnode_1.cwl
     in:
+      db_gencode: db_gencode
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       input_jobs: gpx_qsubmit/jobs

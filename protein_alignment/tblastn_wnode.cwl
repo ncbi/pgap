@@ -19,9 +19,13 @@ requirements:
     
 baseCommand: tblastn_wnode 
 
-arguments: [ -comp_based_stats, "F", -db_gencode, "4", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "12", -word_size, "3", -nogenbank ]
+arguments: [ -comp_based_stats, "F", -dbsize, "6000000000", -delay, "0", -evalue, "0.1", -gapextend, "2", -gapopen, "9", -matrix, BLOSUM62, -seg, "no", -soft_masking, "true", -threshold, "12", -word_size, "3", -nogenbank ]
 
 inputs:
+  db_gencode:
+    type: int
+    inputBinding:
+      prefix: -db_gencode
   asn_cache:
     type: Directory
     inputBinding:
