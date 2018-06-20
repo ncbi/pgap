@@ -3,6 +3,7 @@
 label: "PGAP Pipeline"
 cwlVersion: v1.0
 class: Workflow
+doc: PGAP pipeline for external usage, powered via Docker containers
 
 requirements:
   - class: SubworkflowFeatureRequirement
