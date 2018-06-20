@@ -43,16 +43,16 @@ steps:
     run: ../progs/compute_gencode.cwl
     in:
         taxid: taxid
-    out: [ db_gencode ]
+    out: [ output ]
   Compute_Gencode_int:
     run: ../progs/file2int.cwl
     in:
-        input: Compute_Gencode/db_gencode
+        input: Compute_Gencode/output
     out: [ value ]
   Seed_Search_Compartments:
     run: wf_seed.cwl
     in:
-      db_gencode: Compute_Gencode_int/db_gencode
+      db_gencode: Compute_Gencode_int/value
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       compartments: compartments
@@ -61,7 +61,7 @@ steps:
   Seed_Protein_Alignments:
     run: wf_seed_1.cwl
     in:
-      db_gencode: Compute_Gencode_int/db_gencode
+      db_gencode: Compute_Gencode_int/value
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       seqids: Get_Proteins/all_prots
