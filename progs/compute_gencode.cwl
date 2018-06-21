@@ -19,6 +19,10 @@ inputs:
     default: gencode.txt
     inputBinding:
       prefix: -output
+  taxon_db:
+    type: File
+    inputBinding:
+      prefix: -taxon-db
 outputs:
   output:
     type: File

@@ -9,11 +9,13 @@ inputs:
     taxid: 
         type: int
         default: 2
+    taxon_db: File
 steps:
     app: 
         run: ../../compute_gencode.cwl
         in:
             taxid: taxid
+            taxon_db: taxon_db
         out: [output]
     conversion:
         run: ../../file2int.cwl

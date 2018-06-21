@@ -43,6 +43,7 @@ steps:
     run: ../progs/compute_gencode.cwl
     in:
         taxid: taxid
+        taxon_db: tax_sql_file
     out: [ output ]
   Compute_Gencode_int:
     run: ../progs/file2int.cwl
