@@ -25,7 +25,7 @@ inputs:
       prefix: -input-jobs
   gcode_othmito:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode.othmito
+    # default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode.othmito
     inputBinding:
       prefix: -g
   binary:

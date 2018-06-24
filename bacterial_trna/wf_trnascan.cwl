@@ -23,7 +23,22 @@ steps:
       seqids: seqids
     #out: [asncache, jobs]
     out: [jobs]
-  
+  Compute_Gencode_for_trna:
+    run: ../progs/compute_gencode.cwl
+    in:
+        taxid: taxid
+        taxon_db: taxon_db
+    out: [ output ]
+  Compute_Gencode_int_for_trna:
+    run: ../progs/file2int.cwl
+    in:
+        input: Compute_Gencode_for_trna/output
+    out: [ value ]
+  Get_TRNA_model: 
+    run: ../progs/gencode2trnamodel.cwl
+    in:
+        gencode: Compute_Gencode_int_for_trna/value
+    out: [output]
   Run_tRNAScan_wnode:
     run: trnascan_wnode.cwl
     in:
@@ -32,6 +47,7 @@ steps:
       input_jobs: Run_tRNAScan_submit/jobs
       #input_jobs: jobs
       taxid: taxid
+      gcode_othmito: Get_TRNA_model/output
       taxon_db: taxon_db
     #out: [asncache, outdir]
     out: [outdir]
