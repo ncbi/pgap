@@ -23,6 +23,19 @@ inputs:
     type: File
     inputBinding:
       prefix: -input-jobs
+  superkingdom:
+    type: int
+  cove_flag_bacteria:
+    type: boolean?
+    
+    inputBinding:
+      valueFrom: ${if (inputs.superkingdom==2) { return "true"; } else {return "false"; } }
+      prefix: -B
+  cove_flag_archaea:
+    type: boolean?
+    inputBinding:
+      valueFrom: ${if (inputs.superkingdom==2157) { return "true"; } else {return "false"; } }
+      prefix: -A
   gcode_othmito:
     type: string?
     # default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode.othmito

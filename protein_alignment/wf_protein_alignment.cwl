@@ -44,6 +44,8 @@ steps:
     in:
         taxid: taxid
         taxon_db: tax_sql_file
+        gencode: 
+            default: true
     out: [ output ]
   Compute_Gencode_int:
     run: ../progs/file2int.cwl

@@ -28,11 +28,26 @@ steps:
     in:
         taxid: taxid
         taxon_db: taxon_db
+        gencode:
+            default: true
+    out: [ output ]
+  Compute_Superkingdom_for_trna:
+    run: ../progs/compute_gencode.cwl
+    in:
+        taxid: taxid
+        taxon_db: taxon_db
+        superkingdom:
+            default: true
     out: [ output ]
   Compute_Gencode_int_for_trna:
     run: ../progs/file2int.cwl
     in:
         input: Compute_Gencode_for_trna/output
+    out: [ value ]
+  Compute_Superkingdom_int_for_trna:
+    run: ../progs/file2int.cwl
+    in:
+        input: Compute_Superkingdom_for_trna/output
     out: [ value ]
   Get_TRNA_model: 
     run: ../progs/gencode2trnamodel.cwl
@@ -49,6 +64,7 @@ steps:
       taxid: taxid
       gcode_othmito: Get_TRNA_model/output
       taxon_db: taxon_db
+      superkingdom: Compute_Superkingdom_int_for_trna/value
     #out: [asncache, outdir]
     out: [outdir]
 

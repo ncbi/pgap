@@ -10,6 +10,14 @@ requirements:
 
 baseCommand: compute_gencode
 inputs:
+  gencode:  # output control flag
+    type: boolean?
+    inputBinding:
+      prefix: -gencode
+  superkingdom:  # output control flag
+    type: boolean?
+    inputBinding:
+      prefix: -superkingdom
   taxid:
     type: int
     inputBinding:
