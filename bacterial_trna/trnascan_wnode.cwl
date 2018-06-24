@@ -6,14 +6,14 @@ hints:
     dockerPull: ncbi/gpdev:latest
 
 requirements:
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)
         writable: False
 
-#trnascan_wnode -X 20 -asn-cache sequence_cache -g gcode.othmito -tRNAscan tRNAscan-SE -taxid 243273 -B -C -Q -b -q
 baseCommand: trnascan_wnode
-arguments: [ -X, "20", -B, -C, -Q, -b, -q ]
+arguments: [ -X, "20", -C, Q, -b, -q ]
 inputs:
   asn_cache:
     type: Directory
@@ -29,12 +29,12 @@ inputs:
     type: boolean?
     
     inputBinding:
-      valueFrom: ${if (inputs.superkingdom==2) { return "true"; } else {return "false"; } }
+      valueFrom: ${if (inputs.superkingdom==2)    { return true; } else {return false; } }
       prefix: -B
   cove_flag_archaea:
     type: boolean?
     inputBinding:
-      valueFrom: ${if (inputs.superkingdom==2157) { return "true"; } else {return "false"; } }
+      valueFrom: ${if (inputs.superkingdom==2157) { return true; } else {return false; } }
       prefix: -A
   gcode_othmito:
     type: string?
