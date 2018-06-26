@@ -13,7 +13,7 @@ requirements:
         writable: False
 
 baseCommand: trnascan_wnode
-arguments: [ -X, "20", -C, Q, -b, -q ]
+arguments: [ -X, "20", -C, -Q, -b, -q ]
 inputs:
   asn_cache:
     type: Directory
