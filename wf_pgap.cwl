@@ -456,6 +456,52 @@ steps:
       it:
         default: true
     out: [output]
+  export_gff:
+    run: progs/gp_annot_format.cwl
+    in:
+        input: Final_Bacterial_Package_dumb_down_as_required/outent
+        ifmt: 
+            default: seq-entry
+        t:
+            default: true
+        ofmt:
+            default: gff3 
+        exclude_external:
+            default: true
+    out: [output]    
+  export_gbk:
+    run: progs/asn2flat.cwl
+    in:
+        input: Final_Bacterial_Package_sqn2gbent/output
+        no_external:
+            default: true
+        type:
+            default: seq-entry
+        mode:
+            default: entrez
+        style:
+            default: master
+        gbload:
+            default: true
+    out: [output]
+  export_nuc_fasta:
+    run: progs/asn2fasta.cwl
+    in:
+        i: Final_Bacterial_Package_sqn2gbent/output
+        type:   
+            default: seq-entry
+        nuc_fasta_name:
+            default: annot.fna
+    out: [nuc_fasta]
+  export_prot_fasta:
+    run: progs/asn2fasta.cwl
+    in:
+            i: Final_Bacterial_Package_sqn2gbent/output
+            type:   
+                default: seq-entry
+            prot_fasta_name:
+                default: annot.faa
+    out: [prot_fasta]
   Final_Bacterial_Package_std_validation: # asnvalidation path in docker image is not valid: either no program at all, or it is in the wrong place 
   #  this is need to be fixed GP-24257
     run: progs/std_validation.cwl
@@ -650,4 +696,16 @@ outputs:
   gbent:
     type: File
     outputSource: Final_Bacterial_Package_sqn2gbent/output
+  gff:
+    type: File
+    outputSource:  export_gff/output
+  gbk:
+    type: File
+    outputSource:  export_gbk/output
+  nucleotide_fasta:
+    type: File?
+    outputSource: export_nuc_fasta/nuc_fasta
+  protein_fasta:
+    type: File?
+    outputSource: export_prot_fasta/prot_fasta
  
