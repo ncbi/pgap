@@ -11,6 +11,10 @@ inputs:
     type: File
     inputBinding:
         prefix: -i
+  type:
+    type: string
+    inputBinding:
+        prefix: -type 
   serial: 
     type: string?
     inputBinding:
@@ -21,13 +25,28 @@ inputs:
         prefix: -prots-only
   fasta_name:
     type: string?
-    default: protein.fa
     inputBinding:
         prefix: -o
+  nuc_fasta_name:
+    type: string?
+    inputBinding:
+        prefix: -on
+  prot_fasta_name:
+    type: string?
+    inputBinding:
+        prefix: -op
 outputs:
     fasta:
-        type: File
+        type: File?
         outputBinding:
             glob: $(inputs.fasta_name)
+    nuc_fasta:
+        type: File?
+        outputBinding:
+            glob: $(inputs.nuc_fasta_name)
+    prot_fasta:
+        type: File?
+        outputBinding:
+            glob: $(inputs.prot_fasta_name)
 
     

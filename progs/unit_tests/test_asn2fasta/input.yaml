@@ -1,0 +1,6 @@
+input:
+    class: File
+    location: annot-gb.ent
+input_bin: # for SPARCL
+    class: File
+    location: output_proteins.asn

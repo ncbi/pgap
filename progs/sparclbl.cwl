@@ -8,7 +8,7 @@ hints:
 baseCommand: sparclbl.sh
 inputs:
   s: 
-    type: File
+    type: File? # to accomodate output of asn2fasta which is of type [null, File]
     inputBinding:
         prefix: -s
   p: 

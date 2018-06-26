@@ -193,8 +193,12 @@ steps:
             i: Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences/out_proteins
             serial:
                 default: binary
+            type:   
+                default: seq-entry
             prots_only:
                 default: true
+            fasta_name:
+                default: proteins.fa
         out: [fasta]
     Assign_SPARCL_Architecture_Names_to_Proteins_sparclbl:
         label: "Assign SPARCL Architecture Names to Proteins"
