@@ -1,0 +1,3 @@
+input:
+    class: File
+    location: annot-gb.ent

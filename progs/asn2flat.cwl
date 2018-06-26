@@ -5,47 +5,42 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: A.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.A.length; i++) { blob += inputs.A[i].path + '\n'; } return blob; }
-      - entryname: B.mft
-        # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.B.length; i++) { blob += inputs.B[i].path + '\n'; } return blob; }
-
-baseCommand: set_operation
+baseCommand: asn2flat
 inputs:
-  operation:
+  input:
+    type: File
+    inputBinding:
+      prefix: -i
+  no_external:
+    type: boolean
+    inputBinding:
+      prefix: -no-external 
+  gbload:
+    type: boolean
+    inputBinding:
+      prefix: -gbload 
+  type:
     type: string
     inputBinding:
-      prefix: -operation
-  A:
-    type: File[]
-  A_impl:
+      prefix: -type 
+  mode:
     type: string
-    default: A.mft
     inputBinding:
-      prefix: -A-manifest
-  B:
-    type: File[]
-  B_impl:
+      prefix: -mode  
+  style:
     type: string
-    default: B.mft
     inputBinding:
-      prefix: -B-manifest
-  output_impl:
+      prefix: -style 
+  oname:
     type: string
-    default: result.lst
+    default: annot.gbk
     inputBinding:
-      prefix: -output
+      prefix: -o
 outputs:
   output:
     type: File
     outputBinding:
-      glob: $(inputs.output_impl)
+      glob: $(inputs.oname)
 
   
   
