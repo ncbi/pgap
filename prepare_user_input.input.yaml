@@ -1,0 +1,12 @@
+tech: wgs
+# completeness: 
+#    class: string? # complete
+submit_block_template_static: 
+    class: File
+    location: input_template/submit_block_static.template
+molinfo_complete_asn: 
+    class: File
+    location: input_template/molinfo_complete.asn
+molinfo_wgs_asn: 
+    class: File
+    location: input_template/molinfo_wgs.asn
