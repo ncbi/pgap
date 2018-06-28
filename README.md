@@ -124,29 +124,28 @@ TDB
 
 ## References
 
-[https://www.ncbi.nlm.nih.gov/pubmed/27342282]
-Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.
+[NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
+Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.\
 Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 
-[https://www.ncbi.nlm.nih.gov/pubmed/29112715]
-Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.
+[RefSeq: an update on prokaryotic genome annotation and curation.](https://www.ncbi.nlm.nih.gov/pubmed/29112715)\
+Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
 
-Also, as part of our agreement with JCVI, when distributing the TIGRFAM HMMs (what we are doing here), we need to give credit to JCVI for creating the TIGRFAM collection and cite these articles:
-[https://www.ncbi.nlm.nih.gov/pubmed/11125044]
-Haft DH, Loftus BJ, Richardson DL, Yang F, Eisen JA, Paulsen IT, White O.
+[TIGRFAMs: a protein family resource for the functional identification of proteins.](https://www.ncbi.nlm.nih.gov/pubmed/11125044)\
+Haft DH, Loftus BJ, Richardson DL, Yang F, Eisen JA, Paulsen IT, White O.\
 Nucleic Acids Res. 2001 Jan 1;29(1):41-3.
 
-[https://www.ncbi.nlm.nih.gov/pubmed/12520025]
-Haft DH, Selengut JD, White O.
+[The TIGRFAMs database of protein families.](https://www.ncbi.nlm.nih.gov/pubmed/12520025)\
+Haft DH, Selengut JD, White O.\
 Nucleic Acids Res. 2003 Jan 1;31(1):371-3.
 
-[https://www.ncbi.nlm.nih.gov/pubmed/23197656]
-Haft DH, Selengut JD, Richter RA, Harkins D, Basu MK, Beck E.
+[TIGRFAMs and Genome Properties in 2013.](https://www.ncbi.nlm.nih.gov/pubmed/23197656)\
+Haft DH, Selengut JD, Richter RA, Harkins D, Basu MK, Beck E.\
 Nucleic Acids Res. 2013 Jan;41(Database issue):D387-95. doi: 10.1093/nar/gks1234. Epub 2012 Nov 28.
 
-[https://www.ncbi.nlm.nih.gov/pubmed/17151080]
-Selengut JD, Haft DH, Davidsen T, Ganapathy A, Gwinn-Giglio M, Nelson WC, Richter AR, White O.
+[TIGRFAMs and Genome Properties: tools for the assignment of molecular function and biological process in prokaryotic genomes.](https://www.ncbi.nlm.nih.gov/pubmed/17151080)\
+Selengut JD, Haft DH, Davidsen T, Ganapathy A, Gwinn-Giglio M, Nelson WC, Richter AR, White O.\
 Nucleic Acids Res. 2007 Jan;35(Database issue):D260-4. Epub 2006 Dec 6.
 
 ## Public Domain notice
