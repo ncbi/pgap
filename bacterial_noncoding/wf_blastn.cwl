@@ -16,10 +16,10 @@ inputs:
 outputs:
   annotations:
     type: File
-    outputSource: ribosomal_align2annot/annotations
+    outputSource: Generate_nS_rRNA_Annotation/annotations
     
 steps:
-  gpx_qsubmit:
+  BLAST_against_nS_rRNA_db_gpx_qsubmit:
     run: gpx_qsubmit_blastn.cwl
     in:
       asn_cache: asn_cache
@@ -28,36 +28,36 @@ steps:
       blastdb: blastdb
     out: [jobs]
   
-  blastn_wnode:
+  BLAST_against_nS_rRNA_db_blastn_wnode:
     run: blastn_wnode.cwl
     in:
       asn_cache: asn_cache
-      input_jobs: gpx_qsubmit/jobs
+      input_jobs: BLAST_against_nS_rRNA_db_gpx_qsubmit/jobs
       blastdb_dir: blastdb_dir
     out: [outdir]
 
-  gpx_make_outputs:
+  BLAST_against_nS_rRNA_db_gpx_make_outputs:
     run: gpx_make_outputs.cwl
     in:
-      input_path: blastn_wnode/outdir
+      input_path: BLAST_against_nS_rRNA_db_blastn_wnode/outdir
     out: [blast_align]
 
-  align_merge:
+  Merge_nS_rRNA_Alignments:
     run: align_merge.cwl
     in:
       asn_cache: asn_cache
       blastdb_dir: blastdb_dir
       blastdb: blastdb
-      alignments: gpx_make_outputs/blast_align
+      alignments: BLAST_against_nS_rRNA_db_gpx_make_outputs/blast_align
     out: [aligns]
 
-  ribosomal_align2annot:
+  Generate_nS_rRNA_Annotation:
     run: ribosomal_align2annot.cwl
     in:
       asn_cache: asn_cache
       blastdb_dir: blastdb_dir
       blastdb: blastdb
       product_name: product_name
-      alignments: align_merge/aligns
+      alignments: Merge_nS_rRNA_Alignments/aligns
       annotation: outname
     out: [annotations]

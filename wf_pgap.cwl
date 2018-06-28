@@ -66,7 +66,7 @@ steps:
   #
   #  Pseudo plane "default 1"
   #   
-  bacterial_prepare_unannotated: # ORIGINAL TASK NAME: Prepare Unannotated Sequences # default 1
+  Prepare_Unannotated_Sequences: # ORIGINAL TASK NAME: Prepare Unannotated Sequences # default 1
     label: "Prepare Unannotated Sequences"
     run: bacterial_prepare_unannotated.cwl
     in:
@@ -77,13 +77,13 @@ steps:
       taxon_db: taxon_db
     out: [master_desc, sequences]
     
-  cache_entrez_gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
+  Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
     run: cache_entrez_gene.cwl
     in:
       asn_cache: [genomic_source/asncache, uniColl_cache]
       egene_ini: gene_master_ini
-      input: bacterial_prepare_unannotated/sequences
+      input: Prepare_Unannotated_Sequences/sequences
     out: [prok_entrez_gene_stuff]
     
   Create_Genomic_BLASTdb: # default 1
@@ -146,7 +146,7 @@ steps:
     run: bacterial_annot/wf_bacterial_annot_pass1.cwl
     in:
       asn_cache: genomic_source/asncache
-      inseq: bacterial_prepare_unannotated/sequences
+      inseq: Prepare_Unannotated_Sequences/sequences
       hmm_path: hmm_path
       hmms_tab: hmms_tab
       uniColl_cache: uniColl_cache
@@ -209,7 +209,7 @@ steps:
         hmm_aligns: bacterial_annot/aligns
         prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
-        raw_seqs: bacterial_prepare_unannotated/sequences
+        raw_seqs: Prepare_Unannotated_Sequences/sequences
         thresholds: thresholds 
         naming_sqlite: naming_sqlite 
         hmm_params: bacterial_annot/out_hmm_params # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
@@ -293,7 +293,7 @@ steps:
       # # egene_ini: gene_master_ini
       # # gc_assembly: genomic_source/gencoll_asn
       # # input: Preserve_Annotations/annotations
-      # # prok_entrez_gene_stuff: cache_entrez_gene/prok_entrez_gene_stuff
+      # # prok_entrez_gene_stuff: Cache_Entrez_Gene/prok_entrez_gene_stuff
     # # out: [annotations]
       
   # #
@@ -337,7 +337,7 @@ steps:
         linkMerge: merge_flattened
       asn_cache: genomic_source/asncache
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
-      master_desc: bacterial_prepare_unannotated/master_desc
+      master_desc: Prepare_Unannotated_Sequences/master_desc
       submit_block_template: 
         source: [submit_block_template]
         linkMerge: merge_flattened
@@ -394,7 +394,7 @@ steps:
       it:
         default: true
     out: [output]
-  export_gff:
+  Generate_Annotation_Reports_gff:
     run: progs/gp_annot_format.cwl
     in:
         input: Final_Bacterial_Package_dumb_down_as_required/outent
@@ -407,7 +407,7 @@ steps:
         exclude_external:
             default: true
     out: [output]    
-  export_gbk:
+  Generate_Annotation_Reports_gbk:
     run: progs/asn2flat.cwl
     in:
         input: Final_Bacterial_Package_sqn2gbent/output
@@ -422,7 +422,7 @@ steps:
         gbload:
             default: true
     out: [output]
-  export_nuc_fasta:
+  Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
     in:
         i: Final_Bacterial_Package_sqn2gbent/output
@@ -431,7 +431,7 @@ steps:
         nuc_fasta_name:
             default: annot.fna
     out: [nuc_fasta]
-  export_prot_fasta:
+  Generate_Annotation_Reports_prot_fasta:
     run: progs/asn2fasta.cwl
     in:
             i: Final_Bacterial_Package_sqn2gbent/output
@@ -452,7 +452,7 @@ steps:
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
       master_desc: 
-        source: [bacterial_prepare_unannotated/master_desc]
+        source: [Prepare_Unannotated_Sequences/master_desc]
         linkMerge: merge_flattened
       submit_block_template:
         source: [submit_block_template]
@@ -625,14 +625,14 @@ outputs:
     outputSource: Final_Bacterial_Package_sqn2gbent/output
   gff:
     type: File
-    outputSource:  export_gff/output
+    outputSource:  Generate_Annotation_Reports_gff/output
   gbk:
     type: File
-    outputSource:  export_gbk/output
+    outputSource:  Generate_Annotation_Reports_gbk/output
   nucleotide_fasta:
     type: File?
-    outputSource: export_nuc_fasta/nuc_fasta
+    outputSource: Generate_Annotation_Reports_nuc_fasta/nuc_fasta
   protein_fasta:
     type: File?
-    outputSource: export_prot_fasta/prot_fasta
+    outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
  
