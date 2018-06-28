@@ -19,19 +19,19 @@ inputs:
 outputs:
   # asncache:
   #   type: Directory
-  #   outputSource: generate_16s/asncache
+  #   outputSource: bacterial_noncoding_16S/asncache
   annotations_5s:
     type: File
-    outputSource: generate_5s/annots
+    outputSource: bacterial_noncoding_5S/annots
   annotations_16s:
     type: File
-    outputSource: generate_16s/annotations
+    outputSource: bacterial_noncoding_16S/annotations
   annotations_23s:
     type: File
-    outputSource: generate_23s/annotations
+    outputSource: bacterial_noncoding_23S/annotations
     
 steps:
-  generate_5s:
+  bacterial_noncoding_5S:
     run: wf_gcmsearch.cwl
     in:
       asn_cache: asn_cache
@@ -42,7 +42,7 @@ steps:
       taxon_db: taxon_db
     out: [ annots ]
 
-  generate_16s:
+  bacterial_noncoding_16S:
     run: wf_blastn.cwl
     in:
       asn_cache: asn_cache
@@ -56,7 +56,7 @@ steps:
         default: annotations_16s.asn
     out: [annotations]
 
-  generate_23s:
+  bacterial_noncoding_23S:
     run: wf_blastn.cwl
     in:
       asn_cache: asn_cache

@@ -1,0 +1,260 @@
+Submit-block ::= {
+    contact {
+      contact {
+        name name {
+          last "Fraser",
+          first "Claire",
+          middle "M",
+          initials "C.M."
+        },
+        affil std {
+          affil "The Institute for Genomic Research",
+          city "Rockville",
+          sub "MD",
+          country "USA",
+          street "9712 Medical Center Dr",
+          postal-code "20850"
+        }
+      }
+    },
+    cit {
+      authors {
+        names std {
+          {
+            name name {
+              last "Fraser",
+              first "Claire",
+              middle "M",
+              initials "C.M."
+            }
+          },
+          {
+            name name {
+              last "Gocayne",
+              first "Jeannine",
+              middle "D",
+              initials "J.D."
+            }
+          },
+          {
+            name name {
+              last "White",
+              first "Owen",
+              initials "O."
+            }
+          },
+          {
+            name name {
+              last "Adams",
+              first "Mark",
+              middle "D",
+              initials "M.D."
+            }
+          },
+          {
+            name name {
+              last "Clayton",
+              first "Rebecca",
+              middle "A",
+              initials "R.A."
+            }
+          },
+          {
+            name name {
+              last "Fleischmann",
+              first "Robert",
+              middle "D",
+              initials "R.D."
+            }
+          },
+          {
+            name name {
+              last "Bult",
+              first "Carol",
+              middle "J",
+              initials "C.J."
+            }
+          },
+          {
+            name name {
+              last "Kerlavage",
+              first "Anthony",
+              middle "R",
+              initials "A.R."
+            }
+          },
+          {
+            name name {
+              last "Sutton",
+              first "Granger",
+              middle "G",
+              initials "G.G."
+            }
+          },
+          {
+            name name {
+              last "Kelley",
+              first "Jenny",
+              middle "M",
+              initials "J.M."
+            }
+          },
+          {
+            name name {
+              last "Fritchman",
+              first "Janice",
+              middle "L",
+              initials "J.L."
+            }
+          },
+          {
+            name name {
+              last "Weidman",
+              first "Janice",
+              middle "F",
+              initials "J.F."
+            }
+          },
+          {
+            name name {
+              last "Small",
+              first "Keith",
+              middle "V",
+              initials "K.V."
+            }
+          },
+          {
+            name name {
+              last "Sandusky",
+              first "Mina",
+              initials "M."
+            }
+          },
+          {
+            name name {
+              last "Fuhrmann",
+              first "Joyce",
+              middle "L",
+              initials "J.L."
+            }
+          },
+          {
+            name name {
+              last "Nguyen",
+              first "David",
+              middle "T",
+              initials "D.T."
+            }
+          },
+          {
+            name name {
+              last "Utterback",
+              first "Teresa",
+              initials "T."
+            }
+          },
+          {
+            name name {
+              last "Saudek",
+              first "Deborah",
+              middle "M",
+              initials "D.M."
+            }
+          },
+          {
+            name name {
+              last "Phillips",
+              first "Cheryl",
+              middle "A",
+              initials "C.A."
+            }
+          },
+          {
+            name name {
+              last "Merrick",
+              first "Joseph",
+              middle "M",
+              initials "J.M."
+            }
+          },
+          {
+            name name {
+              last "Tomb",
+              first "Jean-F",
+              initials "J.-F."
+            }
+          },
+          {
+            name name {
+              last "Dougherty",
+              first "Brian",
+              middle "A",
+              initials "B.A."
+            }
+          },
+          {
+            name name {
+              last "Bott",
+              first "Kennith",
+              middle "F",
+              initials "K.F."
+            }
+          },
+          {
+            name name {
+              last "Hu",
+              first "Pan",
+              middle "C",
+              initials "P.C."
+            }
+          },
+          {
+            name name {
+              last "Lucier",
+              first "Thomas",
+              middle "S",
+              initials "T.S."
+            }
+          },
+          {
+            name name {
+              last "Peterson",
+              first "Scott",
+              middle "N",
+              initials "S.N."
+            }
+          },
+          {
+            name name {
+              last "Smith",
+              first "Hamilton",
+              middle "O",
+              initials "H.O."
+            }
+          },
+          {
+            name name {
+              last "Venter",
+              first "J",
+              middle "Craig",
+              initials "J.C."
+            }
+          }
+        },
+        affil std {
+          affil "The Institute for Genomic Research",
+          city "Rockville",
+          sub "MD",
+          country "USA",
+          street "9712 Medical Center Dr",
+          postal-code "20850"
+        }
+      },
+      medium other,
+      date std {
+        year 1995,
+        month 10,
+        day 29
+      }
+    }
+}

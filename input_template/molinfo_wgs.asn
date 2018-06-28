@@ -1,0 +1,4 @@
+Seqdesc ::= molinfo {
+  biomol genomic,
+  tech wgs
+}
