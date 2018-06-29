@@ -23,8 +23,6 @@ inputs:
     type: File
   molinfo_wgs_asn: 
     type: File
-  file2:
-    type: File?
     inputBinding:
         position: 2
         valueFrom: ${ if(inputs.tech != null) { return inputs.molinfo_wgs_asn; } else {return inputs.molinfo_complete_asn; } }
