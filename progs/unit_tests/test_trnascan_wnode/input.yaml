@@ -1,0 +1,4 @@
+taxid: 2
+taxon_db:
+    class: File
+    location: taxonomy.sqlite3
