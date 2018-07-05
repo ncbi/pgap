@@ -1,47 +1,34 @@
 cwlVersion: v1.0 
-label: "compute_gencode"
+label: "trnascan_wnode"
 
 class: Workflow
 hints:
   DockerRequirement:
     dockerPull: ncbi/gpdev:latest
 inputs:
-    taxid: 
-        type: int
-        default: 2
+    jobs: File
+    asn_cache: Directory
     taxon_db: File
 steps:
-    gencode: 
-        run: ../../compute_gencode.cwl
+    test: 
+        run: ../../../bacterial_trna/trnascan_wnode.cwl
         in:
-            taxid: taxid
-            taxon_db: taxon_db
-            gencode:
-                default: true
-        out: [output]
-    superkindom: 
-        run: ../../compute_gencode.cwl
-        in:
-            taxid: taxid
-            taxon_db: taxon_db
-            superkindom:
-                default: true
-        out: [output]
-    gencode_int:
-        run: ../../file2int.cwl
-        in:
-            input: gencode/output
-        out: [value]
-    superkingdom_int:
-        run: ../../file2int.cwl
-        in:
-            input: superkingdom/output
-        out: [value]
+          asn_cache: asn_cache
+          input_jobs: jobs
+          taxon_db: taxon_db
+          gcode_othmito:    
+            default: ./gcode.othmito
+          taxid: 
+            default: 243273 # MG37
+          superkingdom: 
+            default: 2 # MG37
+          # cove_flag_bacteria:
+            # default: false
+          # cove_flag_archaea:
+            # default: false
+        out: [outdir]
 outputs:
-    gencode: 
-        type: int
-        outputSource: gencode_int/value
-    superkingdom: 
-        type: int
-        outputSource: superkingdom_int/value
+    outdir: 
+        type: Directory
+        outputSource: test/outdir
     

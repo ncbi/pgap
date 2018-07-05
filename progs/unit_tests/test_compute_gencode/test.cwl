@@ -11,7 +11,7 @@ inputs:
         default: 2
     taxon_db: File
 steps:
-    gencode: 
+    gencode_file: 
         run: ../../compute_gencode.cwl
         in:
             taxid: taxid
@@ -19,23 +19,23 @@ steps:
             gencode:
                 default: true
         out: [output]
-    superkindom: 
+    superkindom_file: 
         run: ../../compute_gencode.cwl
         in:
             taxid: taxid
             taxon_db: taxon_db
-            superkindom:
+            superkingdom:
                 default: true
         out: [output]
     gencode_int:
         run: ../../file2int.cwl
         in:
-            input: gencode/output
+            input: gencode_file/output
         out: [value]
     superkingdom_int:
         run: ../../file2int.cwl
         in:
-            input: superkingdom/output
+            input: superkindom_file/output
         out: [value]
 outputs:
     gencode: 

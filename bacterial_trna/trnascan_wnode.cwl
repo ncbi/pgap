@@ -26,13 +26,14 @@ inputs:
   superkingdom:
     type: int
   cove_flag_bacteria:
-    type: boolean?
-    
+    type: boolean
+    default: true # to cause calculation
     inputBinding:
       valueFrom: ${if (inputs.superkingdom==2)    { return true; } else {return false; } }
       prefix: -B
   cove_flag_archaea:
-    type: boolean?
+    type: boolean
+    default: true # to cause calculation
     inputBinding:
       valueFrom: ${if (inputs.superkingdom==2157) { return true; } else {return false; } }
       prefix: -A

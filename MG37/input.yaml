@@ -1,9 +1,0 @@
-submit_block_template:
-  class: File
-  location: MG37/ASM2732v1.1.template
-fasta:
-  class: File
-  location: MG37/ASM2732v1.annotation.nucleotide.1.fa
-taxid: 243273
-gc_assm_name: MG37
-completeness: complete

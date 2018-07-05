@@ -1,4 +1,9 @@
-taxid: 2
 taxon_db:
     class: File
     location: taxonomy.sqlite3
+jobs:
+    class: File
+    location: jobs.xml
+asn_cache:
+    class: Directory
+    location: sequence_cache
