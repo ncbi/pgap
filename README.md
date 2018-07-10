@@ -5,7 +5,7 @@ NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate bacterial an
 
 Genome annotation is a multi-level process that includes prediction of protein-coding genes, as well as other functional genome units such as structural RNAs, tRNAs, small RNAs, pseudogenes, control regions, direct and inverted repeats, insertion sequences, transposons and other mobile elements.
 
-NCBI has developed an automatic prokaryotic genome annotation pipeline that combines ab initio gene prediction algorithms with homology based methods. The first version of NCBI Prokaryotic Genome Automatic Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has been replaced with an upgraded version that is capable of processing a larger data volume.  NCBI's annotation pipeline depends on several internal databases and is not currently available for download or use outside of the NCBI environment.
+NCBI has developed an automatic prokaryotic genome annotation pipeline that combines ab initio gene prediction algorithms with homology based methods. The first version of NCBI Prokaryotic Genome Automatic Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has been replaced with an upgraded version that is capable of processing a larger data volume.
 
 
 ## Installation
@@ -122,6 +122,15 @@ TBD
 
 TDB
 
+### Expected Output
+
+- **annot.fna:** FASTA format of the genomic sequence(s), as provided on input
+- **annot.faa:** FASTA format of the protein products annotated on the genome. The FASTA title is formatted as a local identifier (lcl|GENEMARK_*) plus the product name.
+- **annot.gbk:** GenBank flat file format of the genomic sequence(s). This file includes the annotation and the genomic sequence. Genes use the arbitrary locus_tag extpgap_\*.
+- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
+- **annot-gb.ent:** ASN format of the annotated genomic sequence(s).
+
+
 ## References
 
 [NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
@@ -147,6 +156,10 @@ Nucleic Acids Res. 2013 Jan;41(Database issue):D387-95. doi: 10.1093/nar/gks1234
 [TIGRFAMs and Genome Properties: tools for the assignment of molecular function and biological process in prokaryotic genomes.](https://www.ncbi.nlm.nih.gov/pubmed/17151080)\
 Selengut JD, Haft DH, Davidsen T, Ganapathy A, Gwinn-Giglio M, Nelson WC, Richter AR, White O.\
 Nucleic Acids Res. 2007 Jan;35(Database issue):D260-4. Epub 2006 Dec 6.
+
+[GeneMarkS: a self-training method for prediction of gene starts in microbial genomes. Implications for finding sequence motifs in regulatory regions.](https://www.ncbi.nlm.nih.gov/pubmed/11410670)\
+Besemer J, Lomsadze A, Borodovsky M.\
+Nucleic Acids Research. 2001;29(12):2607-2618.
 
 ## Public Domain notice
 
