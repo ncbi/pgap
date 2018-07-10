@@ -8,9 +8,9 @@ doc: PGAP pipeline for external usage, powered via Docker containers
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-#  - class: DockerRequirement
-#    dockerPull: ncbi/gpdev:latest
-    
+  - class: DockerRequirement
+    dockerPull: ncbi/pgap:2018-07-05.build2884
+
 inputs:
   #
   # User specific input

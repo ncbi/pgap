@@ -10,6 +10,8 @@ doc: |
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
+  - class: DockerRequirement
+    dockerPull: ncbi/pgap:2018-07-05.build2884
   
 inputs:
   #
@@ -66,7 +68,7 @@ inputs:
   molinfo_wgs_asn: File
 steps:
   prepare_input_template:
-    run: wf_prepare_user_input.cwl
+    run: prepare_user_input.cwl
     in: 
         tech: tech
         completeness: completeness

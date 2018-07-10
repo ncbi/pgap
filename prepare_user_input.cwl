@@ -8,6 +8,7 @@ doc: Prepare user input for  NCBI-PGAP pipeline
 requirements:
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
+
 baseCommand: cat  
 stdout: complete.template
 inputs:
