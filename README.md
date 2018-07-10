@@ -133,6 +133,8 @@ TDB
 
 ## References
 
+### NCBI
+
 [NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
 Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.\
 Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
@@ -141,9 +143,13 @@ Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
 
+### GeneMarkS
+
 [GeneMarkS: a self-training method for prediction of gene starts in microbial genomes. Implications for finding sequence motifs in regulatory regions.](https://www.ncbi.nlm.nih.gov/pubmed/11410670)\
 Besemer J, Lomsadze A, Borodovsky M.\
 Nucleic Acids Research. 2001;29(12):2607-2618.
+
+### TIGRFAMs
 
 [TIGRFAMs: a protein family resource for the functional identification of proteins.](https://www.ncbi.nlm.nih.gov/pubmed/11125044)\
 Haft DH, Loftus BJ, Richardson DL, Yang F, Eisen JA, Paulsen IT, White O.\
