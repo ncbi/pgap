@@ -91,7 +91,7 @@ To create a virtualenv for your installation of CWL and PGAP:
 ### Installing Docker
 
 It is recommended that you install Docker instead of the more limited uDocker.
-Detailed instructions may be found on the docker website. [Docker
+Detailed instructions may be found on the docker website, [Docker
 Install](https://docs.docker.com/install/). Please install the latest version
 of docker, it is usually newer than the one that comes with your distribution.
 Note that it requires root access to install, and the user who will be running
@@ -127,7 +127,7 @@ TDB
 - **annot.fna:** FASTA format of the genomic sequence(s), as provided on input
 - **annot.faa:** FASTA format of the protein products annotated on the genome. The FASTA title is formatted as a local identifier (lcl|GENEMARK_*) plus the product name.
 - **annot.gbk:** GenBank flat file format of the genomic sequence(s). This file includes the annotation and the genomic sequence. Genes use the arbitrary locus_tag extpgap_\*.
-- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
+- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_\*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_\* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
 - **annot-gb.ent:** ASN format of the annotated genomic sequence(s).
 
 
@@ -141,6 +141,10 @@ Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
 
+[GeneMarkS: a self-training method for prediction of gene starts in microbial genomes. Implications for finding sequence motifs in regulatory regions.](https://www.ncbi.nlm.nih.gov/pubmed/11410670)\
+Besemer J, Lomsadze A, Borodovsky M.\
+Nucleic Acids Research. 2001;29(12):2607-2618.
+
 [TIGRFAMs: a protein family resource for the functional identification of proteins.](https://www.ncbi.nlm.nih.gov/pubmed/11125044)\
 Haft DH, Loftus BJ, Richardson DL, Yang F, Eisen JA, Paulsen IT, White O.\
 Nucleic Acids Res. 2001 Jan 1;29(1):41-3.
@@ -149,17 +153,14 @@ Nucleic Acids Res. 2001 Jan 1;29(1):41-3.
 Haft DH, Selengut JD, White O.\
 Nucleic Acids Res. 2003 Jan 1;31(1):371-3.
 
-[TIGRFAMs and Genome Properties in 2013.](https://www.ncbi.nlm.nih.gov/pubmed/23197656)\
-Haft DH, Selengut JD, Richter RA, Harkins D, Basu MK, Beck E.\
-Nucleic Acids Res. 2013 Jan;41(Database issue):D387-95. doi: 10.1093/nar/gks1234. Epub 2012 Nov 28.
-
 [TIGRFAMs and Genome Properties: tools for the assignment of molecular function and biological process in prokaryotic genomes.](https://www.ncbi.nlm.nih.gov/pubmed/17151080)\
 Selengut JD, Haft DH, Davidsen T, Ganapathy A, Gwinn-Giglio M, Nelson WC, Richter AR, White O.\
 Nucleic Acids Res. 2007 Jan;35(Database issue):D260-4. Epub 2006 Dec 6.
 
-[GeneMarkS: a self-training method for prediction of gene starts in microbial genomes. Implications for finding sequence motifs in regulatory regions.](https://www.ncbi.nlm.nih.gov/pubmed/11410670)\
-Besemer J, Lomsadze A, Borodovsky M.\
-Nucleic Acids Research. 2001;29(12):2607-2618.
+[TIGRFAMs and Genome Properties in 2013.](https://www.ncbi.nlm.nih.gov/pubmed/23197656)\
+Haft DH, Selengut JD, Richter RA, Harkins D, Basu MK, Beck E.\
+Nucleic Acids Res. 2013 Jan;41(Database issue):D387-95. doi: 10.1093/nar/gks1234. Epub 2012 Nov 28.
+
 
 ## Public Domain notice
 
