@@ -10,10 +10,7 @@ NCBI has developed an automatic prokaryotic genome annotation pipeline that comb
 
 ## Installation
 
-To run the PGAP pipeline you will need Linux, Docker and CWL (Common
-Workflow Language). We provide instructions here for running under the
-CWL reference implementation, cwltool.
-
+To run the PGAP pipeline you will need Linux, Docker, CWL (Common Workflow Language), and about 30GB of supplemental data. We provide instructions here for running under the CWL reference implementation, cwltool.
 
 ### Quick start
 
@@ -22,16 +19,48 @@ These instructions assume that you have a python virtualenv, pip, and docker ins
 ```shell
 (cwl) ~$ pip install -U wheel setuptools
 (cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
-(cwl) ~$ git clone https://github.com/ncbi-gpipe/pgap.git
-(cwl) ~$ cd pgap
-(cwl) ~/pgap$ download supplemental data instructions here
-(cwl) ~/pgap$ run instructions here
+(cwl) ~$ wget -qO- https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz | tar xvf
+(cwl) ~$ cd pgap-2018-07-05.build2884
+(cwl) ~/pgap-2018-07-05.build2884$ ./fetch_supplemental_data.sh
+(cwl) ~/pgap-2018-07-05.build2884$ cat input.yaml MG37/input.yaml > mg37_input.yaml
+(cwl) ~/pgap-2018-07-05.build2884$ ./wf_pgap_simple.cwl mg37_input.yaml
 ```
 
-### Installation summary
+### Retrieving the CWL code
 
-The PGAP Pipeline only runs on Linux and requires three types of items to run. The CWL instructions, about 30GB of supplemental data, and Docker containers. Note that
-Docker (http://docker.com) requires root to install.
+The CWL software is available at GitHub at https://github.com/ncbi-gpipe/pgap. Download source code package for the latest release, which is located at https://github.com/ncbi-gpipe/pgap/releases, and extract the code.
+
+```shell
+(cwl) ~$ wget -qO- https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz | tar xvf
+```
+
+### Download the Supplemental Data
+
+The supplemental data is stored on S3. It is versioned, and must match the CWL and Docker versions. A handy script to download the matching version is provided in the CWL source tree. This will download and extract the data to the input subdirectory.
+
+```shell
+(cwl) ~/pgap-2018-07-05.build2884$ ./fetch_supplemental_data.sh
+```
+
+### Run the pipeline
+
+The input.yaml file provides most of the required input parameters for the data in the input subdirectory. The other parameters are specific to the genome being annotated, and must be provided by the user. An example MG37 genome is provided with the CWL source, which may be run thusly.
+
+```shell
+(cwl) ~/pgap-2018-07-05.build2884$ cat input.yaml MG37/input.yaml > mg37_input.yaml
+(cwl) ~/pgap-2018-07-05.build2884$ ./wf_pgap_simple.cwl mg37_input.yaml
+```
+
+### Expected Output
+
+- **annot.fna:** FASTA format of the genomic sequence(s), as provided on input
+- **annot.faa:** FASTA format of the protein products annotated on the genome. The FASTA title is formatted as a local identifier (lcl|GENEMARK_*) plus the product name.
+- **annot.gbk:** GenBank flat file format of the genomic sequence(s). This file includes the annotation and the genomic sequence. Genes use the arbitrary locus_tag extpgap_\*.
+- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_\*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_\* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
+- **annot-gb.ent:** ASN format of the annotated genomic sequence(s).
+
+
+### Prerequisites
 
 Prerequisites include:
 - python
@@ -42,17 +71,6 @@ Prerequisites include:
 - PyYAML
 - cwlref-runner
 - cwltool
-
-### Retrieving the CWL code
-
-The CWL software is available at GitHub at https://github.com/ncbi-gpipe/pgap,
-and can be retrieved with git like:
-
-```shell
-~$ git clone https://github.com/ncbi-gpipe/pgap.git
-```
-
-### Prerequisites
 
 You will need to install the prerequisites if they're not already installed on
 your system.
@@ -80,7 +98,7 @@ To create a virtualenv for your installation of CWL and PGAP:
 ~$ virtualenv --python=python3 cwl
 ```
 
-### Installing CWL
+#### Installing CWL
 
 ```shell
 ~$ source cwl/bin/activate
@@ -88,9 +106,8 @@ To create a virtualenv for your installation of CWL and PGAP:
 (cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
 ```
 
-### Installing Docker
+#### Installing Docker
 
-It is recommended that you install Docker instead of the more limited uDocker.
 Detailed instructions may be found on the docker website, [Docker
 Install](https://docs.docker.com/install/). Please install the latest version
 of docker, it is usually newer than the one that comes with your distribution.
@@ -113,22 +130,6 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
 
 ```
-
-### Download the Supplemental Data
-
-TBD
-
-### Run the pipeline
-
-TDB
-
-### Expected Output
-
-- **annot.fna:** FASTA format of the genomic sequence(s), as provided on input
-- **annot.faa:** FASTA format of the protein products annotated on the genome. The FASTA title is formatted as a local identifier (lcl|GENEMARK_*) plus the product name.
-- **annot.gbk:** GenBank flat file format of the genomic sequence(s). This file includes the annotation and the genomic sequence. Genes use the arbitrary locus_tag extpgap_\*.
-- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_\*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_\* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
-- **annot-gb.ent:** ASN format of the annotated genomic sequence(s).
 
 
 ## References
