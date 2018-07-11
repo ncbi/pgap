@@ -224,3 +224,7 @@ particular, users of PGAP may not:
 
 a) alter, modify, or adapt GeneMarkS or its documentation\
 b) separate GeneMarkS from PGAP and use it as a stand-alone analysis tool.
+
+### TIGRFAMs
+
+The TIGRFAM Hidden Markov Models, which constitute a part of the evidence used for PGAP annotation, were created by the J. Craig Venter Institute \(see publications in the Reference section\) and were transferred to NCBI in April 2018. The TIGRFAMs data are made available under a [Creative Commons Attribution-ShareAlike 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/). See the full text \(legal code\) of the [license here](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
