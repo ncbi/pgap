@@ -1,20 +1,35 @@
 # PGAP
 NCBI Prokaryotic Genome Annotation Pipeline
 
-NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate bacterial and archaeal genomes (chromosomes and plasmids).
+NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate
+bacterial and archaeal genomes (chromosomes and plasmids).
 
-Genome annotation is a multi-level process that includes prediction of protein-coding genes, as well as other functional genome units such as structural RNAs, tRNAs, small RNAs, pseudogenes, control regions, direct and inverted repeats, insertion sequences, transposons and other mobile elements.
+Genome annotation is a multi-level process that includes prediction of
+protein-coding genes, as well as other functional genome units such as
+structural RNAs, tRNAs, small RNAs, pseudogenes, control regions,
+direct and inverted repeats, insertion sequences, transposons and
+other mobile elements.
 
-NCBI has developed an automatic prokaryotic genome annotation pipeline that combines ab initio gene prediction algorithms with homology based methods. The first version of NCBI Prokaryotic Genome Automatic Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has been replaced with an upgraded version that is capable of processing a larger data volume.
+NCBI has developed an automatic prokaryotic genome annotation pipeline
+that combines ab initio gene prediction algorithms with homology based
+methods. The first version of NCBI Prokaryotic Genome Automatic
+Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has
+been replaced with an upgraded version that is capable of processing a
+larger data volume.
 
 
 ## Installation
 
-To run the PGAP pipeline you will need Linux, Docker, CWL (Common Workflow Language), and about 30GB of supplemental data. We provide instructions here for running under the CWL reference implementation, cwltool.
+To run the PGAP pipeline you will need Linux, Docker, CWL (Common
+Workflow Language), and about 30GB of supplemental data. We provide
+instructions here for running under the CWL reference implementation,
+cwltool.
 
 ### Quick start
 
-These instructions assume that you have a python virtualenv, pip, and docker installed. We provide more details about how to install these prerequisites below.
+These instructions assume that you have a python virtualenv, pip, and
+docker installed. We provide more details about how to install these
+prerequisites below.
 
 ```shell
 (cwl) ~$ pip install -U wheel setuptools
@@ -28,7 +43,10 @@ These instructions assume that you have a python virtualenv, pip, and docker ins
 
 ### Retrieving the CWL code
 
-The CWL software is available at GitHub at https://github.com/ncbi-gpipe/pgap. Download source code package for the latest release, which is located at https://github.com/ncbi-gpipe/pgap/releases, and extract the code.
+The CWL software is available at GitHub at
+https://github.com/ncbi-gpipe/pgap. Download source code package for
+the latest release, which is located at
+https://github.com/ncbi-gpipe/pgap/releases, and extract the code.
 
 ```shell
 (cwl) ~$ wget -qO- https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz | tar xvf
@@ -36,13 +54,16 @@ The CWL software is available at GitHub at https://github.com/ncbi-gpipe/pgap. D
 
 ### Download the Supplemental Data
 
-The supplemental data is stored on S3. It is versioned, and must match the CWL and Docker versions. A handy script to download the matching version is provided in the CWL source tree. This will download and extract the data to the input subdirectory.
+The supplemental data is stored on S3. It is versioned, and must match
+the CWL and Docker versions. A handy script to download the matching
+version is provided in the CWL source tree. This will download and
+extract the data to the input subdirectory.
 
 ```shell
 (cwl) ~/pgap-2018-07-05.build2884$ ./fetch_supplemental_data.sh
 ```
 
-### Run the pipeline
+### Running the pipeline
 
 The input.yaml file provides most of the required input parameters for the data in the input subdirectory. The other parameters are specific to the genome being annotated, and must be provided by the user. An example MG37 genome is provided with the CWL source, which may be run thusly.
 
@@ -168,25 +189,38 @@ Nucleic Acids Res. 2007 Jan;35(Database issue):D260-4. Epub 2006 Dec 6.
 Haft DH, Selengut JD, Richter RA, Harkins D, Basu MK, Beck E.\
 Nucleic Acids Res. 2013 Jan;41(Database issue):D387-95. doi: 10.1093/nar/gks1234. Epub 2012 Nov 28.
 
+## LICENSING TERMS
 
-## Public Domain notice
+### NCBI PGAP CWL
 
-National Center for Biotechnology Information.
-
-This software is a "United States Government Work" under the terms of the
-United States Copyright Act.  It was written as part of the authors'
-official duties as United States Government employees and thus cannot
-be copyrighted.  This software is freely available to the public for
-use. The National Library of Medicine and the U.S. Government have not
-placed any restriction on its use or reproduction.
+The NCBI PGAP CWL and other code authored by NCBI is a "United States
+Government Work" under the terms of the United States Copyright
+Act. It was written as part of the authors' official duties as United
+States Government employees and thus cannot be copyrighted. This
+software is freely available to the public for use. The National
+Library of Medicine and the U.S. Government have not placed any
+restriction on its use or reproduction.
 
 Although all reasonable efforts have been taken to ensure the accuracy
-and reliability of the software and data, the NLM and the U.S.
-Government do not and cannot warrant the performance or results that
-may be obtained by using this software or data. The NLM and the U.S.
-Government disclaim all warranties, express or implied, including
+and reliability of the software and data, the NLM and the
+U.S. Government do not and cannot warrant the performance or results
+that may be obtained by using this software or data. The NLM and the
+U.S. Government disclaim all warranties, express or implied, including
 warranties of performance, merchantability or fitness for any
 particular purpose.
 
 Please cite NCBI in any work or product based on this material.
 
+### Third-party tools
+
+The Docker image contains third-party tools distributed under the
+licensing terms of the respective license holders.
+
+### GeneMarkS
+
+GeneMarkS is distributed as part of PGAP with limited rights of use
+and redistribution from the Georgia Tech Research Corporation.  In
+particular, users of PGAP may not:
+
+a) alter, modify, or adapt GeneMarkS or its documentation
+b) separate GeneMarkS from PGAP and use it as a stand-alone analysis tool.
