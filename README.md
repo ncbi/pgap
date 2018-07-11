@@ -222,5 +222,5 @@ GeneMarkS is distributed as part of PGAP with limited rights of use
 and redistribution from the Georgia Tech Research Corporation.  In
 particular, users of PGAP may not:
 
-a) alter, modify, or adapt GeneMarkS or its documentation
+a) alter, modify, or adapt GeneMarkS or its documentation\
 b) separate GeneMarkS from PGAP and use it as a stand-alone analysis tool.
