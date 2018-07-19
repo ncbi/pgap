@@ -1,23 +1,133 @@
 License for the GeneMarkS+ software
 
-Georgia Tech Research Corporation, a non-profit corporation organized and existing under the laws of-the State of Georgia, with offices at the Georgia Institute of Technology, 505 Tenth Street, Atlanta, Georgia, U.S.A., 30332-0415 ("Licensor") is the joint owner of all right title and interest in this copy and any subsequent copies of the GeneMarkS+ software ("Product") Licensor hereby grants to the National Center for Biotechnology Information, a U.S. Governmental agency ("Licensee"), that desires to provide the Product, as a part of a larger software package (PGAP), a nonexclusive, royalty free license to use the copy of the Product in accordance with the terms and conditions of this License Agreement.
+Georgia Tech Research Corporation, a non-profit corporation organized
+and existing under the laws of-the State of Georgia, with offices at
+the Georgia Institute of Technology, 505 Tenth Street, Atlanta,
+Georgia, U.S.A., 30332-0415 ("Licensor") is the joint owner of all
+right title and interest in this copy and any subsequent copies of the
+GeneMarkS+ software ("Product") Licensor hereby grants to the National
+Center for Biotechnology Information, a U.S. Governmental agency
+("Licensee"), that desires to provide the Product, as a part of a
+larger software package (PGAP), a nonexclusive, royalty free license
+to use the copy of the Product in accordance with the terms and
+conditions of this License Agreement.
 
-1. Permitted Uses. Licensee may:
-a) use the Product for both Licensee's own internal research purposes as well as for embedding the Product into a public-facing prokaryotic genome annotation pipeline ("PGAP") that will be made available on a cloud computing system to either government, academic, non-profit or for-profit organizations, "Users". Users may download, install, and use the PGAP containing the Product for analysis and annotation of genomic DNA sequences. The sequences could be supplied by Users or by the third parties. This analysis may be done as a service for genomic community either with fees charged by the Users or without fees charged.
+1. Permitted Uses.
 
-2. Prohibited Uses. Licensee and/or Users may not:
-a) alter, modify, or adapt the Product or its documentation, or its portions thereof other than to incorporate the Product into PGAP.
-b) separate the Product from PGAP and use it as a stand-alone analysis tool.
-c) Sublicense or otherwise transfer the Product or its documentation in part or in whole, other than as provided for herein, without the prior written approval of Licensor.
-d) export any portion of the Product as a component of PGAP without fully and completely complying with any and all United States export or munitions control regulations and laws.
+Licensee may:
 
-3. Timeframe. The License is valid for one year period from the date of download ("Term"). The term of this agreement shall automatically renew for additional one year periods until such time as one party expresses its desire to terminate the license granted herein by providing written notice to the other. At the end of the Term or any successive extension thereof, Licensee may be reminded to renew the license and to download a new version of the software. It is Licensee's sole responsibility to incorporate any updated versions of the Product into PGAP. Licensor is not obligated to support, maintain, provide error corrections, update, or modify the Product. Should Licensee fail to comply with any provision of this License, or any terms and conditions associated with the transfer of the Product, this License shall automatically terminate without any further action taken by or notice from Licensor. Immediately upon termination, Licensee must remove and destroy all copies of the Product and its documentation from its machines.
+  a) use the Product for both Licensee's own internal research
+     purposes as well as for embedding the Product into a
+     public-facing prokaryotic genome annotation pipeline ("PGAP")
+     that will be made available on a cloud computing system to either
+     government, academic, non-profit or for-profit organizations,
+     "Users". Users may download, install, and use the PGAP containing
+     the Product for analysis and annotation of genomic DNA
+     sequences. The sequences could be supplied by Users or by the
+     third parties. This analysis may be done as a service for genomic
+     community either with fees charged by the Users or without fees
+     charged.
 
-4. Attribution. Licensee shall make a reasonable effort to ensure that the Users of the Product would make appropriate reference to the contributions of Dr. Mark Borodovsky, Georgia Institute of Technology, and GeneMarkS+ in any use of the Product, related documentation, or portions thereof in keeping with academic and industry norms, particularly, by citing the papers on GeneMarkS (Nucl. Acids Res. 2001) and PGAP(Nucl.Acids Res. 2016)
+2. Prohibited Uses.
+
+Licensee and/or Users may not:
+
+  a) alter, modify, or adapt the Product or its documentation, or its
+     portions thereof other than to incorporate the Product into PGAP.
+  b) separate the Product from PGAP and use it as a stand-alone
+     analysis tool.
+  c) Sublicense or otherwise transfer the Product or its documentation
+     in part or in whole, other than as provided for herein, without
+     the prior written approval of Licensor.
+  d) export any portion of the Product as a component of PGAP without
+     fully and completely complying with any and all United States
+     export or munitions control regulations and laws.
+
+3. Timeframe.
+
+The License is valid for one year period from the date of download
+("Term"). The term of this agreement shall automatically renew for
+additional one year periods until such time as one party expresses its
+desire to terminate the license granted herein by providing written
+notice to the other. At the end of the Term or any successive
+extension thereof, Licensee may be reminded to renew the license and
+to download a new version of the software. It is Licensee's sole
+responsibility to incorporate any updated versions of the Product into
+PGAP. Licensor is not obligated to support, maintain, provide error
+corrections, update, or modify the Product. Should Licensee fail to
+comply with any provision of this License, or any terms and conditions
+associated with the transfer of the Product, this License shall
+automatically terminate without any further action taken by or notice
+from Licensor. Immediately upon termination, Licensee must remove and
+destroy all copies of the Product and its documentation from its
+machines.
+
+4. Attribution.
+
+Licensee shall make a reasonable effort to ensure that the Users of
+the Product would make appropriate reference to the contributions of
+Dr. Mark Borodovsky, Georgia Institute of Technology, and GeneMarkS+
+in any use of the Product, related documentation, or portions thereof
+in keeping with academic and industry norms, particularly, by citing
+the papers on GeneMarkS (Nucl. Acids Res. 2001) and PGAP(Nucl.Acids
+Res. 2016)
 
 5. Limited Warranty and Liability.
-LICENSEE ACCEPTS THE PRODUCT ON AN "AS IS" BASIS. LICENSOR MAKES NO REPRESENTATION OR WARRANTY THAT THE PRODUCT WILL BE ACCESSIBLE OR DOWNLOADABLE. LICENSOR MAKES NO WARRANTY THAT ALL ERRORS CAN BE OR HAVE BEEN ELIMINATED FROM THE PRODUCT. LICNESOR SHALL NOT BE RESPONSIBLE FOR LOSSES OF ANY KIND RESULTING FROM THE USE OF THE PRODUCT AND ITS ACCOMPANYING DOCUMENTATION, AND CAN IN NO WAY PROVIDE COMPENSATION FOR ANY LOSSES SUSTAINED, INCLUDING BUT NOT LIMITED TO ANY OBLIGATION, LIABILITY, RIGHT, CLAIM OR REMEDY FOR TORT, OR FOR ANY ACTUAL OR ALLEGED INFRINGEMENT OF PATENTS, COPYRIGHTS, TRADE SECRETS, OR SIMILAR RIGHTS OF THIRD PARTIES, NOR ANY BUSINESS EXPENSE, MACHINE DOWNTIME OR DAMAGES CAUSED USER BY ANY DEFICIENCY, DEFECT OR ERROR IN THE PRODUCT OR MALFUNCTION THEREOF, NOR ANY INCIDENTAL OR CONSEQUENTIAL DAMAGES, HOWEVER CAUSED. LICNESOR DISCLAIMS ALL WARRANTIES, BOTH EXPRESS AND IMPLIED RESPECTING THE USE AND OPERATION OF THE PRODUCT AND ITS DOCUMENTATION, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR PARTICULAR PURPOSE AND ANY IMPLIED WARRANTY ARISING FROM COURSE OF PERFORMANCE, COURSE OF DEALING OR USAGE OF TRADE. LICSENSOR MAKES NO WARRANTY THAT THE PRODUCT IS ADEQUATELY OR COMPLETELY DESCRIBED IN, OR BEHAVES IN ACCORDANCE WITH ANY DOCUMENTATION. LICENSEE IS EXPECTED TO MAKE THE FINAL EVALUATION OF THE PRODUCT'S USEFULNESS IN LICNESEE'S OWN ENVIRONMENT.
+
+LICENSEE ACCEPTS THE PRODUCT ON AN "AS IS" BASIS. LICENSOR MAKES NO
+REPRESENTATION OR WARRANTY THAT THE PRODUCT WILL BE ACCESSIBLE OR
+DOWNLOADABLE. LICENSOR MAKES NO WARRANTY THAT ALL ERRORS CAN BE OR
+HAVE BEEN ELIMINATED FROM THE PRODUCT. LICNESOR SHALL NOT BE
+RESPONSIBLE FOR LOSSES OF ANY KIND RESULTING FROM THE USE OF THE
+PRODUCT AND ITS ACCOMPANYING DOCUMENTATION, AND CAN IN NO WAY PROVIDE
+COMPENSATION FOR ANY LOSSES SUSTAINED, INCLUDING BUT NOT LIMITED TO
+ANY OBLIGATION, LIABILITY, RIGHT, CLAIM OR REMEDY FOR TORT, OR FOR ANY
+ACTUAL OR ALLEGED INFRINGEMENT OF PATENTS, COPYRIGHTS, TRADE SECRETS,
+OR SIMILAR RIGHTS OF THIRD PARTIES, NOR ANY BUSINESS EXPENSE, MACHINE
+DOWNTIME OR DAMAGES CAUSED USER BY ANY DEFICIENCY, DEFECT OR ERROR IN
+THE PRODUCT OR MALFUNCTION THEREOF, NOR ANY INCIDENTAL OR
+CONSEQUENTIAL DAMAGES, HOWEVER CAUSED. LICNESOR DISCLAIMS ALL
+WARRANTIES, BOTH EXPRESS AND IMPLIED RESPECTING THE USE AND OPERATION
+OF THE PRODUCT AND ITS DOCUMENTATION, INCLUDING ALL IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR PARTICULAR PURPOSE AND ANY IMPLIED
+WARRANTY ARISING FROM COURSE OF PERFORMANCE, COURSE OF DEALING OR
+USAGE OF TRADE. LICSENSOR MAKES NO WARRANTY THAT THE PRODUCT IS
+ADEQUATELY OR COMPLETELY DESCRIBED IN, OR BEHAVES IN ACCORDANCE WITH
+ANY DOCUMENTATION. LICENSEE IS EXPECTED TO MAKE THE FINAL EVALUATION
+OF THE PRODUCT'S USEFULNESS IN LICNESEE'S OWN ENVIRONMENT.
 
 6. General
-Licensor retains all rights not expressly granted herein. Nothing in this License Agreement constitutes a waiver of Licensor's rights under United States copyright law. This License and Licensee's right to use the Product (including Users) automatically terminate without notice from Licensor if Licensee and/or User(s) fails to comply with any provision of this License, or any terms and conditions associated with the transfer of the Product. Licensee shall not use the names of GTRC, Georgia Institute of Technology, the Board of Regents of the University System of Georgia, or the Georgia Tech Foundation without prior written approval from GTRC in any advertising or publicity matter related to this License. GTRC's name in this paragraph shall extend, but not be limited, to the name of Georgia Tech Research Corporation, GTRC, Georgia Tech Foundation, Georgia Institute of Technology and Georgia Tech. Licensee shall not assign, transfer or subcontract its rights or obligations under this agreement without the prior written consent of Licensor. Licensor shall have the right to assign, transfer or subcontract any of its rights or obligations under this agreement to the Georgia Institute of Technology, to any party succeeding to substantially all of the business interests of Licensor, and/or another entity selected or created by Licensor to assume part or all of Licensor's rights and obligations incident to existing and future license agreements representing the subject matter hereof. This License sets forth the entire agreement and understanding between the parties as to the subject matter hereof and merges all prior discussions between them; and neither party shall be bound by any conditions, definitions, warranties, understandings or representations with respect to such subject matter other than as expressly provided herein. This License Agreement is governed by the laws of the State of Georgia insofar as they do not conflict with U.S. Federal law. This License represents the complete and exclusive statement between the Licensor and Licensee relating to the Product, and supersedes all prior understandings, communications, or representations, either oral or written between Licensor and Licensee.
 
+Licensor retains all rights not expressly granted herein. Nothing in
+this License Agreement constitutes a waiver of Licensor's rights under
+United States copyright law. This License and Licensee's right to use
+the Product (including Users) automatically terminate without notice
+from Licensor if Licensee and/or User(s) fails to comply with any
+provision of this License, or any terms and conditions associated with
+the transfer of the Product. Licensee shall not use the names of GTRC,
+Georgia Institute of Technology, the Board of Regents of the
+University System of Georgia, or the Georgia Tech Foundation without
+prior written approval from GTRC in any advertising or publicity
+matter related to this License. GTRC's name in this paragraph shall
+extend, but not be limited, to the name of Georgia Tech Research
+Corporation, GTRC, Georgia Tech Foundation, Georgia Institute of
+Technology and Georgia Tech. Licensee shall not assign, transfer or
+subcontract its rights or obligations under this agreement without the
+prior written consent of Licensor. Licensor shall have the right to
+assign, transfer or subcontract any of its rights or obligations under
+this agreement to the Georgia Institute of Technology, to any party
+succeeding to substantially all of the business interests of Licensor,
+and/or another entity selected or created by Licensor to assume part
+or all of Licensor's rights and obligations incident to existing and
+future license agreements representing the subject matter hereof. This
+License sets forth the entire agreement and understanding between the
+parties as to the subject matter hereof and merges all prior
+discussions between them; and neither party shall be bound by any
+conditions, definitions, warranties, understandings or representations
+with respect to such subject matter other than as expressly provided
+herein. This License Agreement is governed by the laws of the State of
+Georgia insofar as they do not conflict with U.S. Federal law. This
+License represents the complete and exclusive statement between the
+Licensor and Licensee relating to the Product, and supersedes all
+prior understandings, communications, or representations, either oral
+or written between Licensor and Licensee.
