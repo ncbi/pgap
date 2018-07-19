@@ -219,19 +219,29 @@ licensing terms of the respective license holders.
 ### GeneMarkS
 
 GeneMarkS is distributed as part of PGAP with limited rights of use
-and redistribution from the Georgia Tech Research Corporation.  In
-particular, users of PGAP may not:
-
-a) alter, modify, or adapt GeneMarkS or its documentation\
-b) separate GeneMarkS from PGAP and use it as a stand-alone analysis tool.
+and redistribution from the Georgia Tech Research Corporation. See the
+[full text of the license](GeneMarkS_Software_License.txt).
 
 ### TIGRFAMs
 
-The TIGRFAM Hidden Markov Models, which constitute a part of the
-evidence used for PGAP annotation, were created by the J. Craig Venter
-Institute \(see publications in the [Reference section](#reference)\) and were
-transferred to NCBI in April 2018. The TIGRFAMs data are made
-available under a [Creative Commons Attribution-ShareAlike 4.0
-license](https://creativecommons.org/licenses/by-sa/4.0/). See the
-[full text \(legal code\) of the
-license](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+The original TIGRFAMs database was a research project of the J. Craig
+Venter Institute \(JCVI\) . TIGRFAMs, short for The Institute for
+Genomic Research's database of protein families, is a collection of
+manually curated protein families focusing primarily on prokaryotic
+sequences. It consists of hidden Markov models \(HMMs\), multiple
+sequence alignments, Gene Ontology \(GO\) terminology, Enzyme Commission
+\(EC\) numbers, gene symbols, protein family names, descriptive text,
+cross-references to related models in TIGRFAMs and other databases,
+and pointers to the literature. The work has been described in the
+articles listed in the References section above and use of the
+TIGRFAMs database must grant proper attribution by citing those four
+articles.
+
+As of April 2018, rights were transferred to the National Center for
+Biotechnology Information \(NCBI\), National Library of Medicine, NIH,
+for the data to be made available for distribution under a Creative
+Commons Attribution-ShareAlike 4.0 license.  Please see
+(https://creativecommons.org/licenses/by-sa/4.0/) for a brief summary
+of the license and
+(https://creativecommons.org/licenses/by-sa/4.0/legalcode) to see the
+full text.
