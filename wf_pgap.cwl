@@ -219,8 +219,6 @@ steps:
         wp_hashes: wp_hashes
         taxon_db: taxon_db
         genemark_path: genemark_path
-        sequence_cache: genomic_source/asncache
-        uniColl_cache: uniColl_cache
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
