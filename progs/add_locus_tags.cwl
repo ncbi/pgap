@@ -12,11 +12,13 @@ inputs:
     inputBinding:
       prefix: -input
   locus_tag_prefix:
-    type: string
+    type: string?
+    default: "NoSubmit_"
     inputBinding:
       prefix: -locus-tag-prefix
   dbname:
-    type: string
+    type: string?
+    default: "extdb"
     inputBinding:
       prefix: -dbname
   output_impl:

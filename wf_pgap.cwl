@@ -311,9 +311,7 @@ steps:
     in:
         input: bacterial_annot_4/out_annotation
         locus_tag_prefix: locus_tag_prefix
-            default: "NoSubmit_"
-		dbname: dbname
-			default: "extdb"
+        dbname: dbname
     out: [output]
     
   #
