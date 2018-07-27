@@ -15,6 +15,10 @@ inputs:
     type: string
     inputBinding:
       prefix: -locus-tag-prefix
+  dbname:
+    type: string
+    inputBinding:
+      prefix: -dbname
   output_impl:
     type: string
     default: annotation.asn

@@ -310,6 +310,8 @@ steps:
         input: bacterial_annot_4/out_annotation
         locus_tag_prefix:
             default: "extpgap_"
+		dbname:
+			default: "extdb"
     out: [output]
     
   #
