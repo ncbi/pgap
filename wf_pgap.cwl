@@ -19,6 +19,8 @@ inputs:
   submit_block_template: File
   taxid: int
   gc_assm_name: string
+  locus_tag_prefix: string?
+  dbname: string?
 
   #
   # User independent, static input
@@ -308,9 +310,9 @@ steps:
     run: progs/add_locus_tags.cwl
     in:
         input: bacterial_annot_4/out_annotation
-        locus_tag_prefix:
+        locus_tag_prefix: locus_tag_prefix
             default: "NoSubmit_"
-		dbname:
+		dbname: dbname
 			default: "extdb"
     out: [output]
     
