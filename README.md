@@ -34,9 +34,9 @@ prerequisites below.
 ```shell
 (cwl) ~$ pip install -U wheel setuptools
 (cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
-(cwl) ~$ wget https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz && tar xvf 2018-07-05.build2884.tar.gz
+(cwl) ~$ wget -qO- https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz | tar xvz
 (cwl) ~$ cd pgap-2018-07-05.build2884
-(cwl) ~/pgap-2018-07-05.build2884$ ./fetch_supplemental_data.sh
+(cwl) ~/pgap-2018-07-05.build2884$ ./scripts/fetch_supplemental_data.sh
 (cwl) ~/pgap-2018-07-05.build2884$ cat input.yaml MG37/input.yaml > mg37_input.yaml
 (cwl) ~/pgap-2018-07-05.build2884$ ./wf_pgap_simple.cwl mg37_input.yaml
 ```
@@ -49,7 +49,7 @@ the latest release, which is located at
 https://github.com/ncbi-gpipe/pgap/releases, and extract the code.
 
 ```shell
-(cwl) ~$ wget https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz && tar xvf 2018-07-05.build2884.tar.gz
+(cwl) ~$ wget -qO- https://github.com/ncbi-gpipe/pgap/archive/2018-07-05.build2884.tar.gz | tar xvz
 ```
 
 ### Download the Supplemental Data
@@ -60,7 +60,7 @@ version is provided in the CWL source tree. This will download and
 extract the data to the input subdirectory.
 
 ```shell
-(cwl) ~/pgap-2018-07-05.build2884$ ./fetch_supplemental_data.sh
+(cwl) ~/pgap-2018-07-05.build2884$ ./scripts/fetch_supplemental_data.sh
 ```
 
 ### Running the pipeline
