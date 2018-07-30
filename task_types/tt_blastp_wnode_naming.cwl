@@ -34,7 +34,6 @@ inputs:
   max_jobs: int
   max_target_seqs: int
   no_merge: boolean
-  nogenbank: boolean
   ofmt: string
   seg: string
   threshold: int

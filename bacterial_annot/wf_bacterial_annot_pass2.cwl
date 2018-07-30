@@ -105,8 +105,6 @@ steps:
                 default: 50
             no_merge: 
                 default: false
-            nogenbank: 
-                default: true
             ofmt: 
                 default: asn-binary
             seg: 

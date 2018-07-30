@@ -60,8 +60,6 @@ steps:
             start_stop_allowance:
                 default: 60
             thr: thresholds
-            start_stop_allowance:
-                default: 60
             unicoll_sqlite: naming_sqlite
             nogenbank: 
                 default: true
