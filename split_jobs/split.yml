@@ -1,8 +1,0 @@
-input:
-  class: File
-  location: jobs.xml
-chunk_size: "1"
-#nchunks: "4"
-#mask: "jobs"
-#suffix: .xml
-#outdir_name: JOBS
