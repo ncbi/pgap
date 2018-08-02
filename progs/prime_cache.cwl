@@ -46,6 +46,10 @@ inputs:
     default: "oseq-ids.seqids"
     inputBinding:
         prefix: -oseq-ids
+  submit_block_template: 
+    type: File
+    inputBinding:
+        prefix: -submit-block-template
 outputs:
   oseq_ids:
      type: File

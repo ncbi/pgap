@@ -63,6 +63,7 @@ steps:
       taxid: taxid
       gc_assm_name: gc_assm_name
       taxon_db: taxon_db
+      submit_block_template: submit_block_template
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
 
   #

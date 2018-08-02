@@ -6,7 +6,7 @@ hints:
     dockerPull: ncbi/gpdev:latest
 
 baseCommand: preserve_annot_markup
-arguments: [-locus-tag-prefix, NoSubmit, -ltp-table, vLTPs, -create-missing-LTPs, -preserve-product-ID, -submission-mode-genbank]
+arguments: [-locus-tag-prefix, pgaptmp, -ltp-table, vLTPs, -create-missing-LTPs, -preserve-product-ID, -submission-mode-genbank]
 inputs:
   full_id_cache:
     type: Directory?

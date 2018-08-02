@@ -11,6 +11,7 @@ inputs:
   taxid: int
   gc_assm_name: string
   taxon_db: File
+  submit_block_template: File
   # sequence_cache_shortcut: Directory
   # ids_out_shortcut: File
 outputs:
@@ -45,6 +46,7 @@ steps:
       input: fasta
       taxon_db: taxon_db
       taxid: taxid
+      submit_block_template: submit_block_template
     out: [oseq_ids, asn_cache]
 
   Create_Assembly_From_Sequences:
