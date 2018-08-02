@@ -13,7 +13,7 @@ inputs:
       prefix: -input
   locus_tag_prefix:
     type: string?
-    default: "NoSubmit_"
+    default: "pgaptmp_"
     inputBinding:
       prefix: -locus-tag-prefix
   dbname:
