@@ -55,6 +55,9 @@ inputs:
   univ_prot_xml: File
   val_res_den_xml: File
   asn2pas_xsl: File
+  scatter_gather_nchunks:
+    type: string
+    default: '1'  
 steps:
   genomic_source: # PLANE
     run: genomic_source/wf_genomic_source.cwl
@@ -189,6 +192,7 @@ steps:
         annotation: bacterial_annot/outseqs
         sequence_cache: genomic_source/asncache
         unicoll_cache: uniColl_cache
+        scatter_gather_nchunks: scatter_gather_nchunks
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
   
   protein_alignment: # PLANE
@@ -267,6 +271,7 @@ steps:
         blast_rules_db_dir: blast_rules_db_dir
         blast_rules_db: blast_rules_db
         identification_db_dir: naming_blast_db
+        scatter_gather_nchunks: scatter_gather_nchunks
     out:
         - id: out_annotation 
   # #

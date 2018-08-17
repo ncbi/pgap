@@ -22,7 +22,8 @@ inputs:
     type: string?
     inputBinding:
       position: 2
-      prefix: -n
+      prefix: "-n l//"
+      separate: False
   suffix:
     type: string?
     default: .xml

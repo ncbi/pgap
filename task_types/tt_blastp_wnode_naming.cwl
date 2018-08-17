@@ -6,6 +6,7 @@ hints:
     dockerPull: ncbi/gpdev:latest
 requirements:
   - class: SubworkflowFeatureRequirement
+  - class: ScatterFeatureRequirement
 #  - class: InlineJavascriptRequirement
 #  - class: InitialWorkDirRequirement
 #    listing:
@@ -15,6 +16,8 @@ requirements:
 #          #   writable: False
     
 inputs:
+  scatter_gather_nchunks: string
+#  scatter_gather_chunk_size: string
   blastdb_dir: Directory[]
   blastdb: string[]
   # cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
@@ -41,12 +44,13 @@ inputs:
   word_size: int
   ids: File[]
   batch-size: int?
+
 outputs:
   blast_align:
     type: File
-    outputSource: gpx_qdump/output
+    outputSource: collect_aligns/file_out
+
 steps:
-  # this has been tested, commenting out to run faster
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
@@ -61,10 +65,20 @@ steps:
       nogenbank: nogenbank
       batch_size: batch-size
     out: [jobs]
-  cluster_blastp_wnode: # 30 minutes
-    run: ../progs/cluster_blastp_wnode.cwl
+
+  split_jobs:
+    run: ../split_jobs/split.cwl
     in:
-      input_jobs: gpx_qsubmit/jobs
+      input: gpx_qsubmit/jobs
+      nchunks: scatter_gather_nchunks
+#      chunk_size: scatter_gather_chunk_size
+    out:  [ jobs ]
+
+  cluster_and_qdump: 
+    run: tt_cluster_and_qdump.cwl
+    scatter: input_jobs
+    in:
+      input_jobs: split_jobs/jobs
       align_filter: align_filter
       allow_intersection: allow_intersection
       asn_cache: asn_cache
@@ -85,19 +99,11 @@ steps:
       threshold: threshold
       top_by_score: top_by_score
       word_size: word_size
-      workers:
-        default: 1
-    out: [outdir]
-  gpx_qdump:
-    run: ../progs/gpx_qdump.cwl
-    in:
-      input_path: cluster_blastp_wnode/outdir # production mode
-      # input_path: cluster_blastp_wnode_output # shortcut, because actually running cluster_blastp_wnode takes 30 min even for MG
-      unzip: 
-        default: '*'
-      # bogus input because for some reason we are importing requirements from caller node
-      # do not know how to resolve it yet, but at least we can keep on going
-      # lds2: lds2
-      # proteins: proteins
-    out: [ output ]
+    out: [blast_align]
     
+
+  collect_aligns:
+    run: ../split_jobs/cat_array_of_files.cwl
+    in: 
+      files_in: cluster_and_qdump/blast_align
+    out: [ file_out ]

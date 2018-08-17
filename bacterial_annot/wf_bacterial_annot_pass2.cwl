@@ -7,6 +7,8 @@ requirements:
     - class: MultipleInputFeatureRequirement
 
 inputs:
+    scatter_gather_nchunks: 
+        type: string
     # This LDS2 resource needs to be fixed by removing absolute path from files
     lds2: 
         label: "Extract ORF Proteins/lds2"
@@ -67,6 +69,7 @@ steps:
         label: "Find Naming Protein Hits I"
         run: ../task_types/tt_blastp_wnode_naming.cwl
         in:
+            scatter_gather_nchunks: scatter_gather_nchunks
             ids: 
                 source: [Remove_off_frame_ORFs/output]
                 linkMerge: merge_flattened

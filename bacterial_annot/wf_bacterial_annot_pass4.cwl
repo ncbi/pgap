@@ -7,6 +7,8 @@ requirements:
     - class: MultipleInputFeatureRequirement
 
 inputs:
+    scatter_gather_nchunks: 
+        type: string
     lds2: # Extract Model Proteins/lds2
         type: File
     proteins: # Extract Model Proteins/proteins
@@ -51,6 +53,7 @@ steps:
         label: "Find Naming Protein Hits"
         run: ../task_types/tt_blastp_wnode_naming.cwl
         in:
+            scatter_gather_nchunks: scatter_gather_nchunks
             # files/directories
             ids: 
                 source: [Good_AntiFam_filtered_proteins_gilist]
