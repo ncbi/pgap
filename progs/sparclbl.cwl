@@ -41,7 +41,7 @@ inputs:
         prefix: -x
   protein_assignments_name:
     type: string?
-    default: proteins.xml
+    default: ./proteins.xml
     inputBinding:
         prefix: -o
         
