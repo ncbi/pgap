@@ -1,0 +1,12 @@
+# Test input
+asn_cache:
+  class: Directory
+  location: INPUT/sequence_cache
+taxon_db:
+  class: File
+  location: INPUT/taxonomy.sqlite3
+seqids:
+  class: File
+  location: INPUT/sequences.seq_id
+taxid: 243273
+scatter_gather_nchunks: "5"

@@ -146,6 +146,7 @@ steps:
       seqids: genomic_source/seqid_list
       taxid: taxid
       taxon_db: taxon_db
+      scatter_gather_nchunks: scatter_gather_nchunks
     out: [annots]
 
   bacterial_annot: # PLANE

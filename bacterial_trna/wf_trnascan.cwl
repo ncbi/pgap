@@ -3,13 +3,17 @@ label: "Run tRNAScan"
 cwlVersion: v1.0
 class: Workflow
 
-#requirements:
+requirements:
+  - class: SubworkflowFeatureRequirement
+  - class: ScatterFeatureRequirement
 
 inputs:
   asn_cache: Directory
   seqids: File
   taxid: int
   taxon_db: File
+  scatter_gather_nchunks: string
+
 outputs:
   annots:
     type: File
@@ -54,28 +58,32 @@ steps:
     in:
         gencode: Compute_Gencode_int_for_trna/value
     out: [output]
-  Run_tRNAScan_wnode:
-    run: trnascan_wnode.cwl
+  split_jobs:
+    run: ../split_jobs/split.cwl
     in:
-      #asn_cache: Run_tRNAScan_submit/asncache
+      input: Run_tRNAScan_submit/jobs
+      nchunks: scatter_gather_nchunks
+#      chunk_size: scatter_gather_chunk_size
+    out:  [ jobs ]
+  Run_scan_and_dump:
+    run: wf_scan_and_dump.cwl
+    scatter: input_jobs
+    in:
       asn_cache: asn_cache
-      input_jobs: Run_tRNAScan_submit/jobs
+      input_jobs: split_jobs/jobs
       #input_jobs: jobs
       taxid: taxid
       gcode_othmito: Get_TRNA_model/output
       taxon_db: taxon_db
       superkingdom: Compute_Superkingdom_int_for_trna/value
-    #out: [asncache, outdir]
-    out: [outdir]
-
-  Run_tRNAScan_dump:
-    run: gpx_qdump.cwl
-    in:
-      input_path: Run_tRNAScan_wnode/outdir
     out: [intermediate]
-    
+  collect_intermediate:
+    run: ../split_jobs/cat_array_of_files.cwl
+    in: 
+      files_in: Run_scan_and_dump/intermediate
+    out: [ file_out ]
   Run_tRNAScan_trnascan_dump:
     run: trnascan_dump.cwl
     in:
-      input: Run_tRNAScan_dump/intermediate
+      input: collect_intermediate/file_out
     out: [outasn, outstruct]
