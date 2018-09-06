@@ -156,6 +156,7 @@ steps:
       inseq: Prepare_Unannotated_Sequences/sequences
       hmm_path: hmm_path
       hmms_tab: hmms_tab
+      scatter_gather_nchunks: scatter_gather_nchunks
       uniColl_cache: uniColl_cache
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
@@ -177,6 +178,7 @@ steps:
       Extract_ORF_Proteins_lds2: bacterial_annot/lds2
       AntiFamLib: AntiFamLib
       sequence_cache: genomic_source/asncache
+      scatter_gather_nchunks: scatter_gather_nchunks
     out: [AntiFam_tainted_proteins_I___oseqids]
     
   bacterial_annot_2: # PLANE  
@@ -215,6 +217,7 @@ steps:
         uniColl_cache: uniColl_cache
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
+        scatter_gather_nchunks: scatter_gather_nchunks
         prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
         raw_seqs: Prepare_Unannotated_Sequences/sequences
@@ -245,6 +248,7 @@ steps:
       Extract_Model_Proteins_lds2: bacterial_annot_3/Extract_Model_Proteins_lds2
       AntiFamLib: AntiFamLib
       sequence_cache: genomic_source/asncache
+      scatter_gather_nchunks: scatter_gather_nchunks
       Run_GeneMark_models: bacterial_annot_3/Run_GeneMark_Post_models
     out:
       - AntiFam_tainted_proteins___oseqids

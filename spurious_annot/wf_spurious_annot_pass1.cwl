@@ -11,6 +11,7 @@ inputs:
   Extract_ORF_Proteins_lds2: File
   AntiFamLib: Directory
   sequence_cache: Directory
+  scatter_gather_nchunks: string
 outputs:
   AntiFam_tainted_proteins_I___oseqids:
     type: File
@@ -27,6 +28,7 @@ steps:
             lds2: Extract_ORF_Proteins_lds2
             # hmms_tab: hmms_tab # goes eventually to -fam parameter -fam is empty here
             asn_cache: sequence_cache
+            scatter_gather_nchunks: scatter_gather_nchunks
         out: [hmm_hits]
     AntiFam_tainted_proteins_I:
         label: "AntiFam tainted proteins I"

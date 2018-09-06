@@ -24,6 +24,7 @@ inputs:
   genemark_path: Directory
   # Cached computational steps
   #hmm_hits: File
+  scatter_gather_nchunks: string
 outputs:
   outseqs:
     type: File
@@ -81,6 +82,7 @@ steps:
       lds2: Extract_ORF_Proteins/lds2
       hmms_tab: hmms_tab
       asn_cache: asn_cache
+      scatter_gather_nchunks: scatter_gather_nchunks
     out:
       [hmm_hits]
       #[hmm_hits, jobs, workdir]

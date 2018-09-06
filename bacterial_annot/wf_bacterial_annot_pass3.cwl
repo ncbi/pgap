@@ -41,6 +41,7 @@ inputs:
     wp_hashes: File #    input/wp-hashes.sqlite
     taxon_db: File # input/taxonomy.sqlite3
     genemark_path: Directory
+    scatter_gather_nchunks: string
 steps:
     Find_Best_Evidence_Alignments:
         label: "Find Best Evidence Alignments"
@@ -133,6 +134,7 @@ steps:
               lds2: Extract_Model_Proteins/lds2
               hmms_tab: hmms_tab # goes eventually to -fam parameter
               asn_cache: sequence_cache
+              scatter_gather_nchunks: scatter_gather_nchunks
         out:
           [hmm_hits]    
     Assign_Naming_HMM_to_Proteins:

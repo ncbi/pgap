@@ -12,6 +12,7 @@ inputs:
   AntiFamLib: Directory
   sequence_cache: Directory
   Run_GeneMark_models: File
+  scatter_gather_nchunks: string
 outputs:
   AntiFam_tainted_proteins___oseqids:
     type: File
@@ -34,6 +35,7 @@ steps:
             lds2: Extract_Model_Proteins_lds2
             # hmms_tab: hmms_tab # goes eventually to -fam parameter -fam is empty here
             asn_cache: sequence_cache
+            scatter_gather_nchunks: scatter_gather_nchunks
         out: [hmm_hits]
     AntiFam_tainted_proteins:
         label: "AntiFam tainted proteins"
