@@ -14,7 +14,7 @@ requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: DockerRequirement
-    dockerPull: ncbi/pgap:2018-07-05.build2884
+    dockerPull: ncbi/pgap:2018-09-10.build3008
   
 inputs:
   #
