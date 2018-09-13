@@ -99,6 +99,8 @@ steps:
                 default: false
             dbsize: 
                 default: '6000000000'
+            evalue: 
+                default: 0.1
             # evalue: float # application default
             extra_coverage: 
                 default: 20
