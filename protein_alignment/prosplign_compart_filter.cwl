@@ -36,7 +36,7 @@ inputs:
     inputBinding:
         prefix: min_scaffold_coverage
   max_compart_count:
-    type: integer
+    type: int
     default: 5000
     inputBinding:
         prefix: -max_compart_count
@@ -56,7 +56,7 @@ inputs:
     inputBinding:
       prefix: -gc-assembly
   sufficient_compart_length:
-    type: integer?
+    type: int?
     inputBinding:
         prefix: -sufficient_compart_length 
   output:
