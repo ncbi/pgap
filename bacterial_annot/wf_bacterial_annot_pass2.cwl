@@ -109,7 +109,7 @@ steps:
             max_target_seqs: 
                 default: 50
             no_merge: 
-                default: false
+                default: true
             ofmt: 
                 default: asn-binary
             seg: 
