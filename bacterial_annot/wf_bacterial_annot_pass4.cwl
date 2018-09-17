@@ -149,6 +149,8 @@ steps:
             hfmt:
                 default: seq-align
             hits: Assign_Clusters_to_Proteins_sort/output
+            limit_mem: 
+                default: '13G'
             margin:
                 default: 0.05
             namedb_dir: naming_blast_db # NamingDatabase
@@ -255,7 +257,7 @@ steps:
             long_model_limit:
                 default: 1000000 # 1,000,000
             max_overlap:
-                default: 113
+                default: 120
             max_unannotated_region:
                 default: 5000
             short_model_limit:

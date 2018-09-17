@@ -32,6 +32,11 @@ inputs:
     type: File
     inputBinding:
       prefix: -input
+  limit_mem:
+    type: string?
+    inputBinding:
+        prefix: -limit-mem
+        
   output:
     type: string?
     default: align.asn

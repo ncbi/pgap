@@ -19,14 +19,32 @@ requirements:
     
 baseCommand: prosplign_compart_filter
 
-arguments: [ -max_compart_count, "5000", -min_prot_coverage, "0.05", -min_scaffold_coverage, "0.50", -nogenbank ] 
-
 inputs:
   asn_cache:
     type: Directory
     inputBinding:
       prefix: -asn-cache
       valueFrom: $(inputs.asn_cache.basename),$(inputs.uniColl_asn_cache.basename)
+  min_prot_coverage:
+    type: float
+    default: 0.05
+    inputBinding:
+        prefix: min_prot_coverage
+  min_scaffold_coverage:
+    type: float
+    default: 0.50
+    inputBinding:
+        prefix: min_scaffold_coverage
+  max_compart_count:
+    type: integer
+    default: 5000
+    inputBinding:
+        prefix: -max_compart_count
+  nogenbank:
+    type: boolean?
+    default: true
+    inputBinding:
+        prefix: -nogenbank
   uniColl_asn_cache:
     type: Directory
   unfilt_comp:
@@ -37,6 +55,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -gc-assembly
+  sufficient_compart_length:
+    type: integer?
+    inputBinding:
+        prefix: -sufficient_compart_length 
   output:
     type: string?
     default: compartments.asn   

@@ -55,7 +55,7 @@ steps:
                 # source: 
                 # linkMerge: merge_flattened
             max_overlap:
-                default: 113
+                default: 120
             output_align_name:
                 default: best_aligns.asn
             start_stop_allowance:

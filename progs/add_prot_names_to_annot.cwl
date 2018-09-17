@@ -31,7 +31,6 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -nogenbank
-      valueFrom: 
   proteins:
     type: File[]
   proteins_mft:

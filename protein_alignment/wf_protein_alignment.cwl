@@ -84,6 +84,8 @@ steps:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
       blast_aligns: cat/file_out
+      limit_mem: 
+        default: '13G'      
     out: [ sorted_aligns ]
 
   Filter_Full_Coverage_Alignments_I:

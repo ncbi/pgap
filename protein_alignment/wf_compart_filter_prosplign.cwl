@@ -32,6 +32,9 @@ steps:
       uniColl_asn_cache: uniColl_asn_cache
       unfilt_comp: Filter_Protein_Seeds_I_prosplign_compart/unfilt_comp
       gc_assembly: gc_assembly
+      sufficient_compart_length:
+        default: 1500
+      
     out: [compartments]
   
   Find_ProSplign_Alignments_gpx_qsubmit:
