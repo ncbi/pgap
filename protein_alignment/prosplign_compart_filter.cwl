@@ -29,12 +29,12 @@ inputs:
     type: float
     default: 0.05
     inputBinding:
-        prefix: min_prot_coverage
+        prefix: -min_prot_coverage
   min_scaffold_coverage:
     type: float
     default: 0.50
     inputBinding:
-        prefix: min_scaffold_coverage
+        prefix: -min_scaffold_coverage
   max_compart_count:
     type: int
     default: 5000
