@@ -38,10 +38,6 @@ inputs:
     type: File
     inputBinding:
       prefix: -hits
-  limit_mem:
-    type: string?
-    inputBinding:
-        prefix: -limit-mem
   margin:
     type: float?
     inputBinding:

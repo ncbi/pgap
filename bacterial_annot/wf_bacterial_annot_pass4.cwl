@@ -131,6 +131,8 @@ steps:
                 default: seq-align-set
             k:
                 default: query,subject,-score,-num_ident,query_align_len,subject_align_len,query_start,subject_start
+            limit_mem: 
+                default: '13G'
             nogenbank:
                 default: true
             # internal: tmp
@@ -149,8 +151,6 @@ steps:
             hfmt:
                 default: seq-align
             hits: Assign_Clusters_to_Proteins_sort/output
-            limit_mem: 
-                default: '13G'
             margin:
                 default: 0.05
             namedb_dir: naming_blast_db # NamingDatabase
