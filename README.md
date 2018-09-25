@@ -37,11 +37,11 @@ prerequisites below.
 (cwl) ~$ pip install -U pip
 (cwl) ~$ pip install -U wheel setuptools
 (cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
-(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-10.build3008-beta.tar.gz | tar xvz
-(cwl) ~$ cd pgap-2018-09-10.build3008-beta
-(cwl) ~/pgap-2018-09-10.build3008-beta$ ./scripts/fetch_supplemental_data.sh
-(cwl) ~/pgap-2018-09-10.build3008-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
-(cwl) ~/pgap-2018-09-10.build3008-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
+(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-18.build3030-beta.tar.gz | tar xvz
+(cwl) ~$ cd pgap-2018-09-18.build3030-beta
+(cwl) ~/pgap-2018-09-18.build3030-beta$ ./scripts/fetch_supplemental_data.sh
+(cwl) ~/pgap-2018-09-18.build3030-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
+(cwl) ~/pgap-2018-09-18.build3030-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
 ```
 
 ### Retrieving the CWL code
@@ -52,7 +52,7 @@ the latest release, which is located at
 https://github.com/ncbi/pgap/releases, and extract the code.
 
 ```shell
-(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-10.build3008-beta.tar.gz | tar xvz
+(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-18.build3030-beta.tar.gz | tar xvz
 ```
 
 ### Download the Supplemental Data
@@ -63,7 +63,7 @@ version is provided in the CWL source tree. This will download and
 extract the data to the input subdirectory.
 
 ```shell
-(cwl) ~/pgap-2018-09-10.build3008-beta$ ./scripts/fetch_supplemental_data.sh
+(cwl) ~/pgap-2018-09-18.build3030-beta$ ./scripts/fetch_supplemental_data.sh
 ```
 
 ### Running the pipeline
@@ -71,8 +71,8 @@ extract the data to the input subdirectory.
 The input.yaml file provides most of the required input parameters for the data in the input subdirectory. The other parameters are specific to the genome being annotated, and must be provided by the user. An example MG37 genome is provided with the CWL source, which may be run thusly.
 
 ```shell
-(cwl) ~/pgap-2018-09-10.build3008-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
-(cwl) ~/pgap-2018-09-10.build3008-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
+(cwl) ~/pgap-2018-09-18.build3030-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
+(cwl) ~/pgap-2018-09-18.build3030-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
 ```
 
 ### Expected Output
