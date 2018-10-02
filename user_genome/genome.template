@@ -63,47 +63,25 @@ Submit-block ::= {
     }
 }
 Seqdesc ::= source {
-              org {
-                taxname "Mycoplasma genitalium G37",
-                db {
-                  {
-                    db "ATCC",
-                    tag id 33530
-                  },
-                  {
-                    db "taxon",
-                    tag id 243273
-                  }
-                },
-                orgname {
-                  name binomial {
-                    genus "Mycoplasma",
-                    species "genitalium"
-                  },
-                  attrib "specified",
-                  mod {
-                    {
-                      subtype strain,
-                      subname "G-37"
-                    },
-                    {
-                      subtype old-name,
-                      subname "Mycoplasma genitalium G-37",
-                      attrib "(2)strain=G-37"
-                    },
-                    {
-                      subtype other,
-                      subname "strain coidentity: G37 = ATCC 33530"
-                    }
-                  },
-                  lineage "Bacteria; Tenericutes; Mollicutes;
- Mycoplasmataceae; Mycoplasma",
-                  gcode 4,
-                  div "BCT"
-                }
-              }
+    org {
+      taxname "Escherichia coli",
+      db {
+        {
+          db "taxon",
+          tag id 562
+        }
+      },
+      orgname {
+        name binomial {
+          genus "Escherichia",
+          species "coli"
+        },
+        attrib "specified",
+        gcode 11,
+        div "BCT"
+      }
+    }
 }
 Seqdesc ::= molinfo {
-  biomol genomic,
-  completeness complete
+  biomol genomic
 }

@@ -6,4 +6,3 @@ fasta:
   location: example_genome/genome.fa
 taxid: 562
 gc_assm_name: ecoli_example
-completeness: complete
