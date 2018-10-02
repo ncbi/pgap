@@ -18,143 +18,18 @@ been replaced with an upgraded version that is capable of processing a
 larger data volume.
 
 
-## Installation
+## Instructions
 
 To run the PGAP pipeline you will need Linux, Docker, CWL (Common
 Workflow Language), and about 30GB of supplemental data. We provide
 instructions here for running under the CWL reference implementation,
-cwltool.
+cwltool. Full instructions for installing, running, and interpreting
+the results may be found in our [wiki](wiki).
 
-### Quick start
-
-These instructions assume that you have a python virtualenv, pip, and
-docker installed. We provide more details about how to install these
-prerequisites below.
-
-```shell
-~$ python3 -m venv cwl
-~$ source cwl/bin/activate
-(cwl) ~$ pip install -U pip
-(cwl) ~$ pip install -U wheel setuptools
-(cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
-(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-18.build3030-beta.tar.gz | tar xvz
-(cwl) ~$ cd pgap-2018-09-18.build3030-beta
-(cwl) ~/pgap-2018-09-18.build3030-beta$ ./scripts/fetch_supplemental_data.sh
-(cwl) ~/pgap-2018-09-18.build3030-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
-(cwl) ~/pgap-2018-09-18.build3030-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
-```
-
-### Retrieving the CWL code
-
-The CWL software is available at GitHub at
-https://github.com/ncbi/pgap. Download source code package for
-the latest release, which is located at
-https://github.com/ncbi/pgap/releases, and extract the code.
-
-```shell
-(cwl) ~$ wget -qO- https://github.com/ncbi/pgap/archive/2018-09-18.build3030-beta.tar.gz | tar xvz
-```
-
-### Download the Supplemental Data
-
-The supplemental data is stored on S3. It is versioned, and must match
-the CWL and Docker versions. A handy script to download the matching
-version is provided in the CWL source tree. This will download and
-extract the data to the input subdirectory.
-
-```shell
-(cwl) ~/pgap-2018-09-18.build3030-beta$ ./scripts/fetch_supplemental_data.sh
-```
-
-### Running the pipeline
-
-The input.yaml file provides most of the required input parameters for the data in the input subdirectory. The other parameters are specific to the genome being annotated, and must be provided by the user. An example MG37 genome is provided with the CWL source, which may be run thusly.
-
-```shell
-(cwl) ~/pgap-2018-09-18.build3030-beta$ cat input.yaml MG37/input.yaml > mg37_input.yaml
-(cwl) ~/pgap-2018-09-18.build3030-beta$ ./wf_pgap_simple.cwl mg37_input.yaml
-```
-
-### Expected Output
-
-- **annot.fna:** FASTA format of the genomic sequence(s), as provided on input
-- **annot.faa:** FASTA format of the protein products annotated on the genome. The FASTA title is formatted as a local identifier (lcl|GENEMARK_*) plus the product name.
-- **annot.gbk:** GenBank flat file format of the genomic sequence(s). This file includes the annotation and the genomic sequence. Genes use the arbitrary locus_tag extpgap_\*.
-- **annot.gff:** Annotation of the genomic sequence(s) in Generic Feature Format Version 3 (GFF3). Sequence identifiers (column 1) correspond to the identifier in the input FASTA file. Identifiers for genes use the format gene-locus_tags (gene-extpgap_\*), and identifiers for CDSs use the format cds-locus_tag (cds-extpgap_\*), matching locus tags in the annot.gbk file. protein_ids use the format GENEMARK_\* similarly to the annot.faa file. Additional information about NCBI's GFF files is available at [README_GFF3.txt](ftp://ftp.ncbi.nlm.nih.gov/genomes/README_GFF3.txt).
-- **annot-gb.ent:** ASN format of the annotated genomic sequence(s).
-
-
-### Prerequisites
-
-Prerequisites include:
-- python
-- docker
-- python packages
-- wheel
-- setuptools
-- PyYAML
-- cwlref-runner
-- cwltool
-
-You will need to install the prerequisites if they're not already installed on
-your system.
-
-e.g.,
-
-The instructions that follow use pip and virtualenv, which are usually
-included with most python installs, so try:
-
-```shell
-~$ pip --version
-~$ virtualenv --version
-```
-If pip is not installed see https://pip.pypa.io/en/stable/installing/ for installation instructions.
-
-Virtualenv can be easily installed with pip:
-
-```shell
-~$ pip install virtualenv
-```
-
-To create a virtualenv for your installation of CWL and PGAP:
-
-```shell
-~$ virtualenv --python=python3 cwl
-```
-
-#### Installing CWL
-
-```shell
-~$ source cwl/bin/activate
-(cwl) ~$ pip install -U wheel setuptools
-(cwl) ~$ pip install -U cwltool[deps] PyYAML cwlref-runner
-```
-
-#### Installing Docker
-
-Detailed instructions may be found on the docker website, [Docker
-Install](https://docs.docker.com/install/). Please install the latest version
-of docker, it is usually newer than the one that comes with your distribution.
-Note that it requires root access to install, and the user who will be running
-the software will need to be in the docker group. The required docker
-containers images will download automatically the first time the pipeline runs.
-Afterwards, they will be cached and subsequent runs will execute much faster.
-
-Make sure that you're running Docker and that you are part of the group that has
-docker permissions by running
-
-```shell
-(cwl) ~$ docker run hello-world
-```
-
-You should see a message that starts with:
-```
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-```
-
+* [Quick Start](wiki/Quick-Start)
+* [Installation](wiki/Installation)
+* [Running your own genomes](wiki/Running-your-own-genomes)
+* [Output Files](wiki/Output-Files)
 
 ## References
 
