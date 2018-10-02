@@ -24,12 +24,12 @@ To run the PGAP pipeline you will need Linux, Docker, CWL (Common
 Workflow Language), and about 30GB of supplemental data. We provide
 instructions here for running under the CWL reference implementation,
 cwltool. Full instructions for installing, running, and interpreting
-the results may be found in our [wiki](wiki).
+the results may be found in our [wiki](https://github.com/ncbi/pgap/wiki).
 
-* [Quick Start](wiki/Quick-Start)
-* [Installation](wiki/Installation)
-* [Running your own genomes](wiki/Running-your-own-genomes)
-* [Output Files](wiki/Output-Files)
+* [Quick Start](https://github.com/ncbi/pgap/wiki/Quick-Start)
+* [Installation](https://github.com/ncbi/pgap/wiki/Installation)
+* [Running your own genomes](https://github.com/ncbi/pgap/wiki/Running-your-own-genomes)
+* [Output Files](https://github.com/ncbi/pgap/wiki/Output-Files)
 
 ## References
 
