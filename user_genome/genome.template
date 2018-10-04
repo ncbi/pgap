@@ -1,0 +1,87 @@
+Submit-block ::= {
+    contact {
+      contact {
+        name name {
+          last "Doe",
+          first "John",
+          middle "J",
+          initials "J.D."
+        },
+        affil std {
+          affil "The Institute",
+          city "Commonwealth",
+          sub "MA",
+          country "USA",
+          street "31459 Infinity Dr",
+          postal-code "02114"
+        }
+      }
+    },
+    cit {
+      authors {
+        names std {
+          {
+            name name {
+              last "Author",
+              first "One",
+              middle "the",
+              initials "O.A."
+            }
+          },
+          {
+            name name {
+              last "Author",
+              first "Two",
+              middle "the",
+              initials "T.A."
+            }
+          },
+          {
+            name name {
+              last "Author",
+              first "Last",
+              middle "the",
+              initials "L.A."
+            }
+          }
+        },
+        affil std {
+          affil "The Institute",
+          city "Commonwealth",
+          sub "MA",
+          country "USA",
+          street "31459 Infinity Dr",
+          postal-code "02114"
+        }
+      },
+      medium other,
+      date std {
+        year 2018,
+        month 3,
+        day 15
+      }
+    }
+}
+Seqdesc ::= source {
+    org {
+      taxname "Escherichia coli",
+      db {
+        {
+          db "taxon",
+          tag id 562
+        }
+      },
+      orgname {
+        name binomial {
+          genus "Escherichia",
+          species "coli"
+        },
+        attrib "specified",
+        gcode 11,
+        div "BCT"
+      }
+    }
+}
+Seqdesc ::= molinfo {
+  biomol genomic
+}
