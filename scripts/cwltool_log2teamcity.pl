@@ -33,7 +33,7 @@ use warnings;
 				&tc_failed($key, $$k{message});
 			}
             &tc_finish($key);
-            &tc_block_closed($key) unless $$k{type} eq "job";
+            &tc_block_closed($$k{step}) if $$k{type} eq "workflow";
             pop @$stack;
         }
         elsif ($$k{message} =~ /^start$/ or not defined $started{$key})  { # Starting new step/job.
@@ -43,7 +43,7 @@ use warnings;
                 $test_suite = 'cwltool' unless defined $test_suite;
                 &tc_start_suite($test_suite);
             }
-            &tc_block_opened($key, $$k{step}) unless $$k{type} eq "job";
+            &tc_block_opened($$k{step}, $key) if $$k{type} eq "workflow";
             &tc_start($key);
             print "$_\n";
             push @$stack, $k;
