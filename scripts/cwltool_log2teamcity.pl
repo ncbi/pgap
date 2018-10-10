@@ -32,7 +32,7 @@ use warnings;
 			if( $$k{message} =~/permanentFail/ ) {
 				&tc_failed($key, $$k{message});
 			}
-            &tc_finish($key);
+            &tc_finish($key) if $$k{type} eq "job";;
             &tc_block_closed($$k{step}) if $$k{type} eq "workflow";
             pop @$stack;
         }
@@ -44,7 +44,7 @@ use warnings;
                 &tc_start_suite($test_suite);
             }
             &tc_block_opened($$k{step}, $key) if $$k{type} eq "workflow";
-            &tc_start($key);
+            &tc_start($key) if $$k{type} eq "job";
             print "$_\n";
             push @$stack, $k;
         }
