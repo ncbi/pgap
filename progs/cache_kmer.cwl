@@ -4,8 +4,6 @@ label: "cache_kmer"
 # file: progs/cache_kmer.cwl
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

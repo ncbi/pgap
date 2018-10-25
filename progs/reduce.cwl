@@ -3,8 +3,6 @@ label: "reduce"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: reduce
 inputs:
   aligns:

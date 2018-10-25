@@ -6,8 +6,6 @@ class: Workflow
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-#  - class: DockerRequirement
-#    dockerPull: ncbi/gpdev:latest
     
 inputs:
   var_bact_univ_prot_stats_xml: File

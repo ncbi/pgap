@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "file concatenation"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: cat
 stdout: cat.out

@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Assign Clade, assign_clade_bacteria"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: assign_clade_bacteria
 arguments: [ -comp_based_stats, "F", -lower-threshold, "0.004", -matrix, BLOSUM80, -min-markers, "17", -release-id, "0",  -seg, "22 2.2 2.5", -soft_masking, "true", -task, tblastn, -threshold, "18", -upper-threshold, "0.01", -word_size, "6", -nogenbank ]

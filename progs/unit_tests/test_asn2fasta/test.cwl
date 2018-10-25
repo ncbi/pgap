@@ -3,8 +3,6 @@ label: "asn2fasta"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     input: File
     input_bin: File

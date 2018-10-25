@@ -3,8 +3,6 @@ label: "identify_wp"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: identify_wp
 inputs:
   wp_hashes:

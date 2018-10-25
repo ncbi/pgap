@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Find ProSplign Alignments I, scatter"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

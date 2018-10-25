@@ -3,8 +3,6 @@ label: "sparclbl"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: sparclbl.sh
 inputs:
   s: 

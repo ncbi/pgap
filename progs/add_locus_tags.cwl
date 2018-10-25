@@ -3,8 +3,6 @@ label: "add_locus_tags"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: add_locus_tags
 inputs:
   input:

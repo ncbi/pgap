@@ -4,8 +4,6 @@ label: "kmer_ref_compare_wnode"
 # this probably should be kmer_ref_compare_wnode12 where 2 is the number of files in input manifest 1 is the input file
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   kmer_file_list: File[]
   ref_kmer_file_list: File[]

@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "blastp_wnode_naming"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement

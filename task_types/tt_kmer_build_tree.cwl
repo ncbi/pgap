@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: kmer_build_tree
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     distances:
         type: File

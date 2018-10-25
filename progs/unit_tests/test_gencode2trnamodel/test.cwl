@@ -3,8 +3,6 @@ label: "gencode2trnamodel"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     gencode: int
 steps:

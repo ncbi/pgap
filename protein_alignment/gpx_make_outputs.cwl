@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Seed Protein Alignments I, gather"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
     
 baseCommand: gpx_make_outputs
 arguments: [ -unzip, '*', -num-partitions, "1" ]

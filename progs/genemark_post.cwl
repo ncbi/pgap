@@ -3,8 +3,6 @@ label: "genemark_post"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: genemark_post
 inputs:
   abs_short_model_limit:

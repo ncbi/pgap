@@ -3,8 +3,6 @@ label: "val_format"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     input: File
     inputMG: File

@@ -3,8 +3,6 @@ label: "gpx_make_outputs"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
 #

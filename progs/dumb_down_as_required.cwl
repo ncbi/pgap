@@ -3,8 +3,6 @@ label: "dumb_down_as_required"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: dumb_down_as_required
 inputs:

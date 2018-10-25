@@ -3,8 +3,6 @@ label: "proc_annot_stats"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: proc_annot_stats
 inputs:
   input: # annot.ent

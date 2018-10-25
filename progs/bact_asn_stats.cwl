@@ -3,8 +3,6 @@ label: "bact_asn_stats"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: bact_asn_stats
 inputs:
   input_annotation:

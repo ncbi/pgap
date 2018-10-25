@@ -3,8 +3,6 @@ label: "kmer_cache_store"
 # file: task_types/tt_kmer_cache_store.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   kmer_file_list: File[]
   kmer_cache_path: Directory

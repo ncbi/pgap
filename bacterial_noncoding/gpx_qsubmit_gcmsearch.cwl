@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Run genomic CMsearch (5S rRNA), scatter"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

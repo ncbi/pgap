@@ -3,8 +3,6 @@ label: "gc_get_assembly"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: gc_get_assembly
 inputs:
   mode:

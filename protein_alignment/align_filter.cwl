@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Filter Protein Alignments I"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

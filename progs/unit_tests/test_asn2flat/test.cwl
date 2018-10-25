@@ -3,8 +3,6 @@ label: "asn2flat"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     input: File
 steps:

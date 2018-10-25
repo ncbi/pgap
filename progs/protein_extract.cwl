@@ -3,8 +3,6 @@ cwlVersion: v1.0
 label: "protein_extract"
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 inputs:
   input: File

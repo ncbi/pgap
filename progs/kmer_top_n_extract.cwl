@@ -3,8 +3,6 @@ label: "kmer_top_n_extract"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: kmer_top_n_extract
 # this is only one example
 # 

@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Seed Protein Alignments I, execute"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

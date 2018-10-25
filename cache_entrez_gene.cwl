@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Cache Entrez Gene"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 #cache_entrez_gene -asn-cache sequence_cache,uniColl/ver-3.2/cache -egene-ini gene_master.ini -input-manifest annotation.mft -prok-entrez-gene-stuff prok_entrez_gene_stuff.xml
 #/panfs/pan1.be-md.ncbi.nlm.nih.gov/refgene/LOCUS/bin/genes/inifiles/gene_master.ini

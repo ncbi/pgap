@@ -3,8 +3,6 @@ label: "compute_gencode"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     taxid: 
         type: int

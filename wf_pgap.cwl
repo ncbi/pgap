@@ -3,13 +3,11 @@
 label: "PGAP Pipeline"
 cwlVersion: v1.0
 class: Workflow
-doc: PGAP pipeline for external usage, powered via Docker containers
+doc: PGAP pipeline for external usage, powered via containers
 
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-  - class: DockerRequirement
-    dockerPull: ncbi/pgap:2018-09-18.build3030
 
 inputs:
   #

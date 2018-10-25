@@ -3,8 +3,6 @@ label: "submit_kmer_extract"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: submit_kmer_extract
 # this is only one example
 # 

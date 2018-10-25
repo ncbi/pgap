@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Sort Seed Hits, align_sort"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

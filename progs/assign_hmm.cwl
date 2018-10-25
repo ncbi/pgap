@@ -3,8 +3,6 @@ label: "assign_hmm"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: assign_hmm
 inputs:

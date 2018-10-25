@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Filter Protein Seeds I, compart filter"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

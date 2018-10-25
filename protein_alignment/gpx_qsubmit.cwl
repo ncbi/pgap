@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Seed Search Compartments, scatter"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

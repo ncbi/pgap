@@ -3,8 +3,6 @@ label: "asn2fasta"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: asn2fasta
 inputs:
   i: 

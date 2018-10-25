@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "align_filter_sa"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   asn_cache: Directory
   prosplign_align: File?

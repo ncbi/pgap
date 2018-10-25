@@ -3,8 +3,6 @@ label: "taxonomy_check_16S"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
   - class: InitialWorkDirRequirement
     listing:

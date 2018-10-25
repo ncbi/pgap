@@ -3,8 +3,6 @@ label: "asn2flat"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: asn2flat
 inputs:
   input:

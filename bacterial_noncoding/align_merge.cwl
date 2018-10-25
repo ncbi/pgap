@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Merge rRNA Alignments"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

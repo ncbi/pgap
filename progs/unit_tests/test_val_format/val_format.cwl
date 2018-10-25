@@ -1,10 +1,6 @@
 label: "val_format"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest # fails
-    # dockerPull: ncbi/gpdev:2018-06-08.prod.build142  # fails
-    # dockerPull: ncbi/gpdev:2018-06-07.prod.build139  #   succeeds
     # these guys were not tested yet:
     # ncbi/gpdev                         2018-06-07.prod.build138     9c0cc08e797d        42 hours ago        1.25GB
     # ncbi/gpdev                         2018-06-06.prod.build136     2fcb57b2c754        2 days ago          1.16GB

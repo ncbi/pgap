@@ -3,8 +3,6 @@ label: "bact_univ_prot_stats"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 
 baseCommand: bact_univ_prot_stats

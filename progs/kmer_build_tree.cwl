@@ -3,8 +3,6 @@ label: "kmer_build_tree"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand:     kmer_build_tree 
 inputs:
     distances: 

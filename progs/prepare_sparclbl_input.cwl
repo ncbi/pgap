@@ -3,8 +3,6 @@ label: "prepare_sparclbl_input"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
  - class: InlineJavascriptRequirement
  - class: InitialWorkDirRequirement

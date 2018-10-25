@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Search All HMMs I, gather"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
     
 #gpx_qdump -output hmm_hits.asn -unzip '*' -input-path output/
 baseCommand: gpx_qdump

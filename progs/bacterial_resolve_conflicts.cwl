@@ -3,8 +3,6 @@ label: "bacterial_resolve_conflicts"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:    
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

@@ -14,8 +14,6 @@ class: Workflow # task type
 #    -threshold \
 #    0.8
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   distances: File
 outputs:

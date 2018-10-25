@@ -3,8 +3,6 @@ label: "gp_annot_format"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: gp_annot_format
 inputs:
   input:

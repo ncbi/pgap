@@ -3,8 +3,6 @@ label: "asn_cleanup"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: asn_cleanup
 inputs:
   inp_annotation:

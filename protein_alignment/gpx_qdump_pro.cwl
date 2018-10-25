@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Find ProSplign Alignments I, gather"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: gpx_qdump
 arguments: [ -unzip, '*' ]

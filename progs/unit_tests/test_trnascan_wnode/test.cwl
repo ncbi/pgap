@@ -3,8 +3,6 @@ label: "trnascan_wnode"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     jobs: File
     asn_cache: Directory

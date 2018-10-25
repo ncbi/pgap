@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Run tRNAScan, gather"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
     
 #gpx_qdump -output cmsearch.asn -output-manifest placements.mft -unzip '*' 
 #gpx_qdump -o intermediate.asn -unzip '*'

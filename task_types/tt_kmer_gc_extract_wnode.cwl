@@ -5,8 +5,6 @@ label: "kmer_gc_extract_wnode"
 #    Extract_Kmer_List
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   new_gc_id_list: File
   asn_cache: Directory

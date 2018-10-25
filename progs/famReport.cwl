@@ -3,8 +3,6 @@ label: "famReport"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
     
 requirements:
   - class: InitialWorkDirRequirement

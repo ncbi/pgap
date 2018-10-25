@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "align_sort_sa"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   align: File
   asn_cache: Directory

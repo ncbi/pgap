@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Seed Search Compartments, gather"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: gpx_qdump
 arguments: [ -unzip, '*' ]

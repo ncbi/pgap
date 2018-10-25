@@ -3,8 +3,6 @@ label: "kmer_compare_wnode"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
 #

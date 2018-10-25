@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "cwl split wrapper"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
         
 baseCommand: split

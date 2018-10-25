@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "cache_asnb_entries"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   rna: File
   cache: Directory

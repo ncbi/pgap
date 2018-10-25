@@ -6,8 +6,6 @@ class: Workflow
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-#  - class: DockerRequirement
-#    dockerPull: ncbi/gpdev:latest
     
 inputs:
   input_annotation: File
@@ -127,7 +125,7 @@ steps:
       it:
         default: true
     out: [output]
-  Final_Bacterial_Package_std_validation: # asnvalidation path in docker image is not valid: either no program at all, or it is in the wrong place 
+  Final_Bacterial_Package_std_validation: # asnvalidation path in container is not valid: either no program at all, or it is in the wrong place 
   #  this is need to be fixed GP-24257
     run: progs/std_validation.cwl
     in:

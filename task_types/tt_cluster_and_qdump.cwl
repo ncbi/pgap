@@ -9,8 +9,6 @@ class: Workflow
 label: "cluster_blastp_wnode and gpx_qdump combined"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: SubworkflowFeatureRequirement

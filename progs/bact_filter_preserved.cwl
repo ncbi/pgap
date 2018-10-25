@@ -3,8 +3,6 @@ label: "bact_filter_preserved"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: bact_filter_preserved
 inputs:
             # Run GeneMark 	bacterial_annot 	models 	ASNB_SEQ_ENTRY 	annotation

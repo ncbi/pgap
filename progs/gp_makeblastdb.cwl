@@ -3,8 +3,6 @@ label: "gp_makeblastdb"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
 - class: StepInputExpressionRequirement
     
@@ -24,8 +22,6 @@ steps:
         run:
             class: CommandLineTool
             hints:
-              DockerRequirement:
-                dockerPull: ncbi/gpdev:latest
             baseCommand: gp_makeblastdb
             inputs:
               asn_cache:

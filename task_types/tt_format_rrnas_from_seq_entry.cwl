@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "format_rrnas_from_seq_entry"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   entry: File
 outputs:

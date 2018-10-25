@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Get Proteins, bacterial_prot_src"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

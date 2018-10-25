@@ -3,8 +3,6 @@ label: "kmer_seq_entry_extract_wnode"
 # File: tt_kmer_seq_entry_extract_wnode.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   entry: File
   kmer_file_list: File[]

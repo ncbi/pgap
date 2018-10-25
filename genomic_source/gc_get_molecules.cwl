@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Extract Assembly Information I"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 # gc_get_molecules -gc-assembly gencoll.asn -level top-level -filter reference-no-organelle -o ref_no_organelle.gi
 

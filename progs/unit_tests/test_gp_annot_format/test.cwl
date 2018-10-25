@@ -3,8 +3,6 @@ label: "gp_annot_format"
 
 class: Workflow
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     input: File
 steps:

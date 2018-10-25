@@ -3,8 +3,6 @@ label: "ani_top_n"
 # file: task_types/tt_ani_top_n.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   gencoll_asn: File
   blast_align: File

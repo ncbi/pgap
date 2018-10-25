@@ -3,8 +3,6 @@ label: "xsltproc"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: xsltproc
 inputs:
   output_name: 

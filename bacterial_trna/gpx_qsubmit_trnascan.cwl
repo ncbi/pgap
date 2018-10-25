@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "Run tRNAScan, scatter"
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

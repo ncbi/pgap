@@ -3,8 +3,6 @@ label: "gcaccess_from_list"
 # File: task+types/tt_gcaccess_from_list.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   gc_id_list: File
 outputs:

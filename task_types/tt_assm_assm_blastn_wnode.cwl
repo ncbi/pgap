@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "assm_assm_blastn_wnode"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   asn_cache: Directory
   gencoll_asn: File

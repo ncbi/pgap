@@ -3,8 +3,6 @@ label: "sqn2gbent"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: sqn2gbent
 inputs:
   input:

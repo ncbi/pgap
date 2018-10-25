@@ -3,8 +3,6 @@ label: "compute_gencode"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
   - class: InlineJavascriptRequirement
 

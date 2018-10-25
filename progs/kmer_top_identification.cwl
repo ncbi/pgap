@@ -5,8 +5,6 @@ label: "kmer_top_identification"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 baseCommand: kmer_top_identification
 # this is only one example

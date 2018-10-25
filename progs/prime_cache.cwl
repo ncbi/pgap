@@ -3,8 +3,6 @@ label: "prime_cache"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: prime_cache    
 inputs:
   input:

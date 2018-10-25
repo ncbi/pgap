@@ -6,8 +6,6 @@ class: Workflow
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-#  - class: DockerRequirement
-#    dockerPull: ncbi/gpdev:latest
     
 inputs:
   annot_val: File

@@ -3,8 +3,6 @@ label: extract_gencoll_ids
 # File: tt_extract_gencoll_ids.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
     assemblies: File
 outputs:

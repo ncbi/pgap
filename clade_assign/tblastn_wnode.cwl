@@ -6,8 +6,6 @@ class: CommandLineTool
 label: Find Marker Alignments, execute"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement

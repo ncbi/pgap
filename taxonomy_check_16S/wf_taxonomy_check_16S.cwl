@@ -5,8 +5,6 @@ class: Workflow
 requirements: 
     - class: SubworkflowFeatureRequirement    
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   Format_16S_rRNA___entry: File
   asn_cache: Directory

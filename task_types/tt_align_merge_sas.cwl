@@ -2,8 +2,6 @@ cwlVersion: v1.0
 label: "align_merge_sas"
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   blastdb: string
   blastdb_dir: Directory

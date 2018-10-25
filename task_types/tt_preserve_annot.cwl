@@ -1,8 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: preserve_annot
 inputs:
   asn_cache:

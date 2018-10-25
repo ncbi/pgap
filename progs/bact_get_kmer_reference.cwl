@@ -3,8 +3,6 @@ label: "bact_get_kmer_reference"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: bact_get_kmer_reference
 inputs:
     o:

@@ -3,8 +3,6 @@ label: "val_stats"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 baseCommand: val_stats
 inputs:
   annot_val: # -i

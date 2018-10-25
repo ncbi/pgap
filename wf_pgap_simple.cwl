@@ -4,14 +4,12 @@ label: "PGAP Pipeline, simple user input"
 cwlVersion: v1.0
 class: Workflow
 doc: |
-    PGAP pipeline for external usage, powered via Docker containers, 
+    PGAP pipeline for external usage, powered via containers, 
     simple user input:  (FASTA + yaml only, no template)
 
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
-  - class: DockerRequirement
-    dockerPull: ncbi/pgap:2018-09-18.build3030
   
 inputs:
   #

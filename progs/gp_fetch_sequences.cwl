@@ -3,8 +3,6 @@ label: "gp_fetch_sequences"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 requirements:
  - class: InitialWorkDirRequirement
    listing:

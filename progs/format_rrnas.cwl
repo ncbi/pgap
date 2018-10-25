@@ -3,8 +3,6 @@ label: "format_rrnas"
 
 class: CommandLineTool
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 #
 # You might need something like this:
 #

@@ -3,8 +3,6 @@ label: "kmer_cache_retrieve"
 # file: task_types/tt_kmer_cache_retrieve.cwl
 class: Workflow # task type
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 inputs:
   gc_id_list: File
   kmer_cache_path: Directory

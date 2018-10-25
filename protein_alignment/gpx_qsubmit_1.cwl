@@ -6,8 +6,6 @@ class: CommandLineTool
 label: "Seed Protein Alignments I, scatter"
 
 hints:
-  DockerRequirement:
-    dockerPull: ncbi/gpdev:latest
 
 requirements:
   - class: InitialWorkDirRequirement
