@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bact_filter_preserved"
 
 class: CommandLineTool
-hints:
 baseCommand: bact_filter_preserved
 inputs:
             # Run GeneMark 	bacterial_annot 	models 	ASNB_SEQ_ENTRY 	annotation

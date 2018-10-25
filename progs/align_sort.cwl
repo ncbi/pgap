@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "align_sort"
 
 class: CommandLineTool
-hints:
 
 
 baseCommand: align_sort

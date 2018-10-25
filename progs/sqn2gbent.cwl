@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "sqn2gbent"
 
 class: CommandLineTool
-hints:
 baseCommand: sqn2gbent
 inputs:
   input:

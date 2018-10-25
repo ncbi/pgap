@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Find Marker Alignments, gather"
 
-hints:
     
 baseCommand: gpx_make_outputs
 arguments: [ -unzip, '*', -num-partitions, "1" ]

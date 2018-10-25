@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Run tRNAScan, execution"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InlineJavascriptRequirement

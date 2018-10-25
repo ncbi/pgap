@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Assign Clade, align_sort"
 
-hints:
 
 baseCommand: align_sort
 arguments: [ -ifmt, seq-align-set,  -k, "query,subject", -nogenbank ]

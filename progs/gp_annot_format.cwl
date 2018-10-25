@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gp_annot_format"
 
 class: CommandLineTool
-hints:
 baseCommand: gp_annot_format
 inputs:
   input:

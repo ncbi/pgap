@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: extract_gencoll_ids
 # File: tt_extract_gencoll_ids.cwl
 class: Workflow # task type
-hints:
 inputs:
     assemblies: File
 outputs:

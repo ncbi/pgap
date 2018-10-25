@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "assm_assm_blastn_wnode"
 
 class: CommandLineTool
-hints:
 #
 # You might need something like this:
 #

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "add_prot_names_to_annot"
 
 class: CommandLineTool
-hints:
 requirements:
  - class: InlineJavascriptRequirement
  - class: InitialWorkDirRequirement

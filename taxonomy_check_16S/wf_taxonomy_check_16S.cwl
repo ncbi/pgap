@@ -4,7 +4,6 @@ cwlVersion: v1.0
 class: Workflow
 requirements: 
     - class: SubworkflowFeatureRequirement    
-hints:
 inputs:
   Format_16S_rRNA___entry: File
   asn_cache: Directory

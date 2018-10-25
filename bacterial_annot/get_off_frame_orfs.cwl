@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Get off-frame ORFs"
 class: CommandLineTool
-hints:
     
 #get_off_frame_orfs -aligns-manifest aligns.mft -o prot.ids -seq_entries-manifest seq_entries.mft
 baseCommand: get_off_frame_orfs

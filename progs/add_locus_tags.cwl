@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "add_locus_tags"
 
 class: CommandLineTool
-hints:
 baseCommand: add_locus_tags
 inputs:
   input:

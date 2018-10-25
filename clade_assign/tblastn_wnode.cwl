@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: Find Marker Alignments, execute"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

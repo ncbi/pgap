@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "val_format"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

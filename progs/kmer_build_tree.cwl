@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_build_tree"
 
 class: CommandLineTool
-hints:
 baseCommand:     kmer_build_tree 
 inputs:
     distances: 

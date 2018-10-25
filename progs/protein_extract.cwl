@@ -2,7 +2,6 @@
 cwlVersion: v1.0
 label: "protein_extract"
 class: Workflow
-hints:
 
 inputs:
   input: File

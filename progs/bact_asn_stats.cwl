@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bact_asn_stats"
 
 class: CommandLineTool
-hints:
 baseCommand: bact_asn_stats
 inputs:
   input_annotation:

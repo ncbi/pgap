@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "format_rrnas"
 
 class: CommandLineTool
-hints:
 #
 # You might need something like this:
 #

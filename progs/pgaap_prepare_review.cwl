@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "pgaap_prepare_review"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

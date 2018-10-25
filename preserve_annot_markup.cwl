@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Preserve Product Accessions"
 class: CommandLineTool
-hints:
 
 baseCommand: preserve_annot_markup
 arguments: [-locus-tag-prefix, pgaptmp, -ltp-table, vLTPs, -create-missing-LTPs, -preserve-product-ID, -submission-mode-genbank]

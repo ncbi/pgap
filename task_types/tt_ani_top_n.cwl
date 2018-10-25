@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "ani_top_n"
 # file: task_types/tt_ani_top_n.cwl
 class: Workflow # task type
-hints:
 inputs:
   gencoll_asn: File
   blast_align: File

@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Generate rRNA Annotation"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

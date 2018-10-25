@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: Seed Search Compartments, execute"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

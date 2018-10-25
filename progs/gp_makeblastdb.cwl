@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gp_makeblastdb"
 
 class: Workflow
-hints:
 requirements:
 - class: StepInputExpressionRequirement
     
@@ -21,7 +20,6 @@ steps:
     actual:
         run:
             class: CommandLineTool
-            hints:
             baseCommand: gp_makeblastdb
             inputs:
               asn_cache:

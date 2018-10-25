@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "compute_gencode"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
 

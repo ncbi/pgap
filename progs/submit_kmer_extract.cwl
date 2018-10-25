@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "submit_kmer_extract"
 
 class: CommandLineTool
-hints:
 baseCommand: submit_kmer_extract
 # this is only one example
 # 

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "hmmsearch_wnode"
 
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InlineJavascriptRequirement

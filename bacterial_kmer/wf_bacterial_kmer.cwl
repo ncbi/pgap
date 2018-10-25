@@ -5,7 +5,6 @@ class: Workflow
 requirements: 
     - class: SubworkflowFeatureRequirement    
     - class: MultipleInputFeatureRequirement
-hints:
     
 inputs:
   # kmer_minhash_tarball: File # tarball of all reference minhashes. For Mycoplasma genitalium, there are 8K files, in total 1G

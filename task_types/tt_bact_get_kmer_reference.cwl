@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bact_get_kmer_reference"
 # File: task_types/tt_bact_get_kmer_reference.cwl
 class: Workflow # task type
-hints:
 inputs: []    
 outputs:
   gc_id_list:

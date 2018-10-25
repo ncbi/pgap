@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Filter Protein Alignments I"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

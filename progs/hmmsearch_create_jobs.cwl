@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "hmmsearch_create_jobs"
 
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

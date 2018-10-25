@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bact_best_evidence_alignments"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

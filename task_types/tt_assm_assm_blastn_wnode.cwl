@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "assm_assm_blastn_wnode"
 class: Workflow # task type
-hints:
 inputs:
   asn_cache: Directory
   gencoll_asn: File

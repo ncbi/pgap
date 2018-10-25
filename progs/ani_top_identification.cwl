@@ -3,7 +3,6 @@ label: "ani_top_identification"
 
 # file: progs/ani_top_identification.cwl
 class: CommandLineTool
-hints:
 baseCommand: ani_top_identification
 inputs:
       ANI_cutoff:   

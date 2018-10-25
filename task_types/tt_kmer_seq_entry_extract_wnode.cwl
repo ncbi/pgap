@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_seq_entry_extract_wnode"
 # File: tt_kmer_seq_entry_extract_wnode.cwl
 class: Workflow # task type
-hints:
 inputs:
   entry: File
   kmer_file_list: File[]

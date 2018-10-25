@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "asn2flat"
 
 class: CommandLineTool
-hints:
 baseCommand: asn2flat
 inputs:
   input:

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "proc_annot_stats"
 
 class: CommandLineTool
-hints:
 baseCommand: proc_annot_stats
 inputs:
   input: # annot.ent

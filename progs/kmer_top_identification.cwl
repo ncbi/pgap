@@ -4,7 +4,6 @@ label: "kmer_top_identification"
 # file: progs/kmer_top_identification.cwl
 
 class: CommandLineTool
-hints:
 
 baseCommand: kmer_top_identification
 # this is only one example

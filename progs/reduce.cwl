@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "reduce"
 
 class: CommandLineTool
-hints:
 baseCommand: reduce
 inputs:
   aligns:

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gc_get_assembly"
 
 class: CommandLineTool
-hints:
 baseCommand: gc_get_assembly
 inputs:
   mode:

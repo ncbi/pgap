@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Seed Search Compartments, gather"
 
-hints:
 
 baseCommand: gpx_qdump
 arguments: [ -unzip, '*' ]

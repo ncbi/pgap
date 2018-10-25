@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "blastn_wnode"
 class: Workflow # task type
-hints:
 inputs:
   asn_cache: Directory
   ids_out: File

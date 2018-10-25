@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "align_sort_sa"
 class: Workflow # task type
-hints:
 inputs:
   align: File
   asn_cache: Directory

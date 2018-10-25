@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "blastn_wnode"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InitialWorkDirRequirement
     listing:

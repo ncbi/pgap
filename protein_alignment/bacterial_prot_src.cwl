@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Get Proteins, bacterial_prot_src"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

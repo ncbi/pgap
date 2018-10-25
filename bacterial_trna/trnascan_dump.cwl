@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Run tRNAScan, transform"
 class: CommandLineTool
-hints:
     
 # trnascan_dump -input intermediate.asn -oasn trnascan.asn -ostruc struc.tar.gz -X 20
 baseCommand: trnascan_dump

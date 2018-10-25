@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bacterial_resolve_conflicts"
 
 class: CommandLineTool
-hints:
 requirements:    
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

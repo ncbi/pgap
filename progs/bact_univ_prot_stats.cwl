@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "bact_univ_prot_stats"
 
 class: CommandLineTool
-hints:
 
 
 baseCommand: bact_univ_prot_stats

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "famReport"
 
 class: CommandLineTool
-hints:
     
 requirements:
   - class: InitialWorkDirRequirement

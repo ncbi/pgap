@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Find ProSplign Alignments I, scatter"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

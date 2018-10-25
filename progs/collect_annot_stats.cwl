@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "collect_annot_stats"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

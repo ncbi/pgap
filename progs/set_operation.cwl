@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "set_operation"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

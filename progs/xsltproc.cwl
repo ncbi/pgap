@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "xsltproc"
 
 class: CommandLineTool
-hints:
 baseCommand: xsltproc
 inputs:
   output_name: 

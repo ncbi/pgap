@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "sparclbl"
 
 class: CommandLineTool
-hints:
 baseCommand: sparclbl.sh
 inputs:
   s: 

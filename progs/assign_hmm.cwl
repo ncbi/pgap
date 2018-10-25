@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "assign_hmm"
 
 class: CommandLineTool
-hints:
 
 baseCommand: assign_hmm
 inputs:

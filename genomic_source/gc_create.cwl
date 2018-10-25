@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Create Assembly From Sequences"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

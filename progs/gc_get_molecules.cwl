@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gc_get_molecules"
 
 class: CommandLineTool
-hints:
 #
 # You might need something like this:
 #

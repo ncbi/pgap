@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Filter Protein Seeds I, compart filter"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

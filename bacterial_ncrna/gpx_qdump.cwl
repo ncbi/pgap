@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Run genomic CMsearch (Rfam rRNA), gather"
 class: CommandLineTool
-hints:
     
 #gpx_qdump -output cmsearch.asn -output-manifest placements.mft -unzip '*' 
 baseCommand: gpx_qdump

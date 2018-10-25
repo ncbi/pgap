@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "lds2_indexer"
 
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

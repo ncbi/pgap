@@ -3,7 +3,6 @@ label: "extract_gencoll_ids"
 
 # File: progs/extract_gencoll_ids.cwl
 class: CommandLineTool
-hints:
 baseCommand: gc_extract_ids
 inputs:
     assemblies: 

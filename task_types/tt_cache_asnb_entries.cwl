@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "cache_asnb_entries"
 class: Workflow # task type
-hints:
 inputs:
   rna: File
   cache: Directory

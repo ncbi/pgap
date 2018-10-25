@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Seed Search Compartments, scatter"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Seed Protein Alignments I, gather"
 
-hints:
     
 baseCommand: gpx_make_outputs
 arguments: [ -unzip, '*', -num-partitions, "1" ]

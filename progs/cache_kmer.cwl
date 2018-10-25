@@ -3,7 +3,6 @@ label: "cache_kmer"
 
 # file: progs/cache_kmer.cwl
 class: CommandLineTool
-hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

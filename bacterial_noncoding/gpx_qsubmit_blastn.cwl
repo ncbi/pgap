@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "BLAST against rRNA db, scatter"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

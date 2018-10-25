@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "trnascan_wnode"
 
 class: Workflow
-hints:
 inputs:
     jobs: File
     asn_cache: Directory

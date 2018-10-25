@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "asn2flat"
 
 class: Workflow
-hints:
 inputs:
     input: File
 steps:

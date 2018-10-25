@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "prime_cache"
 
 class: CommandLineTool
-hints:
 baseCommand: prime_cache    
 inputs:
   input:

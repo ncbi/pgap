@@ -4,7 +4,6 @@ label: "kmer_gc_extract_wnode"
 # caller steps:
 #    Extract_Kmer_List
 class: Workflow # task type
-hints:
 inputs:
   new_gc_id_list: File
   asn_cache: Directory

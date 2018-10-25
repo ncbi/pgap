@@ -1,6 +1,5 @@
 cwlVersion: v1.0
 class: CommandLineTool
-hints:
 baseCommand: preserve_annot
 inputs:
   asn_cache:

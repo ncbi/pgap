@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_top_n_extract"
 # file: tt_kmer_top_n_extract.cwl
 class: Workflow # task type
-hints:
 inputs:
   top_distances: File
   ref_assembly_taxid: int

@@ -13,7 +13,6 @@ class: Workflow # task type
 #    /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n.455674842/out/top_distances.xml \
 #    -threshold \
 #    0.8
-hints:
 inputs:
   distances: File
 outputs:

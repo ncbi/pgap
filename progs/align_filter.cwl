@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "align_filter"
 
 class: CommandLineTool
-hints:
     
 baseCommand: align_filter
 # this is only one example

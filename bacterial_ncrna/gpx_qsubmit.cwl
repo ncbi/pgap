@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Run genomic CMsearch (Rfam rRNA), scatter"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

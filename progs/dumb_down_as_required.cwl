@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "dumb_down_as_required"
 
 class: CommandLineTool
-hints:
 
 baseCommand: dumb_down_as_required
 inputs:

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gencode2trnamodel"
 
 class: Workflow
-hints:
 inputs:
     gencode: int
 steps:

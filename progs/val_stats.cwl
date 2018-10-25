@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "val_stats"
 
 class: CommandLineTool
-hints:
 baseCommand: val_stats
 inputs:
   annot_val: # -i

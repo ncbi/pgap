@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_compare_wnode"  
 # File: tt_kmer_compare_wnode.cwl
 class: Workflow # task type
-hints:
 inputs:
   kmer_file_list: File[]
   dist_method: string

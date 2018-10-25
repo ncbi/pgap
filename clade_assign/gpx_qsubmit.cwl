@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Find Marker Alignments, scatter"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

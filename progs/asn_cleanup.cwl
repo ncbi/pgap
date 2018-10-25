@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "asn_cleanup"
 
 class: CommandLineTool
-hints:
 baseCommand: asn_cleanup
 inputs:
   inp_annotation:

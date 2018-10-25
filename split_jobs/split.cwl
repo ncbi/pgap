@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "cwl split wrapper"
 
-hints:
 
         
 baseCommand: split

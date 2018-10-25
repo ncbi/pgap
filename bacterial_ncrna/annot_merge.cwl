@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Post-process CMsearch annotations"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

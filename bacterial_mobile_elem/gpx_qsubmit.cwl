@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Execute CRISPR, scatter"
 class: CommandLineTool
-hints:
 
 # requirements:
 #   - class: InitialWorkDirRequirement

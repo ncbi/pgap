@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "file concatenation"
 
-hints:
 
 baseCommand: cat
 stdout: cat.out

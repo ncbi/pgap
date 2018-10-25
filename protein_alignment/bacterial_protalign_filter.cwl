@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Filter Full-Coverage Alignments I"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

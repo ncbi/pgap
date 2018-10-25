@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_top_n_extract"
 
 class: CommandLineTool
-hints:
 baseCommand: kmer_top_n_extract
 # this is only one example
 # 

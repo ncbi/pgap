@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Sort Seed Hits, align_sort"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: "Merge rRNA Alignments"
 class: CommandLineTool
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

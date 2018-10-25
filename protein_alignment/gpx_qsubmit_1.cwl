@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Seed Protein Alignments I, scatter"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

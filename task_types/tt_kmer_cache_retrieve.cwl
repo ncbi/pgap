@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "kmer_cache_retrieve"
 # file: task_types/tt_kmer_cache_retrieve.cwl
 class: Workflow # task type
-hints:
 inputs:
   gc_id_list: File
   kmer_cache_path: Directory

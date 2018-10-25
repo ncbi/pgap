@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "asn2fasta"
 
 class: Workflow
-hints:
 inputs:
     input: File
     input_bin: File

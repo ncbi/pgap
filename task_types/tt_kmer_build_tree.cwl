@@ -1,7 +1,6 @@
 cwlVersion: v1.0
 label: kmer_build_tree
 class: Workflow # task type
-hints:
 inputs:
     distances:
         type: File

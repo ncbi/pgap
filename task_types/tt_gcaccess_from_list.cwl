@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gcaccess_from_list"
 # File: task+types/tt_gcaccess_from_list.cwl
 class: Workflow # task type
-hints:
 inputs:
   gc_id_list: File
 outputs:

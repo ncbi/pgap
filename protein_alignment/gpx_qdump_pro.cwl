@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Find ProSplign Alignments I, gather"
 
-hints:
 
 baseCommand: gpx_qdump
 arguments: [ -unzip, '*' ]

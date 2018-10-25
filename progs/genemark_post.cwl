@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "genemark_post"
 
 class: CommandLineTool
-hints:
 baseCommand: genemark_post
 inputs:
   abs_short_model_limit:

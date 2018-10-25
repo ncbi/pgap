@@ -3,7 +3,6 @@ label: "kmer_ref_compare_wnode"
 # File: task_types/tt_kmer_ref_compare_wnode.cwl
 # this probably should be kmer_ref_compare_wnode12 where 2 is the number of files in input manifest 1 is the input file
 class: Workflow # task type
-hints:
 inputs:
   kmer_file_list: File[]
   ref_kmer_file_list: File[]

@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "assign_cluster"
 
 class: CommandLineTool
-hints:
 requirements:
     - class: InitialWorkDirRequirement
       listing:

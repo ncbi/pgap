@@ -5,7 +5,6 @@ class: CommandLineTool
 
 label: "Seed Protein Alignments I, execute"
 
-hints:
 
 requirements:
   - class: InitialWorkDirRequirement

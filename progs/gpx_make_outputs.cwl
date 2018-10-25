@@ -2,7 +2,6 @@ cwlVersion: v1.0
 label: "gpx_make_outputs"
 
 class: CommandLineTool
-hints:
 #
 # You might need something like this:
 #
