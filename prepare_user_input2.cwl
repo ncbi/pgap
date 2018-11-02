@@ -2,31 +2,38 @@
 
 label: "Prepare user input"
 cwlVersion: v1.0
-class: CommandLineTool
+class: Workflow
 doc: Prepare user input for  NCBI-PGAP pipeline
 
 requirements:
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
 
-baseCommand: cat  
-stdout: complete.template
 inputs:
-  tech: 
-    type: string? # wgs
-  completeness: 
-    type: string? # complete
-  submit_block_template_static: 
+  submol: 
     type: File
-    inputBinding:
-        position: 1
-  molinfo_complete_asn: 
+  fasta:
     type: File
-  molinfo_wgs_asn: 
-    type: File
-    inputBinding:
-        position: 2
-        valueFrom: ${ if(inputs.tech != null) { return inputs.molinfo_wgs_asn; } else {return inputs.molinfo_complete_asn; } }
+steps:
+    yaml2json:
+        label: "yaml2json"
+        run: progs/yaml2json.cwl
+        in: 
+            input: submol
+        out: [output]
+
+    pgapx_yaml_ctl:
+        label: "pgapx_yaml_ctl"
+        run: progs/pgapx_yaml_ctl.cwl
+        in:
+            input: yaml2json/output
+            input_fasta: fasta
+        out: [output_fasta, output_template]
 outputs:
-  submit_block_template: 
-    type: stdout
+    submit_block_template: 
+        type: File
+        outputSource: pgapx_yaml_ctl/output_template
+    output_fasta:
+        type: File
+        outputSource: pgapx_yaml_ctl/output_fasta
+
