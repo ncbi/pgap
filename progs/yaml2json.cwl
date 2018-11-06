@@ -2,7 +2,7 @@
 cwlVersion: v1.0
 label: "yaml2json"
 class: CommandLineTool
-baseCommand: yaml2json
+baseCommand: yaml2json.py
 
 inputs:
     input:
