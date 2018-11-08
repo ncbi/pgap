@@ -259,3 +259,6 @@ steps:
     'sbg:y': 1831
 requirements:
   - class: SubworkflowFeatureRequirement
+  - class: DockerRequirement
+    dockerPull: ncbi/pgap:2018-11-07.build3190
+
