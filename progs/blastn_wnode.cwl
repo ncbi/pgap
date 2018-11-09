@@ -92,11 +92,11 @@ baseCommand: blastn_wnode
 # 
 inputs:
   asn_cache:
-    type: Directory
+    type: Directory?
     inputBinding:
       prefix: -asn-cache
   evalue:
-    type: float
+    type: float?
     default: 0.01
     inputBinding:
       prefix: -evalue
@@ -110,12 +110,12 @@ inputs:
     inputBinding:
       prefix: -input-jobs
   soft_masking:
-    type: string
+    type: string?
     default: true
     inputBinding:
       prefix: -soft_masking
   swap_rows:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: -swap-rows
   task:
@@ -124,7 +124,7 @@ inputs:
     inputBinding:
       prefix: -task
   word_size:
-    type: int
+    type: int?
     default: 12
     inputBinding:
       prefix: -word_size

@@ -42,9 +42,7 @@ steps:
   blastn_wnode:
     run: ../progs/blastn_wnode.cwl
     in:
-      asn_cache: 
-        source: [asn_cache]
-        linkMerge: merge_flattened
+      asn_cache: asn_cache
       evalue: evalue
       max_target_seqs: max_target_seqs
       soft_masking: 
@@ -55,12 +53,8 @@ steps:
         default: blastn
       word_size: word_size
       input_jobs: gpx_qsubmit/jobs
-      blastdb_dir: 
-        source: [blastdb_dir]
-        linkMerge: merge_flattened
-      blastdb: 
-        source: [blastdb]
-        linkMerge: merge_flattened
+      blastdb_dir: blastdb_dir
+      blastdb: blastdb
       best_hit_overhang: best_hit_overhang
       best_hit_score_edge: best_hit_score_edge
       dust: dust
