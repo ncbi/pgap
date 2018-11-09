@@ -140,6 +140,23 @@ inputs:
     inputBinding:
       prefix: -blastdb
       valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
+  best_hit_overhang: 
+    type: float?
+    inputBinding: 
+        prefix: -best_hit_overhang
+  best_hit_score_edge: 
+    type: float?
+    inputBinding: 
+        prefix: -best_hit_score_edge
+  dust: 
+    type: string?
+    inputBinding: 
+        prefix: -dust
+  perc_identity: 
+    type: float?
+    inputBinding: 
+        prefix: -perc_identity
+      
 outputs:
   outdir:
     type: Directory

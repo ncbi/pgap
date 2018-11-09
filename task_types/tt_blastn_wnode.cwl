@@ -6,13 +6,17 @@ inputs:
   ids_out: File
   blastdb_dir: Directory
   blastdb: string
-  gilist: File
   evalue: float
   word_size: int
-  max_target_seqs: int
-  soft_masking: string
-  affinity: string
-  max_batch_length: int
+  max_target_seqs: int?
+  soft_masking: string?
+  affinity: string?
+  max_batch_length: int?
+  best_hit_overhang: float?
+  best_hit_score_edge: float?
+  dust: string?
+  perc_identity: float?
+  task: string?
   
 outputs:
   blast_align:
@@ -47,6 +51,11 @@ steps:
       input_jobs: gpx_qsubmit/jobs
       blastdb_dir: blastdb_dir
       blastdb: blastdb
+      best_hit_overhang: best_hit_overhang
+      best_hit_score_edge: best_hit_score_edge
+      dust: dust
+      perc_identity: perc_identity
+      
     out: [outdir]
   gpx_make_outputs:
     run: ../progs/gpx_make_outputs.cwl

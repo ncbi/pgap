@@ -58,6 +58,10 @@ inputs:
     type: boolean
     inputBinding:
       prefix: -nogenbank
+  subject_whitelist: 
+    type: File?
+    inputBinding:
+      prefix: -subject-whitelist
   onon_match_name: 
     type: string
     default: align-nomatch.asn
