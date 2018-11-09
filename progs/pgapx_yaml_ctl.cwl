@@ -16,6 +16,16 @@ inputs:
         doc: "FASTA file with user provided headers and user provided prokaryota genome"
         inputBinding:
             prefix: -input-fasta
+    ifmt:
+        type: string
+        default: 'JSON'
+        inputBinding:
+            prefix: -ifmt
+    ofmt:
+        type: string
+        default: 'JSON'
+        inputBinding:
+            prefix: -ofmt
     output_template_name:
         type: string
         default: input.template

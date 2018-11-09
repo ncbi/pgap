@@ -1,7 +1,7 @@
 topology: circular
-fasta: 
-    class: File
-    location: MG37/ASM2732v1.annotation.nucleotide.1.fa
+# fasta: 
+#    class: File
+#    location: MG37/ASM2732v1.annotation.nucleotide.1.fa
 organism:
     scientific_name: 'Mycoplasma genitalium'
     taxon: 243273

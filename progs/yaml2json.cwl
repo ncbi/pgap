@@ -19,4 +19,5 @@ inputs:
 outputs:
     output: 
         type: File
-        glob: $(inputs.output_name)
+        outputBinding:
+            glob: $(inputs.output_name)
