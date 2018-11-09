@@ -9,10 +9,6 @@ inputs:
     type: File
     'sbg:x': -73
     'sbg:y': 187
-  - id: cache_dir
-    type: Directory
-    'sbg:x': -67
-    'sbg:y': 16
   - id: contam_in_prok_blastdb_dir
     type: Directory
     'sbg:x': -72.5
@@ -83,8 +79,6 @@ steps:
     in:
       - id: adaptor_fasta
         source: adaptor_fasta
-      - id: cache_dir
-        source: cache_dir
       - id: contig_fasta
         source: contig_fasta
     out:

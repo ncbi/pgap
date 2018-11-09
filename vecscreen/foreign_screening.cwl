@@ -7,16 +7,12 @@ $namespaces:
 inputs:
   - id: adaptor_fasta
     type: File
-    'sbg:x': -28
-    'sbg:y': -18
-  - id: cache_dir
-    type: Directory
-    'sbg:x': -18
-    'sbg:y': 113
+    'sbg:x': -95
+    'sbg:y': -81
   - id: contig_fasta
     type: File
-    'sbg:x': 0
-    'sbg:y': 276.5
+    'sbg:x': -151
+    'sbg:y': 316
 outputs:
   - id: adaptor_blastdb_dir
     outputSource:
@@ -66,8 +62,6 @@ steps:
     'sbg:y': 37
   - id: Cache_WGS_contig_FASTA
     in:
-      - id: cache_dir
-        source: cache_dir
       - id: input
         source: contig_fasta
     out:
@@ -75,13 +69,13 @@ steps:
       - id: oseq_ids
     run: ../progs/prime_cache.cwl
     label: prime_cache
-    'sbg:x': 272
-    'sbg:y': 258
+    'sbg:x': 74
+    'sbg:y': 176
   - id: Create_Adaptor_BLASTdb
     in:
       - id: asn_cache
         source:
-          - cache_dir
+          - Cache_WGS_contig_FASTA/asn_cache
       - id: fasta
         source: adaptor_fasta
       - id: title
@@ -90,7 +84,7 @@ steps:
       - id: blastdb
     run: ../progs/gp_makeblastdb.cwl
     label: gp_makeblastdb
-    'sbg:x': 235.5
-    'sbg:y': -18
+    'sbg:x': 316
+    'sbg:y': -60
 requirements:
   - class: SubworkflowFeatureRequirement
