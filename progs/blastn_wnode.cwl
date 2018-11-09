@@ -101,7 +101,7 @@ inputs:
     inputBinding:
       prefix: -evalue
   max_target_seqs:
-    type: int
+    type: int?
     default: 250
     inputBinding:
       prefix: -max_target_seqs

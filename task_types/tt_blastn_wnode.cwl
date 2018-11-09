@@ -1,6 +1,8 @@
 cwlVersion: v1.0
-label: "blastn_wnode"
+label: "tt_blastn_wnode"
 class: Workflow # task type
+requirements:
+    - class: MultipleInputFeatureRequirement
 inputs:
   asn_cache: Directory
   ids_out: File
@@ -29,7 +31,9 @@ steps:
       affinity: affinity
       asn_cache: asn_cache
       max_batch_length: max_batch_length
-      ids: ids_out
+      ids: 
+        source: [ids_out]
+        linkMerge: merge_flattened
       blastdb_dir: blastdb_dir
       blastdb: blastdb
       nogenbank: 
@@ -38,7 +42,9 @@ steps:
   blastn_wnode:
     run: ../progs/blastn_wnode.cwl
     in:
-      asn_cache: asn_cache
+      asn_cache: 
+        source: [asn_cache]
+        linkMerge: merge_flattened
       evalue: evalue
       max_target_seqs: max_target_seqs
       soft_masking: 
@@ -49,8 +55,12 @@ steps:
         default: blastn
       word_size: word_size
       input_jobs: gpx_qsubmit/jobs
-      blastdb_dir: blastdb_dir
-      blastdb: blastdb
+      blastdb_dir: 
+        source: [blastdb_dir]
+        linkMerge: merge_flattened
+      blastdb: 
+        source: [blastdb]
+        linkMerge: merge_flattened
       best_hit_overhang: best_hit_overhang
       best_hit_score_edge: best_hit_score_edge
       dust: dust
