@@ -24,9 +24,12 @@ outputs:
     type: Directory
     'sbg:x': 636.3505859375
     'sbg:y': -182
-  - id: feats
+  - id: contamination_feats
     outputSource:
       - Contamination_Screen/feats
+    type: File
+  - id: foreign_feats
+    outputSource:
       - Foreign_Screen/feats
     type: File
     'sbg:x': 620
@@ -59,7 +62,7 @@ steps:
   - id: Contamination_Screen
     in:
       - id: asn_cache
-        source: adaptor_fasta
+        source: Foreign_Screen/out_cache_dir
       - id: contam_in_prok_blastdb_dir
         source: contam_in_prok_blastdb_dir
       - id: contig_gilist

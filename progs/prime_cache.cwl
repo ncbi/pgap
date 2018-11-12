@@ -9,7 +9,7 @@ inputs:
     inputBinding:
         prefix: -i
   taxon_db:
-    type: File
+    type: File?
     inputBinding:
         prefix: -taxon-db
   biosource:
@@ -44,7 +44,7 @@ inputs:
     inputBinding:
         prefix: -oseq-ids
   submit_block_template: 
-    type: File
+    type: File?
     inputBinding:
         prefix: -submit-block-template
 outputs:

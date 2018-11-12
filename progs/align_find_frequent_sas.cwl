@@ -22,12 +22,12 @@ inputs:
         inputBinding:
             prefix: -out
     row:
-        type: integer
+        type: int
         default: 1
         inputBinding:
             prefix: -row
     threshold:
-        type: integer
+        type: int
         default: 10
         inputBinding:
             prefix: -threshold

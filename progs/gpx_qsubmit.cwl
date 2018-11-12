@@ -1,5 +1,19 @@
 cwlVersion: v1.0 
 label: "gpx_qsubmit"
+doc: >
+    This workflow is specialized for the case when there is an LDS2 input 
+    LDS2 is a _reference_ object, the kind that CWL does not like
+    we need to provide actual input: proteins which matches the name of ASN.1 object
+    references in LDS2
+    Another limitation is that it can handle no more than two item arrays in blastdb_dir and asn_cache
+    Workaround used so far:
+    in:
+      proteins:
+        default:
+            class: File
+            path: '/dev/null'
+            basename: 'null'
+            contents: ''
 
 class: CommandLineTool
 requirements:

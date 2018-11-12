@@ -3,8 +3,7 @@ cwlVersion: v1.0
 $namespaces:
   sbg: 'https://www.sevenbridges.com/'
 id: generate_fscr_feats
-baseCommand:
-  - generate_fscr_feats
+baseCommand: generate_fscr_feats
 label: generate_fscr_feats
 inputs:
     input:

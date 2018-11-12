@@ -28,14 +28,26 @@ steps:
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
+      proteins:
+        default:
+            class: File
+            path: '/dev/null'
+            basename: 'null'
+            contents: ''
       affinity: affinity
-      asn_cache: asn_cache
+      asn_cache: 
+        source: [asn_cache]
+        linkMerge: merge_flattened
       max_batch_length: max_batch_length
       ids: 
         source: [ids_out]
         linkMerge: merge_flattened
-      blastdb_dir: blastdb_dir
-      blastdb: blastdb
+      blastdb_dir: 
+        source: [blastdb_dir]
+        linkMerge: merge_flattened
+      blastdb: 
+        source: [blastdb]
+        linkMerge: merge_flattened
       nogenbank: 
         default: true
     out: [jobs]
