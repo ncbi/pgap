@@ -98,7 +98,8 @@ steps:
     label: Prepare user input
   fastaval:
     run: progs/fastaval.cwl
-    in: fasta
+    in: 
+        fasta: fasta
         check_min_seqlen:
             default: 200 
         check_internal_ns:
