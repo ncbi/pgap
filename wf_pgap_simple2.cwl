@@ -99,7 +99,7 @@ steps:
   fastaval:
     run: progs/fastaval.cwl
     in: 
-        fasta: fasta
+        in: fasta
         check_min_seqlen:
             default: 200 
         check_internal_ns:
