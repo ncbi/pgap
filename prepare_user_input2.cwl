@@ -7,7 +7,6 @@ doc: Prepare user input for  NCBI-PGAP pipeline
 
 requirements:
   - class: MultipleInputFeatureRequirement
-  - class: InlineJavascriptRequirement
 
 inputs:
   submol: 
@@ -28,7 +27,7 @@ steps:
         in:
             input: yaml2json/output
             input_fasta: fasta
-        out: [output_fasta, output_template]
+        out: [output_fasta, output_template, locus_tag_prefix]
 outputs:
     submit_block_template: 
         type: File
@@ -36,4 +35,6 @@ outputs:
     output_fasta:
         type: File
         outputSource: pgapx_yaml_ctl/output_fasta
-
+    locus_tag_prefix:
+        type: string
+        outputSource: pgapx_yaml_ctl/locus_tag_prefix

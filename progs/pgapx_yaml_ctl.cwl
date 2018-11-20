@@ -4,6 +4,8 @@ label: "pgapx_yaml_ctl"
 doc: "Converts input JSON file to ASN.1 template"
 class: CommandLineTool
 baseCommand: pgapx_yaml_ctl
+requirements:
+  - class: InlineJavascriptRequirement
 
 inputs:
     input:
@@ -36,6 +38,11 @@ inputs:
         default: genome.fasta
         inputBinding:
             prefix: -output-fasta
+    output_ltp_name:
+        type: string
+        default: genome.ltp.txt
+        inputBinding:
+            prefix: -output-ltp
 
 outputs:
     output_template:
@@ -48,3 +55,7 @@ outputs:
         doc: "FASTA file with corrected headers and user provided prokaryota genome"
         outputBinding:
             glob: $(inputs.output_fasta_name)
+    locus_tag_prefix:
+        type: string
+        outputBinding:
+            expression: ${return inputs.output_ltp_name.contents.trim();} 
