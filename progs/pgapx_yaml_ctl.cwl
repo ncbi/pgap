@@ -58,4 +58,4 @@ outputs:
     locus_tag_prefix:
         type: string
         outputBinding:
-            expression: ${return inputs.output_ltp_name.contents.trim();} 
+            outputEval: ${return inputs.output_ltp_name.contents.trim();} 
