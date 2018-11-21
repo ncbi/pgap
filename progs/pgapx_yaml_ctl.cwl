@@ -55,7 +55,7 @@ outputs:
         doc: "FASTA file with corrected headers and user provided prokaryota genome"
         outputBinding:
             glob: $(inputs.output_fasta_name)
-    locus_tag_prefix:
-        type: string
+    output_ltp:
+        type: File
         outputBinding:
-            outputEval: ${return inputs.output_ltp_name.contents.trim();} 
+            glob: $(inputs.output_ltp_name)
