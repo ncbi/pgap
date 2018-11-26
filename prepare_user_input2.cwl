@@ -28,7 +28,13 @@ steps:
         in:
             input: yaml2json/output
             input_fasta: fasta
-        out: [output_fasta, output_template]
+        out: [output_fasta, output_template, output_ltp]
+    file2string:
+        run: progs/file2string.cwl
+        in:
+             input: pgapx_yaml_ctl/output_ltp
+        out: [value]
+    
 outputs:
     submit_block_template: 
         type: File
@@ -36,4 +42,7 @@ outputs:
     output_fasta:
         type: File
         outputSource: pgapx_yaml_ctl/output_fasta
-
+    locus_tag_prefix:
+        type: string
+        outputSource: file2string/value
+            

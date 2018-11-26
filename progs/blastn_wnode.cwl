@@ -92,16 +92,16 @@ baseCommand: blastn_wnode
 # 
 inputs:
   asn_cache:
-    type: Directory
+    type: Directory?
     inputBinding:
       prefix: -asn-cache
   evalue:
-    type: float
+    type: float?
     default: 0.01
     inputBinding:
       prefix: -evalue
   max_target_seqs:
-    type: int
+    type: int?
     default: 250
     inputBinding:
       prefix: -max_target_seqs
@@ -110,12 +110,12 @@ inputs:
     inputBinding:
       prefix: -input-jobs
   soft_masking:
-    type: string
+    type: string?
     default: true
     inputBinding:
       prefix: -soft_masking
   swap_rows:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: -swap-rows
   task:
@@ -124,7 +124,7 @@ inputs:
     inputBinding:
       prefix: -task
   word_size:
-    type: int
+    type: int?
     default: 12
     inputBinding:
       prefix: -word_size
@@ -140,6 +140,23 @@ inputs:
     inputBinding:
       prefix: -blastdb
       valueFrom: $(inputs.blastdb_dir.path)/$(inputs.blastdb)
+  best_hit_overhang: 
+    type: float?
+    inputBinding: 
+        prefix: -best_hit_overhang
+  best_hit_score_edge: 
+    type: float?
+    inputBinding: 
+        prefix: -best_hit_score_edge
+  dust: 
+    type: string?
+    inputBinding: 
+        prefix: -dust
+  perc_identity: 
+    type: float?
+    inputBinding: 
+        prefix: -perc_identity
+      
 outputs:
   outdir:
     type: Directory

@@ -1,18 +1,24 @@
 cwlVersion: v1.0
-label: "blastn_wnode"
+label: "tt_blastn_wnode"
 class: Workflow # task type
+requirements:
+    - class: MultipleInputFeatureRequirement
 inputs:
   asn_cache: Directory
   ids_out: File
   blastdb_dir: Directory
   blastdb: string
-  gilist: File
   evalue: float
   word_size: int
-  max_target_seqs: int
-  soft_masking: string
-  affinity: string
-  max_batch_length: int
+  max_target_seqs: int?
+  soft_masking: string?
+  affinity: string?
+  max_batch_length: int?
+  best_hit_overhang: float?
+  best_hit_score_edge: float?
+  dust: string?
+  perc_identity: float?
+  task: string?
   
 outputs:
   blast_align:
@@ -22,12 +28,26 @@ steps:
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
+      proteins:
+        default:
+            class: File
+            path: '/dev/null'
+            basename: 'null'
+            contents: ''
       affinity: affinity
-      asn_cache: asn_cache
+      asn_cache: 
+        source: [asn_cache]
+        linkMerge: merge_flattened
       max_batch_length: max_batch_length
-      ids: ids_out
-      blastdb_dir: blastdb_dir
-      blastdb: blastdb
+      ids: 
+        source: [ids_out]
+        linkMerge: merge_flattened
+      blastdb_dir: 
+        source: [blastdb_dir]
+        linkMerge: merge_flattened
+      blastdb: 
+        source: [blastdb]
+        linkMerge: merge_flattened
       nogenbank: 
         default: true
     out: [jobs]
@@ -47,6 +67,11 @@ steps:
       input_jobs: gpx_qsubmit/jobs
       blastdb_dir: blastdb_dir
       blastdb: blastdb
+      best_hit_overhang: best_hit_overhang
+      best_hit_score_edge: best_hit_score_edge
+      dust: dust
+      perc_identity: perc_identity
+      
     out: [outdir]
   gpx_make_outputs:
     run: ../progs/gpx_make_outputs.cwl
