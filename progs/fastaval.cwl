@@ -15,6 +15,7 @@ inputs:
     inputBinding:
   outname:
     type: string?
+    default: "fastaval.xml"
     inputBinding:
       prefix: '-out'
   check_min_seqlen:
