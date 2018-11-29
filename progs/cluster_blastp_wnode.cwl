@@ -114,6 +114,10 @@ inputs:
     type: int?
     inputBinding:
       prefix: -workers
+  workers_per_cpu:
+    type: float?
+    inputBinding:
+      prefix: -workers-per-cpu
   word_size:
     type: int
     inputBinding:

@@ -65,8 +65,8 @@ steps:
       threshold: threshold
       top_by_score: top_by_score
       word_size: word_size
-      workers:
-        default: 1
+      workers_per_cpu:
+        default: 1.0
     out: [outdir]
 
   gpx_qdump:
