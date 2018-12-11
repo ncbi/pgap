@@ -4,6 +4,7 @@ id: vecscreen
 label: vecscreen
 requirements:
   - class: SubworkflowFeatureRequirement
+  - class: MultipleInputFeatureRequirement
 inputs:
   - id: adaptor_fasta
     type: File
