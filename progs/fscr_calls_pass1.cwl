@@ -37,7 +37,7 @@ inputs:
     type: string
     default: calls.asn
     inputBinding:
-      prefix: '-calls'
+      prefix: '-o'
   reblast_locs_name:
     type: string
     default: reblast_locs.asn
