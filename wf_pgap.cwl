@@ -57,12 +57,20 @@ inputs:
     type: string
     default: '1'  
 steps:
+  ping_start:
+    run: progs/pinger.cwl
+    in:
+      state:
+        default: "start"
+      instring: gc_assm_name
+    out: [stdout, outstring]
+      
   genomic_source: # PLANE
     run: genomic_source/wf_genomic_source.cwl
     in:
       fasta: fasta
       taxid: taxid
-      gc_assm_name: gc_assm_name
+      gc_assm_name: ping_start/outstring
       taxon_db: taxon_db
       submit_block_template: submit_block_template
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
@@ -563,6 +571,15 @@ steps:
       output_name:
         default: proc_annot_details.xml
     out: [output]
+
+  ping_stop:
+    run: progs/pinger.cwl
+    in:
+      state:
+        default: "stop"
+      infile: Validate_Annotation_collect_annot_details/output
+    out: [stdout, outfile]
+    
   #
   #  end of Validate_Annotation task
   #
