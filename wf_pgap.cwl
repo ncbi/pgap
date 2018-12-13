@@ -580,7 +580,14 @@ steps:
       report_usage: report_usage
       state:
         default: "stop"
-      infile: Validate_Annotation_collect_annot_details/output
+      # Note: the input on the following line should be the same as all of the outputs
+      # for this workflow, so we ensure this is the final step.
+      infile:
+        - Final_Bacterial_Package_sqn2gbent/output
+        - Generate_Annotation_Reports_gff/output
+        - Generate_Annotation_Reports_gbk/output
+        - Generate_Annotation_Reports_nuc_fasta/nuc_fasta
+        - Generate_Annotation_Reports_prot_fasta/prot_fasta
     out: [stdout]
     
   #

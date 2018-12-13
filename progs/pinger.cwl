@@ -21,7 +21,7 @@ inputs:
     type: string?
     default: "dummyarg"
   infile:
-    type: File?
+    type: File[]?
       
 outputs:
   stdout:
