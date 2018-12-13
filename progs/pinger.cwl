@@ -6,6 +6,11 @@ baseCommand: pinger.sh
 
 stdout: pinger.out
 inputs:
+  report_usage:
+    type: boolean
+    inputBinding:
+      position: 0
+      prefix: "do_report"
   state:
     type: string 
     inputBinding:
@@ -17,9 +22,6 @@ inputs:
     default: "dummyarg"
   infile:
     type: File?
-    default:
-      class: File
-      path: /dev/null
       
 outputs:
   stdout:
@@ -28,7 +30,7 @@ outputs:
     type: string
     outputBinding:
       outputEval: $(inputs.instring)
-  outfile:
-    type: File
-    outputBinding:
-      outputEval: $(inputs.infile)
+  # outfile:
+  #   type: File
+  #   outputBinding:
+  #     outputEval: $(inputs.infile)

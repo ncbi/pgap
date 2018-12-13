@@ -19,6 +19,7 @@ inputs:
   gc_assm_name: string
   locus_tag_prefix: string?
   dbname: string?
+  report_usage: boolean
 
   #
   # User independent, static input
@@ -60,6 +61,7 @@ steps:
   ping_start:
     run: progs/pinger.cwl
     in:
+      report_usage: report_usage
       state:
         default: "start"
       instring: gc_assm_name
@@ -575,10 +577,11 @@ steps:
   ping_stop:
     run: progs/pinger.cwl
     in:
+      report_usage: report_usage
       state:
         default: "stop"
       infile: Validate_Annotation_collect_annot_details/output
-    out: [stdout, outfile]
+    out: [stdout]
     
   #
   #  end of Validate_Annotation task

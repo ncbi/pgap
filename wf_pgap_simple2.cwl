@@ -48,6 +48,8 @@ inputs:
     type: File
   naming_sqlite:
     type: File
+  report_usage:
+    type: boolean
   rfam_amendments:
     type: File
   rfam_model_path:
@@ -149,6 +151,8 @@ steps:
         source: naming_hmms_tab
       naming_sqlite:
         source: naming_sqlite
+      report_usage:
+        source: report_usage
       rfam_amendments:
         source: rfam_amendments
       rfam_model_path:

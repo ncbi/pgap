@@ -19,6 +19,8 @@ inputs:
   submit_block_template: File
   taxid: int
   gc_assm_name: string
+  report_usage: boolean
+    
   #
   # User specified input for "simple user input" case (this)
   #
@@ -81,6 +83,7 @@ steps:
         submit_block_template: prepare_input_template/submit_block_template
         taxid: taxid
         gc_assm_name: gc_assm_name
+        report_usage: report_usage
         hmm_path: hmm_path
         hmms_tab: hmms_tab
         naming_hmms_tab: naming_hmms_tab
