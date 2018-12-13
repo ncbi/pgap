@@ -13,6 +13,8 @@ arg_overrides = {
 
 def main():
     parser = argparse.ArgumentParser(description='Test each PGAP binary to see if they can be executed simply.')
+    parser.add_argument('--workflow', '-w', dest='workflow', default='wf_pgap_simple2.cwl',
+                        help='Execute in a container based on this image (default: no container)')
     parser.add_argument('--docker', '-d', dest='docker',
                         help='Execute in a container based on this image (default: no container)')
 
@@ -22,8 +24,9 @@ def main():
     if args.docker:
         docker_prefix = ["docker", "run", args.docker]
         # where args.docker is image name like "ncbi/gpdev:2018-11-28.prod.build629"        
-        
-    getcmdstr = "cwltool --print-rdf wf_pgap_simple2.cwl | grep baseCommand | cut -d'\"' -f2 | sort -u"
+
+    workflow = args.workflow
+    getcmdstr = "cwltool --print-rdf {} | grep baseCommand | cut -d'\"' -f2 | sort -u".format(workflow)
     robj = subprocess.run(getcmdstr, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
     #print(robj.stdout.split())
     binaries = robj.stdout.split()
