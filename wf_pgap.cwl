@@ -64,6 +64,8 @@ steps:
       report_usage: report_usage
       state:
         default: "start"
+      workflow:
+        default: "pgap"
       instring: gc_assm_name
     out: [stdout, outstring]
       
@@ -580,6 +582,8 @@ steps:
       report_usage: report_usage
       state:
         default: "stop"
+      workflow:
+        default: "pgap"
       # Note: the input on the following line should be the same as all of the outputs
       # for this workflow, so we ensure this is the final step.
       infile:

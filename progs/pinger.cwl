@@ -17,6 +17,12 @@ inputs:
       position: 1
       prefix: "state"
       itemSeparator: " "
+  workflow:
+    type: string 
+    inputBinding:
+      position: 1
+      prefix: "workflow"
+      itemSeparator: " "
   instring:
     type: string?
     default: "dummyarg"
