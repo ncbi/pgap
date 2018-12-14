@@ -178,5 +178,5 @@ steps:
       wp_hashes:
         source: wp_hashes
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta]
-    run: wf_pgap.cwl
+    run: wf_common.cwl
     label: PGAP Pipeline
