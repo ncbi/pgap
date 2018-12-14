@@ -14,6 +14,8 @@ inputs:
     type: File
   fasta:
     type: File
+  taxon_db:
+    type: File
 steps:
     yaml2json:
         label: "yaml2json"
@@ -28,6 +30,7 @@ steps:
         in:
             input: yaml2json/output
             input_fasta: fasta
+            taxon_db: taxon_db
         out: [output_fasta, output_template, output_ltp]
     file2string:
         run: progs/file2string.cwl

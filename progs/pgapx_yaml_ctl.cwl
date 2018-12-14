@@ -43,7 +43,10 @@ inputs:
         default: genome.ltp.txt
         inputBinding:
             prefix: -output-ltp
-
+    taxon_db:
+        type: File
+        inputBinding:
+            prefix: -taxon-db
 outputs:
     output_template:
         type: File

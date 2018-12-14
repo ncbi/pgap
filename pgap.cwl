@@ -65,6 +65,7 @@ steps:
     in:
       fasta: fasta
       submol: submol
+      taxon_db: taxon_db
     out: [output_fasta, submit_block_template, locus_tag_prefix]
     run: prepare_user_input2.cwl
     label: Prepare user input
