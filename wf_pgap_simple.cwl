@@ -77,7 +77,7 @@ steps:
         molinfo_wgs_asn: molinfo_wgs_asn
     out: [submit_block_template]
   standard_pgap:
-    run: wf_pgap.cwl
+    run: wf_common.cwl
     in:
         fasta: fasta
         submit_block_template: prepare_input_template/submit_block_template
