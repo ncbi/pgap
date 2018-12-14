@@ -11,7 +11,9 @@ inputs:
   Extract_Kmers_From_Input___entry: File
   gencoll_asn: File
   asn_cache: Directory
-  kmer_cache_path: Directory
+  # kmer_cache_path: Directory
+  kmer_cache_sqlite: File
+  kmer_cache_uri: string
   ref_assembly_taxid: int
   ANI_cutoff: File
   kmer_reference_assemblies: File
