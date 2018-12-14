@@ -1,3 +1,5 @@
+#!/usr/bin/env cwl-runner
+
 class: Workflow
 cwlVersion: v1.0
 doc: |
@@ -7,73 +9,41 @@ label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
   - class: SubworkflowFeatureRequirement
 inputs:
-  16s_blastdb_dir:
-    type: Directory
-  23s_blastdb_dir:
-    type: Directory
-  5s_model_path:
-    type: File
-  AntiFamLib:
-    type: Directory
-  CDDdata:
-    type: Directory
-  CDDdata2:
-    type: Directory
-  asn2pas_xsl:
-    type: File
+  16s_blastdb_dir: Directory
+  23s_blastdb_dir: Directory
+  5s_model_path: File
+  AntiFamLib: Directory
+  CDDdata: Directory
+  CDDdata2: Directory
+  asn2pas_xsl: File
   blast_rules_db:
     type: string
     default: blast_rules_db
-  blast_rules_db_dir:
-    type: Directory
-  defline_cleanup_rules:
-    type: File
-  fasta:
-    type: File
-  gc_assm_name:
-    type: string
-  gene_master_ini:
-    type: File
-  genemark_path:
-    type: Directory
-  hmm_path:
-    type: Directory
-  hmms_tab:
-    type: File
-  naming_blast_db:
-    type: Directory
-  naming_hmms_combined:
-    type: Directory
-  naming_hmms_tab:
-    type: File
-  naming_sqlite:
-    type: File
-  report_usage:
-    type: boolean
-  rfam_amendments:
-    type: File
-  rfam_model_path:
-    type: File
-  rfam_stockholm:
-    type: File
-  selenoproteins:
-    type: Directory
-  submol:
-    type: File
-  taxid:
-    type: int
-  taxon_db:
-    type: File
-  thresholds:
-    type: File
-  uniColl_cache:
-    type: Directory
-  univ_prot_xml:
-    type: File
-  val_res_den_xml:
-    type: File
-  wp_hashes:
-    type: File
+  blast_rules_db_dir: Directory
+  defline_cleanup_rules: File
+  fasta: File
+  gc_assm_name: string
+  gene_master_ini: File
+  genemark_path: Directory
+  hmm_path: Directory
+  hmms_tab: File
+  naming_blast_db: Directory
+  naming_hmms_combined: Directory
+  naming_hmms_tab: File
+  naming_sqlite: File
+  report_usage: boolean
+  rfam_amendments: File
+  rfam_model_path: File
+  rfam_stockholm: File
+  selenoproteins: Directory
+  submol: File
+  taxid: int
+  taxon_db: File
+  thresholds: File
+  uniColl_cache: Directory
+  univ_prot_xml: File
+  val_res_den_xml: File
+  wp_hashes: File
 outputs:
   gbent:
     outputSource: standard_pgap/gbent
@@ -109,74 +79,40 @@ steps:
     out: []
   standard_pgap:
     in:
-      16s_blastdb_dir:
-        source: 16s_blastdb_dir
-      23s_blastdb_dir:
-        source: 23s_blastdb_dir
-      5s_model_path:
-        source: 5s_model_path
-      AntiFamLib:
-        source: AntiFamLib
-      CDDdata:
-        source: CDDdata
-      CDDdata2:
-        source: CDDdata2
-      asn2pas_xsl:
-        source: asn2pas_xsl
-      blast_rules_db:
-        source: blast_rules_db
-      blast_rules_db_dir:
-        source: blast_rules_db_dir
-      defline_cleanup_rules:
-        source: defline_cleanup_rules
-      fasta:
-        source: prepare_input_template/output_fasta
-      gc_assm_name:
-        source: gc_assm_name
-      gene_master_ini:
-        source: gene_master_ini
-      genemark_path:
-        source: genemark_path
-      hmm_path:
-        source: hmm_path
-      hmms_tab:
-        source: hmms_tab
-      locus_tag_prefix:
-        source: prepare_input_template/locus_tag_prefix
-      naming_blast_db:
-        source: naming_blast_db
-      naming_hmms_combined:
-        source: naming_hmms_combined
-      naming_hmms_tab:
-        source: naming_hmms_tab
-      naming_sqlite:
-        source: naming_sqlite
-      report_usage:
-        source: report_usage
-      rfam_amendments:
-        source: rfam_amendments
-      rfam_model_path:
-        source: rfam_model_path
-      rfam_stockholm:
-        source: rfam_stockholm
-      selenoproteins:
-        source: selenoproteins
-      submit_block_template:
-        source: prepare_input_template/submit_block_template
-      taxid:
-        source: taxid
-      taxon_db:
-        source: taxon_db
-      thresholds:
-        source: thresholds
-      uniColl_cache:
-        source: uniColl_cache
-      univ_prot_xml:
-        source: univ_prot_xml
-      val_res_den_xml:
-        source: val_res_den_xml
-      wp_hashes:
-        source: wp_hashes
+      16s_blastdb_dir: 16s_blastdb_dir
+      23s_blastdb_dir: 23s_blastdb_dir
+      5s_model_path: 5s_model_path
+      AntiFamLib: AntiFamLib
+      CDDdata: CDDdata
+      CDDdata2: CDDdata2
+      asn2pas_xsl: asn2pas_xsl
+      blast_rules_db: blast_rules_db
+      blast_rules_db_dir: blast_rules_db_dir
+      defline_cleanup_rules: defline_cleanup_rules
+      fasta: prepare_input_template/output_fasta
+      gc_assm_name: gc_assm_name
+      gene_master_ini: gene_master_ini
+      genemark_path: genemark_path
+      hmm_path: hmm_path
+      hmms_tab: hmms_tab
+      locus_tag_prefix: prepare_input_template/locus_tag_prefix
+      naming_blast_db: naming_blast_db
+      naming_hmms_combined: naming_hmms_combined
+      naming_hmms_tab: naming_hmms_tab
+      naming_sqlite: naming_sqlite
+      report_usage: report_usage
+      rfam_amendments: rfam_amendments
+      rfam_model_path: rfam_model_path
+      rfam_stockholm: rfam_stockholm
+      selenoproteins: selenoproteins
+      submit_block_template: prepare_input_template/submit_block_template
+      taxid: taxid
+      taxon_db: taxon_db
+      thresholds: thresholds
+      uniColl_cache: uniColl_cache
+      univ_prot_xml: univ_prot_xml
+      val_res_den_xml: val_res_den_xml
+      wp_hashes: wp_hashes
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta]
     run: wf_common.cwl
     label: PGAP Pipeline
