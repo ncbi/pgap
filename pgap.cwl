@@ -80,8 +80,6 @@ steps:
       supplemental_data: supplemental_data
       gc_assm_name: gc_assm_name
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
-      submit_block_template: prepare_input_template/submit_block_template
-      fasta: prepare_input_template/output_fasta
       report_usage: report_usage
       taxid: taxid
       #16s_blastdb_dir: 16s_blastdb_dir
