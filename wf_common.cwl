@@ -30,7 +30,11 @@ inputs:
   scatter_gather_nchunks:
     type: string
     default: '1'
-  supplemental_data: Directory
+  supplemental_data:
+    type: Directory
+    default:
+      class: Directory
+      location: input
 
 steps:
   ping_start:
