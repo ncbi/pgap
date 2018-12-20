@@ -21,6 +21,11 @@ inputs:
         inputBinding:
             prefix: -ifmt
             valueFrom: ${ return inputs.seq_submit.path ? 'seq-submit' :  'seq-entry'; } 
+    t:
+        type: boolean
+        default: true
+        inputBinding:
+            prefix: -t
     order_name:
         type: string
         default: order.seqids
