@@ -13,8 +13,8 @@ inputs:
   #
   # User specific input
   #
-  fasta: File
-  submit_block_template: File
+  entries: File?
+  seq_submit: File?
   taxid: int
   gc_assm_name: string
   locus_tag_prefix: string?
@@ -70,14 +70,14 @@ steps:
     out: [stdout, outstring]
       
   genomic_source: # PLANE
-    run: genomic_source/wf_genomic_source.cwl
+    run: genomic_source/wf_genomic_source_asn.cwl
     in:
-      fasta: fasta
+      entries: entries
+      seq_submit: seq_submit
       taxid: taxid
       gc_assm_name: ping_start/outstring
       taxon_db: taxon_db
-      submit_block_template: submit_block_template
-    out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out]
+    out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]
 
   #
   #  Pseudo plane "default 1"
@@ -89,7 +89,7 @@ steps:
       asn_cache: genomic_source/asncache
       gc_assembly: genomic_source/gencoll_asn
       ids: genomic_source/seqid_list
-      submit_block: submit_block_template
+      submit_block: genomic_source/submit_block_template
       taxon_db: taxon_db
     out: [master_desc, sequences]
     
@@ -360,7 +360,7 @@ steps:
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
       master_desc: Prepare_Unannotated_Sequences/master_desc
       submit_block_template: 
-        source: [submit_block_template]
+        source: [genomic_source/submit_block_template]
         linkMerge: merge_flattened
       it:
         default: true
@@ -403,7 +403,7 @@ steps:
         linkMerge: merge_flattened
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
       submit_block_template: 
-        source: [submit_block_template]
+        source: [genomic_source/submit_block_template]
         linkMerge: merge_flattened
       it:
         default: true
@@ -476,7 +476,7 @@ steps:
         source: [Prepare_Unannotated_Sequences/master_desc]
         linkMerge: merge_flattened
       submit_block_template:
-        source: [submit_block_template]
+        source: [genomic_source/submit_block_template]
         linkMerge: merge_flattened
       it:
         default: true

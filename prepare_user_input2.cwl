@@ -31,7 +31,7 @@ steps:
             input: yaml2json/output
             input_fasta: fasta
             taxon_db: taxon_db
-        out: [output_fasta, output_template, output_ltp]
+        out: [output_entries, output_seq_submit, output_ltp]
     file2string:
         run: progs/file2string.cwl
         in:
@@ -39,12 +39,12 @@ steps:
         out: [value]
     
 outputs:
-    submit_block_template: 
-        type: File
-        outputSource: pgapx_yaml_ctl/output_template
-    output_fasta:
-        type: File
-        outputSource: pgapx_yaml_ctl/output_fasta
+    output_entries:
+        type: File?
+        outputSource: pgapx_yaml_ctl/output_entries
+    output_seq_submit:
+        type: File?
+        outputSource: pgapx_yaml_ctl/output_seq_submit
     locus_tag_prefix:
         type: string
         outputSource: file2string/value

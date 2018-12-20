@@ -66,7 +66,7 @@ steps:
       fasta: fasta
       submol: submol
       taxon_db: taxon_db
-    out: [output_fasta, submit_block_template, locus_tag_prefix]
+    out: [output_seq_submit, output_entries, locus_tag_prefix]
     run: prepare_user_input2.cwl
     label: Prepare user input
   fastaval:
@@ -90,7 +90,8 @@ steps:
       blast_rules_db: blast_rules_db
       blast_rules_db_dir: blast_rules_db_dir
       defline_cleanup_rules: defline_cleanup_rules
-      fasta: prepare_input_template/output_fasta
+      entries: prepare_input_template/output_entries
+      seq_submit: prepare_input_template/output_seq_submit
       gc_assm_name: gc_assm_name
       gene_master_ini: gene_master_ini
       genemark_path: genemark_path
