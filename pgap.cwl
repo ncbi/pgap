@@ -9,7 +9,11 @@ label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
   - class: SubworkflowFeatureRequirement
 inputs:
-  supplemental_data: Directory
+  supplemental_data:
+    type: Directory
+    default:
+      class: Directory
+      location: input
   blast_rules_db:
     type: string
     default: blast_rules_db
