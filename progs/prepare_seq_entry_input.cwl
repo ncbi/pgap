@@ -13,12 +13,14 @@ inputs:
     entries: 
         type: File?
     input:
-        type: string?
+        type: string
+        default: '/dev/null' # to cause calculations
         inputBinding:
             prefix: -input
             valueFrom: ${ if( inputs.seq_submit != null ) { return  inputs.seq_submit.path; } else { return inputs.entries.path;  } }
     ifmt:
-        type: string?
+        type: string
+        default: '/dev/null' # to cause calculations
         inputBinding:
             prefix: -ifmt
             valueFrom: ${ if( inputs.seq_submit != null ) {return 'seq-submit'; } else { return 'seq-entry'; } } 
