@@ -61,7 +61,7 @@ steps:
       fasta: fasta
       submol: submol
       taxon_db: passdata/taxon_db
-    out: [output_fasta, submit_block_template, locus_tag_prefix]
+    out: [output_seq_submit, output_entries, locus_tag_prefix]
     run: prepare_user_input2.cwl
     label: Prepare user input
   fastaval:
@@ -75,11 +75,11 @@ steps:
     out: []
   standard_pgap:
     in:
+      entries: prepare_input_template/output_entries
+      seq_submit: prepare_input_template/output_seq_submit
       supplemental_data: supplemental_data
       gc_assm_name: gc_assm_name
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
-      submit_block_template: prepare_input_template/submit_block_template
-      fasta: prepare_input_template/output_fasta
       report_usage: report_usage
       taxid: taxid
       #16s_blastdb_dir: 16s_blastdb_dir

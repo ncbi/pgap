@@ -4,6 +4,7 @@ label: "prepare_seq_entry_input"
 doc: ""
 class: CommandLineTool
 baseCommand: prepare_seq_entry_input
+requirements: 
   - class: InlineJavascriptRequirement
 
 inputs:
@@ -12,15 +13,20 @@ inputs:
     entries: 
         type: File?
     input:
-        type: string
+        type: string?
         inputBinding:
             prefix: -input
-            valueFrom: ${ return inputs.seq_submit.path ? inputs.seq_submit.path : inputs.entries.path; }
+            valueFrom: ${ if( inputs.seq_submit.path ) return  inputs.seq_submit.path; else return inputs.entries.path; }
     ifmt:
-        type: string
+        type: string?
         inputBinding:
             prefix: -ifmt
-            valueFrom: ${ return inputs.seq_submit.path ? 'seq-submit' :  'seq-entry'; } 
+            valueFrom: ${ if( inputs.seq_submit.path ) return 'seq-submit'; else return 'seq-entry'; } 
+    t:
+        type: boolean
+        default: true
+        inputBinding:
+            prefix: -t
     order_name:
         type: string
         default: order.seqids
@@ -31,6 +37,11 @@ inputs:
         default: submit_block_template.asn
         inputBinding:
             prefix: -submit-block 
+    output_entries_name:
+        type: string
+        default: entries.asn
+        inputBinding:
+            prefix: -output 
 outputs:
     order:
         type: File
@@ -39,4 +50,8 @@ outputs:
     submit_block:
         type: File
         outputBinding:
-            glob: $( inputs.submit_block_name  )            
+            glob: $( inputs.submit_block_name  )  
+    output_entries:
+        type: File
+        outputBinding:
+            glob: $( inputs.output_entries_name  )  

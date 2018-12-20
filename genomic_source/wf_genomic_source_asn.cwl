@@ -37,11 +37,11 @@ steps:
     in: 
         entries: entries
         seq_submit: seq_submit
-    out: [order, submit_block, out_entries]
+    out: [order, submit_block, output_entries]
   Cache_Seq_entries:
     run: ../progs/prime_cache.cwl
     in:
-        input: Prepare_Seq_entries/out_entries
+        input: Prepare_Seq_entries/output_entries
         taxon_db: taxon_db
         taxid: taxid
         ifmt: 

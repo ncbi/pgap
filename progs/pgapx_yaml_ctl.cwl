@@ -28,16 +28,16 @@ inputs:
         default: 'JSON'
         inputBinding:
             prefix: -ofmt
-    output_template_name:
+    output_entries_name:
         type: string
-        default: input.template
+        default: input_entries.asn
         inputBinding:
-            prefix: -output-template
-    output_fasta_name:
+            prefix: -output-entries
+    output_seq_submit_name:
         type: string
-        default: genome.fasta
+        default: input_seq_submit.sqn
         inputBinding:
-            prefix: -output-fasta
+            prefix: -output-seq-submit
     output_ltp_name:
         type: string
         default: genome.ltp.txt
@@ -48,16 +48,14 @@ inputs:
         inputBinding:
             prefix: -taxon-db
 outputs:
-    output_template:
+    output_entries:
         type: File
-        doc: "ASN.1 template file recognizable by classic PGAP"
         outputBinding:
-            glob: $(inputs.output_template_name)
-    output_fasta:
+            glob: $(inputs.output_entries_name)
+    output_seq_submit:
         type: File
-        doc: "FASTA file with corrected headers and user provided prokaryota genome"
         outputBinding:
-            glob: $(inputs.output_fasta_name)
+            glob: $(inputs.output_seq_submit_name)
     output_ltp:
         type: File
         outputBinding:
