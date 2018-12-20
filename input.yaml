@@ -1,4 +1,8 @@
-
+report_usage: true    
+supplemental_data: 
+  class: Directory
+  location: input/
+# we will ignore everything below I suppose.    
 
 # pipeline data files
 16s_blastdb_dir:

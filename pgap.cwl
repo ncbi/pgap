@@ -57,13 +57,13 @@ steps:
     out: [ taxon_db ]
 
   prepare_input_template:
+    run: prepare_user_input2.cwl
+    label: Prepare user input
     in:
       fasta: fasta
       submol: submol
       taxon_db: passdata/taxon_db
     out: [output_seq_submit, output_entries, locus_tag_prefix]
-    run: prepare_user_input2.cwl
-    label: Prepare user input
   fastaval:
     run: progs/fastaval.cwl
     in:

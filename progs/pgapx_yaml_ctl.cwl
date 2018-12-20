@@ -49,11 +49,11 @@ inputs:
             prefix: -taxon-db
 outputs:
     output_entries:
-        type: File
+        type: File?
         outputBinding:
             glob: $(inputs.output_entries_name)
     output_seq_submit:
-        type: File
+        type: File?
         outputBinding:
             glob: $(inputs.output_seq_submit_name)
     output_ltp:

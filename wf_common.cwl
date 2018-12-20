@@ -200,7 +200,7 @@ steps:
     in:
       entries: entries
       seq_submit: seq_submit
-      taxid: taxid
+      # taxid: taxid
       gc_assm_name: ping_start/outstring
       taxon_db: passdata/taxon_db
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]

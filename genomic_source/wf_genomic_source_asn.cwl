@@ -11,7 +11,7 @@ inputs:
   seq_submit: File?
   taxid: int
   gc_assm_name: string
-  taxon_db: File
+  # taxon_db: File
 outputs:
   ids_out:
     type: File
@@ -43,7 +43,7 @@ steps:
     in:
         input: Prepare_Seq_entries/output_entries
         taxon_db: taxon_db
-        taxid: taxid
+        # taxid: taxid
         ifmt: 
             default: asn-seq-entry
     out: [oseq_ids, asn_cache]
