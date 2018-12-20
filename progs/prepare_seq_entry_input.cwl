@@ -16,12 +16,12 @@ inputs:
         type: string?
         inputBinding:
             prefix: -input
-            valueFrom: ${ if( inputs.seq_submit.path ) return  inputs.seq_submit.path; else return inputs.entries.path; }
+            valueFrom: ${ if( inputs.seq_submit != null ) { return  inputs.seq_submit.path; } else { return inputs.entries.path;  } }
     ifmt:
         type: string?
         inputBinding:
             prefix: -ifmt
-            valueFrom: ${ if( inputs.seq_submit.path ) return 'seq-submit'; else return 'seq-entry'; } 
+            valueFrom: ${ if( inputs.seq_submit != null ) {return 'seq-submit'; } else { return 'seq-entry'; } } 
     t:
         type: boolean
         default: true

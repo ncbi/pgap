@@ -9,9 +9,9 @@ requirements:
 inputs:
   entries: File?
   seq_submit: File?
-  taxid: int
+  # taxid: int
   gc_assm_name: string
-  # taxon_db: File
+  taxon_db: File
 outputs:
   ids_out:
     type: File
