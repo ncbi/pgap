@@ -23,40 +23,15 @@ inputs:
 
   #
   # User independent, static input
-  # 
-  hmm_path: Directory
-  hmms_tab: File
-  naming_hmms_tab: File
-  uniColl_cache: Directory
-  gene_master_ini: File
-  16s_blastdb_dir: Directory
-  23s_blastdb_dir: Directory
-  5s_model_path: File
-  rfam_model_path: File
-  rfam_amendments: File
-  rfam_stockholm: File
-  AntiFamLib: Directory
-  blast_rules_db_dir: Directory
-  blast_rules_db: 
+  #
+  blast_rules_db:
     type: string
     default: blast_rules_db
-  thresholds: File
-  naming_sqlite: File 
-  selenoproteins: Directory
-  naming_hmms_combined: Directory
-  wp_hashes: File
-  taxon_db: File   
-  genemark_path: Directory
-  naming_blast_db: Directory
-  CDDdata: Directory
-  CDDdata2: Directory
-  defline_cleanup_rules: File
-  univ_prot_xml: File
-  val_res_den_xml: File
-  asn2pas_xsl: File
   scatter_gather_nchunks:
     type: string
-    default: '1'  
+    default: '1'
+  supplemental_data: Directory
+
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -68,7 +43,158 @@ steps:
         default: "pgap"
       instring: gc_assm_name
     out: [stdout, outstring]
-      
+
+  passdata:
+    in:
+      data: supplemental_data
+    run:
+      class: CommandLineTool
+      requirements:
+        InitialWorkDirRequirement:
+          listing:
+            - entry: $(inputs.data)
+              writable: False
+      inputs:
+        data:
+          type: Directory
+      outputs:
+        16s_blastdb_dir:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/16S_rRNA
+        23s_blastdb_dir:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/23S_rRNA
+        5s_model_path:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/RF00001.cm
+        AntiFamLib:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/AntiFamLib
+        asn2pas_xsl:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/asn2pas.xsl
+        blast_rules_db_dir:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/blast_dir
+        CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/CDD
+        CDDdata2: # ${GP_HOME}/third-party/data/cdd_add
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/cdd_add
+        defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/product_rules.prt
+        gene_master_ini:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/gene_master.ini
+        genemark_path:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/GeneMark
+        hmm_path:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/real_hmms
+        hmms_tab:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/real_hmms.tab
+        naming_blast_db: # NamingDatabase
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/blast_dir # this one might have created problems for assign_cluster, let's try this:
+        naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/naming_hmms
+        naming_hmms_tab:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/naming_hmms.tab
+        naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/naming.sqlite
+        rfam_amendments:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/rfam-amendments.xml
+        rfam_model_path:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/Rfam.selected1.cm
+        rfam_stockholm:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/Rfam.seed
+        selenoproteins: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/selenoproteins
+        taxon_db:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/taxonomy.sqlite3
+        thresholds:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/thresholds.xml
+        uniColl_cache:
+          type: Directory
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/cache
+        univ_prot_xml:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/universal.xml
+        val_res_den_xml:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/validation-results.xml
+        wp_hashes:
+          type: File
+          outputBinding:
+            glob: $(inputs.data.basename)/uniColl_path/wp-hashes.sqlite
+    out:
+      - 16s_blastdb_dir
+      - 23s_blastdb_dir
+      - 5s_model_path
+      - AntiFamLib
+      - asn2pas_xsl
+      - blast_rules_db_dir
+      - CDDdata2
+      - CDDdata
+      - defline_cleanup_rules
+      - gene_master_ini
+      - genemark_path
+      - hmm_path
+      - hmms_tab
+      - naming_blast_db
+      - naming_hmms_combined
+      - naming_hmms_tab
+      - naming_sqlite
+      - rfam_amendments
+      - rfam_model_path
+      - rfam_stockholm
+      - selenoproteins
+      - taxon_db
+      - thresholds
+      - uniColl_cache
+      - univ_prot_xml
+      - val_res_den_xml
+      - wp_hashes
+
   genomic_source: # PLANE
     run: genomic_source/wf_genomic_source_asn.cwl
     in:
@@ -76,12 +202,12 @@ steps:
       seq_submit: seq_submit
       taxid: taxid
       gc_assm_name: ping_start/outstring
-      taxon_db: taxon_db
+      taxon_db: passdata/taxon_db
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]
 
   #
   #  Pseudo plane "default 1"
-  #   
+  #
   Prepare_Unannotated_Sequences: # ORIGINAL TASK NAME: Prepare Unannotated Sequences # default 1
     label: "Prepare Unannotated Sequences"
     run: bacterial_prepare_unannotated.cwl
@@ -90,29 +216,29 @@ steps:
       gc_assembly: genomic_source/gencoll_asn
       ids: genomic_source/seqid_list
       submit_block: genomic_source/submit_block_template
-      taxon_db: taxon_db
+      taxon_db: passdata/taxon_db
     out: [master_desc, sequences]
-    
+
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
     run: cache_entrez_gene.cwl
     in:
-      asn_cache: [genomic_source/asncache, uniColl_cache]
-      egene_ini: gene_master_ini
+      asn_cache: [genomic_source/asncache, passdata/uniColl_cache]
+      egene_ini: passdata/gene_master_ini
       input: Prepare_Unannotated_Sequences/sequences
     out: [prok_entrez_gene_stuff]
-    
+
   Create_Genomic_BLASTdb: # default 1
    label: "Create Genomic BLASTdb" # default 1
    run: progs/gp_makeblastdb.cwl
    in:
        ids: genomic_source/ids_out
-       title: 
+       title:
            default: 'BLASTdb  created by GPipe'
-       asn_cache: 
+       asn_cache:
          source: [ genomic_source/asncache ]
          linkMerge: merge_flattened
-       dbtype: 
+       dbtype:
            default: 'nucl'
    out: [blastdb]
   #
@@ -123,30 +249,30 @@ steps:
     in:
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
-      model_path: rfam_model_path
-      rfam_amendments: rfam_amendments
-      rfam_stockholm: rfam_stockholm
-      taxon_db: taxon_db
+      model_path: passdata/rfam_model_path
+      rfam_amendments: passdata/rfam_amendments
+      rfam_stockholm: passdata/rfam_stockholm
+      taxon_db: passdata/taxon_db
     out: [annots]
-   
+
   bacterial_mobile_elem: # PLANE
     run: bacterial_mobile_elem/wf_bacterial_mobile_elem.cwl
     in:
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
     out: [annots]
-  
+
   bacterial_noncoding: # PLANE
     run: bacterial_noncoding/wf_bacterial_noncoding.cwl
     in:
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
-      16s_blastdb_dir: 16s_blastdb_dir
-      23s_blastdb_dir: 23s_blastdb_dir
-      model_path: 5s_model_path
-      rfam_amendments: rfam_amendments
-      rfam_stockholm: rfam_stockholm
-      taxon_db: taxon_db
+      16s_blastdb_dir: passdata/16s_blastdb_dir
+      23s_blastdb_dir: passdata/23s_blastdb_dir
+      model_path: passdata/5s_model_path
+      rfam_amendments: passdata/rfam_amendments
+      rfam_stockholm: passdata/rfam_stockholm
+      taxon_db: passdata/taxon_db
     out: [ annotations_5s, annotations_16s, annotations_23s ]
 
   bacterial_trna: # PLANE
@@ -155,7 +281,7 @@ steps:
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
       taxid: taxid
-      taxon_db: taxon_db
+      taxon_db: passdata/taxon_db
       scatter_gather_nchunks: scatter_gather_nchunks
     out: [annots]
 
@@ -164,10 +290,10 @@ steps:
     in:
       asn_cache: genomic_source/asncache
       inseq: Prepare_Unannotated_Sequences/sequences
-      hmm_path: hmm_path
-      hmms_tab: hmms_tab
+      hmm_path: passdata/hmm_path
+      hmms_tab: passdata/hmms_tab
       scatter_gather_nchunks: scatter_gather_nchunks
-      uniColl_cache: uniColl_cache
+      uniColl_cache: passdata/uniColl_cache
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
       nogenbank:
@@ -176,22 +302,22 @@ steps:
       Generate_16S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_16s
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
-      genemark_path: genemark_path
-      thresholds: thresholds
+      genemark_path: passdata/genemark_path
+      thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids]
 
   spurious_annot_1: # PLANE
-    run: spurious_annot/wf_spurious_annot_pass1.cwl      
+    run: spurious_annot/wf_spurious_annot_pass1.cwl
     in:
       Extract_ORF_Proteins_proteins: bacterial_annot/proteins
       Extract_ORF_Proteins_seqids: bacterial_annot/seqids
       Extract_ORF_Proteins_lds2: bacterial_annot/lds2
-      AntiFamLib: AntiFamLib
+      AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
     out: [AntiFam_tainted_proteins_I___oseqids]
-    
-  bacterial_annot_2: # PLANE  
+
+  bacterial_annot_2: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass2.cwl
     in:
         lds2: bacterial_annot/lds2
@@ -199,47 +325,47 @@ steps:
         prot_ids_A: bacterial_annot/seqids
         prot_ids_B1: bacterial_annot/prot_ids
         prot_ids_B2: spurious_annot_1/AntiFam_tainted_proteins_I___oseqids
-        blast_rules_db_dir: blast_rules_db_dir
+        blast_rules_db_dir: passdata/blast_rules_db_dir
         blast_rules_db: blast_rules_db
-        identification_db_dir: naming_blast_db
+        identification_db_dir: passdata/naming_blast_db
         annotation: bacterial_annot/outseqs
         sequence_cache: genomic_source/asncache
-        unicoll_cache: uniColl_cache
+        unicoll_cache: passdata/uniColl_cache
         scatter_gather_nchunks: scatter_gather_nchunks
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
-  
+
   protein_alignment: # PLANE
     run: protein_alignment/wf_protein_alignment.cwl
     in:
       asn_cache: genomic_source/asncache
-      uniColl_asn_cache: uniColl_cache
-      naming_sqlite: naming_sqlite
+      uniColl_asn_cache: passdata/uniColl_cache
+      naming_sqlite: passdata/naming_sqlite
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
-      tax_sql_file: taxon_db 
+      tax_sql_file: passdata/taxon_db
       gc_assembly: genomic_source/gencoll_asn
       compartments: bacterial_annot_2/aligns
     out: [universal_clusters, align, align_non_match]
-  
+
   bacterial_annot_3:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
     in:
-        uniColl_cache: uniColl_cache
+        uniColl_cache: passdata/uniColl_cache
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
         scatter_gather_nchunks: scatter_gather_nchunks
         prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
         raw_seqs: Prepare_Unannotated_Sequences/sequences
-        thresholds: thresholds 
-        naming_sqlite: naming_sqlite 
+        thresholds: passdata/thresholds
+        naming_sqlite: passdata/naming_sqlite
         hmm_params: bacterial_annot/out_hmm_params # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
-        selenoproteins: selenoproteins 
-        naming_hmms_combined: naming_hmms_combined 
-        hmms_tab: naming_hmms_tab
-        wp_hashes: wp_hashes
-        taxon_db: taxon_db
-        genemark_path: genemark_path
+        selenoproteins: passdata/selenoproteins
+        naming_hmms_combined: passdata/naming_hmms_combined
+        hmms_tab: passdata/naming_hmms_tab
+        wp_hashes: passdata/wp_hashes
+        taxon_db: passdata/taxon_db
+        genemark_path: passdata/genemark_path
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
@@ -249,14 +375,14 @@ steps:
         - id: Search_Naming_HMMs_hmm_hits
         - id: Assign_Naming_HMM_to_Proteins_assignments
         - id: Name_by_WPs_names
-    
+
   spurious_annot_2:
     run: spurious_annot/wf_spurious_annot_pass2.cwl
     in:
       Extract_Model_Proteins_proteins: bacterial_annot_3/Extract_Model_Proteins_proteins
       Extract_Model_Proteins_seqids: bacterial_annot_3/Extract_Model_Proteins_seqids
       Extract_Model_Proteins_lds2: bacterial_annot_3/Extract_Model_Proteins_lds2
-      AntiFamLib: AntiFamLib
+      AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
       Run_GeneMark_models: bacterial_annot_3/Run_GeneMark_Post_models
@@ -264,7 +390,7 @@ steps:
       - AntiFam_tainted_proteins___oseqids
       - Good_AntiFam_filtered_annotations_out
       - Good_AntiFam_filtered_proteins_output
-    
+
   bacterial_annot_4:
     run: bacterial_annot/wf_bacterial_annot_pass4.cwl
     in:
@@ -273,34 +399,34 @@ steps:
         annotation: spurious_annot_2/Good_AntiFam_filtered_annotations_out
         Good_AntiFam_filtered_proteins_gilist: spurious_annot_2/Good_AntiFam_filtered_proteins_output
         sequence_cache: genomic_source/asncache
-        uniColl_cache: uniColl_cache
-        naming_blast_db: naming_blast_db 
-        naming_sqlite: naming_sqlite
-        hmm_assignments:  bacterial_annot_3/Assign_Naming_HMM_to_Proteins_assignments 
-        wp_assignments:  bacterial_annot_3/Name_by_WPs_names 
+        uniColl_cache: passdata/uniColl_cache
+        naming_blast_db: passdata/naming_blast_db
+        naming_sqlite: passdata/naming_sqlite
+        hmm_assignments:  bacterial_annot_3/Assign_Naming_HMM_to_Proteins_assignments
+        wp_assignments:  bacterial_annot_3/Name_by_WPs_names
         Extract_Model_Proteins_prot_ids: bacterial_annot_3/Extract_Model_Proteins_seqids
-        CDDdata: CDDdata 
-        CDDdata2: CDDdata2 
-        thresholds: thresholds
-        defline_cleanup_rules: defline_cleanup_rules 
-        blast_rules_db_dir: blast_rules_db_dir
+        CDDdata: passdata/CDDdata
+        CDDdata2: passdata/CDDdata2
+        thresholds: passdata/thresholds
+        defline_cleanup_rules: passdata/defline_cleanup_rules
+        blast_rules_db_dir: passdata/blast_rules_db_dir
         blast_rules_db: blast_rules_db
-        identification_db_dir: naming_blast_db
+        identification_db_dir: passdata/naming_blast_db
         scatter_gather_nchunks: scatter_gather_nchunks
     out:
-        - id: out_annotation 
+        - id: out_annotation
   # #
   # # Pseudo plane default 2, we do not need that for new submissions in off-NCBI environment
   # #
   # # Preserve_Annotations: # Pseudo plane default 2
    # # run: task_types/tt_preserve_annot.cwl
    # # in:
-     # # asn_cache: 
+     # # asn_cache:
         # # source: [genomic_source/asncache]
         # # linkMerge: merge_flattened
      # # input_annotation: bacterial_annot/annotation
      # # rfam_amendments: rfam_amendments
-     # # no_ncRNA: 
+     # # no_ncRNA:
        # # default: true
    # # out: [annotations]
   # # preserve_annot_markup: # Pseudo plane default 2
@@ -316,12 +442,12 @@ steps:
       # # input: Preserve_Annotations/annotations
       # # prok_entrez_gene_stuff: Cache_Entrez_Gene/prok_entrez_gene_stuff
     # # out: [annotations]
-      
+
   # #
   # # End of Pseudo plane default 2
   # #
   # # This step takes input from bacterial_annot 4/Bacterial Annot Filter, see GP-23942
-  # # Status: 
+  # # Status:
     # # tasktype coded, input/output matches
     # # application not coded
   # ###############################################
@@ -334,26 +460,26 @@ steps:
         locus_tag_prefix: locus_tag_prefix
         dbname: dbname
     out: [output]
-    
+
   #
   # Pseudo plane default 3
-  # 
-  
+  #
+
   #
   #  Final_Bacterial_Package task
   #
-  Final_Bacterial_Package_asn_cleanup: 
+  Final_Bacterial_Package_asn_cleanup:
     run: progs/asn_cleanup.cwl
     in:
       inp_annotation: Add_Locus_Tags/output # production
-      serial: 
+      serial:
         default: binary
     out: [annotation]
 
-  Final_Bacterial_Package_final_bact_asn: 
+  Final_Bacterial_Package_final_bact_asn:
     run: progs/final_bact_asn.cwl
     in:
-      annotation: 
+      annotation:
         source: [Final_Bacterial_Package_asn_cleanup/annotation]
         linkMerge: merge_flattened
       asn_cache: genomic_source/asncache
@@ -368,18 +494,18 @@ steps:
         default: true
       nogenbank:
         default: true
-        
+
     out: [outfull]
-  Final_Bacterial_Package_dumb_down_as_required: 
+  Final_Bacterial_Package_dumb_down_as_required:
     run: progs/dumb_down_as_required.cwl
-    in: 
+    in:
       annotation:  Final_Bacterial_Package_final_bact_asn/outfull
-      asn_cache: 
+      asn_cache:
         source: [genomic_source/asncache]
         linkMerge: merge_flattened
-      max_x_ratio: 
+      max_x_ratio:
         default: 0.1
-      max_x_run: 
+      max_x_run:
         default: 3
       partial_cov_threshold:
         default: 65
@@ -394,11 +520,11 @@ steps:
       it:
         default: true
     out: [outent]
-  Final_Bacterial_Package_ent2sqn: 
+  Final_Bacterial_Package_ent2sqn:
     run: progs/ent2sqn.cwl
     in:
       annotation: Final_Bacterial_Package_dumb_down_as_required/outent
-      asn_cache: 
+      asn_cache:
         source: [genomic_source/asncache]
         linkMerge: merge_flattened
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
@@ -408,7 +534,7 @@ steps:
       it:
         default: true
     out: [output]
-  Final_Bacterial_Package_sqn2gbent: 
+  Final_Bacterial_Package_sqn2gbent:
     run: progs/sqn2gbent.cwl
     in:
       input: Final_Bacterial_Package_ent2sqn/output
@@ -419,15 +545,15 @@ steps:
     run: progs/gp_annot_format.cwl
     in:
         input: Final_Bacterial_Package_dumb_down_as_required/outent
-        ifmt: 
+        ifmt:
             default: seq-entry
         t:
             default: true
         ofmt:
-            default: gff3 
+            default: gff3
         exclude_external:
             default: true
-    out: [output]    
+    out: [output]
   Generate_Annotation_Reports_gbk:
     run: progs/asn2flat.cwl
     in:
@@ -447,7 +573,7 @@ steps:
     run: progs/asn2fasta.cwl
     in:
         i: Final_Bacterial_Package_sqn2gbent/output
-        type:   
+        type:
             default: seq-entry
         nuc_fasta_name:
             default: annot.fna
@@ -456,23 +582,23 @@ steps:
     run: progs/asn2fasta.cwl
     in:
             i: Final_Bacterial_Package_sqn2gbent/output
-            type:   
+            type:
                 default: seq-entry
             prot_fasta_name:
                 default: annot.faa
     out: [prot_fasta]
-  Final_Bacterial_Package_std_validation: 
+  Final_Bacterial_Package_std_validation:
     run: progs/std_validation.cwl
     in:
       annotation: Final_Bacterial_Package_dumb_down_as_required/outent
       asn_cache:
         source: [genomic_source/asncache]
-      exclude_asndisc_codes: # 
+      exclude_asndisc_codes: #
         default: ['OVERLAPPING_CDS']
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
-      master_desc: 
+      master_desc:
         source: [Prepare_Unannotated_Sequences/master_desc]
         linkMerge: merge_flattened
       submit_block_template:
@@ -490,85 +616,85 @@ steps:
       - id: outmetamaster
       - id: outval
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
-    run: progs/val_stats.cwl  
+    run: progs/val_stats.cwl
     in:
       annot_val: Final_Bacterial_Package_std_validation/outval
-      c_toolkit: 
+      c_toolkit:
         default: true
     out: [output, xml]
   #
   #  end of Final_Bacterial_Package task
   #
-  
+
   #### we do not need this
   # Prepare_Init_Refseq_Molecules:
   #  run: progs/
-  
+
   #
   #  Validate_Annotation task
   #
-  
-  Validate_Annotation_bact_univ_prot_stats: 
+
+  Validate_Annotation_bact_univ_prot_stats:
     run: progs/bact_univ_prot_stats.cwl
     in:
-      annot_request_id: 
+      annot_request_id:
         default: -1 # this is dummy annot_request_id
-      hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits 
-      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models 
+      hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits
+      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models
       input:  Final_Bacterial_Package_final_bact_asn/outfull
-      univ_prot_xml:  univ_prot_xml  
-      val_res_den_xml:  val_res_den_xml 
+      univ_prot_xml:  passdata/univ_prot_xml
+      val_res_den_xml:  passdata/val_res_den_xml
       it:
         default: true
     out: [bact_univ_prot_stats_old_xml, var_bact_univ_prot_details_xml, var_bact_univ_prot_stats_xml]
-      
-  Validate_Annotation_proc_annot_stats: 
+
+  Validate_Annotation_proc_annot_stats:
     run: progs/proc_annot_stats.cwl
     in:
       input: Final_Bacterial_Package_dumb_down_as_required/outent
-      max_unannotated_region: 
+      max_unannotated_region:
         default: 5000
-      univ_prot_xml:  univ_prot_xml 
-      val_res_den_xml:  val_res_den_xml
+      univ_prot_xml:  passdata/univ_prot_xml
+      val_res_den_xml:  passdata/val_res_den_xml
       it:
         default: true
     out:
       - id: var_proc_annot_stats_xml
       - id: var_proc_annot_details_xml
-  Validate_Annotation_xsltproc_asnvalidate: 
+  Validate_Annotation_xsltproc_asnvalidate:
     run: progs/xsltproc.cwl
     in:
-      xml: Final_Bacterial_Package_val_stats/xml 
-      xslt: asn2pas_xsl 
-      output_name: 
+      xml: Final_Bacterial_Package_val_stats/xml
+      xslt: passdata/asn2pas_xsl
+      output_name:
         default: 'var_proc_annot_stats.val.xml'
     out: [output]
-  Validate_Annotation_xsltproc_asndisc: 
+  Validate_Annotation_xsltproc_asndisc:
     run: progs/xsltproc.cwl
     in:
       xml: Final_Bacterial_Package_std_validation/outdiscxml
-      xslt: asn2pas_xsl 
-      output_name: 
+      xslt: passdata/asn2pas_xsl
+      output_name:
         default: 'var_proc_annot_stats.disc.xml'
     out: [output]
   Validate_Annotation_collect_annot_stats: # TESTED (unit test)
     run: progs/collect_annot_stats.cwl
     in:
       input:
-        source:  
-            - Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_stats_xml 
-            - Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml 
-            - Validate_Annotation_xsltproc_asndisc/output 
-            - Validate_Annotation_xsltproc_asnvalidate/output 
+        source:
+            - Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_stats_xml
+            - Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml
+            - Validate_Annotation_xsltproc_asndisc/output
+            - Validate_Annotation_xsltproc_asnvalidate/output
         linkMerge: merge_flattened
       output_name:
         default: proc_annot_stats.xml
     out: [output]
-  Validate_Annotation_collect_annot_details: 
-    run: progs/collect_annot_stats.cwl 
+  Validate_Annotation_collect_annot_details:
+    run: progs/collect_annot_stats.cwl
     in:
       input:
-        source: 
+        source:
             - Validate_Annotation_bact_univ_prot_stats/var_bact_univ_prot_details_xml
             - Validate_Annotation_proc_annot_stats/var_proc_annot_details_xml
         linkMerge: merge_flattened
@@ -593,25 +719,25 @@ steps:
         - Generate_Annotation_Reports_nuc_fasta/nuc_fasta
         - Generate_Annotation_Reports_prot_fasta/prot_fasta
     out: [stdout]
-    
+
   #
   #  end of Validate_Annotation task
   #
-  
+
   #
   # End of Pseudo plane default 3
   #
-  
+
   ###############################################
   # taxonomy plane is for later stages skipping
   ###############################################
 
   #
   # Pseudo plane default 4
-  # 
-  
+  #
+
   # task: Generate Annotation Reports
-  # 
+  #
   # Generate_Annotation_Reports_pgaap_prepare_review:
     # run: progs/pgaap_prepare_review.cwl
   # Generate_Annotation_Reports_lds2_indexer:
@@ -651,14 +777,14 @@ steps:
   # Generate_Annotation_Reports_asn2rrna_fa:
     # run: progs/asn2fasta.cwl
   # Generate_Annotation_Reports_gp_annot_format:
-    # run: progs/gp_annot_format.cwl  
+    # run: progs/gp_annot_format.cwl
   # end of task: Generate Annotation Reports
-  # 
+  #
 
   #
   # End of Pseudo plane default 4
   #
-    
+
 outputs:
   gbent:
     type: File
@@ -675,4 +801,4 @@ outputs:
   protein_fasta:
     type: File?
     outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
- 
+
