@@ -53,14 +53,22 @@ steps:
       data: supplemental_data
     run:
       class: CommandLineTool
-      requirements:
-        InitialWorkDirRequirement:
-          listing:
-            - entry: $(inputs.data)
-              writable: False
+      #requirements:
+      #  InitialWorkDirRequirement:
+      #    listing:
+      #      - entry: $(inputs.data)
+      #        writable: False
+      baseCommand: [cp, -ar]
       inputs:
         data:
           type: Directory
+          inputBinding:
+            position: 1
+        destination:
+          type: string
+          default: .
+          inputBinding:
+            position: 2
       outputs:
         16s_blastdb_dir:
           type: Directory
