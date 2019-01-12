@@ -45,6 +45,7 @@ steps:
       data: supplemental_data
     run:
       class: CommandLineTool
+      baseCommand: "true"
       requirements:
         InitialWorkDirRequirement:
           listing:
