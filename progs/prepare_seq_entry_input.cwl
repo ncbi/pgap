@@ -34,6 +34,11 @@ inputs:
         default: order.seqids
         inputBinding:
             prefix: -order
+    pathogen_mode:
+        type: boolean?
+        default: true
+        inputBinding:
+            prefix: -pathogen-mode
     submit_block_name:        
         type: string
         default: submit_block_template.asn
