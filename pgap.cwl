@@ -87,34 +87,6 @@ steps:
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: taxid
-      #16s_blastdb_dir: 16s_blastdb_dir
-      #23s_blastdb_dir: 23s_blastdb_dir
-      #5s_model_path: 5s_model_path
-      #AntiFamLib: AntiFamLib
-      #CDDdata: CDDdata
-      #CDDdata2: CDDdata2
-      #asn2pas_xsl: asn2pas_xsl
-      #blast_rules_db: blast_rules_db
-      #blast_rules_db_dir: blast_rules_db_dir
-      #defline_cleanup_rules: defline_cleanup_rules
-      #gene_master_ini: gene_master_ini
-      #genemark_path: genemark_path
-      #hmm_path: hmm_path
-      #hmms_tab: hmms_tab
-      #naming_blast_db: naming_blast_db
-      #naming_hmms_combined: naming_hmms_combined
-      #naming_hmms_tab: naming_hmms_tab
-      #naming_sqlite: naming_sqlite
-      #rfam_amendments: rfam_amendments
-      #rfam_model_path: rfam_model_path
-      #rfam_stockholm: rfam_stockholm
-      #selenoproteins: selenoproteins
-      #taxon_db: taxon_db
-      #thresholds: thresholds
-      #uniColl_cache: uniColl_cache
-      #univ_prot_xml: univ_prot_xml
-      #val_res_den_xml: val_res_den_xml
-      #wp_hashes: wp_hashes
-    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta]
+    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl
     label: PGAP Pipeline

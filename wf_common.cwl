@@ -53,11 +53,6 @@ steps:
       data: supplemental_data
     run:
       class: CommandLineTool
-      #requirements:
-      #  InitialWorkDirRequirement:
-      #    listing:
-      #      - entry: $(inputs.data)
-      #        writable: False
       baseCommand: [cp, -ar]
       inputs:
         data:
@@ -813,4 +808,8 @@ outputs:
   protein_fasta:
     type: File?
     outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
+  sqn:
+    type: File?
+    outputSource:  Final_Bacterial_Package_ent2sqn/output
+    
 
