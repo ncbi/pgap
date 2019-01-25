@@ -48,7 +48,7 @@ outputs:
   cookies:
     type: ["null", File]
     outputBinding:
-      glob: cookie.txt
+      glob: cookies.txt
   # outfile:
   #   type: File
   #   outputBinding:
