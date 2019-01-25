@@ -41,12 +41,14 @@ steps:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
+      make_cookies:
+        default: true
       state:
         default: "start"
       workflow:
         default: "pgap"
       instring: gc_assm_name
-    out: [stdout, outstring]
+    out: [stdout, outstring, cookies]
 
   passdata:
     in:
@@ -713,6 +715,7 @@ steps:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
+      use_cookies: ping_start/cookies
       state:
         default: "stop"
       workflow:
