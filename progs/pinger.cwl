@@ -46,7 +46,7 @@ outputs:
     outputBinding:
       outputEval: $(inputs.instring)
   cookies:
-    type: ["null", File]
+    type: File
     outputBinding:
       glob: cookies.txt
   # outfile:
