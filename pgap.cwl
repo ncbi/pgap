@@ -33,6 +33,12 @@ outputs:
   gff:
     outputSource: standard_pgap/gff
     type: File
+  fasta:
+    outputSource: fasta
+    type: File
+  submol:
+    outputSource: submol
+    type: File
   nucleotide_fasta:
     outputSource: standard_pgap/nucleotide_fasta
     type: File?
