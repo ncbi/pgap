@@ -11,16 +11,25 @@ inputs:
     inputBinding:
       position: 0
       prefix: "do_report"
+  make_cookies:
+    type: boolean?
+    inputBinding:
+      position: 1
+      prefix: "make_cookies"
+  use_cookies:
+    type: File?
+    inputBinding:
+      position: 2
   state:
     type: string 
     inputBinding:
-      position: 1
+      position: 3
       prefix: "state"
       itemSeparator: " "
   workflow:
     type: string 
     inputBinding:
-      position: 1
+      position: 4
       prefix: "workflow"
       itemSeparator: " "
   instring:
@@ -36,6 +45,10 @@ outputs:
     type: string
     outputBinding:
       outputEval: $(inputs.instring)
+  cookies:
+    type: File
+    outputBinding:
+      glob: cookies.txt
   # outfile:
   #   type: File
   #   outputBinding:
