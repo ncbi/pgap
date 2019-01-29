@@ -11,12 +11,12 @@ inputs:
     inputBinding:
       position: 0
       prefix: "do_report"
-  make_cookies:
+  make_uuid:
     type: boolean?
     inputBinding:
       position: 1
-      prefix: "make_cookies"
-  use_cookies:
+      prefix: "make_uuid"
+  uuid_in:
     type: File?
     inputBinding:
       position: 2
@@ -45,11 +45,7 @@ outputs:
     type: string
     outputBinding:
       outputEval: $(inputs.instring)
-  cookies:
+  uuid_out:
     type: File
     outputBinding:
-      glob: cookies.txt
-  # outfile:
-  #   type: File
-  #   outputBinding:
-  #     outputEval: $(inputs.infile)
+      glob: uuid.txt

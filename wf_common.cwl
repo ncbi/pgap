@@ -41,14 +41,14 @@ steps:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
-      make_cookies:
+      make_uuid:
         default: true
       state:
         default: "start"
       workflow:
         default: "pgap"
       instring: gc_assm_name
-    out: [stdout, outstring, cookies]
+    out: [stdout, outstring, uuid_out]
 
   passdata:
     in:
@@ -715,7 +715,7 @@ steps:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
-      use_cookies: ping_start/cookies
+      uuid_in: ping_start/uuid_out
       state:
         default: "stop"
       workflow:
