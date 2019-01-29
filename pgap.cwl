@@ -33,7 +33,7 @@ outputs:
   gff:
     outputSource: standard_pgap/gff
     type: File
-  fasta:
+  input_fasta:
     outputSource: fasta
     type: File
   submol:
