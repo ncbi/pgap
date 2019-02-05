@@ -54,127 +54,171 @@ steps:
     in:
       data: supplemental_data
     run:
-      class: CommandLineTool
-      baseCommand: [cp, -ar]
+      class: ExpressionTool
+      requirements:
+        InlineJavascriptRequirement: {}
       inputs:
         data:
           type: Directory
-          inputBinding:
-            position: 1
-        destination:
-          type: string
-          default: .
-          inputBinding:
-            position: 2
+      expression: |
+        ${
+          var r = {};
+          var l = inputs.data.listing;
+          var n = l.length;
+          for (var i = 0; i < n; i++) {
+            switch (l[i].basename) {
+              case '16S_rRNA':
+                r['16s_blastdb_dir'] = l[i];
+                break;
+              case '23S_rRNA':
+                r['23s_blastdb_dir'] = l[i];
+                break;
+              case 'RF00001.cm':
+                r['5s_model_path'] = l[i];
+                break;
+              case 'AntiFamLib':
+                r['AntiFamLib'] = l[i];
+                break;
+              case 'asn2pas.xsl':
+                r['asn2pas_xsl'] = l[i];
+                break;
+              case 'CDD':
+                r['CDDdata'] = l[i];
+                break;
+              case 'cdd_add':
+                r['CDDdata2'] = l[i];
+                break;
+              case 'product_rules.prt':
+                r['defline_cleanup_rules'] = l[i];
+                break;
+              case 'gene_master.ini':
+                r['gene_master_ini'] = l[i];
+                break;
+              case 'GeneMark':
+                r['genemark_path'] = l[i];
+                break;
+              case 'rfam-amendments.xml':
+                r['rfam_amendments'] = l[i];
+                break;
+              case 'Rfam.selected1.cm':
+                r['rfam_model_path'] = l[i];
+                break;
+              case 'Rfam.seed':
+                r['rfam_stockholm'] = l[i];
+                break;
+              case 'selenoproteins':
+                r['selenoproteins'] = l[i];
+                break;
+              case 'thresholds.xml':
+                r['thresholds'] = l[i];
+                break;
+              case 'uniColl_path':
+                var ul = l[i].listing;
+                var un = ul.length;
+                for (var j = 0; j < un; j++) {
+                  switch (ul[j].basename) {
+                    case 'blast_dir':
+                      r['blast_rules_db_dir'] = ul[j];
+                      r['naming_blast_db'] = ul[j];
+                      break;
+                    case 'real_hmms':
+                      r['hmm_path'] = ul[j];
+                      break;
+                    case 'real_hmms.tab':
+                      r['hmms_tab'] = ul[j];
+                      break;
+                    case 'naming_hmms':
+                      r['naming_hmms_combined'] = ul[j];
+                      break;
+                    case 'naming_hmms.tab':
+                      r['naming_hmms_tab'] = ul[j];
+                      break;
+                    case 'naming.sqlite':
+                      r['naming_sqlite'] = ul[j];
+                      break;
+                    case 'taxonomy.sqlite3':
+                      r['taxon_db'] = ul[j];
+                      break;
+                    case 'cache':
+                      r['uniColl_cache'] = ul[j];
+                      break;
+                    case 'universal.xml':
+                      r['univ_prot_xml'] = ul[j];
+                      break;
+                    case 'wp-hashes.sqlite':
+                      r['wp_hashes'] = ul[j];
+                      break;
+                  }
+                }
+                break;
+              case 'validation-results.xml':
+                r['val_res_den_xml'] = l[i];
+                break;
+            }
+          }
+          return r;
+        }
       outputs:
         16s_blastdb_dir:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/16S_rRNA
         23s_blastdb_dir:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/23S_rRNA
         5s_model_path:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/RF00001.cm
         AntiFamLib:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/AntiFamLib
         asn2pas_xsl:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/asn2pas.xsl
         blast_rules_db_dir:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/blast_dir
-        CDDdata: # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
+        CDDdata:
+          # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/CDD
-        CDDdata2: # ${GP_HOME}/third-party/data/cdd_add
+        CDDdata2:
+          # ${GP_HOME}/third-party/data/cdd_add
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/cdd_add
-        defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+        defline_cleanup_rules:
+          # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/product_rules.prt
         gene_master_ini:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/gene_master.ini
         genemark_path:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/GeneMark
         hmm_path:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/real_hmms
         hmms_tab:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/real_hmms.tab
         naming_blast_db: # NamingDatabase
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/blast_dir # this one might have created problems for assign_cluster, let's try this:
-        naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
+        naming_hmms_combined:
+          # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/naming_hmms
         naming_hmms_tab:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/naming_hmms.tab
-        naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+        naming_sqlite:
+          # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/naming.sqlite
         rfam_amendments:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/rfam-amendments.xml
         rfam_model_path:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/Rfam.selected1.cm
         rfam_stockholm:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/Rfam.seed
-        selenoproteins: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
+        selenoproteins:
+          # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/selenoproteins
         taxon_db:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/taxonomy.sqlite3
         thresholds:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/thresholds.xml
         uniColl_cache:
           type: Directory
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/cache
         univ_prot_xml:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/universal.xml
         val_res_den_xml:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/validation-results.xml
         wp_hashes:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/wp-hashes.sqlite
     out:
       - 16s_blastdb_dir
       - 23s_blastdb_dir
