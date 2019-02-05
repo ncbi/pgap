@@ -50,21 +50,33 @@ steps:
     in:
       data: supplemental_data
     run:
-      class: CommandLineTool
-      baseCommand: "true"
+      class: ExpressionTool
       requirements:
-        InitialWorkDirRequirement:
-          listing:
-            - entry: $(inputs.data)
-              writable: False
+        InlineJavascriptRequirement: {}
       inputs:
         data:
           type: Directory
+      expression: |
+        ${
+          var r = {};
+          var l = inputs.data.listing;
+          var n = l.length;
+          for (var i = 0; i < n; i++) {
+            if (l[i].basename == 'uniColl_path') {
+              var ul = l[i].listing;
+              var un = ul.length;
+              for (var j = 0; j < un; j++) {
+                if (ul[j].basename == 'taxonomy.sqlite3') {
+                  r['taxon_db'] = ul[j];
+                }
+              }
+            }
+          }
+          return r;
+        }
       outputs:
         taxon_db:
           type: File
-          outputBinding:
-            glob: $(inputs.data.basename)/uniColl_path/taxonomy.sqlite3
     out: [ taxon_db ]
 
   prepare_input_template:
