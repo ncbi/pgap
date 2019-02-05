@@ -36,7 +36,7 @@ outputs:
   input_fasta:
     outputSource: fasta
     type: File
-  submol:
+  input_submol:
     outputSource: submol
     type: File
   nucleotide_fasta:
