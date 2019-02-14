@@ -87,10 +87,46 @@ def install_docker(version):
     print('Downloading (as needed) PGAP Docker image version {}'.format(version))
     subprocess.check_call([docker, 'pull', get_docker_image(version)])
 
+
+class urlopen_progress:
+    def __init__(self, url):
+        self.remote_file = urlopen(url)
+        total_size = 0
+        try:
+            total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
+        except AttributeError:
+            total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
+            
+        self.total_size = int(total_size)
+        if self.total_size > 0:
+            self.header = True
+        else:
+            self.header = False # a response doesn't always include the "Content-Length" header
+
+        self.bytes_so_far = 0
+
+    def read(self, n=10240):
+        buffer = self.remote_file.read(n)
+        if not buffer:
+            sys.stdout.write('\n')
+            return ''
+
+        self.bytes_so_far += len(buffer)
+        if self.header:
+            percent = float(self.bytes_so_far) / self.total_size
+            percent = round(percent*100, 2)
+            sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)\r" % (self.bytes_so_far, self.total_size, percent))
+        else:
+            sys.stderr.write("Downloaded %d bytes\r" % (self.bytes_so_far))
+            
+        return buffer
+        
 def install_url(url):
-    with urlopen(url) as response:
-        with tarfile.open(mode='r|*', fileobj=response) as tar:
-            tar.extractall()
+    #with urlopen(url) as response:
+    #with urlopen_progress(url) as response:
+    response = urlopen_progress(url)
+    with tarfile.open(mode='r|*', fileobj=response) as tar:
+        tar.extractall()
 #            while True:
 #                item = tar.next()
 #                if not item: break
@@ -112,6 +148,16 @@ def install_test_genomes(version):
         print('Downloading PGAP test genomes')
         install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
 
+def get_remote_version():
+    # Old system, where we checked github releases
+    #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+    #latest = json.load(response)['tag_name']
+
+    # Check docker hub
+    response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
+    json_response = json.load(response)
+    return json_response[-1]['name']
+    
 def get_version():
     if os.path.isfile('VERSION'):
         with open('VERSION', encoding='utf-8') as f:
@@ -122,8 +168,7 @@ def setup(update, local_runner):
     '''Determine version of PGAP.'''
     version = get_version()
     if update or not version:
-        response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-        latest = json.load(response)['tag_name']
+        latest = get_remote_version()
         if version != latest:
             print('Updating PGAP to version {} (previous version was {})'.format(latest, version))
             if local_runner: install_cwl(latest)
@@ -173,44 +218,48 @@ def run(version, input, output):
             '--outdir', '/pgap/output',
             'wf_pgap_simple.cwl', '/pgap/user_input/pgap_input.yaml'])
 
-parser = argparse.ArgumentParser(description='Run PGAP.')
-parser.add_argument('input', nargs='?',
-                    help='Input YAML file to process.')
-parser.add_argument('--version', action='store_true',
-                    help='Print currently set up PGAP version')
-parser.add_argument('-v', '--verbose', action='store_true',
-                    help='Verbose mode')
-parser.add_argument('-u', '--update', dest='update', action='store_true',
-                    help='Update to the latest PGAP version, including reference data')
-parser.add_argument('-r', '--local-runner', dest='local_runner', action='store_true',
-                    help='Use a local CWL runner instead of the bundled cwltool')
-parser.add_argument('-d', '--docker', nargs=1, metavar='path', default='docker',
-                    help='Docker executable, which may include a full path like /usr/bin/docker')
-parser.add_argument('-o', '--output', nargs=1, metavar='path', default='output',
-                    help='Output directory to be created, which may include a full path')
-parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
-                    help='Run a test genome')
-args = parser.parse_args()
-verbose = args.verbose
-docker = args.docker
+def main():
+    parser = argparse.ArgumentParser(description='Run PGAP.')
+    parser.add_argument('input', nargs='?',
+                        help='Input YAML file to process.')
+    parser.add_argument('--version', action='store_true',
+                        help='Print currently set up PGAP version')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='Verbose mode')
+    parser.add_argument('-u', '--update', dest='update', action='store_true',
+                        help='Update to the latest PGAP version, including reference data')
+    parser.add_argument('-r', '--local-runner', dest='local_runner', action='store_true',
+                        help='Use a local CWL runner instead of the bundled cwltool')
+    parser.add_argument('-d', '--docker', nargs=1, metavar='path', default='docker',
+                        help='Docker executable, which may include a full path like /usr/bin/docker')
+    parser.add_argument('-o', '--output', nargs=1, metavar='path', default='output',
+                        help='Output directory to be created, which may include a full path')
+    parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
+                        help='Run a test genome')
+    args = parser.parse_args()
+    verbose = args.verbose
+    docker = args.docker
 
-if (args.version):
-    version = get_version()
-    if version:
-        print('PGAP version {}'.format())
+    if (args.version):
+        version = get_version()
+        if version:
+            print('PGAP version {}'.format())
+        else:
+            print('PGAP not installed; use --update to install the latest version.')
+            exit(0)
+
+    version = setup(args.update, args.local_runner)
+    check_runtime(version)
+    if args.local_runner:
+        check_cwl_runner()
+
+    if args.test_genome:
+        input = 'test_genomes/MG37/input.yaml'
     else:
-        print('PGAP not installed; use --update to install the latest version.')
-    exit(0)
+        input = args.input
 
-version = setup(args.update, args.local_runner)
-check_runtime(version)
-if args.local_runner:
-    check_cwl_runner()
+    if input:
+        run(version, input, args.output)
 
-if args.test_genome:
-    input = 'test_genomes/MG37/input.yaml'
-else:
-    input = args.input
-
-if input:
-    run(version, input, args.output)
+if __name__== "__main__":
+    main()
