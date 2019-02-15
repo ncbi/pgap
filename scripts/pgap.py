@@ -182,24 +182,33 @@ def setup(update, local_runner):
         raise RuntimeError('Failed to identify PGAP version')
     return version
 
+
+
 def run(version, input, output):
     image = get_docker_image(version)
 
     # Create a work directory.
     os.mkdir(output)
     os.mkdir(output + '/log')
-    with open(output +'/pgap_input.yaml', 'w') as f:
-        with open(input) as i:
-            shutil.copyfileobj(i, f)
-        f.write('\n')
-        f.flush()
-        subprocess.check_call([docker, 'run', '-i', image,
-            'sed', '-e', 's,input_template,/pgap/input_template,', '/pgap/input.yaml'],
-            stdout=f)
 
     # Run the actual workflow.
     data_dir = os.path.abspath('input-{}'.format(version))
     input_dir = os.path.dirname(os.path.abspath(input))
+    input_file = '/pgap/user_input/pgap_input.yaml'
+
+    with open(output +'/pgap_input.yaml', 'w') as f:
+        with open(input) as i:
+            shutil.copyfileobj(i, f)
+        f.write('\n')
+        f.write('supplemental_data:\n')
+        f.write('  class: Directory\n')
+        f.write('  location: /pgap/input\n')
+        #f.write('report_usage: False\n')
+        f.flush()
+        #subprocess.check_call([docker, 'run', '-i', image,
+        #    'sed', '-e', 's,input_template,/pgap/input_template,', '/pgap/input.yaml'],
+        #    stdout=f)
+
     output_dir = os.path.abspath(output)
     yaml = output_dir + '/pgap_input.yaml'
     log_dir = output_dir + '/log'
@@ -208,15 +217,15 @@ def run(version, input, output):
     #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
     subprocess.check_call(
         [docker, 'run', '-i',
+            '--volume', '{}:/pgap/input:ro'.format(data_dir),
             '--volume', '{}:/pgap/user_input'.format(input_dir),
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-            '--volume', '{}:/pgap/user_input/input:ro'.format(data_dir),
             '--volume', '{}:/pgap/output:rw'.format(output_dir),
             '--volume', '{}:/log/srv'.format(log_dir),
             image,
             'cwltool',
             '--outdir', '/pgap/output',
-            'wf_pgap_simple.cwl', '/pgap/user_input/pgap_input.yaml'])
+            'pgap.cwl', input_file])
 
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
