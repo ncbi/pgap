@@ -96,7 +96,7 @@ class urlopen_progress:
             total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
         except AttributeError:
             total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
-            
+
         self.total_size = int(total_size)
         if self.total_size > 0:
             self.header = True
@@ -118,9 +118,8 @@ class urlopen_progress:
             sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)\r" % (self.bytes_so_far, self.total_size, percent))
         else:
             sys.stderr.write("Downloaded %d bytes\r" % (self.bytes_so_far))
-            
         return buffer
-        
+
 def install_url(url):
     #with urlopen(url) as response:
     #with urlopen_progress(url) as response:
@@ -157,7 +156,7 @@ def get_remote_version():
     response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
     json_response = json.load(response)
     return json_response[-1]['name']
-    
+
 def get_version():
     if os.path.isfile('VERSION'):
         with open('VERSION', encoding='utf-8') as f:
@@ -182,8 +181,6 @@ def setup(update, local_runner):
         raise RuntimeError('Failed to identify PGAP version')
     return version
 
-
-
 def run(version, input, output):
     image = get_docker_image(version)
 
@@ -200,9 +197,10 @@ def run(version, input, output):
         with open(input) as i:
             shutil.copyfileobj(i, f)
         f.write('\n')
-        f.write('supplemental_data:\n')
-        f.write('  class: Directory\n')
-        f.write('  location: /pgap/input\n')
+        f.write('supplemental_data: { class: Directory, location: /pgap/input }\n')
+	#f.write('supplemental_data:\n')
+        #f.write('  class: Directory\n')
+        #f.write('  location: /pgap/input\n')
         #f.write('report_usage: False\n')
         f.flush()
         #subprocess.check_call([docker, 'run', '-i', image,
