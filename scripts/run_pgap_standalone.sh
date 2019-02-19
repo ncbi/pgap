@@ -26,7 +26,7 @@ docker run -i \
        --volume $(pwd -P)/output:/pgap/output:rw \
        ncbi/pgap:2018-11-07.build3190 \
        cwltool \
-       --outdir ./outdir \
+       --outdir ./output \
        wf_pgap_simple.cwl \
        user_input/pgap_input.yaml
 
