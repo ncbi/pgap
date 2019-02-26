@@ -184,7 +184,7 @@ def setup(update, local_runner):
 
 
 
-def run(version, input, output):
+def run(version, input, output, debug):
     image = get_docker_image(version)
 
     # Create a work directory.
@@ -215,17 +215,24 @@ def run(version, input, output):
     # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
     # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
     #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
-    subprocess.check_call(
-        [docker, 'run', '-i',
-            '--volume', '{}:/pgap/input:ro'.format(data_dir),
-            '--volume', '{}:/pgap/user_input'.format(input_dir),
-            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-            '--volume', '{}:/pgap/output:rw'.format(output_dir),
-            '--volume', '{}:/log/srv'.format(log_dir),
-            image,
-            'cwltool',
-            '--outdir', '/pgap/output',
-            'pgap.cwl', input_file])
+
+    cmd = [docker, 'run', '-i',
+               '--user', str(os.getuid()) + ":" + str(os.getgid()),
+               '--volume', '{}:/pgap/input:ro'.format(data_dir),
+               '--volume', '{}:/pgap/user_input'.format(input_dir),
+               '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
+               '--volume', '{}:/pgap/output:rw'.format(output_dir),
+               '--volume', '{}:/log/srv'.format(log_dir),
+               image,
+               'cwltool',
+               '--outdir', '/pgap/output']
+    if debug:
+        cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
+                    '--leave-tmpdir',
+                    '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
+                    '--copy-outputs'])
+    cmd.extend(['pgap.cwl', input_file])
+    subprocess.check_call(cmd)
 
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
@@ -245,9 +252,12 @@ def main():
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
                         help='Run a test genome')
+    parser.add_argument('-D', '--debug', action='store_true',
+                        help='Debug mode')
     args = parser.parse_args()
     verbose = args.verbose
     docker = args.docker
+    debug = args.debug
 
     if (args.version):
         version = get_version()
@@ -268,7 +278,7 @@ def main():
         input = args.input
 
     if input:
-        run(version, input, args.output)
+        run(version, input, args.output, debug)
 
 if __name__== "__main__":
     main()
