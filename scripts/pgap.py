@@ -244,9 +244,9 @@ def main():
                         help='Update to the latest PGAP version, including reference data')
     parser.add_argument('-r', '--local-runner', dest='local_runner', action='store_true',
                         help='Use a local CWL runner instead of the bundled cwltool')
-    parser.add_argument('-d', '--docker', nargs=1, metavar='path', default='docker',
+    parser.add_argument('-d', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
-    parser.add_argument('-o', '--output', nargs=1, metavar='path', default='output',
+    parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
                         help='Run a test genome')
