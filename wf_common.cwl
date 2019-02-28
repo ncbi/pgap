@@ -856,7 +856,7 @@ outputs:
     type: File?
     outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
   sqn:
-    type: File?
+    type: File
     outputSource:  Final_Bacterial_Package_ent2sqn/output
     
 
