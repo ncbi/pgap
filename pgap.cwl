@@ -33,6 +33,9 @@ outputs:
   gff:
     outputSource: standard_pgap/gff
     type: File
+  sqn:
+    outputSource: standard_pgap/sqn
+    type: File
   input_fasta:
     outputSource: fasta
     type: File
