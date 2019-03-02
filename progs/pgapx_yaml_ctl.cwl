@@ -28,35 +28,35 @@ inputs:
         default: 'JSON'
         inputBinding:
             prefix: -ofmt
-    output_entries_name:
+    output_annotation_name:
         type: string
-        default: input_entries.asn
+        default: input.asn
         inputBinding:
-            prefix: -output-entries
-    output_seq_submit_name:
-        type: string
-        default: input_seq_submit.sqn
-        inputBinding:
-            prefix: -output-seq-submit
+            prefix: -output-annotation
     output_ltp_name:
         type: string
         default: genome.ltp.txt
         inputBinding:
             prefix: -output-ltp
+    output_input_asn_type_name:
+        type: string
+        default: input_asn_type.txt
+        inputBinding:
+            prefix: -output-asn-type
     taxon_db:
         type: File
         inputBinding:
             prefix: -taxon-db
 outputs:
-    output_entries:
-        type: File?
+    output_annotation: 
+        type: File
         outputBinding:
-            glob: $(inputs.output_entries_name)
-    output_seq_submit:
-        type: File?
-        outputBinding:
-            glob: $(inputs.output_seq_submit_name)
+            glob: $(inputs.output_annotation_name)
     output_ltp:
         type: File
         outputBinding:
             glob: $(inputs.output_ltp_name)
+    input_asn_type:
+        type: File
+        outputBinding:
+            glob: $(inputs.output_input_asn_type_name)

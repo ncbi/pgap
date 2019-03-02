@@ -31,21 +31,71 @@ steps:
             input: yaml2json/output
             input_fasta: fasta
             taxon_db: taxon_db
-        out: [output_entries, output_seq_submit, output_ltp]
-    file2string:
+        out: [output_annotation, output_ltp, input_asn_type]
+    file2string_ltp:
         run: progs/file2string.cwl
         in:
              input: pgapx_yaml_ctl/output_ltp
         out: [value]
-    
+    file2string_input_asn_type:
+        run: progs/file2string.cwl
+        in:
+             input: pgapx_yaml_ctl/input_asn_type
+        out: [value]        
+    initial_cleanup:
+        run: progs/asn_cleanup.cwl
+        in:
+            inp_annotation:  pgapx_yaml_ctl/output_annotation
+            type1: file2string_input_asn_type/value
+            serial: 
+                default: 'text'
+            outformat:
+                default: 'text' 
+            out_annotation_name:
+                default:  'cleaned_input.asn'
+        out: [annotation]
+    type_based_splitter:
+        run: 
+            class: ExpressionTool
+            inputs:
+                input:
+                    type: File
+                input_asn_type: 
+                    type: string
+            outputs: 
+                output_entries:
+                    type: File?
+                output_seq_submit:
+                    type: File?
+            expression: "${ 
+                    if ( inputs.input_asn_type == 'seq-entry' ) {
+                        return {
+                            'output_entries': inputs.input,
+                            'output_seq_submit': null
+                        }
+                    }
+                    if ( inputs.input_asn_type == 'seq-submit' ) {
+                        return {
+                            'output_entries': null,
+                            'output_seq_submit': inputs.input
+                        }
+                    }
+                }"
+        in: 
+            input: initial_cleanup/annotation
+            input_asn_type: file2string_input_asn_type/value
+        out: [output_entries, output_seq_submit]
 outputs:
+    input_asn_type: 
+        type: string
+        outputSource: file2string_input_asn_type/value
     output_entries:
         type: File?
-        outputSource: pgapx_yaml_ctl/output_entries
+        outputSource: type_based_splitter/output_entries
     output_seq_submit:
         type: File?
-        outputSource: pgapx_yaml_ctl/output_seq_submit
+        outputSource: type_based_splitter/output_seq_submit
     locus_tag_prefix:
         type: string
-        outputSource: file2string/value
+        outputSource: file2string_ltp/value
             

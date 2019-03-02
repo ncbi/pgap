@@ -13,10 +13,22 @@ inputs:
     default: cleaned-annotation.asn
     inputBinding:
       prefix: -o
-  serial: # binary
-    type: string
+  serial: 
+    type: string?
+    default: binary
     inputBinding:
       prefix: -serial 
+  type1: 
+    type: string?
+    default: seq-entry
+    inputBinding:
+      prefix: -type
+  outformat:
+    type: string?
+    default: 'text' 
+    inputBinding:
+      prefix: -outformat
+
 outputs:
   annotation:
     type: File
