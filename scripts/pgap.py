@@ -154,7 +154,7 @@ def get_remote_version():
 
     # Check docker hub
     response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
-    json_response = json.load(response)
+    json_response = json.loads(response.read().decode())
     return json_response[-1]['name']
 
 def get_version():
@@ -175,7 +175,7 @@ def setup(update, local_runner):
             install_data(latest)
             install_test_genomes(version)
         with open('VERSION', 'w', encoding='utf-8') as f:
-            f.write('{}\n'.format(latest))
+            f.write(u'{}\n'.format(latest))
         version = latest
     if not version:
         raise RuntimeError('Failed to identify PGAP version')
