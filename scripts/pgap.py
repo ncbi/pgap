@@ -196,16 +196,9 @@ def run(version, input, output, debug):
     with open(output +'/pgap_input.yaml', 'w') as f:
         with open(input) as i:
             shutil.copyfileobj(i, f)
-        f.write('\n')
-        f.write('supplemental_data: { class: Directory, location: /pgap/input }\n')
-	#f.write('supplemental_data:\n')
-        #f.write('  class: Directory\n')
-        #f.write('  location: /pgap/input\n')
-        #f.write('report_usage: False\n')
+        f.write(u'\n')
+        f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
         f.flush()
-        #subprocess.check_call([docker, 'run', '-i', image,
-        #    'sed', '-e', 's,input_template,/pgap/input_template,', '/pgap/input.yaml'],
-        #    stdout=f)
 
     output_dir = os.path.abspath(output)
     yaml = output_dir + '/pgap_input.yaml'
