@@ -31,7 +31,7 @@ steps:
             input: yaml2json/output
             input_fasta: fasta
             taxon_db: taxon_db
-        out: [output_annotation, output_ltp, input_asn_type]
+        out: [output_annotation, output_ltp, input_asn_type, contact_person_is_author]
     file2string_ltp:
         run: progs/file2string.cwl
         in:
