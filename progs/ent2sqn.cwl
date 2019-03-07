@@ -25,6 +25,10 @@ inputs:
     inputBinding:
       prefix: -asn-cache
       itemSeparator: ","
+  contact_person_is_author:
+    type: string
+    inputBinding:
+      prefix: -contact-person-is-author
   gc_assembly:
     type: File
     inputBinding:

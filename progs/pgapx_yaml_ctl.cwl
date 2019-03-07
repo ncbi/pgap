@@ -43,6 +43,11 @@ inputs:
         default: input_asn_type.txt
         inputBinding:
             prefix: -output-asn-type
+    output_contact_person_is_author:
+        type: string
+        default: contact_person_is_author.txt
+        inputBinding:
+            prefix: -output-contact-person-is-author
     taxon_db:
         type: File
         inputBinding:
@@ -60,3 +65,8 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.output_input_asn_type_name)
+    contact_person_is_author:
+        type: File
+        outputBinding:
+            glob: $(inputs.output_contact_person_is_author)
+                

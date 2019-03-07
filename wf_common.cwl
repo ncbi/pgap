@@ -18,6 +18,7 @@ inputs:
   taxid: int
   gc_assm_name: string
   locus_tag_prefix: string?
+  contact_person_is_author: string
   dbname: string?
   report_usage: boolean
 
@@ -586,6 +587,7 @@ steps:
         linkMerge: merge_flattened
       it:
         default: true
+      contact_person_is_author: contact_person_is_author
     out: [output]
   Final_Bacterial_Package_sqn2gbent:
     run: progs/sqn2gbent.cwl

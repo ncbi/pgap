@@ -42,6 +42,11 @@ steps:
         in:
              input: pgapx_yaml_ctl/input_asn_type
         out: [value]        
+    file2string_contact_person_is_author:        
+        run: progs/file2string.cwl
+        in:
+             input: pgapx_yaml_ctl/contact_person_is_author
+        out: [value]        
     initial_cleanup:
         run: progs/asn_cleanup.cwl
         in:
@@ -86,9 +91,6 @@ steps:
             input_asn_type: file2string_input_asn_type/value
         out: [output_entries, output_seq_submit]
 outputs:
-    input_asn_type: 
-        type: string
-        outputSource: file2string_input_asn_type/value
     output_entries:
         type: File?
         outputSource: type_based_splitter/output_entries
@@ -98,4 +100,12 @@ outputs:
     locus_tag_prefix:
         type: string
         outputSource: file2string_ltp/value
+    input_asn_type: 
+        type: string
+        outputSource: file2string_input_asn_type/value
+    contact_person_is_author: 
+        type: string
+        outputSource: file2string_contact_person_is_author/value
+        
+        
             
