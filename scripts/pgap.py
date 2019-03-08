@@ -181,7 +181,7 @@ def setup(update, local_runner):
         raise RuntimeError('Failed to identify PGAP version')
     return version
 
-def run(version, input, output, debug):
+def run(version, input, output, debug, report):
     image = get_docker_image(version)
 
     # Create a work directory.
@@ -198,6 +198,8 @@ def run(version, input, output, debug):
             shutil.copyfileobj(i, f)
         f.write(u'\n')
         f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+        if (report != 'none'):
+            f.write(u'report_usage: {}\n'.format(report))
         f.flush()
 
     output_dir = os.path.abspath(output)
@@ -236,8 +238,12 @@ def main():
                         help='Verbose mode')
     parser.add_argument('-u', '--update', dest='update', action='store_true',
                         help='Update to the latest PGAP version, including reference data')
-    parser.add_argument('-r', '--local-runner', dest='local_runner', action='store_true',
+    parser.add_argument('-l', '--local-runner', dest='local_runner', action='store_true',
                         help='Use a local CWL runner instead of the bundled cwltool')
+    parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
+                        help='Set the report_usage flag in the YAML to true.')
+    parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
+                        help='Set the report_usage flag in the YAML to false.')
     parser.add_argument('-d', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -269,8 +275,14 @@ def main():
     else:
         input = args.input
 
+    report='none'
+    if (args.report_usage_true):
+        report = 'true'
+    if (args.report_usage_false):
+        report = 'false'
+        
     if input:
-        run(version, input, args.output, debug)
+        run(version, input, args.output, debug, report)
 
 if __name__== "__main__":
     main()
