@@ -18,7 +18,9 @@ inputs:
     type: string
     default: blast_rules_db
   fasta: File
-  gc_assm_name: string
+  gc_assm_name: 
+    type: string
+    default: my_gc_assm_name
   report_usage: boolean
   submol: File
   taxid: int
