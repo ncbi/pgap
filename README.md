@@ -26,11 +26,6 @@ instructions here for running under the CWL reference implementation,
 cwltool. Full instructions for installing, running, and interpreting
 the results may be found in our [wiki](https://github.com/ncbi/pgap/wiki).
 
-* [Quick Start](https://github.com/ncbi/pgap/wiki/Quick-Start)
-* [Installation](https://github.com/ncbi/pgap/wiki/Installation)
-* [Running your own genomes](https://github.com/ncbi/pgap/wiki/Running-your-own-genomes)
-* [Output Files](https://github.com/ncbi/pgap/wiki/Output-Files)
-
 ## References
 
 ### NCBI
