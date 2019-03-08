@@ -207,16 +207,17 @@ def run(version, input, output, debug):
     # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
     #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
 
-    cmd = [docker, 'run', '-i',
-               '--user', str(os.getuid()) + ":" + str(os.getgid()),
-               '--volume', '{}:/pgap/input:ro'.format(data_dir),
-               '--volume', '{}:/pgap/user_input'.format(input_dir),
-               '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-               '--volume', '{}:/pgap/output:rw'.format(output_dir),
-               '--volume', '{}:/log/srv'.format(log_dir),
-               image,
-               'cwltool',
-               '--outdir', '/pgap/output']
+    cmd = [docker, 'run', '-i' ]
+    if (platform.system() != "Windows"):
+        cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
+    cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
+                '--volume', '{}:/pgap/user_input'.format(input_dir),
+                '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
+                '--volume', '{}:/pgap/output:rw'.format(output_dir),
+                '--volume', '{}:/log/srv'.format(log_dir),
+                image,
+                'cwltool',
+                '--outdir', '/pgap/output'])
     if debug:
         cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
                     '--leave-tmpdir',
