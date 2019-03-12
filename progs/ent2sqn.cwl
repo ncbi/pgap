@@ -40,6 +40,11 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -it
+  contact_as_author_possible:
+    type: boolean?
+    default: true
+    inputBinding:
+      prefix: -contact-as-author-possible  
 outputs:
   output:
     type: File
