@@ -7,61 +7,89 @@ requirements:
     - class: MultipleInputFeatureRequirement
     
 inputs:
-  # kmer_minhash_tarball: File # tarball of all reference minhashes. For Mycoplasma genitalium, there are 8K files, in total 1G
-  Extract_Kmers_From_Input___entry: File
-  gencoll_asn: File
-  asn_cache: Directory
-  # kmer_cache_path: Directory
-  kmer_cache_sqlite: File
-  kmer_cache_uri: string
-  ref_assembly_taxid: int
-  ANI_cutoff: File
-  kmer_reference_assemblies: File
+    Extract_Kmers_From_Input___entry: File
+    gencoll_asn: File
+    asn_cache: Directory
+    kmer_cache_sqlite: File
+    kmer_cache_uri: string
+    ref_assembly_taxid: int
+    ANI_cutoff: File
+    kmer_reference_assemblies: File
 outputs:
-  Identify_Top_N_ANI_annot:
-    type: File
-    outputSource: Identify_Top_N_ANI/annot
-  Identify_Top_N_ANI_top:
-    type: File
-    outputSource: Identify_Top_N_ANI/top
-  Extract_Top_Assemblies___tax_report:
-    type: File
-    outputSource: Extract_Top_Assemblies/tax_report
+    Identify_Top_N_ANI_annot:
+        type: File
+        outputSource: Identify_Top_N_ANI/annot
+    Identify_Top_N_ANI_top:
+        type: File
+        outputSource: Identify_Top_N_ANI/top
+    Extract_Top_Assemblies___tax_report:
+        type: File
+        outputSource: Extract_Top_Assemblies/tax_report
 steps:
-# order manually set to match the order of display on the GPC graph for the plane in the buildrun
-  Query_Kmer_Cache:
-    run: ../task_types/tt_kmer_cache_retrieve.cwl
-    in:
-      gc_id_list: kmer_reference_assemblies
-      kmer_cache_path: kmer_cache_path
-    out: [new_gc_id_list, out_kmer_file_list, out_kmer_cache_path]
-  Extract_Kmer_List:
-    run: ../task_types/tt_kmer_gc_extract_wnode.cwl
-    in:
-      new_gc_id_list: Query_Kmer_Cache/new_gc_id_list
-      asn_cache: asn_cache
-    out: [out_kmer_file_list]
-  Store_in_Kmer_Cache:
-    run: ../task_types/tt_kmer_cache_store.cwl
-    in:
-      kmer_cache_path: Query_Kmer_Cache/out_kmer_cache_path
-      kmer_file_list: Extract_Kmer_List/out_kmer_file_list
-    out: [out_kmer_file_list]
+  # 
+  # Internal PGAP step "Get Reference Assemblies" ommitted it's a const, repplaced by 
+  #     kmer_reference_assemblies
+  # Internal PGAP step "Query_Kmer_Cache:
+  #     This task node in classic PGAP converts list of gcids to a list of URIS
+  #     we do not need to do the conversion, since kmer_store is capable of recognising list of URIs
+  # Internal PGAP step "Extract_Kmer_List":
+  #     This task node in classic PGAP takes the list of new reference assemblies and computes kmer hashes 
+  #     We do not need to do this here, because external PGAP will be always supplied with up to date
+  #     reference assemblies 
+  # Internal PGAP step "Store_in_Kmer_Cache":
+  #     Stores input kmer cache file (local to buildrun directory) in global storage
+  #     We do not need to do this here, because external PGAP will be always supplied with up to date
+  #     reference assemblies 
   Extract_Kmers_From_Input:
     run: ../task_types/tt_kmer_seq_entry_extract_wnode.cwl
+    doc: |
+        computes kmers for input genome (Extract_Kmers_From_Input___entry)
+        produces kmer files (.gz and xml)
     in:
       entry: Extract_Kmers_From_Input___entry
       kmer_file_list: 
-        source: [Query_Kmer_Cache/out_kmer_file_list, Store_in_Kmer_Cache/out_kmer_file_list]
+        source: [kmer_reference_assemblies]
         linkMerge: merge_flattened
       asn_cache: asn_cache
-    out: [out_kmer_file_list]
+    out: [out_kmer_file_list, out_kmer_file, out_kmer_metadata_file]
+  Kmer_files_to_dir:
+    doc: Massager flow for converting input files into a directory outputSource
+    run: ../expr/files_to_dir
+    in: 
+        source: [Kmer_files_to_dir/out_kmer_file, Extract_Kmers_From_Input/out_kmer_metadata_file]
+        linkeMerge: merge_flattened
+    out: [outdir]
+  Convert_kmer_files_to_sqlite:
+    doc: |
+        This new step will convert input .kmer.gz (kmer_file) and .xml (kmer_metadata_file)
+        into new sqlite database
+        The program we are calling here takes a directory input
+    run: ../progs/kmer_files2sqlite.cwl
+    in:
+        kmer_dir: Kmer_files_to_dir/outdir
+        kmer_list: Extract_Kmers_From_Input/out_kmer_file_list
+    out: [out_kmer_cache_sqlite, out_list]
+  Combine_kmer_sqlite:
+    doc: |
+        This new step will combine together reference kmer store and newly created kmer store for a new assembly
+    run: ../progs/combine_kmer_sqlite.cwl
+    in:
+        kmer_cache_sqlite: 
+            source: [kmer_cache_sqlite, Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite]
+            linkMerge: merge_flattened
+    out: [combined_cache_sqlite]
   Compare_Kmer:
+    doc: |
+        compares kmers from different genomes in the input and produces distance matrix
+        filled only for ref vs current elements
     run: ../task_types/tt_kmer_ref_compare_wnode.cwl
     in:
-      kmer_file_list: Extract_Kmers_From_Input/out_kmer_file_list
+      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite
+      kmer_file_list: 
+        source: [Convert_kmer_files_to_sqlite/out_list]
+        linkMerge: merge_flattened
       ref_kmer_file_list:  
-        source: [Query_Kmer_Cache/out_kmer_file_list, Store_in_Kmer_Cache/out_kmer_file_list]
+        source: [kmer_reference_assemblies]
         linkMerge: merge_flattened
       dist_method:
         default: minhash
@@ -71,13 +99,20 @@ steps:
         default: boolean
     out: [distances]
   Identify_Top_N:
+    doc: |
+        Identifies Top N hits to input genome by kmer distances 
+        produces distances XML and list of matching genomes (storage URIs)
     run: ../task_types/tt_kmer_top_n.cwl
     in:
+      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite    
       distances: Compare_Kmer/distances
     out: [matches, top_distances]
   Compare_Kmer__Pairwise_:
+    doc: |
+        compares kmers from top hits to query genome in the input and produces distance matrix for subsequent tree: all-against-all. This is the most downstream node requiring sqlite cache
     run: ../task_types/tt_kmer_compare_wnode.cwl
     in:
+      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite    
       kmer_file_list: 
         source: [Extract_Kmers_From_Input/out_kmer_file_list, Identify_Top_N/matches]
         linkMerge: merge_flattened
@@ -89,12 +124,16 @@ steps:
         default: boolean
     out: [distances]
   Extract_Top_Assemblies:
+    doc: |
+        Takes XML file with top distances between matches and reference assembly taxid
+        produces XML tax report and list of top matched assemblies 
     run: ../task_types/tt_kmer_top_n_extract.cwl
     in:
       top_distances: Identify_Top_N/top_distances
       ref_assembly_taxid: ref_assembly_taxid
     out: [tax_report, gc_id_list]
   Build_Kmer_Tree:
+    doc: Output is BioTree ASN.1
     run: ../task_types/tt_kmer_build_tree.cwl
     in:
         distances: Compare_Kmer__Pairwise_/distances
@@ -106,16 +145,19 @@ steps:
             default: true
     out: [tree]
   Get_Top_Assemblies_GenColl_ASN:
+    doc: Input is list of reference assemblies, not to be mixed with list of URIs
     run: ../task_types/tt_gcaccess_from_list.cwl
     in:
       gc_id_list: Extract_Top_Assemblies/gc_id_list
     out: [gencoll_asn]
   Extract_Input_GenColl_IDs:
+    doc: Input is a target assembly, not to be mixed with list of URIs
     run: ../task_types/tt_extract_gencoll_ids.cwl
     in: 
         assemblies: gencoll_asn
     out: [gc_id_list]
   Assembly_Assembly_BLASTn:
+    doc: This is rather standard blast
     run: ../task_types/tt_assm_assm_blastn_wnode.cwl
     in:
       queries_gc_id_list: Extract_Input_GenColl_IDs/gc_id_list
