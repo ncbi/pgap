@@ -28,7 +28,7 @@ inputs:
         prefix: -d
   blastdb:
     type: string
-    default: cdd
+    default: cdd_split8
     inputBinding:
         prefix: -b
         valueFrom: $(inputs.b.path)/$(inputs.blastdb)

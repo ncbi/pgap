@@ -1,6 +1,6 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 label: "kmer_top_n"
-# file: task_types/tt_kmer_top_n.cwl
 class: Workflow # task type
 #/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/kmer_top_identification \
 #    -N \
@@ -14,7 +14,7 @@ class: Workflow # task type
 #    -threshold \
 #    0.8
 inputs:
-  distances: File
+  distances: File[]
 outputs:
   matches:
     type: File[]
