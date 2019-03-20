@@ -50,13 +50,13 @@ inputs:
     inputBinding:
       prefix: -batch-size
   blastdb:
-    type: string[]?
+    type: string[]
     # this part for testing only, it is not compatible with -db-manifest setting below
     inputBinding:
       prefix: -db
       valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb_dir.length; i++) { blob += inputs.blastdb_dir[i].path + '/' + inputs.blastdb[i]; if(i != inputs.blastdb_dir.length-1) blob += ','; } return blob; }
   blastdb_dir:
-    type: Directory[]?
+    type: Directory[]
   # this won't work because we create manifest in requirement: section simultaneously with declaring input directories "stable"
   # and "stability" is not achieved until we are done with requirements part (I guess)
   # blastdb_manifest:
@@ -66,20 +66,12 @@ inputs:
   #     valueFrom: blastdb.mft
   # same here:
   ids:
-    type: File[]?
+    type: File[]
   ids_manifest:
     type: string?
     default: ids.mft
     inputBinding: 
         prefix: -ids-manifest
-  queries_gc_id_list:
-    type: File?
-    inputBinding:
-        prefix: -queries-gc-id-list
-  subjects_gc_id_list:
-    type: File?
-    inputBinding:
-        prefix: -subjects-gc-id-list
   lds2:
     type: File?
     inputBinding:
@@ -107,18 +99,13 @@ inputs:
     inputBinding:
       prefix: -subseq-size
   xml_jobs:
-    type: File?
-    inputBinding:
-      prefix: -xml-jobs
-  output_xml_jobs:
     type: string
     default: jobs.xml
     inputBinding:
       prefix: -o
-  
       
 outputs:
   jobs:
     type: File
     outputBinding:
-      glob: $(inputs.output_xml_jobs)    
+      glob: $(inputs.xml_jobs)    

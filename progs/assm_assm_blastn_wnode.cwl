@@ -119,10 +119,6 @@ baseCommand: assm_assm_blastn_wnode
 # 
 # 
 inputs:
-  input_jobs:
-    type: File?
-    inputBinding:
-        prefix: -input-jobs 
   asn_cache:
     type: Directory
     inputBinding:
@@ -188,8 +184,6 @@ inputs:
     default: output
     inputBinding:
       prefix: -O
-    
-    
 outputs:
   outdir:
     type: Directory
