@@ -1,9 +1,11 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 label: "assm_assm_blastn_wnode"
 class: Workflow # task type
 inputs:
   asn_cache: Directory
   gencoll_asn: File
+  ref_gencoll_asn: File
   queries_gc_id_list: File
   subjects_gc_id_list: File
   # assm_assm_blastn_wnode inputs:
@@ -28,16 +30,25 @@ inputs:
 outputs:
   blast_align:
     type: File
-    outputSource: gpx_qdump/blast_align
+    outputSource: gpx_qdump/output
 steps:
+  assm_assm_blastn_create_jobs:
+    run: ../progs/assm_assm_blastn_create_jobs.cwl
+    in: 
+        affinity_bin: 
+            default: 10
+        queries_gc_id_list: queries_gc_id_list
+        subjects_gc_id_list: subjects_gc_id_list
+    out: [output]
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
       affinity: affinity
-      asn_cache: asn_cache
-      queries_gc_id_list: queries_gc_id_list
-      subjects_gc_id_list: subjects_gc_id_list
+      asn_cache: 
+        source: [asn_cache]
+        linkMerge: merge_flattened
       nogenbank: nogenbank
+      xml_jobs: assm_assm_blastn_create_jobs/output
     out: [jobs]
   assm_assm_blastn_wnode:
     run: ../progs/assm_assm_blastn_wnode.cwl
@@ -65,4 +76,4 @@ steps:
       input_path: assm_assm_blastn_wnode/outdir
       unzip: 
         default: '*'
-    out: [ blast_align ]
+    out: [ output ]

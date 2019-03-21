@@ -1,9 +1,10 @@
 cwlVersion: v1.0
-label: "kmer_compare_wnode"  
+label: "tt_kmer_compare_wnode"  
 # File: tt_kmer_compare_wnode.cwl
 class: Workflow # task type
 inputs:
-  kmer_file_list: File[]
+  kmer_cache_sqlite: File
+  kmer_list: File
   dist_method: string
   minhash_signature: string
   score_method: string
@@ -15,16 +16,17 @@ steps:
   submit_kmer_compare:
     run: ../progs/submit_kmer_compare.cwl
     in:
-        kmer_file_list: kmer_file_list
+        kmer_list: kmer_list
     out: [output]
   kmer_compare_wnode:
-    run: ../progs/kmer_compare_wnode.cwl
-    in:
-      jobs: submit_kmer_compare/output
-      dist_method: dist_method
-      minhash_signature: minhash_signature
-      score_method: score_method
-    out: [outdir]  
+        run: ../progs/kmer_compare_wnode.cwl
+        in:
+            kmer_cache_sqlite: kmer_cache_sqlite
+            jobs: submit_kmer_compare/output
+            dist_method: dist_method
+            minhash_signature: minhash_signature
+            score_method: score_method
+        out: [outdir]  
   gpx_make_outputs:
     run: ../progs/gpx_make_outputs.cwl
     in:

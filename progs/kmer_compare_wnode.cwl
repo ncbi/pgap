@@ -71,6 +71,10 @@ baseCommand: kmer_compare_wnode
 # 
 # 
 inputs:
+  kmer_cache_sqlite:
+        type: File
+        inputBinding:
+            prefix: -kmer-cache-uri
   dist_method:
     type: string?
     inputBinding:

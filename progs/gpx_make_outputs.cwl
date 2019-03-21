@@ -76,8 +76,10 @@ inputs:
     inputBinding:
       prefix: -input-path
   num_partitions:
+    doc: >
+        this parameter is fixed for this command line workflow, because the output is defined as single file
     type: int
-    default: 32
+    default: 1  
     inputBinding:
       prefix: -num-partitions
   output:

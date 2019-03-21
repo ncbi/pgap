@@ -45,20 +45,14 @@ steps:
     doc: |
         computes kmers for input genome (Extract_Kmers_From_Input___entry)
         produces kmer files (.gz and xml)
+        it will have a new output: out_kmer_dir
     in:
       entry: Extract_Kmers_From_Input___entry
       kmer_file_list: 
         source: [kmer_reference_assemblies]
         linkMerge: merge_flattened
       asn_cache: asn_cache
-    out: [out_kmer_file_list, out_kmer_file, out_kmer_metadata_file]
-  Kmer_files_to_dir:
-    doc: Massager flow for converting input files into a directory outputSource
-    run: ../expr/files_to_dir
-    in: 
-        source: [Kmer_files_to_dir/out_kmer_file, Extract_Kmers_From_Input/out_kmer_metadata_file]
-        linkeMerge: merge_flattened
-    out: [outdir]
+    out: [out_kmer_dir]
   Convert_kmer_files_to_sqlite:
     doc: |
         This new step will convert input .kmer.gz (kmer_file) and .xml (kmer_metadata_file)
@@ -66,9 +60,14 @@ steps:
         The program we are calling here takes a directory input
     run: ../progs/kmer_files2sqlite.cwl
     in:
-        kmer_dir: Kmer_files_to_dir/outdir
-        kmer_list: Extract_Kmers_From_Input/out_kmer_file_list
-    out: [out_kmer_cache_sqlite, out_list]
+        kmer_dir: Extract_Kmers_From_Input/out_kmer_dir
+    out: [out_kmer_cache_sqlite]
+  List_sqlite:
+        doc: Produces the list of all keys in sqlite database
+        run: ../progs/list_kmer_sqlite.cwl
+        in:
+            kmer_cache_sqlite: Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite
+        out: [keys]
   Combine_kmer_sqlite:
     doc: |
         This new step will combine together reference kmer store and newly created kmer store for a new assembly
@@ -84,40 +83,43 @@ steps:
         filled only for ref vs current elements
     run: ../task_types/tt_kmer_ref_compare_wnode.cwl
     in:
-      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite
-      kmer_file_list: 
-        source: [Convert_kmer_files_to_sqlite/out_list]
-        linkMerge: merge_flattened
-      ref_kmer_file_list:  
-        source: [kmer_reference_assemblies]
-        linkMerge: merge_flattened
+      kmer_cache_sqlite: Combine_kmer_sqlite/combined_cache_sqlite
+      kmer_list: List_sqlite/keys
+      ref_kmer_list:   kmer_reference_assemblies
       dist_method:
         default: minhash
       minhash_signature:
         default: minhash
       score_method:
         default: boolean
-    out: [distances]
+    out: [distances, outdir]
   Identify_Top_N:
     doc: |
         Identifies Top N hits to input genome by kmer distances 
         produces distances XML and list of matching genomes (storage URIs)
     run: ../task_types/tt_kmer_top_n.cwl
     in:
-      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite    
+      kmer_cache_sqlite: Combine_kmer_sqlite/combined_cache_sqlite    
       distances: Compare_Kmer/distances
     out: [matches, top_distances]
+  Compare_Kmer_Pairwise_prepare_input:
+        run: ../progs/cat.cwl
+        in:
+            input:
+                source: [List_sqlite/keys, Identify_Top_N/matches]
+                linkMerge: merge_flattened
+            output_file_name:
+                default: 'target_and_matches.ids'
+        out: [output]
   Compare_Kmer__Pairwise_:
     doc: |
         compares kmers from top hits to query genome in the input and produces distance matrix for subsequent tree: all-against-all. This is the most downstream node requiring sqlite cache
     run: ../task_types/tt_kmer_compare_wnode.cwl
     in:
-      kmer_cache_sqlite: Combine_sqlite/combined_cache_sqlite    
-      kmer_file_list: 
-        source: [Extract_Kmers_From_Input/out_kmer_file_list, Identify_Top_N/matches]
-        linkMerge: merge_flattened
+      kmer_cache_sqlite: Combine_kmer_sqlite/combined_cache_sqlite    
+      kmer_list: Compare_Kmer_Pairwise_prepare_input/output
       dist_method:
-        default: minhash
+            default: minhash
       minhash_signature:
         default: minhash
       score_method:
@@ -163,7 +165,7 @@ steps:
       queries_gc_id_list: Extract_Input_GenColl_IDs/gc_id_list
       subjects_gc_id_list: Extract_Top_Assemblies/gc_id_list
       # this will brea here
-      Get_Top_Assemblies_GenColl_ASN_assemblies: Get_Top_Assemblies_GenColl_ASN/gencoll_asn
+      ref_gencoll_asn: Get_Top_Assemblies_GenColl_ASN/gencoll_asn
       gencoll_asn: gencoll_asn
       affinity:
         default: 'subject'

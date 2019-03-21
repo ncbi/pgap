@@ -62,11 +62,11 @@ inputs:
         prefix: -input-jobs
   O:
     type: string
-    default: output_dir
+    default: kmer_dir
     inputBinding:
         prefix: -O
 outputs:
-    output_files:
-        type: File[]
+    outdir:
+        type: Directory
         outputBinding:
-            glob: $(input.O/*.kmer.gz)
+            glob: $(input.O)
