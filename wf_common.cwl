@@ -82,7 +82,7 @@ steps:
               case 'asn2pas.xsl':
                 r['asn2pas_xsl'] = l[i];
                 break;
-              case 'CDD':
+              case 'CDD2':
                 r['CDDdata'] = l[i];
                 break;
               case 'cdd_add':
