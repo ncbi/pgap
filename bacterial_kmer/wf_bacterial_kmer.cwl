@@ -41,6 +41,7 @@ steps:
   #     We do not need to do this here, because external PGAP will be always supplied with up to date
   #     reference assemblies 
   Extract_Kmers_From_Input:
+    label: Extract Kmers From Input
     run: ../task_types/tt_kmer_seq_entry_extract_wnode.cwl
     doc: |
         computes kmers for input genome (Extract_Kmers_From_Input___entry)
@@ -54,6 +55,7 @@ steps:
       asn_cache: asn_cache
     out: [out_kmer_dir]
   Convert_kmer_files_to_sqlite:
+    label: Convert Kmer files to SQLITE
     doc: |
         This new step will convert input .kmer.gz (kmer_file) and .xml (kmer_metadata_file)
         into new sqlite database
@@ -63,21 +65,24 @@ steps:
         kmer_dir: Extract_Kmers_From_Input/out_kmer_dir
     out: [out_kmer_cache_sqlite]
   List_sqlite:
+        label: List SQLITE kmer cache contents
         doc: Produces the list of all keys in sqlite database
         run: ../progs/list_kmer_sqlite.cwl
         in:
             kmer_cache_sqlite: Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite
         out: [keys]
   Combine_kmer_sqlite:
-    doc: |
-        This new step will combine together reference kmer store and newly created kmer store for a new assembly
-    run: ../progs/combine_kmer_sqlite.cwl
-    in:
-        kmer_cache_sqlite: 
-            source: [kmer_cache_sqlite, Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite]
-            linkMerge: merge_flattened
-    out: [combined_cache_sqlite]
+        label: Combine kmer SQLITE
+        doc: |
+            This new step will combine together reference kmer store and newly created kmer store for a new assembly
+        run: ../progs/combine_kmer_sqlite.cwl
+        in:
+            kmer_cache_sqlite: 
+                source: [kmer_cache_sqlite, Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite]
+                linkMerge: merge_flattened
+        out: [combined_cache_sqlite]
   Compare_Kmer:
+    label: Compare Kmer
     doc: |
         compares kmers from different genomes in the input and produces distance matrix
         filled only for ref vs current elements
@@ -94,6 +99,7 @@ steps:
         default: boolean
     out: [distances, outdir]
   Identify_Top_N:
+    label: Identify Top N hits by Kmer
     doc: |
         Identifies Top N hits to input genome by kmer distances 
         produces distances XML and list of matching genomes (storage URIs)
@@ -103,6 +109,7 @@ steps:
       distances: Compare_Kmer/distances
     out: [matches, top_distances]
   Compare_Kmer_Pairwise_prepare_input:
+        label: Glue SQLITE keys
         run: ../progs/cat.cwl
         in:
             input:
@@ -112,6 +119,7 @@ steps:
                 default: 'target_and_matches.ids'
         out: [output]
   Compare_Kmer__Pairwise_:
+    label: Compare Kmer pairwise
     doc: |
         compares kmers from top hits to query genome in the input and produces distance matrix for subsequent tree: all-against-all. This is the most downstream node requiring sqlite cache
     run: ../task_types/tt_kmer_compare_wnode.cwl
@@ -126,6 +134,7 @@ steps:
         default: boolean
     out: [distances]
   Extract_Top_Assemblies:
+    label: Extract Top Assemblies
     doc: |
         Takes XML file with top distances between matches and reference assembly taxid
         produces XML tax report and list of top matched assemblies 
@@ -135,6 +144,7 @@ steps:
       ref_assembly_taxid: ref_assembly_taxid
     out: [tax_report, gc_id_list]
   Build_Kmer_Tree:
+    label: Build Kmer Tree
     doc: Output is BioTree ASN.1
     run: ../task_types/tt_kmer_build_tree.cwl
     in:
@@ -147,18 +157,21 @@ steps:
             default: true
     out: [tree]
   Get_Top_Assemblies_GenColl_ASN:
+    label: Get Top Assemblies GenColl ASN
     doc: Input is list of reference assemblies, not to be mixed with list of URIs
     run: ../task_types/tt_gcaccess_from_list.cwl
     in:
       gc_id_list: Extract_Top_Assemblies/gc_id_list
     out: [gencoll_asn]
   Extract_Input_GenColl_IDs:
+    label: Extract Input Gencoll IDs
     doc: Input is a target assembly, not to be mixed with list of URIs
     run: ../task_types/tt_extract_gencoll_ids.cwl
     in: 
         assemblies: gencoll_asn
     out: [gc_id_list]
   Assembly_Assembly_BLASTn:
+    label: Assembly Assembly BLASTn
     doc: This is rather standard blast
     run: ../task_types/tt_assm_assm_blastn_wnode.cwl
     in:
@@ -201,6 +214,8 @@ steps:
         default:  0.4
     out: [blast_align]
   Identify_Top_N_ANI:
+    doc: identify top N ANI
+    label: "Identify Top N ANI"
     run: ../task_types/tt_ani_top_n.cwl
     in:
         asn_cache: asn_cache
