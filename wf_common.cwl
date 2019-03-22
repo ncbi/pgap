@@ -576,24 +576,56 @@ steps:
   Final_Bacterial_Package_ent2sqn:
     run: progs/ent2sqn.cwl
     in:
-      annotation: Final_Bacterial_Package_dumb_down_as_required/outent
-      asn_cache:
-        source: [genomic_source/asncache]
-        linkMerge: merge_flattened
-      gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
-      submit_block_template: 
-        source: [genomic_source/submit_block_template]
-        linkMerge: merge_flattened
-      it:
-        default: true
+        annotation: Final_Bacterial_Package_dumb_down_as_required/outent
+        asn_cache:
+            source: [genomic_source/asncache]
+            linkMerge: merge_flattened
+        gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
+        submit_block_template: 
+            source: [genomic_source/submit_block_template]
+            linkMerge: merge_flattened
+        it:
+            default: true
+        output_impl:
+            default: annot-wo-checksum.sqn
     out: [output]
+  add_checksum_sqn:
+        label: Add Checksum to SQN
+        run: progs/annot_checksum.cwl
+        in: 
+            input: Final_Bacterial_Package_ent2sqn/output
+            output_name: 
+                default: 'annot.sqn'
+            t: 
+                default: true
+            ifmt:
+                default: seq-submit
+            mode:
+                default: add
+        out: [output]
   Final_Bacterial_Package_sqn2gbent:
     run: progs/sqn2gbent.cwl
     in:
       input: Final_Bacterial_Package_ent2sqn/output
       it:
         default: true
+      out_name:
+            default: annot-gb-wo-checksum.ent
     out: [output]
+  add_checksum_gbent:
+        label: Add Checksum to Genbank class ENT
+        run: progs/annot_checksum.cwl
+        in: 
+            input: Final_Bacterial_Package_sqn2gbent/output
+            output_name: 
+                default: 'annot-gb.ent'
+            t: 
+                default: true
+            ifmt:
+                default: seq-entry
+            mode:
+                default: add
+        out: [output]
   Generate_Annotation_Reports_gff:
     run: progs/gp_annot_format.cwl
     in:
@@ -842,7 +874,7 @@ steps:
 outputs:
   gbent:
     type: File
-    outputSource: Final_Bacterial_Package_sqn2gbent/output
+    outputSource: add_checksum_gbent/output
   gff:
     type: File
     outputSource:  Generate_Annotation_Reports_gff/output
@@ -857,6 +889,6 @@ outputs:
     outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
   sqn:
     type: File
-    outputSource:  Final_Bacterial_Package_ent2sqn/output
+    outputSource:  add_checksum_sqn/output
     
 
