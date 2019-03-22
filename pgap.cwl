@@ -91,7 +91,7 @@ steps:
       fasta: fasta
       submol: submol
       taxon_db: passdata/taxon_db
-    out: [output_seq_submit, output_entries, locus_tag_prefix]
+    out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json]
   fastaval:
     run: progs/fastaval.cwl
     in:
@@ -102,6 +102,7 @@ steps:
             default: true
     out: []
   standard_pgap:
+    label: PGAP Pipeline
     in:
       entries: prepare_input_template/output_entries
       seq_submit: prepare_input_template/output_seq_submit
@@ -110,6 +111,6 @@ steps:
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: taxid
+      submol_block_json: prepare_input_template/submol_block_json
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl
-    label: PGAP Pipeline

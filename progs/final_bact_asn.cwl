@@ -8,8 +8,6 @@ requirements:
     listing:
       - entryname: cleaned-annotation.mft
         entry: ${var blob = ''; for (var i = 0; i < inputs.annotation.length; i++) { blob += inputs.annotation[i].path + '\n'; } return blob; }
-      - entryname: submit_block_template.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
 
 baseCommand: final_bact_asn
 inputs:
@@ -37,13 +35,6 @@ inputs:
     default: annot-full.ent
     inputBinding:
       prefix: -outfull
-  submit_block_template:
-    type: File[]
-  submit_block_template_mft:
-    type: string
-    default: submit_block_template.mft
-    inputBinding:
-      prefix: -submit-block-template
   it:
     type: boolean?
     inputBinding:
@@ -56,7 +47,10 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -nogenbank
-    
+  submol_block_json:
+        type: File?
+        inputBinding:
+            prefix: -submol_block_json
 outputs:
   outfull:
     type: File

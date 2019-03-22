@@ -98,4 +98,6 @@ outputs:
     locus_tag_prefix:
         type: string
         outputSource: file2string_ltp/value
-            
+    submol_block_json:
+        type: File
+        outputSource: yaml2json/output

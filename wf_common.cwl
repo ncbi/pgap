@@ -35,7 +35,8 @@ inputs:
     default:
       class: Directory
       location: input
-
+  submol_block_json:
+        type: File
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -538,9 +539,8 @@ steps:
       asn_cache: genomic_source/asncache
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
       master_desc: Prepare_Unannotated_Sequences/master_desc
-      submit_block_template: 
-        source: [genomic_source/submit_block_template]
-        linkMerge: merge_flattened
+      submol_block_json: submol_block_json
+           
       it:
         default: true
       submission_mode_genbank:
@@ -605,6 +605,7 @@ steps:
         out: [output]
   Final_Bacterial_Package_sqn2gbent:
     run: progs/sqn2gbent.cwl
+    doc: We are not taking here sqn with added annot checksum.
     in:
       input: Final_Bacterial_Package_ent2sqn/output
       it:
