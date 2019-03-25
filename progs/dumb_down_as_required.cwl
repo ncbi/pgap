@@ -43,6 +43,10 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -submission-mode-genbank      
+  submol_block_json:
+        type: File?
+        inputBinding:
+            prefix: -submol_block_json
   nogenbank:
     type: boolean?
     inputBinding:

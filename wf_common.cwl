@@ -539,7 +539,6 @@ steps:
       asn_cache: genomic_source/asncache
       gc_assembly: genomic_source/gencoll_asn # gc_create_from_sequences
       master_desc: Prepare_Unannotated_Sequences/master_desc
-      submol_block_json: submol_block_json
            
       it:
         default: true
@@ -568,6 +567,7 @@ steps:
         default: true
       submission_mode_genbank:
         default: true
+      submol_block_json: submol_block_json
       nogenbank:
         default: true
       it:

@@ -47,10 +47,7 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -nogenbank
-  submol_block_json:
-        type: File?
-        inputBinding:
-            prefix: -submol_block_json
+
 outputs:
   outfull:
     type: File
