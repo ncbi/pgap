@@ -1,8 +1,17 @@
 #!/usr/bin/env python
-
 from __future__ import print_function
+import sys
+min_python = (3,5)
+try:
+    assert(sys.version_info >= min_python)
+except:
+    from platform import python_version
+    print("Python version", python_version(), "is too old.")
+    print("Please use Python", ".".join(map(str,min_python)), "or later.")
+    sys.exit()
+
 from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, sys, tarfile, platform
+import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform
 
 try:
     from urllib.parse import urlparse, urlencode
