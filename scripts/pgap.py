@@ -245,6 +245,10 @@ def main():
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--dev',  action='store_true', help='Use development version')
+    group.add_argument('--test', action='store_true', help='Use test version')
+    group.add_argument('--prod', action='store_true', help='Use production version')
     parser.add_argument('-u', '--update', dest='update', action='store_true',
                         help='Update to the latest PGAP version, including reference data')
     parser.add_argument('-l', '--local-runner', dest='local_runner', action='store_true',
