@@ -75,23 +75,6 @@ def check_runtime(version):
     check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
     if verbose: print('Note: Essential runtime settings = {}'.format(settings))
 
-def check_cwl_runner():
-    try:
-        subprocess.check_call(['cwl-runner', '--version'])
-        return
-    except PermissionError:
-        try:
-            import cwltool
-        except ImportError:
-            if not is_venv():
-                print('ERROR: cwltool is not installed, and you are not currently using a Python virtualenv, as is recommended.')
-                exit(1)
-            install(['cwltool[deps]', 'PyYAML', 'cwlref-runner'])
-            subprocess.check_call(['cwl-runner', '--version'])
-            return
-    print('ERROR: Failed to run cwl-runner.')
-    exit(1)
-
 def install_docker(version):
     print('Downloading (as needed) PGAP Docker image version {}'.format(version))
     subprocess.check_call([docker, 'pull', get_docker_image(version)])
@@ -172,14 +155,13 @@ def get_version():
             return f.read().strip()
     return None
 
-def setup(update, local_runner):
+def setup(update):
     '''Determine version of PGAP.'''
     version = get_version()
     if update or not version:
         latest = get_remote_version()
         if version != latest:
             print('Updating PGAP to version {} (previous version was {})'.format(latest, version))
-            if local_runner: install_cwl(latest)
             install_docker(latest)
             install_data(latest)
             install_test_genomes(version)
@@ -263,8 +245,6 @@ def main():
     group.add_argument('--prod', action='store_true', help='Use production version')
     parser.add_argument('-u', '--update', dest='update', action='store_true',
                         help='Update to the latest PGAP version, including reference data')
-    parser.add_argument('-l', '--local-runner', dest='local_runner', action='store_true',
-                        help='Use a local CWL runner instead of the bundled cwltool')
     parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
     parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
@@ -283,8 +263,6 @@ def main():
     debug = args.debug
 
     repo = get_repo(args)
-    print(repo)
-    sys.exit()
 
     if (args.version):
         version = get_version()
@@ -294,10 +272,8 @@ def main():
             print('PGAP not installed; use --update to install the latest version.')
             exit(0)
 
-    version = setup(args.update, args.local_runner)
+    version = setup(args.update)
     check_runtime(version)
-    if args.local_runner:
-        check_cwl_runner()
 
     if args.test_genome:
         input = 'test_genomes/MG37/input.yaml'
