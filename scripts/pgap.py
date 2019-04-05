@@ -237,6 +237,18 @@ def run(version, input, output, debug, report):
     cmd.extend(['pgap.cwl', input_file])
     subprocess.check_call(cmd)
 
+def get_branch(args):
+    if (args.dev):
+        return "-dev"
+    if (args.test):
+        return "-test"
+    if (args.dev):
+        return "-prod"
+    return ""
+
+def get_repo(args):
+    return "pgap"+get_branch(args)
+
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
@@ -269,6 +281,10 @@ def main():
     verbose = args.verbose
     docker = args.docker
     debug = args.debug
+
+    repo = get_repo(args)
+    print(repo)
+    sys.exit()
 
     if (args.version):
         version = get_version()
