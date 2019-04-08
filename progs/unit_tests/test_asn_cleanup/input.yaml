@@ -1,0 +1,7 @@
+
+seq_entry: 
+    class: File
+    location: seq-entry.asn
+seq_submit: 
+    class: File
+    location: seq-submit.asn
