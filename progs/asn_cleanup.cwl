@@ -2,6 +2,9 @@ cwlVersion: v1.0
 label: "asn_cleanup"
 
 class: CommandLineTool
+requirements:
+  - class: InlineJavascriptRequirement
+
 baseCommand: asn_cleanup
 inputs:
   inp_annotation:
@@ -22,6 +25,7 @@ inputs:
     type: string?
     inputBinding:
       prefix: -type
+      valueFrom: ${ if ( inputs.type1 != 'seq-entry' ) return inputs.type1; else return null; }
   outformat:
     type: string?
     default: 'text' 
