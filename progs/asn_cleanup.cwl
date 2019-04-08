@@ -20,7 +20,6 @@ inputs:
       prefix: -serial 
   type1: 
     type: string?
-    default: seq-entry
     inputBinding:
       prefix: -type
   outformat:
