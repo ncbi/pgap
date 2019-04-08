@@ -139,16 +139,6 @@ def install_test_genomes(version):
         print('Downloading PGAP test genomes')
         install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
 
-def get_remote_version():
-    # Old system, where we checked github releases
-    #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-    #latest = json.load(response)['tag_name']
-
-    # Check docker hub
-    response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
-    json_response = json.loads(response.read().decode())
-    return json_response[-1]['name']
-
 def get_version():
     if os.path.isfile('VERSION'):
         with open('VERSION', encoding='utf-8') as f:
@@ -219,17 +209,37 @@ def run(version, input, output, debug, report):
     cmd.extend(['pgap.cwl', input_file])
     subprocess.check_call(cmd)
 
-def get_branch(args):
-    if (args.dev):
-        return "-dev"
-    if (args.test):
-        return "-test"
-    if (args.dev):
-        return "-prod"
-    return ""
+class Setup:
 
-def get_repo(args):
-    return "pgap"+get_branch(args)
+    def __init__(self, args):
+        self.args = args
+        self.set_repo()
+        print(self.get_remote_version())
+        pass
+
+    def get_branch(self):
+        if (self.args.dev):
+            return "-dev"
+        if (self.args.test):
+            return "-test"
+        if (self.args.dev):
+            return "-prod"
+        return ""
+
+    def set_repo(self):
+        self.repo = "pgap"+self.get_branch()
+
+    def get_remote_version(self):
+        # Old system, where we checked github releases
+        #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+        #latest = json.load(response)['tag_name']
+
+        # Check docker hub
+        url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+        response = urlopen(url)
+        json_response = json.loads(response.read().decode())
+        return json_response[-1]['name']
+
 
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
@@ -258,6 +268,10 @@ def main():
     parser.add_argument('-D', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
+    s = Setup(args)
+    print(s.repo)
+    sys.exit()
+
     verbose = args.verbose
     docker = args.docker
     debug = args.debug
