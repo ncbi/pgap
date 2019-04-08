@@ -1,8 +1,17 @@
 #!/usr/bin/env python
-
 from __future__ import print_function
+import sys
+min_python = (3,5)
+try:
+    assert(sys.version_info >= min_python)
+except:
+    from platform import python_version
+    print("Python version", python_version(), "is too old.")
+    print("Please use Python", ".".join(map(str,min_python)), "or later.")
+    sys.exit()
+
 from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, sys, tarfile, platform
+import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
@@ -60,23 +69,6 @@ def check_runtime(version):
     check_runtime_setting(settings, 'memory (GiB)', 8)
     check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
     if verbose: print('Note: Essential runtime settings = {}'.format(settings))
-
-def check_cwl_runner():
-    try:
-        subprocess.check_call(['cwl-runner', '--version'])
-        return
-    except PermissionError:
-        try:
-            import cwltool
-        except ImportError:
-            if not is_venv():
-                print('ERROR: cwltool is not installed, and you are not currently using a Python virtualenv, as is recommended.')
-                exit(1)
-            install(['cwltool[deps]', 'PyYAML', 'cwlref-runner'])
-            subprocess.check_call(['cwl-runner', '--version'])
-            return
-    print('ERROR: Failed to run cwl-runner.')
-    exit(1)
 
 def install_docker(version):
     print('Downloading (as needed) PGAP Docker image version {}'.format(version))
@@ -142,30 +134,19 @@ def install_test_genomes(version):
         print('Downloading PGAP test genomes')
         install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
 
-def get_remote_version():
-    # Old system, where we checked github releases
-    #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-    #latest = json.load(response)['tag_name']
-
-    # Check docker hub
-    response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
-    json_response = json.loads(response.read().decode())
-    return json_response[-1]['name']
-
 def get_version():
     if os.path.isfile('VERSION'):
         with open('VERSION', encoding='utf-8') as f:
             return f.read().strip()
     return None
 
-def setup(update, local_runner):
+def setup(update):
     '''Determine version of PGAP.'''
     version = get_version()
     if update or not version:
         latest = get_remote_version()
         if version != latest:
             print('Updating PGAP to version {} (previous version was {})'.format(latest, version))
-            if local_runner: install_cwl(latest)
             install_docker(latest)
             install_data(latest)
             install_test_genomes(version)
@@ -223,6 +204,38 @@ def run(version, input, output, debug, report):
     cmd.extend(['pgap.cwl', input_file])
     subprocess.check_call(cmd)
 
+class Setup:
+
+    def __init__(self, args):
+        self.args = args
+        self.set_repo()
+        print(self.get_remote_version())
+        pass
+
+    def get_branch(self):
+        if (self.args.dev):
+            return "-dev"
+        if (self.args.test):
+            return "-test"
+        if (self.args.dev):
+            return "-prod"
+        return ""
+
+    def set_repo(self):
+        self.repo = "pgap"+self.get_branch()
+
+    def get_remote_version(self):
+        # Old system, where we checked github releases
+        #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+        #latest = json.load(response)['tag_name']
+
+        # Check docker hub
+        url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+        response = urlopen(url)
+        json_response = json.loads(response.read().decode())
+        return json_response[-1]['name']
+
+
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
@@ -231,10 +244,12 @@ def main():
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--dev',  action='store_true', help='Use development version')
+    group.add_argument('--test', action='store_true', help='Use test version')
+    group.add_argument('--prod', action='store_true', help='Use production version')
     parser.add_argument('-u', '--update', dest='update', action='store_true',
                         help='Update to the latest PGAP version, including reference data')
-    parser.add_argument('-l', '--local-runner', dest='local_runner', action='store_true',
-                        help='Use a local CWL runner instead of the bundled cwltool')
     parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
     parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
@@ -248,9 +263,15 @@ def main():
     parser.add_argument('-D', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
+    s = Setup(args)
+    print(s.repo)
+    sys.exit()
+
     verbose = args.verbose
     docker = args.docker
     debug = args.debug
+
+    repo = get_repo(args)
 
     if (args.version):
         version = get_version()
@@ -260,10 +281,8 @@ def main():
             print('PGAP not installed; use --update to install the latest version.')
             exit(0)
 
-    version = setup(args.update, args.local_runner)
+    version = setup(args.update)
     check_runtime(version)
-    if args.local_runner:
-        check_cwl_runner()
 
     if args.test_genome:
         input = 'test_genomes/MG37/input.yaml'
