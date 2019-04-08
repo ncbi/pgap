@@ -4,14 +4,9 @@ from __future__ import print_function
 from io import open
 import argparse, atexit, json, os, re, shutil, subprocess, sys, tarfile, platform
 
-try:
-    from urllib.parse import urlparse, urlencode
-    from urllib.request import urlopen, urlretrieve, Request
-    from urllib.error import HTTPError
-except ImportError:
-    from urlparse import urlparse
-    from urllib import urlretrieve, urlencode
-    from urllib2 import urlopen, Request, HTTPError
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, urlretrieve, Request
+from urllib.error import HTTPError
 
 verbose = False
 docker = 'docker'
