@@ -202,35 +202,47 @@ class Setup:
 
     def __init__(self, args):
         self.args = args
-        self.set_repo()
-        self.get_local_version()
-        self.update_remote_versions()
-        print("Local version:", self.local_version)
-        if (args.list):
-            self.list_remote_versions()
-        else:
-            print(self.get_latest_version())
+        self.branch          = self.get_branch()
+        self.repo            = self.get_repo()
+        self.dir             = self.get_dir()
+        self.local_version   = self.get_local_version()
+        self.remote_versions = self.get_remote_versions()
+        self.print_status()
+        #print("Local version:", self.local_version)
+        #if (args.list):
+        #    self.list_remote_versions()
+        #else:
+        #    print(self.get_latest_version())
 
     def get_branch(self):
         if (self.args.dev):
-            return "-dev"
+            return "dev"
         if (self.args.test):
-            return "-test"
+            return "test"
         if (self.args.prod):
-            return "-prod"
+            return "prod"
         return ""
 
-    def set_repo(self):
-        self.repo = "pgap"+self.get_branch()
+    def get_repo(self):
+        if self.branch == "":
+            return "pgap"
+        return "pgap-"+self.branch
 
-    def list_remote_versions(self):
-        for i in reversed(self.remote_info):
-            print(i['name'])
+    def get_dir(self):
+        if self.branch == "":
+            return "./"
+        return "./"+self.branch+"/"
 
-    def get_latest_version(self):
-        return self.remote_info[-1]['name']
 
-    def update_remote_versions(self):
+    def get_local_version(self):
+        filename = self.dir + "VERSION"
+        if os.path.isfile(filename):
+            with open(filename, encoding='utf-8') as f:
+                self.local_version = f.read().strip()
+        self.local_version = None
+
+
+    def get_remote_versions(self):
         # Old system, where we checked github releases
         #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
         #latest = json.load(response)['tag_name']
@@ -238,15 +250,32 @@ class Setup:
         # Check docker hub
         url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
         response = urlopen(url)
-        self.remote_info = json.loads(response.read().decode())
-        #return json_response[-1]['name']
+        json_resp = json.loads(response.read().decode())
+        versions = []
+        for i in reversed(json_resp):
+            versions.append(i['name'])
+        return versions
 
-    def get_local_version(self):
-        filename = "VERSION"+self.get_branch()
-        if os.path.isfile(filename):
-            with open(filename, encoding='utf-8') as f:
-                self.local_version = f.read().strip()
-        self.local_version = None
+    def print_status(self):
+        if self.local_version == None:
+            print("The latest version of PGAP is {}, you have nothing installed locally, updating...".format(self.get_latest_version()))
+            self.update()
+            return
+        if self.local_version == self.get_latest_version():
+            print("PGAP {} is up to date.".format(self.local_version))
+            return
+        print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
+
+    def list_remote_versions(self):
+        for i in reversed(self.remote_info):
+            print(i['name'])
+
+    def get_latest_version(self):
+        return self.remote_versions[0]
+
+
+    def update(self):
+        self.install_docker()
 
     def install_docker(self, version):
         self.docker_image = "ncbi/pgap{}:{}".format(self.get_branch(), version)
@@ -258,25 +287,26 @@ def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
                         help='Input YAML file to process.')
-    parser.add_argument('--version', action='store_true',
+    parser.add_argument('-V', '--version', action='store_true',
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
 
     version_group = parser.add_mutually_exclusive_group()
-    version_group.add_argument('--dev',  action='store_true', help='Use development version')
-    version_group.add_argument('--test', action='store_true', help='Use test version')
-    version_group.add_argument('--prod', action='store_true', help='Use production version')
+    version_group.add_argument('--dev',  action='store_true', help="Set development mode")
+    version_group.add_argument('--test', action='store_true', help="Set test mode")
+    version_group.add_argument('--prod', action='store_true', help="Set production mode")
 
     action_group = parser.add_mutually_exclusive_group()
-    action_group.add_argument('-l', '--list', action='store_true', help='List available versions')
+    action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
-                              help='Update to the latest PGAP version, including reference data')
-    action_group.add_argument('--use-version', dest='use-version', action='store_true',
-                              help='Update to the latest PGAP version, including reference data')
-    parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
+                              help='Update to the latest PGAP version, including reference data.')
+    action_group.add_argument('--use-version', dest='use-version', action='store_true', help=argparse.SUPPRESS)
+
+    report_group = parser.add_mutually_exclusive_group()
+    report_group.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
-    parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
+    report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
     parser.add_argument('-d', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
@@ -288,7 +318,8 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
     s = Setup(args)
-    print(s.repo)
+
+
     sys.exit()
 
     verbose = args.verbose
