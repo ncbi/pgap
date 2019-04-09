@@ -105,12 +105,12 @@ class urlopen_progress:
             sys.stderr.write("Downloaded %d bytes\r" % (self.bytes_so_far))
         return buffer
 
-def install_url(url):
+def install_url(url, path):
     #with urlopen(url) as response:
     #with urlopen_progress(url) as response:
     response = urlopen_progress(url)
     with tarfile.open(mode='r|*', fileobj=response) as tar:
-        tar.extractall()
+        tar.extractall(path=path)
 #            while True:
 #                item = tar.next()
 #                if not item: break
@@ -122,15 +122,6 @@ def install_cwl(version):
         print('Downloading PGAP Common Workflow Language (CWL) version {}'.format(version))
         install_url('https://github.com/ncbi/pgap/archive/{}.tar.gz'.format(version))
 
-def install_data(version):
-    if not os.path.exists('input-{}'.format(version)):
-        print('Downloading PGAP reference data version {}'.format(version))
-        install_url('https://s3.amazonaws.com/pgap-data/input-{}.tgz'.format(version))
-
-def install_test_genomes(version):
-    if not os.path.exists('test_genomes'):
-        print('Downloading PGAP test genomes')
-        install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
 
 
 
@@ -211,7 +202,7 @@ class Setup:
         if (args.list):
             self.list_remote_versions()
             return
-        self.use_version = self.get_use_version
+        self.use_version = self.get_use_version()
         if self.local_version != self.use_version:
             self.update()
 
@@ -231,11 +222,11 @@ class Setup:
 
     def get_dir(self):
         if self.branch == "":
-            return "./"
-        return "./"+self.branch+"/"
+            return "."
+        return "./"+self.branch
 
     def get_local_version(self):
-        filename = self.dir + "VERSION"
+        filename = self.dir + "/VERSION"
         if os.path.isfile(filename):
             with open(filename, encoding='utf-8') as f:
                 self.local_version = f.read().strip()
@@ -266,8 +257,9 @@ class Setup:
         print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
 
     def list_remote_versions(self):
-        for i in reversed(self.remote_info):
-            print(i['name'])
+        print("Available versions:")
+        for i in self.remote_versions:
+            print("\t", i)
 
     def get_latest_version(self):
         return self.remote_versions[0]
@@ -281,13 +273,35 @@ class Setup:
 
     def update(self):
         self.install_docker()
+        self.install_data()
+        self.write_version()
 
     def install_docker(self):
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
         subprocess.check_call([docker, 'pull', self.docker_image])
 
+    def install_data(self):
+        local_path = '{}/input-{}'.format(self.dir, self.use_version)
+        if not os.path.exists(local_path):
+            print('Downloading PGAP reference data version {}'.format(self.use_version))
+            suffix = ""
+            if self.branch != "":
+                suffix = self.branch + "."
+            remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
+            install_url(remote_path, self.dir)
 
+    def install_test_genomes(self):
+        if not os.path.exists('test_genomes'):
+            print('Downloading PGAP test genomes')
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
+
+    def write_version(self):
+        filename = self.dir + "/VERSION"
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(u'{}\n'.format(self.use_version))
+
+        
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
@@ -324,6 +338,7 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
     s = Setup(args)
+    #check_runtime(version)
 
 
     sys.exit()
@@ -343,7 +358,6 @@ def main():
             exit(0)
 
     version = setup(args.update)
-    check_runtime(version)
 
     if args.test_genome:
         input = 'test_genomes/MG37/input.yaml'
