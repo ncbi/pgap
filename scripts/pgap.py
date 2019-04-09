@@ -134,11 +134,7 @@ def install_test_genomes(version):
         print('Downloading PGAP test genomes')
         install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
 
-def get_version():
-    if os.path.isfile('VERSION'):
-        with open('VERSION', encoding='utf-8') as f:
-            return f.read().strip()
-    return None
+
 
 def setup(update):
     '''Determine version of PGAP.'''
@@ -209,7 +205,9 @@ class Setup:
     def __init__(self, args):
         self.args = args
         self.set_repo()
+        self.get_local_version()
         self.update_remote_versions()
+        print("Local version:", self.local_version)
         if (args.list):
             self.list_remote_versions()
         else:
@@ -228,7 +226,6 @@ class Setup:
         self.repo = "pgap"+self.get_branch()
 
     def list_remote_versions(self):
-        print(type(self.remote_info))
         for i in reversed(self.remote_info):
             print(i['name'])
 
@@ -245,6 +242,13 @@ class Setup:
         response = urlopen(url)
         self.remote_info = json.loads(response.read().decode())
         #return json_response[-1]['name']
+
+    def get_local_version(self):
+        filename = "VERSION"+self.get_branch()
+        if os.path.isfile(filename):
+            with open(filename, encoding='utf-8') as f:
+                self.local_version = f.read().strip()
+        self.local_version = None
 
 
 def main():
