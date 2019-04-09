@@ -70,9 +70,7 @@ def check_runtime(version):
     check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
     if verbose: print('Note: Essential runtime settings = {}'.format(settings))
 
-def install_docker(version):
-    print('Downloading (as needed) PGAP Docker image version {}'.format(version))
-    subprocess.check_call([docker, 'pull', get_docker_image(version)])
+
 
 
 class urlopen_progress:
@@ -250,6 +248,11 @@ class Setup:
                 self.local_version = f.read().strip()
         self.local_version = None
 
+    def install_docker(self, version):
+        self.docker_image = "ncbi/pgap{}:{}".format(self.get_branch(), version)
+        print('Downloading (as needed) Docker image {}'.format(self.docker_image))
+        subprocess.check_call([docker, 'pull', self.docker_image])
+
 
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
@@ -259,13 +262,18 @@ def main():
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument('--dev',  action='store_true', help='Use development version')
-    group.add_argument('--test', action='store_true', help='Use test version')
-    group.add_argument('--prod', action='store_true', help='Use production version')
-    parser.add_argument('--list', action='store_true', help='List available versions')
-    parser.add_argument('-u', '--update', dest='update', action='store_true',
-                        help='Update to the latest PGAP version, including reference data')
+
+    version_group = parser.add_mutually_exclusive_group()
+    version_group.add_argument('--dev',  action='store_true', help='Use development version')
+    version_group.add_argument('--test', action='store_true', help='Use test version')
+    version_group.add_argument('--prod', action='store_true', help='Use production version')
+
+    action_group = parser.add_mutually_exclusive_group()
+    action_group.add_argument('-l', '--list', action='store_true', help='List available versions')
+    action_group.add_argument('-u', '--update', dest='update', action='store_true',
+                              help='Update to the latest PGAP version, including reference data')
+    action_group.add_argument('--use-version', dest='use-version', action='store_true',
+                              help='Update to the latest PGAP version, including reference data')
     parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
     parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
