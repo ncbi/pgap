@@ -209,22 +209,33 @@ class Setup:
     def __init__(self, args):
         self.args = args
         self.set_repo()
-        print(self.get_remote_version())
-        pass
+        self.update_remote_versions()
+        if (args.list):
+            self.list_remote_versions()
+        else:
+            print(self.get_latest_version())
 
     def get_branch(self):
         if (self.args.dev):
             return "-dev"
         if (self.args.test):
             return "-test"
-        if (self.args.dev):
+        if (self.args.prod):
             return "-prod"
         return ""
 
     def set_repo(self):
         self.repo = "pgap"+self.get_branch()
 
-    def get_remote_version(self):
+    def list_remote_versions(self):
+        print(type(self.remote_info))
+        for i in reversed(self.remote_info):
+            print(i['name'])
+
+    def get_latest_version(self):
+        return self.remote_info[-1]['name']
+
+    def update_remote_versions(self):
         # Old system, where we checked github releases
         #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
         #latest = json.load(response)['tag_name']
@@ -232,8 +243,8 @@ class Setup:
         # Check docker hub
         url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
         response = urlopen(url)
-        json_response = json.loads(response.read().decode())
-        return json_response[-1]['name']
+        self.remote_info = json.loads(response.read().decode())
+        #return json_response[-1]['name']
 
 
 def main():
@@ -248,6 +259,7 @@ def main():
     group.add_argument('--dev',  action='store_true', help='Use development version')
     group.add_argument('--test', action='store_true', help='Use test version')
     group.add_argument('--prod', action='store_true', help='Use production version')
+    parser.add_argument('--list', action='store_true', help='List available versions')
     parser.add_argument('-u', '--update', dest='update', action='store_true',
                         help='Update to the latest PGAP version, including reference data')
     parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
