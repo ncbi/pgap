@@ -83,12 +83,12 @@ inputs:
      inputBinding:
         prefix: -p
   
-  sra-acc:
+  sra_acc:
      type: string?
      inputBinding:
         prefix: -sra-acc
   
-  sra-file:
+  sra_file:
      type: string?
      inputBinding:
         prefix: -sra-file

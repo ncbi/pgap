@@ -5,7 +5,7 @@ label: asn_translator
 class: CommandLineTool
 baseCommand: asn_translator
 inputs:            
-  class:
+  class1:
      type: string?
      inputBinding:
         prefix: -class
@@ -17,19 +17,19 @@ inputs:
      type: File?
      inputBinding:
         prefix: -input
-  input-manifest:
+  input_manifest:
      type: File?
      inputBinding:
         prefix: -input-manifest
-  input-mask:
+  input_mask:
      type: string?
      inputBinding:
         prefix: -input-mask
-  input-path:
+  input_path:
      type: string?
      inputBinding:
         prefix: -input-path
-  items-per-chunk:
+  items_per_chunk:
      type: int?
      inputBinding:
         prefix: -items-per-chunk
@@ -37,24 +37,24 @@ inputs:
      type: int?
      inputBinding:
         prefix: -len
-  max-chunk-size:
+  max_chunk_size:
      type: long?
      inputBinding:
         prefix: -max-chunk-size
-  max-files-per-dir:
+  max_files_per_dir:
      type: int?
      inputBinding:
         prefix: -max-files-per-dir
-  max-objects:
+  max_objects:
      type: int?
      inputBinding:
         prefix: -max-objects
-  min-chunk-size:
+  min_chunk_size:
      type: int?
      inputBinding:
         prefix: -min-chunk-size
   
-  num-partitions:
+  num_partitions:
      type: int?
      inputBinding:
         prefix: -num-partitions
@@ -74,7 +74,7 @@ inputs:
      inputBinding:
         prefix: -output
   
-  output-manifest_output:
+  output_manifest_output:
      type: string?
      inputBinding:
         prefix: -output-manifest
@@ -91,7 +91,7 @@ outputs:
       outputBinding:
           glob: $(inputs.output_output)
   
-  output-manifest:
+  output_manifest:
       type: File?
       outputBinding:
           glob: $(inputs.output-manifest_output)
