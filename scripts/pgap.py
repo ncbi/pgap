@@ -207,12 +207,13 @@ class Setup:
         self.dir             = self.get_dir()
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
-        self.print_status()
-        #print("Local version:", self.local_version)
-        #if (args.list):
-        #    self.list_remote_versions()
-        #else:
-        #    print(self.get_latest_version())
+        self.check_status()
+        if (args.list):
+            self.list_remote_versions()
+            return
+        self.use_version = self.get_use_version
+        if self.local_version != self.use_version:
+            self.update()
 
     def get_branch(self):
         if (self.args.dev):
@@ -232,7 +233,6 @@ class Setup:
         if self.branch == "":
             return "./"
         return "./"+self.branch+"/"
-
 
     def get_local_version(self):
         filename = self.dir + "VERSION"
@@ -256,10 +256,9 @@ class Setup:
             versions.append(i['name'])
         return versions
 
-    def print_status(self):
+    def check_status(self):
         if self.local_version == None:
-            print("The latest version of PGAP is {}, you have nothing installed locally, updating...".format(self.get_latest_version()))
-            self.update()
+            print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return
         if self.local_version == self.get_latest_version():
             print("PGAP {} is up to date.".format(self.local_version))
@@ -273,12 +272,18 @@ class Setup:
     def get_latest_version(self):
         return self.remote_versions[0]
 
+    def get_use_version(self):
+        if self.args.use_version:
+            return self.args.use_version
+        if (self.local_version == None) or self.args.update:
+            return self.get_latest_version()
+        return self.local_version
 
     def update(self):
         self.install_docker()
 
-    def install_docker(self, version):
-        self.docker_image = "ncbi/pgap{}:{}".format(self.get_branch(), version)
+    def install_docker(self):
+        self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
         subprocess.check_call([docker, 'pull', self.docker_image])
 
@@ -301,13 +306,14 @@ def main():
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
                               help='Update to the latest PGAP version, including reference data.')
-    action_group.add_argument('--use-version', dest='use-version', action='store_true', help=argparse.SUPPRESS)
+    action_group.add_argument('--use-version', dest='use_version', help=argparse.SUPPRESS)
 
     report_group = parser.add_mutually_exclusive_group()
     report_group.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
+
     parser.add_argument('-d', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
