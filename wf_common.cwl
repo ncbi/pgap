@@ -272,6 +272,45 @@ steps:
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
     out: [master_desc, sequences]
+  Prepare_Unannotated_Sequences_text:
+        run: progs/asn_translator.cwl
+        in: 
+            input: Prepare_Unannotated_Sequences/sequences
+            output_output: {default: 'sequences.text.asn'}
+        out: [output]
+  Prepare_Unannotated_Sequences_asndisc_cpp:
+        run: progs/asndisc_cpp.cwl
+        in:
+            XML: {default: true}
+            genbank: {default: true}
+            P: {default: 't'}
+            a: {default: 'c'}
+            asn_cache: genomic_source/asncache
+            o_output: {default: 'sequences.disc.xml'}
+            i: Prepare_Unannotated_Sequences_text/output
+        out: [o]
+  Prepare_Unannotated_Sequences_asnvalidate:
+        run: progs/asnvalidate.cwl
+        in:
+            Q:
+                default: 0
+            R:
+                default: 5
+            a:
+                default: 'e'
+            i: Prepare_Unannotated_Sequences/sequences
+            o_output:
+                default: 'sequences.val'
+            v: { default: 4 }
+            A:
+                default: true
+            U:
+                default: true
+            Z:
+                default: true
+            b:
+                default: true
+        out: [o]
 
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
