@@ -142,20 +142,20 @@ def setup(update):
         raise RuntimeError('Failed to identify PGAP version')
     return version
 
-def run(version, input, output, debug, report):
-    image = get_docker_image(version)
+def run(image, data_path, local_input, output, debug, report):
+    #image = get_docker_image(version)
 
     # Create a work directory.
     os.mkdir(output)
     os.mkdir(output + '/log')
 
     # Run the actual workflow.
-    data_dir = os.path.abspath('input-{}'.format(version))
-    input_dir = os.path.dirname(os.path.abspath(input))
+    data_dir = os.path.abspath(data_path)
+    input_dir = os.path.dirname(os.path.abspath(local_input))
     input_file = '/pgap/user_input/pgap_input.yaml'
 
     with open(output +'/pgap_input.yaml', 'w') as f:
-        with open(input) as i:
+        with open(local_input) as i:
             shutil.copyfileobj(i, f)
         f.write(u'\n')
         f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
@@ -274,6 +274,7 @@ class Setup:
     def update(self):
         self.install_docker()
         self.install_data()
+        self.install_test_genomes()
         self.write_version()
 
     def install_docker(self):
@@ -282,8 +283,8 @@ class Setup:
         subprocess.check_call([docker, 'pull', self.docker_image])
 
     def install_data(self):
-        local_path = '{}/input-{}'.format(self.dir, self.use_version)
-        if not os.path.exists(local_path):
+        self.data_path = '{}/input-{}'.format(self.dir, self.use_version)
+        if not os.path.exists(self.data_path):
             print('Downloading PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
@@ -292,9 +293,10 @@ class Setup:
             install_url(remote_path, self.dir)
 
     def install_test_genomes(self):
-        if not os.path.exists('test_genomes'):
+        local_path = "{}/test_genomes".format(self.dir)
+        if not os.path.exists(local_path):
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz', self.dir)
 
     def write_version(self):
         filename = self.dir + "/VERSION"
@@ -340,6 +342,19 @@ def main():
     s = Setup(args)
     #check_runtime(version)
 
+    if args.test_genome:
+        input_file = s.dir + '/test_genomes/MG37/input.yaml'
+    else:
+        input_file = args.input
+
+    report='none'
+    if (args.report_usage_true):
+        report = 'true'
+    if (args.report_usage_false):
+        report = 'false'
+
+    if input_file:
+        run(s.docker_image, s.data_path, input_file, args.output, args.debug, report)
 
     sys.exit()
 
@@ -359,19 +374,11 @@ def main():
 
     version = setup(args.update)
 
-    if args.test_genome:
-        input = 'test_genomes/MG37/input.yaml'
-    else:
-        input = args.input
 
-    report='none'
-    if (args.report_usage_true):
-        report = 'true'
-    if (args.report_usage_false):
-        report = 'false'
         
     if input:
-        run(version, input, args.output, debug, report)
-
+        #run(version, input, args.output, debug, report)
+        pass
+    
 if __name__== "__main__":
     main()
