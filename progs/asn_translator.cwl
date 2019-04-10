@@ -94,4 +94,4 @@ outputs:
   output_manifest:
       type: File?
       outputBinding:
-          glob: $(inputs.output-manifest_output)
+          glob: $(inputs.output_manifest_output)
