@@ -214,8 +214,8 @@ class Setup:
         filename = self.dir + "/VERSION"
         if os.path.isfile(filename):
             with open(filename, encoding='utf-8') as f:
-                self.local_version = f.read().strip()
-        self.local_version = None
+                return f.read().strip()
+        return None
 
 
     def get_remote_versions(self):
