@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from __future__ import print_function
 import sys
 min_python = (3,5)
@@ -23,13 +23,6 @@ docker = 'docker'
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
-
-def install(packages):
-    try:
-        from pip._internal import main
-    except ImportError:
-        from pip import main
-    main(['install'] + packages)
 
 def get_docker_image(version):
     return 'ncbi/pgap:{}'.format(version)
@@ -116,14 +109,6 @@ def install_url(url, path):
 #                if not item: break
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
-
-def install_cwl(version):
-    if not os.path.exists('pgap-{}'.format(version)):
-        print('Downloading PGAP Common Workflow Language (CWL) version {}'.format(version))
-        install_url('https://github.com/ncbi/pgap/archive/{}.tar.gz'.format(version))
-
-
-
 
 def setup(update):
     '''Determine version of PGAP.'''
@@ -355,30 +340,6 @@ def main():
 
     if input_file:
         run(s.docker_image, s.data_path, input_file, args.output, args.debug, report)
-
-    sys.exit()
-
-    verbose = args.verbose
-    docker = args.docker
-    debug = args.debug
-
-    repo = get_repo(args)
-
-    if (args.version):
-        version = get_version()
-        if version:
-            print('PGAP version {}'.format())
-        else:
-            print('PGAP not installed; use --update to install the latest version.')
-            exit(0)
-
-    version = setup(args.update)
-
-
-        
-    if input:
-        #run(version, input, args.output, debug, report)
-        pass
     
 if __name__== "__main__":
     main()
