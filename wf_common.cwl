@@ -113,6 +113,9 @@ steps:
               case 'thresholds.xml':
                 r['thresholds'] = l[i];
                 break;
+              case 'species_genome_size.txt':
+                r['species_genome_size'] = l[i];
+                break;
               case 'uniColl_path':
                 var ul = l[i].listing;
                 var un = ul.length;
@@ -208,6 +211,8 @@ steps:
         selenoproteins:
           # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
           type: Directory
+        species_genome_size:
+          type: File
         taxon_db:
           type: File
         thresholds:
@@ -242,6 +247,7 @@ steps:
       - rfam_model_path
       - rfam_stockholm
       - selenoproteins
+      - species_genome_size
       - taxon_db
       - thresholds
       - uniColl_cache
@@ -272,6 +278,15 @@ steps:
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
     out: [master_desc, sequences]
+  Prepare_Unannotated_Sequences_pgapx_input_check:
+        run: progs/pgapx_input_check.cwl
+        in:  
+            input: Prepare_Unannotated_Sequences/sequences
+            max_size: { default: 15000000 }
+            min_size: { default: 300 }
+            species_genome_size: passdata/species_genome_size
+            taxon_db: passdata/taxon_db
+        out: []
   Prepare_Unannotated_Sequences_text:
         run: progs/asn_translator.cwl
         in: 
