@@ -110,23 +110,6 @@ def install_url(url, path):
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def setup(update):
-    '''Determine version of PGAP.'''
-    version = get_version()
-    if update or not version:
-        latest = get_remote_version()
-        if version != latest:
-            print('Updating PGAP to version {} (previous version was {})'.format(latest, version))
-            install_docker(latest)
-            install_data(latest)
-            install_test_genomes(version)
-        with open('VERSION', 'w', encoding='utf-8') as f:
-            f.write(u'{}\n'.format(latest))
-        version = latest
-    if not version:
-        raise RuntimeError('Failed to identify PGAP version')
-    return version
-
 def run(image, data_path, local_input, output, debug, report):
     #image = get_docker_image(version)
 
