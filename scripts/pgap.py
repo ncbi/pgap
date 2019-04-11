@@ -110,9 +110,11 @@ def install_url(url, path):
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def run(image, data_path, local_input, output, debug, report):
-    #image = get_docker_image(version)
-
+def run(init, local_input, debug, report):
+    image     = init.docker_image
+    data_path = init.data_path
+    output    = init.outputdir
+    
     # Create a work directory.
     os.mkdir(output)
     os.mkdir(output + '/log')
@@ -322,11 +324,11 @@ def main():
     parser.add_argument('-D', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
-    s = Setup(args)
+    init = Setup(args)
     #check_runtime(version)
 
     if args.test_genome:
-        input_file = s.rundir + '/test_genomes/MG37/input.yaml'
+        input_file = init.rundir + '/test_genomes/MG37/input.yaml'
     else:
         input_file = args.input
 
@@ -337,7 +339,7 @@ def main():
         report = 'false'
 
     if input_file:
-        run(s.docker_image, s.data_path, input_file, s.outputdir, args.debug, report)
+        run(init, input_file, args.debug, report)
     
 if __name__== "__main__":
     main()
