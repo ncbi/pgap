@@ -11,7 +11,7 @@ except:
     sys.exit()
 
 from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform
+import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform, glob
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
@@ -173,6 +173,7 @@ class Setup:
         self.use_version = self.get_use_version()
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
+        self.outputdir = self.get_output_dir()
         if self.local_version != self.use_version:
             self.update()
 
@@ -241,6 +242,20 @@ class Setup:
             return self.get_latest_version()
         return self.local_version
 
+    def get_output_dir(self):
+        def numbers( dirs ):
+            for dirname in dirs:
+                name, ext = os.path.splitext(dirname)
+                yield int(ext[1:])
+        if not os.path.exists(self.args.output):
+            return self.args.output
+        alldirs = glob.glob(self.args.output + ".*")
+        if not alldirs:
+            return self.args.output + ".1" 
+        count = max( numbers( alldirs ) )
+        count += 1
+        return "{}.{}".format(self.args.output, str(count)) 
+        
     def update(self):
         self.install_docker()
         self.install_data()
@@ -322,7 +337,7 @@ def main():
         report = 'false'
 
     if input_file:
-        run(s.docker_image, s.data_path, input_file, args.output, args.debug, report)
+        run(s.docker_image, s.data_path, input_file, s.outputdir, args.debug, report)
     
 if __name__== "__main__":
     main()
