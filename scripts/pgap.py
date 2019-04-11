@@ -163,7 +163,7 @@ class Setup:
         self.args = args
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.dir             = self.get_dir()
+        self.rundir             = self.get_dir()
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
         self.check_status()
@@ -171,6 +171,8 @@ class Setup:
             self.list_remote_versions()
             return
         self.use_version = self.get_use_version()
+        self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
+        self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         if self.local_version != self.use_version:
             self.update()
 
@@ -194,7 +196,7 @@ class Setup:
         return "./"+self.branch
 
     def get_local_version(self):
-        filename = self.dir + "/VERSION"
+        filename = self.rundir + "/VERSION"
         if os.path.isfile(filename):
             with open(filename, encoding='utf-8') as f:
                 return f.read().strip()
@@ -246,28 +248,26 @@ class Setup:
         self.write_version()
 
     def install_docker(self):
-        self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
         subprocess.check_call([docker, 'pull', self.docker_image])
 
     def install_data(self):
-        self.data_path = '{}/input-{}'.format(self.dir, self.use_version)
         if not os.path.exists(self.data_path):
             print('Downloading PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
             remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
-            install_url(remote_path, self.dir)
+            install_url(remote_path, self.rundir)
 
     def install_test_genomes(self):
-        local_path = "{}/test_genomes".format(self.dir)
+        local_path = "{}/test_genomes".format(self.rundir)
         if not os.path.exists(local_path):
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz', self.dir)
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz', self.rundir)
 
     def write_version(self):
-        filename = self.dir + "/VERSION"
+        filename = self.rundir + "/VERSION"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
 
@@ -311,7 +311,7 @@ def main():
     #check_runtime(version)
 
     if args.test_genome:
-        input_file = s.dir + '/test_genomes/MG37/input.yaml'
+        input_file = s.rundir + '/test_genomes/MG37/input.yaml'
     else:
         input_file = args.input
 
