@@ -278,10 +278,15 @@ class Setup:
             install_url(remote_path, self.rundir)
 
     def install_test_genomes(self):
+        def get_suffix(branch):
+            if branch == "":
+                return ""
+            return "."+self.branch
+
         local_path = "{}/test_genomes".format(self.rundir)
         if not os.path.exists(local_path):
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz', self.rundir)
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)), self.rundir)
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
