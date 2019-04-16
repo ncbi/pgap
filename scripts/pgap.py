@@ -1,17 +1,21 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 from __future__ import print_function
-from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, sys, tarfile, platform
-
+import sys
+min_python = (3,5)
 try:
-    from urllib.parse import urlparse, urlencode
-    from urllib.request import urlopen, urlretrieve, Request
-    from urllib.error import HTTPError
-except ImportError:
-    from urlparse import urlparse
-    from urllib import urlretrieve, urlencode
-    from urllib2 import urlopen, Request, HTTPError
+    assert(sys.version_info >= min_python)
+except:
+    from platform import python_version
+    print("Python version", python_version(), "is too old.")
+    print("Please use Python", ".".join(map(str,min_python)), "or later.")
+    sys.exit()
+
+from io import open
+import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform, glob
+
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, urlretrieve, Request
+from urllib.error import HTTPError
 
 verbose = False
 docker = 'docker'
@@ -19,13 +23,6 @@ docker = 'docker'
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
-
-def install(packages):
-    try:
-        from pip._internal import main
-    except ImportError:
-        from pip import main
-    main(['install'] + packages)
 
 def get_docker_image(version):
     return 'ncbi/pgap:{}'.format(version)
@@ -66,26 +63,7 @@ def check_runtime(version):
     check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
     if verbose: print('Note: Essential runtime settings = {}'.format(settings))
 
-def check_cwl_runner():
-    try:
-        subprocess.check_call(['cwl-runner', '--version'])
-        return
-    except PermissionError:
-        try:
-            import cwltool
-        except ImportError:
-            if not is_venv():
-                print('ERROR: cwltool is not installed, and you are not currently using a Python virtualenv, as is recommended.')
-                exit(1)
-            install(['cwltool[deps]', 'PyYAML', 'cwlref-runner'])
-            subprocess.check_call(['cwl-runner', '--version'])
-            return
-    print('ERROR: Failed to run cwl-runner.')
-    exit(1)
 
-def install_docker(version):
-    print('Downloading (as needed) PGAP Docker image version {}'.format(version))
-    subprocess.check_call([docker, 'pull', get_docker_image(version)])
 
 
 class urlopen_progress:
@@ -120,81 +98,34 @@ class urlopen_progress:
             sys.stderr.write("Downloaded %d bytes\r" % (self.bytes_so_far))
         return buffer
 
-def install_url(url):
+def install_url(url, path):
     #with urlopen(url) as response:
     #with urlopen_progress(url) as response:
     response = urlopen_progress(url)
     with tarfile.open(mode='r|*', fileobj=response) as tar:
-        tar.extractall()
+        tar.extractall(path=path)
 #            while True:
 #                item = tar.next()
 #                if not item: break
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def install_cwl(version):
-    if not os.path.exists('pgap-{}'.format(version)):
-        print('Downloading PGAP Common Workflow Language (CWL) version {}'.format(version))
-        install_url('https://github.com/ncbi/pgap/archive/{}.tar.gz'.format(version))
-
-def install_data(version):
-    if not os.path.exists('input-{}'.format(version)):
-        print('Downloading PGAP reference data version {}'.format(version))
-        install_url('https://s3.amazonaws.com/pgap-data/input-{}.tgz'.format(version))
-
-def install_test_genomes(version):
-    if not os.path.exists('test_genomes'):
-        print('Downloading PGAP test genomes')
-        install_url('https://s3.amazonaws.com/pgap-data/test_genomes.tgz')
-
-def get_remote_version():
-    # Old system, where we checked github releases
-    #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-    #latest = json.load(response)['tag_name']
-
-    # Check docker hub
-    response = urlopen('https://registry.hub.docker.com/v1/repositories/ncbi/pgap/tags')
-    json_response = json.loads(response.read().decode())
-    return json_response[-1]['name']
-
-def get_version():
-    if os.path.isfile('VERSION'):
-        with open('VERSION', encoding='utf-8') as f:
-            return f.read().strip()
-    return None
-
-def setup(update, local_runner):
-    '''Determine version of PGAP.'''
-    version = get_version()
-    if update or not version:
-        latest = get_remote_version()
-        if version != latest:
-            print('Updating PGAP to version {} (previous version was {})'.format(latest, version))
-            if local_runner: install_cwl(latest)
-            install_docker(latest)
-            install_data(latest)
-            install_test_genomes(version)
-        with open('VERSION', 'w', encoding='utf-8') as f:
-            f.write(u'{}\n'.format(latest))
-        version = latest
-    if not version:
-        raise RuntimeError('Failed to identify PGAP version')
-    return version
-
-def run(version, input, output, debug, report):
-    image = get_docker_image(version)
-
+def run(init, local_input, debug, report):
+    image     = init.docker_image
+    data_path = init.data_path
+    output    = init.outputdir
+    
     # Create a work directory.
     os.mkdir(output)
     os.mkdir(output + '/log')
 
     # Run the actual workflow.
-    data_dir = os.path.abspath('input-{}'.format(version))
-    input_dir = os.path.dirname(os.path.abspath(input))
+    data_dir = os.path.abspath(data_path)
+    input_dir = os.path.dirname(os.path.abspath(local_input))
     input_file = '/pgap/user_input/pgap_input.yaml'
 
     with open(output +'/pgap_input.yaml', 'w') as f:
-        with open(input) as i:
+        with open(local_input) as i:
             shutil.copyfileobj(i, f)
         f.write(u'\n')
         f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
@@ -228,22 +159,167 @@ def run(version, input, output, debug, report):
     cmd.extend(['pgap.cwl', input_file])
     subprocess.check_call(cmd)
 
+class Setup:
+
+    def __init__(self, args):
+        self.args = args
+        self.branch          = self.get_branch()
+        self.repo            = self.get_repo()
+        self.rundir             = self.get_dir()
+        self.local_version   = self.get_local_version()
+        self.remote_versions = self.get_remote_versions()
+        self.check_status()
+        if (args.list):
+            self.list_remote_versions()
+            return
+        self.use_version = self.get_use_version()
+        self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
+        self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
+        self.outputdir = self.get_output_dir()
+        if self.local_version != self.use_version:
+            self.update()
+
+    def get_branch(self):
+        if (self.args.dev):
+            return "dev"
+        if (self.args.test):
+            return "test"
+        if (self.args.prod):
+            return "prod"
+        return ""
+
+    def get_repo(self):
+        if self.branch == "":
+            return "pgap"
+        return "pgap-"+self.branch
+
+    def get_dir(self):
+        if self.branch == "":
+            return "."
+        return "./"+self.branch
+
+    def get_local_version(self):
+        filename = self.rundir + "/VERSION"
+        if os.path.isfile(filename):
+            with open(filename, encoding='utf-8') as f:
+                return f.read().strip()
+        return None
+
+
+    def get_remote_versions(self):
+        # Old system, where we checked github releases
+        #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+        #latest = json.load(response)['tag_name']
+
+        # Check docker hub
+        url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+        response = urlopen(url)
+        json_resp = json.loads(response.read().decode())
+        versions = []
+        for i in reversed(json_resp):
+            versions.append(i['name'])
+        return versions
+
+    def check_status(self):
+        if self.local_version == None:
+            print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
+            return
+        if self.local_version == self.get_latest_version():
+            print("PGAP {} is up to date.".format(self.local_version))
+            return
+        print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
+
+    def list_remote_versions(self):
+        print("Available versions:")
+        for i in self.remote_versions:
+            print("\t", i)
+
+    def get_latest_version(self):
+        return self.remote_versions[0]
+
+    def get_use_version(self):
+        if self.args.use_version:
+            return self.args.use_version
+        if (self.local_version == None) or self.args.update:
+            return self.get_latest_version()
+        return self.local_version
+
+    def get_output_dir(self):
+        def numbers( dirs ):
+            for dirname in dirs:
+                name, ext = os.path.splitext(dirname)
+                yield int(ext[1:])
+        if not os.path.exists(self.args.output):
+            return self.args.output
+        alldirs = glob.glob(self.args.output + ".*")
+        if not alldirs:
+            return self.args.output + ".1" 
+        count = max( numbers( alldirs ) )
+        count += 1
+        return "{}.{}".format(self.args.output, str(count)) 
+        
+    def update(self):
+        self.install_docker()
+        self.install_data()
+        self.install_test_genomes()
+        self.write_version()
+
+    def install_docker(self):
+        print('Downloading (as needed) Docker image {}'.format(self.docker_image))
+        subprocess.check_call([docker, 'pull', self.docker_image])
+
+    def install_data(self):
+        if not os.path.exists(self.data_path):
+            print('Downloading PGAP reference data version {}'.format(self.use_version))
+            suffix = ""
+            if self.branch != "":
+                suffix = self.branch + "."
+            remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
+            install_url(remote_path, self.rundir)
+
+    def install_test_genomes(self):
+        def get_suffix(branch):
+            if branch == "":
+                return ""
+            return "."+self.branch
+
+        local_path = "{}/test_genomes".format(self.rundir)
+        if not os.path.exists(local_path):
+            print('Downloading PGAP test genomes')
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)), self.rundir)
+
+    def write_version(self):
+        filename = self.rundir + "/VERSION"
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(u'{}\n'.format(self.use_version))
+
+        
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
                         help='Input YAML file to process.')
-    parser.add_argument('--version', action='store_true',
+    parser.add_argument('-V', '--version', action='store_true',
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-    parser.add_argument('-u', '--update', dest='update', action='store_true',
-                        help='Update to the latest PGAP version, including reference data')
-    parser.add_argument('-l', '--local-runner', dest='local_runner', action='store_true',
-                        help='Use a local CWL runner instead of the bundled cwltool')
-    parser.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
+
+    version_group = parser.add_mutually_exclusive_group()
+    version_group.add_argument('--dev',  action='store_true', help="Set development mode")
+    version_group.add_argument('--test', action='store_true', help="Set test mode")
+    version_group.add_argument('--prod', action='store_true', help="Set production mode")
+
+    action_group = parser.add_mutually_exclusive_group()
+    action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
+    action_group.add_argument('-u', '--update', dest='update', action='store_true',
+                              help='Update to the latest PGAP version, including reference data.')
+    action_group.add_argument('--use-version', dest='use_version', help=argparse.SUPPRESS)
+
+    report_group = parser.add_mutually_exclusive_group()
+    report_group.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
                         help='Set the report_usage flag in the YAML to true.')
-    parser.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
+    report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
+
     parser.add_argument('-d', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -253,36 +329,22 @@ def main():
     parser.add_argument('-D', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
-    verbose = args.verbose
-    docker = args.docker
-    debug = args.debug
-
-    if (args.version):
-        version = get_version()
-        if version:
-            print('PGAP version {}'.format())
-        else:
-            print('PGAP not installed; use --update to install the latest version.')
-            exit(0)
-
-    version = setup(args.update, args.local_runner)
-    check_runtime(version)
-    if args.local_runner:
-        check_cwl_runner()
+    init = Setup(args)
+    #check_runtime(version)
 
     if args.test_genome:
-        input = 'test_genomes/MG37/input.yaml'
+        input_file = init.rundir + '/test_genomes/MG37/input.yaml'
     else:
-        input = args.input
+        input_file = args.input
 
     report='none'
     if (args.report_usage_true):
         report = 'true'
     if (args.report_usage_false):
         report = 'false'
-        
-    if input:
-        run(version, input, args.output, debug, report)
 
+    if input_file:
+        run(init, input_file, args.debug, report)
+    
 if __name__== "__main__":
     main()
