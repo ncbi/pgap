@@ -303,7 +303,26 @@ steps:
             asn_cache: genomic_source/asncache
             o_output: {default: 'sequences.disc.xml'}
             i: Prepare_Unannotated_Sequences_text/output
+            d:
+                default:
+                    - FEATURE_LIST
+                    - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS 
+                    - PARTIAL_CDS_COMPLETE_SEQUENCE
+                    - MISSING_AFFIL
+                    - OVERLAPPING_CDS
+                    - BAD_BGPIPE_QUALS
+                    - FLATFILE_FIND
+                    - COMMENT_PRESENT
+                    - SHORT_PROT_SEQUENCES
+                    - OVERLAPPING_GENES
+                    - EXTRA_GENES
         out: [o]
+  Prepare_Unannotated_Sequences_asndisc_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Prepare_Unannotated_Sequences_asndisc_cpp/o
+            xpath_fail: {default: '//*[@severity="FATAL"]' }
+        out: [] 
   Prepare_Unannotated_Sequences_asnvalidate:
         run: progs/asnvalidate.cwl
         in:
@@ -326,6 +345,15 @@ steps:
             b:
                 default: true
         out: [o]
+  Prepare_Unannotated_Sequences_asnvalidate_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Prepare_Unannotated_Sequences_asnvalidate/o
+            xpath_fail: {default: '//*[@severity="ERROR"
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            ]' }
+        out: [] 
 
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
@@ -734,7 +762,18 @@ steps:
       asn_cache:
         source: [genomic_source/asncache]
       exclude_asndisc_codes: #
-        default: ['OVERLAPPING_CDS']
+        default: 
+            - FEATURE_LIST
+            - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS
+            - PARTIAL_CDS_COMPLETE_SEQUENCE
+            - MISSING_AFFIL
+            - OVERLAPPING_CDS
+            - BAD_BGPIPE_QUALS
+            - FLATFILE_FIND
+            - COMMENT_PRESENT
+            - SHORT_PROT_SEQUENCES
+            - OVERLAPPING_GENES
+            - EXTRA_GENES
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
@@ -755,6 +794,20 @@ steps:
       - id: outdiscxml
       - id: outmetamaster
       - id: outval
+      
+  Final_Bacterial_Package_asndisc_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Final_Bacterial_Package_std_validation/outdisc
+            xpath_fail: {default: '//*[@severity="FATAL"]' }
+        out: [] 
+  Final_Bacterial_Package_asnvalidate_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Prepare_Unannotated_Sequences_asnvalidate/o
+            xpath_fail: {default: '//*[@severity="ERROR"
+            ]' }
+        out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
     run: progs/val_stats.cwl
     in:

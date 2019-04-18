@@ -42,8 +42,9 @@ inputs:
      inputBinding:
         prefix: -conffile
   d:
-     type: string?
+     type: string[]?
      inputBinding:
+        itemSeparator: ","
         prefix: -d
   e:
      type: string?
