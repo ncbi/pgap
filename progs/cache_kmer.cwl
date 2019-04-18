@@ -12,7 +12,7 @@ requirements:
       - entryname: kmer_file_list.mft
         entry: |
           ${
-            var blob = '';
+            var blob = '# kmer_file_list.mft created for cache_kmer from input kmer_file_list Array of Files\n';
             for (var i = 0; i < inputs.kmer_file_list.length; i++) {
                 blob += inputs.kmer_file_list[i].path + '\n';
             }

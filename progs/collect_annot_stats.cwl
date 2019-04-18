@@ -8,7 +8,7 @@ requirements:
     listing:
       - entryname: proc_annot_stats_or_details.mft
         # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# proc_annot_stats_or_details.mft created for collect_annot_stats from input input Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
 
 baseCommand: collect_annot_stats
 inputs:

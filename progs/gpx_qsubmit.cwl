@@ -31,7 +31,7 @@ requirements:
       - entry:  ${ var cs=1; var s=inputs.asn_cache.length-1; var as = cs; if(as >= s) {as = s }; return inputs.asn_cache[as]; }
         writable: False
       - entryname: ids.mft
-        entry:  ${var blob = '';for (var i = 0; i < inputs.ids.length; i++) {blob += inputs.ids[i].path  + '\n';}return blob;}
+        entry:  ${var blob = '# ids.mft created for gpx_qsubmit from input ids Array of Files\n';for (var i = 0; i < inputs.ids.length; i++) {blob += inputs.ids[i].path  + '\n';}return blob;}
 
 baseCommand: gpx_qsubmit
 inputs:
