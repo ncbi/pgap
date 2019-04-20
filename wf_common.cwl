@@ -804,7 +804,7 @@ steps:
   Final_Bacterial_Package_asnvalidate_evaluate:
         run: progs/xml_evaluate.cwl
         in:
-            input: Prepare_Unannotated_Sequences_asnvalidate/o
+            input: Final_Bacterial_Package_std_validation/outval
             xpath_fail: {default: '//*[@severity="ERROR"
             ]' }
         out: [] 
