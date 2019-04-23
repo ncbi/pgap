@@ -17,8 +17,6 @@ from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
 from urllib.error import HTTPError
 
-verbose = False
-
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
