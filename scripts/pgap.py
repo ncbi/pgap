@@ -324,13 +324,13 @@ def main():
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
 
-    parser.add_argument('-d', '--docker', metavar='path', default='docker',
+    parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
                         help='Run a test genome')
-    parser.add_argument('-D', '--debug', action='store_true',
+    parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
     init = Setup(args)
