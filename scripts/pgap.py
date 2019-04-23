@@ -18,7 +18,6 @@ from urllib.request import urlopen, urlretrieve, Request
 from urllib.error import HTTPError
 
 verbose = False
-docker = 'docker'
 
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
@@ -103,7 +102,7 @@ def run(init, local_input, debug, report):
     # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
     #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
 
-    cmd = [docker, 'run', '-i' ]
+    cmd = [init.dockercmd, 'run', '-i' ]
     if (platform.system() != "Windows"):
         cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
     cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
@@ -141,6 +140,7 @@ class Setup:
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
+        self.dockercmd = self.get_docker_cmd()
         if self.local_version != self.use_version:
             self.update()
 
@@ -223,6 +223,9 @@ class Setup:
         count += 1
         return "{}.{}".format(self.args.output, str(count)) 
         
+    def get_docker_cmd(self):
+        return shutil.which(self.args.docker)
+
     def update(self):
         self.install_docker()
         self.install_data()
@@ -231,7 +234,7 @@ class Setup:
 
     def install_docker(self):
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
-        subprocess.check_call([docker, 'pull', self.docker_image])
+        subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
 
     def install_data(self):
         if not os.path.exists(self.data_path):
@@ -265,7 +268,7 @@ class Setup:
 
         #image = get_docker_image(version)
         output = subprocess.check_output(
-            [docker, 'run', '-i',
+            [self.dockercmd, 'run', '-i',
                 '-v', '{}:/cwd'.format(os.getcwd()), self.docker_image,
                 'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}'])
         output = output.decode('utf-8')
