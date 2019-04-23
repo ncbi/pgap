@@ -70,57 +70,60 @@ def install_url(url, path):
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def run(init, local_input, debug):
-    image     = init.docker_image
-    data_path = init.data_path
-    output    = init.outputdir
-    report    = init.report_usage
-    
-    # Create a work directory.
-    os.mkdir(output)
-    os.mkdir(output + '/log')
 
-    # Run the actual workflow.
-    data_dir = os.path.abspath(data_path)
-    input_dir = os.path.dirname(os.path.abspath(local_input))
-    input_file = '/pgap/user_input/pgap_input.yaml'
+class Run:
 
-    with open(output +'/pgap_input.yaml', 'w') as f:
-        with open(local_input) as i:
-            shutil.copyfileobj(i, f)
-        f.write(u'\n')
-        f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
-        if (report != 'none'):
-            f.write(u'report_usage: {}\n'.format(report))
-        f.flush()
+    def __init__(self, params, local_input, debug):
+        image     = params.docker_image
+        data_path = params.data_path
+        output    = params.outputdir
+        report    = params.report_usage
+        
+        # Create a work directory.
+        os.mkdir(output)
+        os.mkdir(output + '/log')
 
-    output_dir = os.path.abspath(output)
-    yaml = output_dir + '/pgap_input.yaml'
-    log_dir = output_dir + '/log'
-    # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
-    # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
-    #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
+        # Run the actual workflow.
+        data_dir = os.path.abspath(data_path)
+        input_dir = os.path.dirname(os.path.abspath(local_input))
+        input_file = '/pgap/user_input/pgap_input.yaml'
 
-    cmd = [init.dockercmd, 'run', '-i' ]
-    if (platform.system() != "Windows"):
-        cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
-    cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
-                '--volume', '{}:/pgap/user_input'.format(input_dir),
-                '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-                '--volume', '{}:/pgap/output:rw'.format(output_dir),
-                '--volume', '{}:/log/srv'.format(log_dir),
-                image,
-                'cwltool',
-                '--outdir', '/pgap/output'])
-    if debug:
-        cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
-                    '--leave-tmpdir',
-                    '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
-                    '--copy-outputs'])
-        init.write_runtime()
+        with open(output +'/pgap_input.yaml', 'w') as f:
+            with open(local_input) as i:
+                shutil.copyfileobj(i, f)
+            f.write(u'\n')
+            f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+            if (report != 'none'):
+                f.write(u'report_usage: {}\n'.format(report))
+            f.flush()
 
-    cmd.extend(['pgap.cwl', input_file])
-    subprocess.run(cmd)
+        output_dir = os.path.abspath(output)
+        yaml = output_dir + '/pgap_input.yaml'
+        log_dir = output_dir + '/log'
+        # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
+        # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
+        #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
+
+        cmd = [params.dockercmd, 'run', '-i' ]
+        if (platform.system() != "Windows"):
+            cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
+        cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
+                    '--volume', '{}:/pgap/user_input'.format(input_dir),
+                    '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
+                    '--volume', '{}:/pgap/output:rw'.format(output_dir),
+                    '--volume', '{}:/log/srv'.format(log_dir),
+                    image,
+                    'cwltool',
+                    '--outdir', '/pgap/output'])
+        if debug:
+            cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
+                        '--leave-tmpdir',
+                        '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
+                        '--copy-outputs'])
+            params.write_runtime()
+
+        cmd.extend(['pgap.cwl', input_file])
+        subprocess.run(cmd)
 
 class Setup:
 
@@ -274,12 +277,13 @@ class Setup:
             if settings[value] != 'unlimited' and settings[value] < min:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
-        #image = get_docker_image(version)
-        output = subprocess.check_output(
-            [self.dockercmd, 'run', '-i',
-                '-v', '{}:/cwd'.format(os.getcwd()), self.docker_image,
-                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}'])
-        output = output.decode('utf-8')
+        cmd = [self.dockercmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.docker_image,
+                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
+        # output = subprocess.check_output(cmd)
+        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
+        if result.returncode != 0:
+            return
+        output = result.stdout.decode('utf-8')
         settings = {'Docker image':self.docker_image}
         for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
             value = match.group(2)
@@ -344,16 +348,16 @@ def main():
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
-    init = Setup(args)
+    params = Setup(args)
 
     if args.test_genome:
-        input_file = init.rundir + '/test_genomes/MG37/input.yaml'
+        input_file = params.rundir + '/test_genomes/MG37/input.yaml'
     else:
         input_file = args.input
 
 
     if input_file:
-        run(init, input_file, args.debug)
+        Run(params, input_file, args.debug)
     
 if __name__== "__main__":
     main()
