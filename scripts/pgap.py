@@ -157,7 +157,7 @@ def run(init, local_input, debug, report):
                     '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
                     '--copy-outputs'])
     cmd.extend(['pgap.cwl', input_file])
-    subprocess.check_call(cmd)
+    subprocess.run(cmd)
 
 class Setup:
 
