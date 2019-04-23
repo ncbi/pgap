@@ -24,12 +24,8 @@ def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
-def get_docker_image(version):
-    return 'ncbi/pgap:{}'.format(version)
-
-def check_runtime_setting(settings, value, min):
-    if settings[value] != 'unlimited' and settings[value] < min:
-        print('WARNING: {} is less than the recommended value of {}'.format(value, min))
+# def get_docker_image(version):
+#     return 'ncbi/pgap:{}'.format(version)
 
 
 
@@ -123,6 +119,8 @@ def run(init, local_input, debug, report):
                     '--leave-tmpdir',
                     '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
                     '--copy-outputs'])
+        init.write_runtime()
+
     cmd.extend(['pgap.cwl', input_file])
     subprocess.run(cmd)
 
@@ -260,7 +258,11 @@ class Setup:
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
 
-    def check_runtime(self):
+    def write_runtime(self):
+        def check_runtime_setting(settings, value, min):
+            if settings[value] != 'unlimited' and settings[value] < min:
+                print('WARNING: {} is less than the recommended value of {}'.format(value, min))
+
         #image = get_docker_image(version)
         output = subprocess.check_output(
             [docker, 'run', '-i',
@@ -290,8 +292,10 @@ class Setup:
         check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
         check_runtime_setting(settings, 'memory (GiB)', 8)
         check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-        #if verbose: print('Note: Essential runtime settings = {}'.format(settings))
-        print('Note: Essential runtime settings = {}'.format(settings))
+        filename = self.outputdir + "/RUNTIME.json"
+        with open(filename, 'w', encoding='utf-8') as f:
+            #f.write(u'{}\n'.format(settings))
+            f.write(json.dumps(settings, sort_keys=True, indent=4))
 
         
 def main():
@@ -330,8 +334,6 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
     init = Setup(args)
-    init.check_runtime()
-    return
 
     if args.test_genome:
         input_file = init.rundir + '/test_genomes/MG37/input.yaml'
