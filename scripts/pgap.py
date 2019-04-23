@@ -70,10 +70,11 @@ def install_url(url, path):
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def run(init, local_input, debug, report):
+def run(init, local_input, debug):
     image     = init.docker_image
     data_path = init.data_path
     output    = init.outputdir
+    report    = init.report_usage
     
     # Create a work directory.
     os.mkdir(output)
@@ -127,9 +128,10 @@ class Setup:
         self.args = args
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.rundir             = self.get_dir()
+        self.rundir          = self.get_dir()
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
+        self.report_usage    = self.get_report_usage()
         self.check_status()
         if (args.list):
             self.list_remote_versions()
@@ -223,6 +225,14 @@ class Setup:
         
     def get_docker_cmd(self):
         return shutil.which(self.args.docker)
+
+    def get_report_usage(self):
+        if (self.args.report_usage_true):
+            return 'true'
+        if (self.args.report_usage_false):
+            return 'false'
+        return 'none'
+
 
     def update(self):
         self.install_docker()
@@ -341,14 +351,9 @@ def main():
     else:
         input_file = args.input
 
-    report='none'
-    if (args.report_usage_true):
-        report = 'true'
-    if (args.report_usage_false):
-        report = 'false'
 
     if input_file:
-        run(init, input_file, args.debug, report)
+        run(init, input_file, args.debug)
     
 if __name__== "__main__":
     main()
