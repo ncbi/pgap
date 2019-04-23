@@ -31,39 +31,6 @@ def check_runtime_setting(settings, value, min):
     if settings[value] != 'unlimited' and settings[value] < min:
         print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
-def check_runtime(version):
-    image = get_docker_image(version)
-    output = subprocess.check_output(
-        [docker, 'run', '-i',
-            '-v', '{}:/cwd'.format(os.getcwd()), image,
-            'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}'])
-    output = output.decode('utf-8')
-    settings = {'Docker image':image}
-    for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
-        value = match.group(2)
-        if value != "unlimited":
-            value = int(value)
-        settings[match.group(1)] = value
-    match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
-    settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-    settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
-    match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
-    settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-    cpus = 0
-    for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
-        cpus += 1
-        settings['cpu model'] = match.group(1)
-    settings['CPU cores'] = cpus
-    settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
-    check_runtime_setting(settings, 'open files', 8000)
-    check_runtime_setting(settings, 'max user processes', 100)
-    check_runtime_setting(settings, 'work disk space (GiB)', 80)
-    check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
-    check_runtime_setting(settings, 'memory (GiB)', 8)
-    check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-    if verbose: print('Note: Essential runtime settings = {}'.format(settings))
-
-
 
 
 class urlopen_progress:
@@ -293,6 +260,39 @@ class Setup:
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
 
+    def check_runtime(self):
+        #image = get_docker_image(version)
+        output = subprocess.check_output(
+            [docker, 'run', '-i',
+                '-v', '{}:/cwd'.format(os.getcwd()), self.docker_image,
+                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}'])
+        output = output.decode('utf-8')
+        settings = {'Docker image':self.docker_image}
+        for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
+            value = match.group(2)
+            if value != "unlimited":
+                value = int(value)
+            settings[match.group(1)] = value
+        match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
+        settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
+        match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
+        settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        cpus = 0
+        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
+            cpus += 1
+            settings['cpu model'] = match.group(1)
+        settings['CPU cores'] = cpus
+        settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
+        check_runtime_setting(settings, 'open files', 8000)
+        check_runtime_setting(settings, 'max user processes', 100)
+        check_runtime_setting(settings, 'work disk space (GiB)', 80)
+        check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
+        check_runtime_setting(settings, 'memory (GiB)', 8)
+        check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
+        #if verbose: print('Note: Essential runtime settings = {}'.format(settings))
+        print('Note: Essential runtime settings = {}'.format(settings))
+
         
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
@@ -330,7 +330,8 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
     init = Setup(args)
-    #check_runtime(version)
+    init.check_runtime()
+    return
 
     if args.test_genome:
         input_file = init.rundir + '/test_genomes/MG37/input.yaml'
