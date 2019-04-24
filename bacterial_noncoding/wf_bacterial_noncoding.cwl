@@ -7,6 +7,8 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
+  go: 
+        type: boolean[]
   asn_cache: Directory
   seqids: File
   16s_blastdb_dir: Directory

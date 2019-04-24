@@ -6,6 +6,8 @@ class: CommandLineTool
 #/panfs/pan1.be-md.ncbi.nlm.nih.gov/refgene/LOCUS/bin/genes/inifiles/gene_master.ini
 baseCommand: cache_entrez_gene
 inputs:
+  go: 
+        type: boolean[]
   asn_cache:
     type: Directory[]
     inputBinding:

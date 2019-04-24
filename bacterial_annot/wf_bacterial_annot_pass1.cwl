@@ -8,6 +8,8 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
+  go: 
+        type: boolean[]
   asn_cache: Directory
   inseq: File
   hmm_path: Directory

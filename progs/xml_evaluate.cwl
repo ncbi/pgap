@@ -70,4 +70,7 @@ outputs:
       type: File?
       outputBinding:
           glob: $(inputs.logfile_output)
-          
+  success:
+        type: boolean
+        outputBinding:
+            outputEval: $(true)
