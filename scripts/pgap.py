@@ -97,8 +97,6 @@ class Pipeline:
 
         yaml = self.create_inputfile(local_input)
         
-        output_dir = os.path.abspath(self.params.outputdir)
-
         # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
         #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
@@ -110,12 +108,12 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro'.format(data_dir),
             '--volume', '{}:/pgap/user_input'.format(input_dir),
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-            '--volume', '{}:/pgap/output:rw'.format(output_dir)])
+            '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
         # Debug mount for docker image
         if debug:
-            os.mkdir(self.params.outputdir + '/log')
-            log_dir = output_dir + '/log'
+            log_dir = self.params.outputdir + '/debug/log'
+            os.makedirs(log_dir)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
 
         self.cmd.extend([self.params.docker_image,
@@ -125,9 +123,9 @@ class Pipeline:
         # Debug flags for cwltool
         if debug:
             self.cmd.extend([
-                '--tmpdir-prefix', '/pgap/output/tmpdir/',
+                '--tmpdir-prefix', '/pgap/output/debug/tmpdir/',
                 '--leave-tmpdir',
-                '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
+                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
                 '--copy-outputs'])
             self.record_runtime()
 
@@ -180,7 +178,7 @@ class Pipeline:
         check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
         check_runtime_setting(settings, 'memory (GiB)', 8)
         check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-        filename = self.params.outputdir + "/RUNTIME.json"
+        filename = self.params.outputdir + "/debug/RUNTIME.json"
         with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
             f.write(json.dumps(settings, sort_keys=True, indent=4))
