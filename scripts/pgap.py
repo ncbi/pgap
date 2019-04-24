@@ -84,8 +84,9 @@ def install_url(url, path):
 
 class Pipeline:
 
-    def __init__(self, params, local_input, debug):
+    def __init__(self, params, local_input):
         self.params = params
+        debug = self.params.args.debug
         
         # Create a work directory.
         os.mkdir(self.params.outputdir)
@@ -412,7 +413,7 @@ def main():
 
 
     if input_file:
-        p = Pipeline(params, input_file, args.debug)
+        p = Pipeline(params, input_file)
         p.launch()
         
 if __name__== "__main__":
