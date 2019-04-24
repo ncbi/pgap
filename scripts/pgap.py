@@ -84,10 +84,10 @@ class Pipeline:
         input_dir = os.path.dirname(os.path.abspath(local_input))
         input_file = '/pgap/user_input/pgap_input.yaml'
 
-        self.create_inputfile(local_input)
+        yaml = self.create_inputfile(local_input)
         
         output_dir = os.path.abspath(self.params.outputdir)
-        yaml = output_dir + '/pgap_input.yaml'
+
         log_dir = output_dir + '/log'
         # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
@@ -116,7 +116,8 @@ class Pipeline:
         self.cmd.extend(['pgap.cwl', input_file])
 
     def create_inputfile(self, local_input):        
-        with open(self.params.outputdir +'/pgap_input.yaml', 'w') as f:
+        yaml = self.params.outputdir + '/pgap_input.yaml'
+        with open(yaml, 'w') as f:
             with open(local_input) as i:
                 shutil.copyfileobj(i, f)
                 f.write(u'\n')
@@ -124,7 +125,7 @@ class Pipeline:
             if (self.params.report_usage != 'none'):
                 f.write(u'report_usage: {}\n'.format(self.params.report_usage))
             f.flush()
-
+        return yaml
         
     def record_runtime(self):
         def check_runtime_setting(settings, value, min):
@@ -270,7 +271,8 @@ class Setup:
             return self.args.output + ".1" 
         count = max( numbers( alldirs ) )
         count += 1
-        return "{}.{}".format(self.args.output, str(count)) 
+        outputdir = "{}.{}".format(self.args.output, str(count))
+        return os.path.abspath(outputdir)
         
     def get_docker_cmd(self):
         return shutil.which(self.args.docker)
