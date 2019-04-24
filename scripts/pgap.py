@@ -71,9 +71,10 @@ def install_url(url, path):
 #                tar.extract(item, set_attrs=False)
 
 
-class Run:
+class Pipeline:
 
     def __init__(self, params, local_input, debug):
+        self.params = params
         image     = params.docker_image
         data_path = params.data_path
         output    = params.outputdir
@@ -83,7 +84,6 @@ class Run:
         os.mkdir(output)
         os.mkdir(output + '/log')
 
-        # Run the actual workflow.
         data_dir = os.path.abspath(data_path)
         input_dir = os.path.dirname(os.path.abspath(local_input))
         input_file = '/pgap/user_input/pgap_input.yaml'
@@ -104,10 +104,10 @@ class Run:
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
         #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
 
-        cmd = [params.dockercmd, 'run', '-i' ]
+        self.cmd = [params.dockercmd, 'run', '-i' ]
         if (platform.system() != "Windows"):
-            cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
-        cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
+            self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
+        self.cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
                     '--volume', '{}:/pgap/user_input'.format(input_dir),
                     '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
                     '--volume', '{}:/pgap/output:rw'.format(output_dir),
@@ -116,14 +116,59 @@ class Run:
                     'cwltool',
                     '--outdir', '/pgap/output'])
         if debug:
-            cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
+            self.cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
                         '--leave-tmpdir',
                         '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
                         '--copy-outputs'])
-            params.write_runtime()
+            self.record_runtime()
 
-        cmd.extend(['pgap.cwl', input_file])
-        subprocess.run(cmd)
+        self.cmd.extend(['pgap.cwl', input_file])
+
+
+    def record_runtime(self):
+        def check_runtime_setting(settings, value, min):
+            if settings[value] != 'unlimited' and settings[value] < min:
+                print('WARNING: {} is less than the recommended value of {}'.format(value, min))
+
+        cmd = [self.params.dockercmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
+                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
+        # output = subprocess.check_output(cmd)
+        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
+        if result.returncode != 0:
+            return
+        output = result.stdout.decode('utf-8')
+        settings = {'Docker image':self.params.docker_image}
+        for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
+            value = match.group(2)
+            if value != "unlimited":
+                value = int(value)
+            settings[match.group(1)] = value
+        match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
+        settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
+        match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
+        settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        cpus = 0
+        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
+            cpus += 1
+            settings['cpu model'] = match.group(1)
+        settings['CPU cores'] = cpus
+        settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
+        check_runtime_setting(settings, 'open files', 8000)
+        check_runtime_setting(settings, 'max user processes', 100)
+        check_runtime_setting(settings, 'work disk space (GiB)', 80)
+        check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
+        check_runtime_setting(settings, 'memory (GiB)', 8)
+        check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
+        filename = self.params.outputdir + "/RUNTIME.json"
+        with open(filename, 'w', encoding='utf-8') as f:
+            #f.write(u'{}\n'.format(settings))
+            f.write(json.dumps(settings, sort_keys=True, indent=4))
+        
+        
+    def launch(self):
+        # Run the actual workflow.
+        subprocess.run(self.cmd)
 
 class Setup:
 
@@ -272,46 +317,6 @@ class Setup:
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
 
-    def write_runtime(self):
-        def check_runtime_setting(settings, value, min):
-            if settings[value] != 'unlimited' and settings[value] < min:
-                print('WARNING: {} is less than the recommended value of {}'.format(value, min))
-
-        cmd = [self.dockercmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.docker_image,
-                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
-        # output = subprocess.check_output(cmd)
-        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
-        if result.returncode != 0:
-            return
-        output = result.stdout.decode('utf-8')
-        settings = {'Docker image':self.docker_image}
-        for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
-            value = match.group(2)
-            if value != "unlimited":
-                value = int(value)
-            settings[match.group(1)] = value
-        match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
-        settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-        settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
-        match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
-        settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-        cpus = 0
-        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
-            cpus += 1
-            settings['cpu model'] = match.group(1)
-        settings['CPU cores'] = cpus
-        settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
-        check_runtime_setting(settings, 'open files', 8000)
-        check_runtime_setting(settings, 'max user processes', 100)
-        check_runtime_setting(settings, 'work disk space (GiB)', 80)
-        check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
-        check_runtime_setting(settings, 'memory (GiB)', 8)
-        check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-        filename = self.outputdir + "/RUNTIME.json"
-        with open(filename, 'w', encoding='utf-8') as f:
-            #f.write(u'{}\n'.format(settings))
-            f.write(json.dumps(settings, sort_keys=True, indent=4))
-
         
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
@@ -357,7 +362,8 @@ def main():
 
 
     if input_file:
-        Run(params, input_file, args.debug)
-    
+        p = Pipeline(params, input_file, args.debug)
+        p.launch()
+        
 if __name__== "__main__":
     main()
