@@ -75,29 +75,25 @@ class Pipeline:
 
     def __init__(self, params, local_input, debug):
         self.params = params
-        image     = params.docker_image
-        data_path = params.data_path
-        output    = params.outputdir
-        report    = params.report_usage
         
         # Create a work directory.
-        os.mkdir(output)
-        os.mkdir(output + '/log')
+        os.mkdir(self.params.outputdir)
+        os.mkdir(self.params.outputdir + '/log')
 
-        data_dir = os.path.abspath(data_path)
+        data_dir = os.path.abspath(self.params.data_path)
         input_dir = os.path.dirname(os.path.abspath(local_input))
         input_file = '/pgap/user_input/pgap_input.yaml'
 
-        with open(output +'/pgap_input.yaml', 'w') as f:
+        with open(self.params.outputdir +'/pgap_input.yaml', 'w') as f:
             with open(local_input) as i:
                 shutil.copyfileobj(i, f)
             f.write(u'\n')
             f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
-            if (report != 'none'):
-                f.write(u'report_usage: {}\n'.format(report))
+            if (self.params.report_usage != 'none'):
+                f.write(u'report_usage: {}\n'.format(self.params.report_usage))
             f.flush()
 
-        output_dir = os.path.abspath(output)
+        output_dir = os.path.abspath(self.params.outputdir)
         yaml = output_dir + '/pgap_input.yaml'
         log_dir = output_dir + '/log'
         # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
@@ -107,19 +103,21 @@ class Pipeline:
         self.cmd = [params.dockercmd, 'run', '-i' ]
         if (platform.system() != "Windows"):
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
-        self.cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
-                    '--volume', '{}:/pgap/user_input'.format(input_dir),
-                    '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-                    '--volume', '{}:/pgap/output:rw'.format(output_dir),
-                    '--volume', '{}:/log/srv'.format(log_dir),
-                    image,
-                    'cwltool',
-                    '--outdir', '/pgap/output'])
+        self.cmd.extend([
+            '--volume', '{}:/pgap/input:ro'.format(data_dir),
+            '--volume', '{}:/pgap/user_input'.format(input_dir),
+            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
+            '--volume', '{}:/pgap/output:rw'.format(output_dir),
+            '--volume', '{}:/log/srv'.format(log_dir),
+            self.params.docker_image,
+            'cwltool',
+            '--outdir', '/pgap/output'])
         if debug:
-            self.cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
-                        '--leave-tmpdir',
-                        '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
-                        '--copy-outputs'])
+            self.cmd.extend([
+                '--tmpdir-prefix', '/pgap/output/tmpdir/',
+                '--leave-tmpdir',
+                '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
+                '--copy-outputs'])
             self.record_runtime()
 
         self.cmd.extend(['pgap.cwl', input_file])
