@@ -396,8 +396,6 @@ def main():
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
-    parser.add_argument('-T', '--test-genome', dest='test_genome', action='store_true',
-                        help='Run a test genome')
     parser.add_argument('-t', '--timeout', default='24:00:00',
                         help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-d', '--debug', action='store_true',
@@ -406,14 +404,8 @@ def main():
 
     params = Setup(args)
 
-    if args.test_genome:
-        input_file = params.rundir + '/test_genomes/MG37/input.yaml'
-    else:
-        input_file = args.input
-
-
-    if input_file:
-        p = Pipeline(params, input_file)
+    if args.input:
+        p = Pipeline(params, args.input)
         p.launch()
         
 if __name__== "__main__":
