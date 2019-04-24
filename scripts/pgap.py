@@ -89,7 +89,6 @@ class Pipeline:
         
         # Create a work directory.
         os.mkdir(self.params.outputdir)
-        os.mkdir(self.params.outputdir + '/log')
 
         data_dir = os.path.abspath(self.params.data_path)
         input_dir = os.path.dirname(os.path.abspath(local_input))
@@ -99,7 +98,6 @@ class Pipeline:
         
         output_dir = os.path.abspath(self.params.outputdir)
 
-        log_dir = output_dir + '/log'
         # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
         #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
@@ -111,11 +109,19 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro'.format(data_dir),
             '--volume', '{}:/pgap/user_input'.format(input_dir),
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-            '--volume', '{}:/pgap/output:rw'.format(output_dir),
-            '--volume', '{}:/log/srv'.format(log_dir),
-            self.params.docker_image,
-            'cwltool',
-            '--outdir', '/pgap/output'])
+            '--volume', '{}:/pgap/output:rw'.format(output_dir)])
+
+        # Debug mount for docker image
+        if debug:
+            os.mkdir(self.params.outputdir + '/log')
+            log_dir = output_dir + '/log'
+            self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
+
+        self.cmd.extend([self.params.docker_image,
+                'cwltool',
+                '--outdir', '/pgap/output'])
+
+        # Debug flags for cwltool
         if debug:
             self.cmd.extend([
                 '--tmpdir-prefix', '/pgap/output/tmpdir/',
