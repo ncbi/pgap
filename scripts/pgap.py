@@ -11,7 +11,17 @@ except:
     sys.exit()
 
 from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform, glob
+import argparse
+import atexit
+import glob
+import json
+import os
+import platform
+import re
+import shutil
+import subprocess
+import tarfile
+import threading
 
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
@@ -169,8 +179,26 @@ class Pipeline:
         
         
     def launch(self):
+        def output_reader(proc):
+            for line in iter(proc.stdout.readline, b''):
+                print('got line: {0}'.format(line.decode('utf-8')), end='')
+
         # Run the actual workflow.
-        subprocess.run(self.cmd)
+        #subprocess.run(self.cmd)
+        proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        t = threading.Thread(target=output_reader, args=(proc,))
+        t.start()
+
+        try:
+            time.sleep(10)
+        finally:
+            proc.terminate()
+            try:
+                proc.wait(timeout=0.2)
+                print('== subprocess exited with rc =', proc.returncode)
+            except subprocess.TimeoutExpired:
+                print('subprocess did not terminate in time')
+        t.join()
 
 class Setup:
 
