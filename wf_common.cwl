@@ -316,6 +316,7 @@ steps:
                     - SHORT_PROT_SEQUENCES
                     - OVERLAPPING_GENES
                     - EXTRA_GENES
+                    - N_RUNS
         out: [o]
   Prepare_Unannotated_Sequences_asndisc_evaluate:
         run: progs/xml_evaluate.cwl
@@ -349,8 +350,10 @@ steps:
         run: progs/xml_evaluate.cwl
         in:
             input: Prepare_Unannotated_Sequences_asnvalidate/o
-            xpath_fail: {default: '//*[@severity="ERROR"
+            xpath_fail: {default: '//*[
+                ( @severity="ERROR" or @severity="REJECT" )
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
             ]' }
         out: [] 
@@ -774,6 +777,7 @@ steps:
             - SHORT_PROT_SEQUENCES
             - OVERLAPPING_GENES
             - EXTRA_GENES
+            - N_RUNS
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
@@ -805,7 +809,11 @@ steps:
         run: progs/xml_evaluate.cwl
         in:
             input: Final_Bacterial_Package_std_validation/outval
-            xpath_fail: {default: '//*[@severity="ERROR"
+            xpath_fail: {default: '//*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
             ]' }
         out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
