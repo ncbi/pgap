@@ -10,7 +10,6 @@ except:
     print("Please use Python", ".".join(map(str,min_python)), "or later.")
     sys.exit()
 
-from io import open
 import argparse
 import atexit
 import glob
@@ -22,7 +21,9 @@ import shutil
 import subprocess
 import tarfile
 import threading
+import time
 
+from io import open
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
 from urllib.error import HTTPError
@@ -190,7 +191,7 @@ class Pipeline:
         t.start()
 
         try:
-            time.sleep(10)
+            time.sleep(self.params.timeout)
         finally:
             proc.terminate()
             try:
@@ -210,6 +211,7 @@ class Setup:
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
+        self.timeout         = self.get_timeout()
         self.check_status()
         if (args.list):
             self.list_remote_versions()
@@ -312,6 +314,14 @@ class Setup:
             return 'false'
         return 'none'
 
+    def get_timeout(self):
+        def str2sec(s):
+            return sum(x * int(t) for x, t in
+                    zip(
+                        [1, 60, 3600, 86400],
+                        reversed(s.split(":"))
+                        ))
+        return str2sec(self.args.timeout)
 
     def update(self):
         self.install_docker()
@@ -379,11 +389,14 @@ def main():
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
-    parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
+    parser.add_argument('-T', '--test-genome', dest='test_genome', action='store_true',
                         help='Run a test genome')
+    parser.add_argument('-t', '--timeout', default='24:00:00',
+                        help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
+
     params = Setup(args)
 
     if args.test_genome:
