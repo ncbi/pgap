@@ -7,7 +7,7 @@ requirements:
  - class: InitialWorkDirRequirement
    listing:
      - entryname: other_assignments.mft
-       entry: ${var blob = ''; for (var i = 0; i < inputs.other_assignments.length; i++) { blob += inputs.other_assignments[i].path + '\n'; } return blob; }
+       entry: ${var blob = '# other_assignments.mft created for prepare_sparclbl_input from input other_assignments Array of Files\n'; for (var i = 0; i < inputs.other_assignments.length; i++) { blob += inputs.other_assignments[i].path + '\n'; } return blob; }
 
 baseCommand: prepare_sparclbl_input
 inputs:
@@ -46,4 +46,4 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.prot_ids_filename)
-    
+

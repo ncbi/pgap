@@ -7,7 +7,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: submit_block_template.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# submit_block_template.mft created for ent2sqn from input submit_block_template Array of Files\n'; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
 
 baseCommand: ent2sqn
 inputs:

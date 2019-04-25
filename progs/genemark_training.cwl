@@ -7,11 +7,11 @@ requirements:
     - class: InitialWorkDirRequirement
       listing:
         - entryname: annotation.mft
-          entry: ${ if ( inputs.annotation == null ) { return ''; } else { return inputs.annotation.path; } }
+          entry: ${ var blob = '# annotation.mft created for genemark_training from input annotation File\n'; if ( inputs.annotation == null ) { return blob; } else { return blob + inputs.annotation.path; } }
         - entryname: sequences.mft
-          entry: ${ if ( inputs.sequences == null) { return ''; }  else { return inputs.sequences.path; } }
+          entry: ${ var blob = '# sequences.mft created for genemark_training from input sequences File\n'; if ( inputs.sequences == null) { return blob; }  else { return blob + inputs.sequences.path; } }
         - entryname: alignments.mft
-          entry: ${ if ( inputs.alignments == null ) { return ''; }  else { return inputs.alignments.path; } }
+          entry: ${ var blob = '# alignments.mft created for genemark_training from input alignments File\n'; if ( inputs.alignments == null ) { return blob; }  else { return blob + inputs.alignments.path; } }
           
 baseCommand: genemark
 inputs:
@@ -89,4 +89,4 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.tmp)/$(inputs.out_hmm_params_name)
-    
+

@@ -7,7 +7,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: align.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.align.length; i++) { blob += inputs.align[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# align.mft created for bact_best_evidence_alignments from input align Array of Files\n'; for (var i = 0; i < inputs.align.length; i++) { blob += inputs.align[i].path + '\n'; } return blob; }
       - entryname: annotation.mft
         entry: $(inputs.annotation.path)
 
@@ -62,4 +62,4 @@ outputs:
     type: File
     outputBinding:
         glob: $(inputs.output_align_name)
-       
+

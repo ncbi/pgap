@@ -7,9 +7,9 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: features.mft
-        entry: ${var blob = ''; if ( ! inputs.hasOwnProperty('features') ) { return blob; }; for (var i = 0; i < inputs.features.length; i++) { blob += inputs.features[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# features.mft created for bacterial_resolve_conflicts from input features Array of Files\n'; if ( ! inputs.hasOwnProperty('features') ) { return blob; }; for (var i = 0; i < inputs.features.length; i++) { blob += inputs.features[i].path + '\n'; } return blob; }
       - entryname: prot.mft
-        entry: ${var blob = ''; if ( ! inputs.hasOwnProperty('prots') ) { return blob; }; for (var i = 0; i < inputs.prots.length; i++) { blob += inputs.prots[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# prot.mft created for bacterial_resolve_conflicts from input prots Array of Files\n'; if ( ! inputs.hasOwnProperty('prots') ) { return blob; }; for (var i = 0; i < inputs.prots.length; i++) { blob += inputs.prots[i].path + '\n'; } return blob; }
 baseCommand: bacterial_resolve_conflicts
 inputs:
     features: # all external to this node

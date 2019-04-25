@@ -8,6 +8,8 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
+  go: 
+        type: boolean[]
   asn_cache: Directory
   seqids: File
   taxid: int

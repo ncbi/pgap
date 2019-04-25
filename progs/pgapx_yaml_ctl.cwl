@@ -43,6 +43,11 @@ inputs:
         default: input_asn_type.txt
         inputBinding:
             prefix: -output-asn-type
+    output_taxid_name:
+        type: string
+        default: taxid.txt
+        inputBinding:
+            prefix: -output-taxid
     taxon_db:
         type: File
         inputBinding:
@@ -60,3 +65,7 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.output_input_asn_type_name)
+    taxid:
+        type: File
+        outputBinding:
+            glob: $(inputs.output_taxid_name)

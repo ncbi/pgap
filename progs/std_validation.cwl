@@ -7,9 +7,9 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: submit_block_template.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# submit_block_template.mft created for std_validation from input submit_block_template Array of Files\n'; for (var i = 0; i < inputs.submit_block_template.length; i++) { blob += inputs.submit_block_template[i].path + '\n'; } return blob; }
       - entryname: master_desc_mft.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.master_desc.length; i++) { blob += inputs.master_desc[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# master_desc_mft.mft created for std_validation from input master_desc Array of Files\n'; for (var i = 0; i < inputs.master_desc.length; i++) { blob += inputs.master_desc[i].path + '\n'; } return blob; }
         
 
 baseCommand: std_validation

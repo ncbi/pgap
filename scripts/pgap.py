@@ -10,59 +10,31 @@ except:
     print("Please use Python", ".".join(map(str,min_python)), "or later.")
     sys.exit()
 
-from io import open
-import argparse, atexit, json, os, re, shutil, subprocess, tarfile, platform, glob
+import argparse
+import atexit
+import glob
+import json
+import os
+import platform
+import queue
+import re
+import shutil
+import subprocess
+import tarfile
+import threading
+import time
 
+from io import open
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, urlretrieve, Request
 from urllib.error import HTTPError
-
-verbose = False
-docker = 'docker'
 
 def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
-def get_docker_image(version):
-    return 'ncbi/pgap:{}'.format(version)
-
-def check_runtime_setting(settings, value, min):
-    if settings[value] != 'unlimited' and settings[value] < min:
-        print('WARNING: {} is less than the recommended value of {}'.format(value, min))
-
-def check_runtime(version):
-    image = get_docker_image(version)
-    output = subprocess.check_output(
-        [docker, 'run', '-i',
-            '-v', '{}:/cwd'.format(os.getcwd()), image,
-            'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}'])
-    output = output.decode('utf-8')
-    settings = {'Docker image':image}
-    for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
-        value = match.group(2)
-        if value != "unlimited":
-            value = int(value)
-        settings[match.group(1)] = value
-    match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
-    settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-    settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
-    match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
-    settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-    cpus = 0
-    for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
-        cpus += 1
-        settings['cpu model'] = match.group(1)
-    settings['CPU cores'] = cpus
-    settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
-    check_runtime_setting(settings, 'open files', 8000)
-    check_runtime_setting(settings, 'max user processes', 100)
-    check_runtime_setting(settings, 'work disk space (GiB)', 80)
-    check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
-    check_runtime_setting(settings, 'memory (GiB)', 8)
-    check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-    if verbose: print('Note: Essential runtime settings = {}'.format(settings))
-
+# def get_docker_image(version):
+#     return 'ncbi/pgap:{}'.format(version)
 
 
 
@@ -110,54 +82,147 @@ def install_url(url, path):
 #                print('- {}'.format(item.name))
 #                tar.extract(item, set_attrs=False)
 
-def run(init, local_input, debug, report):
-    image     = init.docker_image
-    data_path = init.data_path
-    output    = init.outputdir
-    
-    # Create a work directory.
-    os.mkdir(output)
-    os.mkdir(output + '/log')
 
-    # Run the actual workflow.
-    data_dir = os.path.abspath(data_path)
-    input_dir = os.path.dirname(os.path.abspath(local_input))
-    input_file = '/pgap/user_input/pgap_input.yaml'
+class Pipeline:
 
-    with open(output +'/pgap_input.yaml', 'w') as f:
-        with open(local_input) as i:
-            shutil.copyfileobj(i, f)
-        f.write(u'\n')
-        f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
-        if (report != 'none'):
-            f.write(u'report_usage: {}\n'.format(report))
-        f.flush()
+    def __init__(self, params, local_input):
+        self.params = params
+        debug = self.params.args.debug
+        
+        # Create a work directory.
+        print(self.params.outputdir)
+        os.mkdir(self.params.outputdir)
 
-    output_dir = os.path.abspath(output)
-    yaml = output_dir + '/pgap_input.yaml'
-    log_dir = output_dir + '/log'
-    # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
-    # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
-    #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
+        data_dir = os.path.abspath(self.params.data_path)
+        input_dir = os.path.dirname(os.path.abspath(local_input))
+        input_file = '/pgap/user_input/pgap_input.yaml'
 
-    cmd = [docker, 'run', '-i' ]
-    if (platform.system() != "Windows"):
-        cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
-    cmd.extend(['--volume', '{}:/pgap/input:ro'.format(data_dir),
-                '--volume', '{}:/pgap/user_input'.format(input_dir),
-                '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-                '--volume', '{}:/pgap/output:rw'.format(output_dir),
-                '--volume', '{}:/log/srv'.format(log_dir),
-                image,
-                'cwltool',
+        yaml = self.create_inputfile(local_input)
+        
+        # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
+        # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
+        #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
+
+        self.cmd = [params.dockercmd, 'run', '-i' ]
+        if (platform.system() != "Windows"):
+            self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
+        self.cmd.extend([
+            '--volume', '{}:/pgap/input:ro'.format(data_dir),
+            '--volume', '{}:/pgap/user_input'.format(input_dir),
+            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
+            '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
+
+        # Debug mount for docker image
+        if debug:
+            log_dir = self.params.outputdir + '/debug/log'
+            os.makedirs(log_dir)
+            self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
+
+        self.cmd.extend([self.params.docker_image,
+                'cwltool', '--timestamps',
                 '--outdir', '/pgap/output'])
-    if debug:
-        cmd.extend(['--tmpdir-prefix', '/pgap/output/tmpdir/',
-                    '--leave-tmpdir',
-                    '--tmp-outdir-prefix', '/pgap/output/tmp-outdir/',
-                    '--copy-outputs'])
-    cmd.extend(['pgap.cwl', input_file])
-    subprocess.check_call(cmd)
+
+        # Debug flags for cwltool
+        if debug:
+            self.cmd.extend([
+                '--tmpdir-prefix', '/pgap/output/debug/tmpdir/',
+                '--leave-tmpdir',
+                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
+                '--copy-outputs'])
+            self.record_runtime()
+
+        self.cmd.extend(['pgap.cwl', input_file])
+
+    def create_inputfile(self, local_input):        
+        yaml = self.params.outputdir + '/pgap_input.yaml'
+        with open(yaml, 'w') as f:
+            with open(local_input) as i:
+                shutil.copyfileobj(i, f)
+                f.write(u'\n')
+            f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+            if (self.params.report_usage != 'none'):
+                f.write(u'report_usage: {}\n'.format(self.params.report_usage))
+            f.flush()
+        return yaml
+        
+    def record_runtime(self):
+        def check_runtime_setting(settings, value, min):
+            if settings[value] != 'unlimited' and settings[value] < min:
+                print('WARNING: {} is less than the recommended value of {}'.format(value, min))
+
+        cmd = [self.params.dockercmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
+                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
+        # output = subprocess.check_output(cmd)
+        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
+        if result.returncode != 0:
+            return
+        output = result.stdout.decode('utf-8')
+        settings = {'Docker image':self.params.docker_image}
+        for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
+            value = match.group(2)
+            if value != "unlimited":
+                value = int(value)
+            settings[match.group(1)] = value
+        match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
+        settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
+        match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
+        settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
+        cpus = 0
+        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
+            cpus += 1
+            settings['cpu model'] = match.group(1)
+        settings['CPU cores'] = cpus
+        settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
+        check_runtime_setting(settings, 'open files', 8000)
+        check_runtime_setting(settings, 'max user processes', 100)
+        check_runtime_setting(settings, 'work disk space (GiB)', 80)
+        check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
+        check_runtime_setting(settings, 'memory (GiB)', 8)
+        check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
+        filename = self.params.outputdir + "/debug/RUNTIME.json"
+        with open(filename, 'w', encoding='utf-8') as f:
+            #f.write(u'{}\n'.format(settings))
+            f.write(json.dumps(settings, sort_keys=True, indent=4))
+        
+        
+    def launch(self):
+        def output_reader(proc, outq):
+            for line in iter(proc.stdout.readline, b''):
+                outq.put(line.decode('utf-8'))
+
+        # Run the actual workflow.
+        #print(self.cmd)
+        proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+        outq = queue.Queue()
+        t = threading.Thread(target=output_reader, args=(proc, outq))
+        t.start()
+
+        cwllog = self.params.outputdir + '/cwltool.log'
+        pat = re.compile('^\[(\d+-\d+-\d+ \d+:\d+:\d+)\] \[(workflow|step)')
+
+        try:
+            with open(cwllog, 'w') as f:
+                while proc.poll() == None:
+                    while True:
+                        try:
+                            line = outq.get(block=False)
+                            f.write(line)
+                            if (self.params.args.verbose) or pat.match(line):
+                                print(line, end='')
+                        except queue.Empty:
+                            break
+                        time.sleep(0.1)
+
+        finally:
+            proc.terminate()
+            try:
+                proc.wait(timeout=2)
+                print('docker exited with rc =', proc.returncode)
+            except subprocess.TimeoutExpired:
+                print('docker did not exit cleanly.')
+        t.join()
 
 class Setup:
 
@@ -165,9 +230,11 @@ class Setup:
         self.args = args
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.rundir             = self.get_dir()
+        self.rundir          = self.get_dir()
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
+        self.report_usage    = self.get_report_usage()
+        self.timeout         = self.get_timeout()
         self.check_status()
         if (args.list):
             self.list_remote_versions()
@@ -176,6 +243,7 @@ class Setup:
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
+        self.dockercmd = self.get_docker_cmd()
         if self.local_version != self.use_version:
             self.update()
 
@@ -250,14 +318,34 @@ class Setup:
                 name, ext = os.path.splitext(dirname)
                 yield int(ext[1:])
         if not os.path.exists(self.args.output):
-            return self.args.output
+            return os.path.abspath(self.args.output)
         alldirs = glob.glob(self.args.output + ".*")
         if not alldirs:
-            return self.args.output + ".1" 
+            return os.path.abspath(self.args.output + ".1")
         count = max( numbers( alldirs ) )
         count += 1
-        return "{}.{}".format(self.args.output, str(count)) 
+        outputdir = "{}.{}".format(self.args.output, str(count))
+        return os.path.abspath(outputdir)
         
+    def get_docker_cmd(self):
+        return shutil.which(self.args.docker)
+
+    def get_report_usage(self):
+        if (self.args.report_usage_true):
+            return 'true'
+        if (self.args.report_usage_false):
+            return 'false'
+        return 'none'
+
+    def get_timeout(self):
+        def str2sec(s):
+            return sum(x * int(t) for x, t in
+                    zip(
+                        [1, 60, 3600, 86400],
+                        reversed(s.split(":"))
+                        ))
+        return str2sec(self.args.timeout)
+
     def update(self):
         self.install_docker()
         self.install_data()
@@ -266,7 +354,7 @@ class Setup:
 
     def install_docker(self):
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
-        subprocess.check_call([docker, 'pull', self.docker_image])
+        subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
 
     def install_data(self):
         if not os.path.exists(self.data_path):
@@ -320,31 +408,21 @@ def main():
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
 
-    parser.add_argument('-d', '--docker', metavar='path', default='docker',
+    parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
-    parser.add_argument('-t', '--test-genome', dest='test_genome', action='store_true',
-                        help='Run a test genome')
-    parser.add_argument('-D', '--debug', action='store_true',
+    parser.add_argument('-t', '--timeout', default='24:00:00',
+                        help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
+    parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
-    init = Setup(args)
-    #check_runtime(version)
 
-    if args.test_genome:
-        input_file = init.rundir + '/test_genomes/MG37/input.yaml'
-    else:
-        input_file = args.input
+    params = Setup(args)
 
-    report='none'
-    if (args.report_usage_true):
-        report = 'true'
-    if (args.report_usage_false):
-        report = 'false'
-
-    if input_file:
-        run(init, input_file, args.debug, report)
-    
+    if args.input:
+        p = Pipeline(params, args.input)
+        p.launch()
+        
 if __name__== "__main__":
     main()

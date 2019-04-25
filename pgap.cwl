@@ -23,7 +23,6 @@ inputs:
     default: my_gc_assm_name
   report_usage: boolean
   submol: File
-  taxid: int
   
 outputs:
   gbent:
@@ -91,7 +90,7 @@ steps:
       fasta: fasta
       submol: submol
       taxon_db: passdata/taxon_db
-    out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json]
+    out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json, taxid]
   fastaval:
     run: progs/fastaval.cwl
     in:
@@ -110,7 +109,7 @@ steps:
       gc_assm_name: gc_assm_name
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
-      taxid: taxid
+      taxid: prepare_input_template/taxid
       submol_block_json: prepare_input_template/submol_block_json
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl
