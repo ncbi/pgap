@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asnvalidate version="10.1" severity_cutoff="NONE">
+  <message severity="ERROR" seq-id="lcl|L43967.2" code="SEQ_PKG_NucProtProblem">No proteins in nuc-prot set</message>
+</asnvalidate>

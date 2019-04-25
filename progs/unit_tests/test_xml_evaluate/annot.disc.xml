@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DiscrepancyCounts>
+  <Counts Severity="WARNING">
+    <Total>18</Total>
+    <Subcount Code="BIOPROJECT_ID">1</Subcount>
+    <Subcount Code="CDS_TRNA_OVERLAP">4</Subcount>
+    <Subcount Code="MISSING_DEFLINES">1</Subcount>
+    <Subcount Code="RNA_CDS_OVERLAP">4</Subcount>
+    <Subcount Code="SOURCE_QUALS">0</Subcount>
+    <Subcount Code="SUSPECT_PHRASES">8</Subcount>
+  </Counts>
+</DiscrepancyCounts>
