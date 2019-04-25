@@ -2,6 +2,9 @@ cwlVersion: v1.0
 label: xml_evaluate
 class: CommandLineTool
 baseCommand: xml_evaluate
+requirements:
+  - class: InlineJavascriptRequirement
+
 inputs:            
         
   input:
