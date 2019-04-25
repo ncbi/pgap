@@ -119,7 +119,7 @@ class Pipeline:
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
 
         self.cmd.extend([self.params.docker_image,
-                'cwltool',
+                'cwltool', '--timestamps',
                 '--outdir', '/pgap/output'])
 
         # Debug flags for cwltool
