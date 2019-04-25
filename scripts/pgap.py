@@ -16,6 +16,7 @@ import glob
 import json
 import os
 import platform
+import queue
 import re
 import shutil
 import subprocess
@@ -89,6 +90,7 @@ class Pipeline:
         debug = self.params.args.debug
         
         # Create a work directory.
+        print(self.params.outputdir)
         os.mkdir(self.params.outputdir)
 
         data_dir = os.path.abspath(self.params.data_path)
@@ -185,25 +187,35 @@ class Pipeline:
         
         
     def launch(self):
-        def output_reader(proc):
+        def output_reader(proc, outq):
             for line in iter(proc.stdout.readline, b''):
-                print('got line: {0}'.format(line.decode('utf-8')), end='')
+                outq.put(line.decode('utf-8'))
 
         # Run the actual workflow.
-        #subprocess.run(self.cmd)
+        print(self.cmd)
         proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        t = threading.Thread(target=output_reader, args=(proc,))
+
+        outq = queue.Queue()
+        t = threading.Thread(target=output_reader, args=(proc, outq))
         t.start()
 
         try:
-            time.sleep(self.params.timeout)
+            while proc.poll() == None:
+                while True:
+                    try:
+                        line = outq.get(block=False)
+                        print(line, end='')
+                    except queue.Empty:
+                        break
+                time.sleep(0.1)
+
         finally:
             proc.terminate()
             try:
-                proc.wait(timeout=0.2)
-                print('== subprocess exited with rc =', proc.returncode)
+                proc.wait(timeout=2)
+                print('docker exited with rc =', proc.returncode)
             except subprocess.TimeoutExpired:
-                print('subprocess did not terminate in time')
+                print('docker did not exit cleanly.')
         t.join()
 
 class Setup:
@@ -300,10 +312,10 @@ class Setup:
                 name, ext = os.path.splitext(dirname)
                 yield int(ext[1:])
         if not os.path.exists(self.args.output):
-            return self.args.output
+            return os.path.abspath(self.args.output)
         alldirs = glob.glob(self.args.output + ".*")
         if not alldirs:
-            return self.args.output + ".1" 
+            return os.path.abspath(self.args.output + ".1")
         count = max( numbers( alldirs ) )
         count += 1
         outputdir = "{}.{}".format(self.args.output, str(count))
