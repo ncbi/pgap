@@ -192,22 +192,27 @@ class Pipeline:
                 outq.put(line.decode('utf-8'))
 
         # Run the actual workflow.
-        print(self.cmd)
+        #print(self.cmd)
         proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         outq = queue.Queue()
         t = threading.Thread(target=output_reader, args=(proc, outq))
         t.start()
 
+        cwllog = self.params.outputdir + '/cwltool.log'
+
         try:
-            while proc.poll() == None:
-                while True:
-                    try:
-                        line = outq.get(block=False)
-                        print(line, end='')
-                    except queue.Empty:
-                        break
-                time.sleep(0.1)
+            with open(cwllog, 'w') as f:
+
+                while proc.poll() == None:
+                    while True:
+                        try:
+                            line = outq.get(block=False)
+                            f.write(line)
+                            print(line, end='')
+                        except queue.Empty:
+                            break
+                        time.sleep(0.1)
 
         finally:
             proc.terminate()
