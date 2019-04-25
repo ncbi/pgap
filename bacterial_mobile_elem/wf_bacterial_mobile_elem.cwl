@@ -6,6 +6,8 @@ class: Workflow
 #requirements:
   
 inputs:
+  go: 
+        type: boolean[]
   asn_cache: Directory
   seqids: File
 
