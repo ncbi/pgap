@@ -200,16 +200,17 @@ class Pipeline:
         t.start()
 
         cwllog = self.params.outputdir + '/cwltool.log'
+        pat = re.compile('^\[(\d+-\d+-\d+ \d+:\d+:\d+)\] \[(workflow|step)')
 
         try:
             with open(cwllog, 'w') as f:
-
                 while proc.poll() == None:
                     while True:
                         try:
                             line = outq.get(block=False)
                             f.write(line)
-                            print(line, end='')
+                            if (self.params.args.verbose) or pat.match(line):
+                                print(line, end='')
                         except queue.Empty:
                             break
                         time.sleep(0.1)
