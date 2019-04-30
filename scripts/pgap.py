@@ -204,6 +204,10 @@ class Pipeline:
 
         try:
             with open(cwllog, 'w') as f:
+                # Show command line in log
+                cmdline = " ".join(self.cmd)
+                f.write(cmdline)
+                f.write("\n")
                 while proc.poll() == None:
                     while True:
                         try:
