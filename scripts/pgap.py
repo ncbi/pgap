@@ -204,10 +204,14 @@ class Pipeline:
 
         try:
             with open(cwllog, 'w') as f:
-                # Show command line in log
-                cmdline = " ".join(self.cmd)
+                # Show original command line in log
+                cmdline = "Original command: " + " ".join(sys.argv)
                 f.write(cmdline)
-                f.write("\n")
+                f.write("\n\n")
+                # Show docker command line in log
+                cmdline = "Docker command: " + " ".join(self.cmd)
+                f.write(cmdline)
+                f.write("\n\n")
                 while proc.poll() == None:
                     while True:
                         try:
