@@ -293,7 +293,7 @@ class Setup:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return
         if self.local_version == self.get_latest_version():
-            print("PGAP {} is up to date.".format(self.local_version))
+            print("PGAP from branch {}: version {} is up to date.".format(self.branch, self.local_version))
             return
         print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
 
