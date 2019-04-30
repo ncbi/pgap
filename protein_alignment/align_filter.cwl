@@ -39,7 +39,7 @@ inputs:
     type: string?
     default: align-nomatch.asn   
     inputBinding:
-      prefix: -non-match
+      prefix: -onon-match
 
 outputs:
   align:
