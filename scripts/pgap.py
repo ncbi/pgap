@@ -135,10 +135,8 @@ class Pipeline:
 
     def create_inputfile(self, local_input):        
         yaml = self.params.outputdir + '/pgap_input.yaml'
-        with open(yaml, 'w') as f:
-            with open(local_input) as i:
-                shutil.copyfileobj(i, f)
-                f.write(u'\n')
+        shutil.copyfile(local_input, yaml)
+        with open(yaml, 'w+') as f:
             f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 f.write(u'report_usage: {}\n'.format(self.params.report_usage))
