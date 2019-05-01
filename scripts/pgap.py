@@ -94,7 +94,7 @@ class Pipeline:
         os.mkdir(self.params.outputdir)
 
         data_dir = os.path.abspath(self.params.data_path)
-        input_dir = os.path.dirname(os.path.abspath(local_input))
+        self.input_dir = os.path.dirname(os.path.abspath(local_input))
         input_file = '/pgap/user_input/pgap_input.yaml'
 
         yaml = self.create_inputfile(local_input)
@@ -108,7 +108,7 @@ class Pipeline:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro'.format(data_dir),
-            '--volume', '{}:/pgap/user_input'.format(input_dir),
+            '--volume', '{}:/pgap/user_input'.format(self.input_dir),
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
             '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
@@ -134,9 +134,9 @@ class Pipeline:
         self.cmd.extend(['pgap.cwl', input_file])
 
     def create_inputfile(self, local_input):        
-        yaml = self.params.outputdir + '/pgap_input.yaml'
+        yaml = self.input_dir + '/pgap_input.yaml'
         shutil.copyfile(local_input, yaml)
-        with open(yaml, 'w+') as f:
+        with open(yaml, 'a') as f:
             f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 f.write(u'report_usage: {}\n'.format(self.params.report_usage))
