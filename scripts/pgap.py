@@ -41,22 +41,16 @@ def is_venv():
 class urlopen_progress:
     def __init__(self, url, teamcity):
         self.remote_file = urlopen(url)
+        self.teamcity = teamcity
         if teamcity:
             self.EOL = '\n'
         else:
             self.EOL = '\r'
+        self.cur_row = -1
         total_size = 0
-        try:
-            total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
-        except AttributeError:
-            total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
+        total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
 
         self.total_size = int(total_size)
-        if self.total_size > 0:
-            self.header = True
-        else:
-            self.header = False # a response doesn't always include the "Content-Length" header
-
         self.bytes_so_far = 0
 
     def read(self, n=10240):
@@ -66,12 +60,20 @@ class urlopen_progress:
             return ''
 
         self.bytes_so_far += len(buffer)
-        if self.header:
-            percent = float(self.bytes_so_far) / self.total_size
-            percent = round(percent*100, 2)
+        percent = float(self.bytes_so_far) / self.total_size
+        percent = round(percent*100, 2)
+
+        do_print = True
+        if self.teamcity:
+            do_print = False
+            row = int(percent)
+            if row > self.cur_row:
+                self.cur_row = row
+                do_print = True
+
+        if do_print:
             sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)%s" % (self.bytes_so_far, self.total_size, percent, self.EOL))
-        else:
-            sys.stderr.write("Downloaded %d bytes%s" % (self.bytes_so_far, self.EOL))
+
         return buffer
 
 def install_url(url, path, quiet, teamcity):
@@ -84,8 +86,10 @@ def install_url(url, path, quiet, teamcity):
             response = urlopen_progress(url, teamcity)
             with tarfile.open(mode='r|*', fileobj=response) as tar:
                 tar.extractall(path=path)
-    except:
-        print("Oops!",sys.exc_info()[0],"occured.")
+    finally:
+        pass
+    #except:
+    #    print("Oops!",sys.exc_info()[0],"occured.")
 
 class Pipeline:
 
@@ -366,8 +370,8 @@ class Setup:
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
         try:
             #subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
-            r = subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
-            print(r)
+            r = subprocess.run([self.dockercmd, 'pull', self.docker_image], check=True)
+            #print(r)
         except CalledProcessError:
             print(r)
 
