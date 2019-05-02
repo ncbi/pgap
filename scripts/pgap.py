@@ -71,17 +71,17 @@ class urlopen_progress:
         return buffer
 
 def install_url(url, path, quiet):
-    #with urlopen(url) as response:
-    #with urlopen_progress(url) as response:
-    if quiet:
-        with urlopen(url) as response:
+    try:
+        if quiet:
+            with urlopen(url) as response:
+                with tarfile.open(mode='r|*', fileobj=response) as tar:
+                    tar.extractall(path=path)
+        else:
+            response = urlopen_progress(url)
             with tarfile.open(mode='r|*', fileobj=response) as tar:
                 tar.extractall(path=path)
-    else:
-        response = urlopen_progress(url)
-        with tarfile.open(mode='r|*', fileobj=response) as tar:
-            tar.extractall(path=path)
-
+    except:
+        print("Oops!",sys.exc_info()[0],"occured.")
 
 class Pipeline:
 
@@ -360,7 +360,13 @@ class Setup:
 
     def install_docker(self):
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
-        subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+        try:
+            #subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+            r = subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+            print(r)
+        except CalledProcessError:
+            print(r)
+
 
     def install_data(self):
         if not os.path.exists(self.data_path):
