@@ -41,15 +41,18 @@ def is_venv():
 class urlopen_progress:
     def __init__(self, url, teamcity):
         self.remote_file = urlopen(url)
+        self.teamcity = teamcity
         if teamcity:
             self.EOL = '\n'
         else:
             self.EOL = '\r'
+        self.nth_row = 500
+        self.cur_row = 0
         total_size = 0
-        try:
-            total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
-        except AttributeError:
-            total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
+        #try:
+        #    total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
+        #except AttributeError:
+        total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
 
         self.total_size = int(total_size)
         if self.total_size > 0:
@@ -66,12 +69,21 @@ class urlopen_progress:
             return ''
 
         self.bytes_so_far += len(buffer)
-        if self.header:
-            percent = float(self.bytes_so_far) / self.total_size
-            percent = round(percent*100, 2)
-            sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)%s" % (self.bytes_so_far, self.total_size, percent, self.EOL))
-        else:
-            sys.stderr.write("Downloaded %d bytes%s" % (self.bytes_so_far, self.EOL))
+        do_print = True
+        if self.teamcity:
+            self.cur_row += 1
+            do_print = False
+            if self.cur_row >= self.nth_row:
+                self.cur_row = 0
+                do_print = True
+
+        if do_print:
+            if self.header:
+                percent = float(self.bytes_so_far) / self.total_size
+                percent = round(percent*100, 2)
+                sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)%s" % (self.bytes_so_far, self.total_size, percent, self.EOL))
+            else:
+                sys.stderr.write("Downloaded %d bytes%s" % (self.bytes_so_far, self.EOL))
         return buffer
 
 def install_url(url, path, quiet, teamcity):
@@ -84,8 +96,10 @@ def install_url(url, path, quiet, teamcity):
             response = urlopen_progress(url, teamcity)
             with tarfile.open(mode='r|*', fileobj=response) as tar:
                 tar.extractall(path=path)
-    except:
-        print("Oops!",sys.exc_info()[0],"occured.")
+    finally:
+        pass
+    #except:
+    #    print("Oops!",sys.exc_info()[0],"occured.")
 
 class Pipeline:
 
