@@ -39,8 +39,12 @@ def is_venv():
 
 
 class urlopen_progress:
-    def __init__(self, url):
+    def __init__(self, url, teamcity):
         self.remote_file = urlopen(url)
+        if teamcity:
+            self.EOL = '\n'
+        else:
+            self.EOL = '\r'
         total_size = 0
         try:
             total_size = self.remote_file.info().getheader('Content-Length').strip() # urllib2 method
@@ -65,23 +69,23 @@ class urlopen_progress:
         if self.header:
             percent = float(self.bytes_so_far) / self.total_size
             percent = round(percent*100, 2)
-            sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)\r" % (self.bytes_so_far, self.total_size, percent))
+            sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)%s" % (self.bytes_so_far, self.total_size, percent, self.EOL))
         else:
-            sys.stderr.write("Downloaded %d bytes\r" % (self.bytes_so_far))
+            sys.stderr.write("Downloaded %d bytes%s" % (self.bytes_so_far, self.EOL))
         return buffer
 
-def install_url(url, path):
-    #with urlopen(url) as response:
-    #with urlopen_progress(url) as response:
-    response = urlopen_progress(url)
-    with tarfile.open(mode='r|*', fileobj=response) as tar:
-        tar.extractall(path=path)
-#            while True:
-#                item = tar.next()
-#                if not item: break
-#                print('- {}'.format(item.name))
-#                tar.extract(item, set_attrs=False)
-
+def install_url(url, path, quiet, teamcity):
+    try:
+        if quiet:
+            with urlopen(url) as response:
+                with tarfile.open(mode='r|*', fileobj=response) as tar:
+                    tar.extractall(path=path)
+        else:
+            response = urlopen_progress(url, teamcity)
+            with tarfile.open(mode='r|*', fileobj=response) as tar:
+                tar.extractall(path=path)
+    except:
+        print("Oops!",sys.exc_info()[0],"occured.")
 
 class Pipeline:
 
@@ -360,7 +364,13 @@ class Setup:
 
     def install_docker(self):
         print('Downloading (as needed) Docker image {}'.format(self.docker_image))
-        subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+        try:
+            #subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+            r = subprocess.check_call([self.dockercmd, 'pull', self.docker_image])
+            print(r)
+        except CalledProcessError:
+            print(r)
+
 
     def install_data(self):
         if not os.path.exists(self.data_path):
@@ -369,7 +379,7 @@ class Setup:
             if self.branch != "":
                 suffix = self.branch + "."
             remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
-            install_url(remote_path, self.rundir)
+            install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
 
     def install_test_genomes(self):
         def get_suffix(branch):
@@ -380,7 +390,8 @@ class Setup:
         local_path = "{}/test_genomes".format(self.rundir)
         if not os.path.exists(local_path):
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)), self.rundir)
+            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)),
+                        self.rundir, self.args.quiet, self.args.teamcity)
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
@@ -420,6 +431,9 @@ def main():
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--timeout', default='24:00:00',
                         help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
+    parser.add_argument('-q', '--quiet', action='store_true',
+                        help='Quiet mode, for scripts')
+    parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
     args = parser.parse_args()
