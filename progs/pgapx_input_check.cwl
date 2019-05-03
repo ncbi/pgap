@@ -9,6 +9,10 @@ inputs:
      type: File
      inputBinding:
         prefix: -input
+  ignore_all_errors:
+        type: boolean?
+        inputBinding:
+            prefix: -ignore-all-errors    
   max_size:
      type: long
      inputBinding:
