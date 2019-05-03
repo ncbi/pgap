@@ -53,7 +53,7 @@ class urlopen_progress:
         self.total_size = int(total_size)
         self.bytes_so_far = 0
 
-    def read(self, n=10240):
+    def read(self, n=65536):
         buffer = self.remote_file.read(n)
         if not buffer:
             sys.stdout.write('\n')
