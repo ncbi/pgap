@@ -16,6 +16,25 @@ inputs:
     type: File
   taxon_db:
     type: File
+outputs:
+    input_asn_type: 
+        type: string
+        outputSource: file2string_input_asn_type/value
+    output_entries:
+        type: File?
+        outputSource: type_based_splitter/output_entries
+    output_seq_submit:
+        type: File?
+        outputSource: type_based_splitter/output_seq_submit
+    locus_tag_prefix:
+        type: string
+        outputSource: file2string_ltp/value
+    submol_block_json:
+        type: File
+        outputSource: yaml2json/output
+    taxid:
+        type: int
+        outputSource: file2int_taxid/value
 steps:
     yaml2json:
         label: "yaml2json"
@@ -31,7 +50,7 @@ steps:
             input: yaml2json/output
             input_fasta: fasta
             taxon_db: taxon_db
-        out: [output_annotation, output_ltp, input_asn_type]
+        out: [output_annotation, output_ltp, input_asn_type, taxid]
     file2string_ltp:
         run: progs/file2string.cwl
         in:
@@ -41,7 +60,12 @@ steps:
         run: progs/file2string.cwl
         in:
              input: pgapx_yaml_ctl/input_asn_type
-        out: [value]        
+        out: [value]     
+    file2int_taxid:
+        run: progs/file2int.cwl
+        in:
+            input: pgapx_yaml_ctl/taxid
+        out: [value]
     initial_cleanup:
         run: progs/asn_cleanup.cwl
         in:
@@ -85,19 +109,3 @@ steps:
             input: initial_cleanup/annotation
             input_asn_type: file2string_input_asn_type/value
         out: [output_entries, output_seq_submit]
-outputs:
-    input_asn_type: 
-        type: string
-        outputSource: file2string_input_asn_type/value
-    output_entries:
-        type: File?
-        outputSource: type_based_splitter/output_entries
-    output_seq_submit:
-        type: File?
-        outputSource: type_based_splitter/output_seq_submit
-    locus_tag_prefix:
-        type: string
-        outputSource: file2string_ltp/value
-    submol_block_json:
-        type: File
-        outputSource: yaml2json/output

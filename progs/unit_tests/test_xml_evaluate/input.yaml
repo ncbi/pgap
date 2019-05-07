@@ -1,0 +1,13 @@
+initial_disc_file:
+    class: File
+    location: sequences.disc.xml
+initial_val_file:
+    class: File
+    location: sequences.val
+final_disc_file:
+    class: File
+    location: annot.disc.xml
+final_val_file:
+    class: File
+    location: meta.annot.val
+        

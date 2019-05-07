@@ -18,7 +18,7 @@ requirements:
       - entry: $(inputs.asn_cache)
         writable: False
       - entryname: fam.mft
-        entry: ${ if ( inputs.hmms_tab == null ) { return ''; }  else { return inputs.hmms_tab.path; } }
+        entry: ${ var blob = '# fam.mft created for hmmsearch_wnode from input hmms_tab File\n'; if ( inputs.hmms_tab == null ) { return blob; }  else { return blob + inputs.hmms_tab.path; } }
           
 #hmmsearch_wnode -lds2 LDS2 -asn-cache sequence_cache -backlog 1 -fam fam.mft -hmmsearch-path ./bin/ -cut_ga -input-jobs jobs.xml -O output
 baseCommand: hmmsearch_wnode

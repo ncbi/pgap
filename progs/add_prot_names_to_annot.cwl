@@ -7,7 +7,7 @@ requirements:
  - class: InitialWorkDirRequirement
    listing:
      - entryname: proteins.mft
-       entry: ${var blob = ''; for (var i = 0; i < inputs.proteins.length; i++) { blob += inputs.proteins[i].path + '\n'; } return blob; }
+       entry: ${var blob = '# proteins.mft created for add_prot_names_to_annot from input proteins Array of Files\n'; for (var i = 0; i < inputs.proteins.length; i++) { blob += inputs.proteins[i].path + '\n'; } return blob; }
 
 baseCommand: add_prot_names_to_annot
 inputs:
@@ -53,3 +53,4 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.out_annotation_name)
+

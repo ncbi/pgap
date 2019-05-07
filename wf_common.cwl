@@ -113,6 +113,9 @@ steps:
               case 'thresholds.xml':
                 r['thresholds'] = l[i];
                 break;
+              case 'species_genome_size.txt':
+                r['species_genome_size'] = l[i];
+                break;
               case 'uniColl_path':
                 var ul = l[i].listing;
                 var un = ul.length;
@@ -208,6 +211,8 @@ steps:
         selenoproteins:
           # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins, it's blastdb
           type: Directory
+        species_genome_size:
+          type: File
         taxon_db:
           type: File
         thresholds:
@@ -242,6 +247,7 @@ steps:
       - rfam_model_path
       - rfam_stockholm
       - selenoproteins
+      - species_genome_size
       - taxon_db
       - thresholds
       - uniColl_cache
@@ -272,6 +278,85 @@ steps:
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
     out: [master_desc, sequences]
+  Prepare_Unannotated_Sequences_pgapx_input_check:
+        run: progs/pgapx_input_check.cwl
+        in:  
+            input: Prepare_Unannotated_Sequences/sequences
+            max_size: { default: 15000000 }
+            min_size: { default: 300 }
+            species_genome_size: passdata/species_genome_size
+            taxon_db: passdata/taxon_db
+        out: []
+  Prepare_Unannotated_Sequences_text:
+        run: progs/asn_translator.cwl
+        in: 
+            input: Prepare_Unannotated_Sequences/sequences
+            output_output: {default: 'sequences.text.asn'}
+        out: [output]
+  Prepare_Unannotated_Sequences_asndisc_cpp:
+        run: progs/asndisc_cpp.cwl
+        in:
+            XML: {default: true}
+            genbank: {default: true}
+            P: {default: 't'}
+            a: {default: 'c'}
+            asn_cache: genomic_source/asncache
+            o_output: {default: 'sequences.disc.xml'}
+            i: Prepare_Unannotated_Sequences_text/output
+            d:
+                default:
+                    - FEATURE_LIST
+                    - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS 
+                    - PARTIAL_CDS_COMPLETE_SEQUENCE
+                    - MISSING_AFFIL
+                    - OVERLAPPING_CDS
+                    - BAD_BGPIPE_QUALS
+                    - FLATFILE_FIND
+                    - COMMENT_PRESENT
+                    - SHORT_PROT_SEQUENCES
+                    - OVERLAPPING_GENES
+                    - EXTRA_GENES
+                    - N_RUNS
+        out: [o]
+  Prepare_Unannotated_Sequences_asndisc_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Prepare_Unannotated_Sequences_asndisc_cpp/o
+            xpath_fail: {default: '//*[@severity="FATAL"]' }
+        out: [success] 
+  Prepare_Unannotated_Sequences_asnvalidate:
+        run: progs/asnvalidate.cwl
+        in:
+            Q:
+                default: 0
+            R:
+                default: 5
+            a:
+                default: 'e'
+            i: Prepare_Unannotated_Sequences/sequences
+            o_output:
+                default: 'sequences.val'
+            v: { default: 4 }
+            A:
+                default: true
+            U:
+                default: true
+            Z:
+                default: true
+            b:
+                default: true
+        out: [o]
+  Prepare_Unannotated_Sequences_asnvalidate_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Prepare_Unannotated_Sequences_asnvalidate/o
+            xpath_fail: {default: '//*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            ]' }
+        out: [success] 
 
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
@@ -280,6 +365,9 @@ steps:
       asn_cache: [genomic_source/asncache, passdata/uniColl_cache]
       egene_ini: passdata/gene_master_ini
       input: Prepare_Unannotated_Sequences/sequences
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
     out: [prok_entrez_gene_stuff]
 
   Create_Genomic_BLASTdb: # default 1
@@ -301,6 +389,9 @@ steps:
   bacterial_ncrna: # PLANE
     run: bacterial_ncrna/wf_gcmsearch.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
       model_path: passdata/rfam_model_path
@@ -312,6 +403,9 @@ steps:
   bacterial_mobile_elem: # PLANE
     run: bacterial_mobile_elem/wf_bacterial_mobile_elem.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
     out: [annots]
@@ -319,6 +413,9 @@ steps:
   bacterial_noncoding: # PLANE
     run: bacterial_noncoding/wf_bacterial_noncoding.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
       16s_blastdb_dir: passdata/16s_blastdb_dir
@@ -332,6 +429,9 @@ steps:
   bacterial_trna: # PLANE
     run: bacterial_trna/wf_trnascan.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
       taxid: taxid
@@ -342,6 +442,9 @@ steps:
   bacterial_annot: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass1.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       inseq: Prepare_Unannotated_Sequences/sequences
       hmm_path: passdata/hmm_path
@@ -391,6 +494,9 @@ steps:
   protein_alignment: # PLANE
     run: protein_alignment/wf_protein_alignment.cwl
     in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       uniColl_asn_cache: passdata/uniColl_cache
       naming_sqlite: passdata/naming_sqlite
@@ -680,7 +786,19 @@ steps:
       asn_cache:
         source: [genomic_source/asncache]
       exclude_asndisc_codes: #
-        default: ['OVERLAPPING_CDS']
+        default: 
+            - FEATURE_LIST
+            - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS
+            - PARTIAL_CDS_COMPLETE_SEQUENCE
+            - MISSING_AFFIL
+            - OVERLAPPING_CDS
+            - BAD_BGPIPE_QUALS
+            - FLATFILE_FIND
+            - COMMENT_PRESENT
+            - SHORT_PROT_SEQUENCES
+            - OVERLAPPING_GENES
+            - EXTRA_GENES
+            - N_RUNS
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
@@ -701,6 +819,24 @@ steps:
       - id: outdiscxml
       - id: outmetamaster
       - id: outval
+      
+  Final_Bacterial_Package_asndisc_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Final_Bacterial_Package_std_validation/outdisc
+            xpath_fail: {default: '//*[@severity="FATAL"]' }
+        out: [] 
+  Final_Bacterial_Package_asnvalidate_evaluate:
+        run: progs/xml_evaluate.cwl
+        in:
+            input: Final_Bacterial_Package_std_validation/outval
+            xpath_fail: {default: '//*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            ]' }
+        out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
     run: progs/val_stats.cwl
     in:

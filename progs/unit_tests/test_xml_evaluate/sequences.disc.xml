@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<discrepancy_report>
+  <test name="BIOPROJECT_ID" description="Sequences with BioProject IDs" severity="WARNING" cardinality="1">
+    <details message="## sequences contain BioProject IDs" severity="WARNING" cardinality="1" unit="sequence">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="COUNT_NUCLEOTIDES" description="Count nucleotide sequences" severity="INFO" cardinality="1">
+    <details message="## nucleotide Bioseqs are present" severity="INFO" cardinality="1" unit="nucleotide Bioseq">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="LONG_NO_ANNOTATION" description="No annotation for LONG sequence" severity="WARNING" cardinality="1">
+    <details message="## bioseqs are longer than 5000nt and have no features" severity="WARNING" cardinality="1" unit="bioseq">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="MISSING_DEFLINES" description="Missing definition lines" severity="WARNING" cardinality="1">
+    <details message="## bioseqs have no definition line" severity="WARNING" cardinality="1" unit="bioseq">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="MISSING_STRUCTURED_COMMENT" description="Structured comment not included" severity="WARNING" cardinality="1">
+    <details message="## sequences do not include structured comments." severity="WARNING" cardinality="1" unit="sequence">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="NO_ANNOTATION" description="No annotation" severity="WARNING" cardinality="1">
+    <details message="## bioseqs have no features" severity="WARNING" cardinality="1" unit="bioseq">
+      <object type="sequence" file="/tmp/tmp21bqb23e/stgd8ee3fed-7c5a-441c-85e3-c313c775ba5b/sequences.text.asn" label="L43967.2 (length 580076)"/>
+    </details>
+  </test>
+  <test name="SOURCE_QUALS" description="Some animals are more equal than others..." severity="WARNING" cardinality="0">
+    <details message="taxname (all present, all unique)" severity="WARNING">
+    </details>
+    <details message="taxid (all present, all unique)" severity="WARNING">
+    </details>
+    <details message="location (all present, all unique)" severity="WARNING">
+    </details>
+    <details message="strain (all present, all unique)" severity="WARNING">
+    </details>
+  </test>
+</discrepancy_report>

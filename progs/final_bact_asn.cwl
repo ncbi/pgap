@@ -7,7 +7,7 @@ requirements:
   - class: InitialWorkDirRequirement
     listing:
       - entryname: cleaned-annotation.mft
-        entry: ${var blob = ''; for (var i = 0; i < inputs.annotation.length; i++) { blob += inputs.annotation[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# cleaned-annotation.mft created for final_bact_asn from input annotation Array of Files\n'; for (var i = 0; i < inputs.annotation.length; i++) { blob += inputs.annotation[i].path + '\n'; } return blob; }
 
 baseCommand: final_bact_asn
 inputs:

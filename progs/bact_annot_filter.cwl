@@ -8,7 +8,7 @@ requirements:
     listing:
       - entryname: annotation.mft
         # using more than line of JS code leads to a wrong result
-        entry: ${var blob = ''; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
+        entry: ${var blob = '# annotation.mft created for bact_annot_filter.mft from input input Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
 baseCommand: bact_annot_filter
 inputs:
   abs_short_model_limit:
@@ -61,3 +61,4 @@ outputs:
         type: File
         outputBinding:
             glob: $(inputs.out_annotation_name)
+
