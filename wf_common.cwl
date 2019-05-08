@@ -37,6 +37,8 @@ inputs:
       location: input
   submol_block_json:
         type: File
+  ignore_all_errors:
+        type: boolean?
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -286,6 +288,7 @@ steps:
             min_size: { default: 300 }
             species_genome_size: passdata/species_genome_size
             taxon_db: passdata/taxon_db
+            ignore_all_errors: ignore_all_errors
         out: []
   Prepare_Unannotated_Sequences_text:
         run: progs/asn_translator.cwl
@@ -323,6 +326,7 @@ steps:
         in:
             input: Prepare_Unannotated_Sequences_asndisc_cpp/o
             xpath_fail: {default: '//*[@severity="FATAL"]' }
+            ignore_all_errors: ignore_all_errors
         out: [success] 
   Prepare_Unannotated_Sequences_asnvalidate:
         run: progs/asnvalidate.cwl
@@ -352,10 +356,12 @@ steps:
             input: Prepare_Unannotated_Sequences_asnvalidate/o
             xpath_fail: {default: '//*[
                 ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
             ]' }
+            ignore_all_errors: ignore_all_errors
         out: [success] 
 
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
@@ -832,6 +838,7 @@ steps:
             input: Final_Bacterial_Package_std_validation/outval
             xpath_fail: {default: '//*[
                 ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
