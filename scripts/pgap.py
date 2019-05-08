@@ -259,6 +259,7 @@ class Setup:
         self.use_version = self.get_use_version()
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
+        self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.dockercmd = self.get_docker_cmd()
         if self.local_version != self.use_version:
@@ -401,11 +402,12 @@ class Setup:
                 return ""
             return "."+self.branch
 
-        local_path = "{}/test_genomes".format(self.rundir)
-        if not os.path.exists(local_path):
+        if not os.path.exists(self.test_genomes_path):
+            URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)),
-                        self.rundir, self.args.quiet, self.args.teamcity)
+            print(self.test_genomes_path)
+            print(URL)
+            install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
