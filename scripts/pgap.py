@@ -148,6 +148,8 @@ class Pipeline:
             f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 f.write(u'report_usage: {}\n'.format(self.params.report_usage))
+            if (self.params.ignore_all_errors != 'none'):
+                f.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             f.flush()
         return yaml
         
@@ -248,6 +250,7 @@ class Setup:
         self.local_version   = self.get_local_version()
         self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
+        self.ignore_all_errors    = self.get_ignore_all_errors()
         self.timeout         = self.get_timeout()
         self.check_status()
         if (args.list):
@@ -256,6 +259,7 @@ class Setup:
         self.use_version = self.get_use_version()
         self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
+        self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.dockercmd = self.get_docker_cmd()
         if self.local_version != self.use_version:
@@ -350,6 +354,13 @@ class Setup:
         if (self.args.report_usage_false):
             return 'false'
         return 'none'
+        
+    def get_ignore_all_errors(self):
+        if (self.args.ignore_all_errors):
+            return 'true'
+        else:
+            return 'false'
+        return 'none' # do we need this in Python? obviously code never reaches this
 
     def get_timeout(self):
         def str2sec(s):
@@ -391,11 +402,12 @@ class Setup:
                 return ""
             return "."+self.branch
 
-        local_path = "{}/test_genomes".format(self.rundir)
-        if not os.path.exists(local_path):
+        if not os.path.exists(self.test_genomes_path):
+            URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Downloading PGAP test genomes')
-            install_url('https://s3.amazonaws.com/pgap-data/test_genomes{}.tgz'.format(get_suffix(self.branch)),
-                        self.rundir, self.args.quiet, self.args.teamcity)
+            print(self.test_genomes_path)
+            print(URL)
+            install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
@@ -429,6 +441,10 @@ def main():
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
 
+    parser.add_argument("--ignore-all-errors", 
+                        dest='ignore_all_errors', 
+                        action='store_true', 
+                        help='Ignore all errors in PGAPX.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
