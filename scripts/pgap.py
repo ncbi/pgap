@@ -148,7 +148,7 @@ class Pipeline:
             f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 f.write(u'report_usage: {}\n'.format(self.params.report_usage))
-            if (self.params.ignore_all_errors != 'none'):
+            if (self.params.ignore_all_errors == 'true'):
                 f.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             f.flush()
         return yaml
@@ -239,6 +239,7 @@ class Pipeline:
             except subprocess.TimeoutExpired:
                 print('docker did not exit cleanly.')
         t.join()
+        return proc.returncode
 
 class Setup:
 
@@ -360,7 +361,6 @@ class Setup:
             return 'true'
         else:
             return 'false'
-        return 'none' # do we need this in Python? obviously code never reaches this
 
     def get_timeout(self):
         def str2sec(s):
@@ -460,9 +460,12 @@ def main():
 
     params = Setup(args)
 
+    retcode = 0
     if args.input:
         p = Pipeline(params, args.input)
-        p.launch()
+        retcode = p.launch()
+
+    sys.exit(retcode)
         
 if __name__== "__main__":
     main()
