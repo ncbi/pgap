@@ -239,6 +239,7 @@ class Pipeline:
             except subprocess.TimeoutExpired:
                 print('docker did not exit cleanly.')
         t.join()
+        return proc.returncode
 
 class Setup:
 
@@ -459,9 +460,12 @@ def main():
 
     params = Setup(args)
 
+    retcode = 0
     if args.input:
         p = Pipeline(params, args.input)
-        p.launch()
+        retcode = p.launch()
+
+    sys.exit(retcode)
         
 if __name__== "__main__":
     main()
