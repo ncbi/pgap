@@ -352,6 +352,7 @@ steps:
             input: Prepare_Unannotated_Sequences_asnvalidate/o
             xpath_fail: {default: '//*[
                 ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
@@ -832,6 +833,7 @@ steps:
             input: Final_Bacterial_Package_std_validation/outval
             xpath_fail: {default: '//*[
                 ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
