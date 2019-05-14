@@ -425,9 +425,9 @@ def main():
                         help='Verbose mode')
 
     version_group = parser.add_mutually_exclusive_group()
-    version_group.add_argument('--dev',  action='store_true', help="Set development mode")
-    version_group.add_argument('--test', action='store_true', help="Set test mode")
-    version_group.add_argument('--prod', action='store_true', help="Set production mode")
+    version_group.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
+    version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
+    version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
@@ -443,14 +443,15 @@ def main():
 
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
-                        action='store_true', 
-                        help='Ignore all errors in PGAPX.')
+                        action='store_true',
+                        help=argparse.SUPPRESS)
+                        #help='Ignore all errors in PGAPX.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
-    parser.add_argument('-t', '--timeout', default='24:00:00',
-                        help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
+    parser.add_argument('-t', '--timeout', default='24:00:00', help=argparse.SUPPRESS)
+                        #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
