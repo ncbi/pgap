@@ -66,7 +66,7 @@ inputs:
     type: string
     default: align-nomatch.asn
     inputBinding:
-        prefix:  -onon-match
+        prefix:  -non-match-output
 
   o_name: 
     type: string
