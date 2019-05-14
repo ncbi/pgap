@@ -49,6 +49,10 @@ inputs:
      type: string?
      inputBinding:
         prefix: -xslt-path
+  ignore_all_errors:
+        type: boolean?
+        inputBinding:
+            prefix: -ignore-all-errors
 
   xml_output_output:
      type: string?

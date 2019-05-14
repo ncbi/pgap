@@ -16,6 +16,8 @@ inputs:
     type: File
   taxon_db:
     type: File
+  ignore_all_errors:
+        type: boolean?
 outputs:
     input_asn_type: 
         type: string
@@ -50,6 +52,7 @@ steps:
             input: yaml2json/output
             input_fasta: fasta
             taxon_db: taxon_db
+            ignore_all_errors: ignore_all_errors
         out: [output_annotation, output_ltp, input_asn_type, taxid]
     file2string_ltp:
         run: progs/file2string.cwl

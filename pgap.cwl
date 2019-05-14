@@ -23,6 +23,8 @@ inputs:
     default: my_gc_assm_name
   report_usage: boolean
   submol: File
+  ignore_all_errors:
+        type: boolean?
   
 outputs:
   gbent:
@@ -90,6 +92,7 @@ steps:
       fasta: fasta
       submol: submol
       taxon_db: passdata/taxon_db
+      ignore_all_errors: ignore_all_errors
     out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json, taxid]
   fastaval:
     run: progs/fastaval.cwl
@@ -111,5 +114,6 @@ steps:
       report_usage: report_usage
       taxid: prepare_input_template/taxid
       submol_block_json: prepare_input_template/submol_block_json
+      ignore_all_errors: ignore_all_errors
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl
