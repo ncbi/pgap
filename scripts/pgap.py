@@ -115,16 +115,16 @@ class Pipeline:
         if (platform.system() != "Windows"):
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
-            '--volume', '{}:/pgap/input:ro'.format(data_dir),
-            '--volume', '{}:/pgap/user_input'.format(self.input_dir),
-            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro'.format(yaml),
-            '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
+            '--volume', '{}:/pgap/input:ro,z'.format(data_dir),
+            '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
+            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(yaml),
+            '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
         # Debug mount for docker image
         if debug:
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir)
-            self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
+            self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
 
         self.cmd.extend([self.params.docker_image,
                 'cwltool', '--timestamps',
@@ -312,7 +312,10 @@ class Setup:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return
         if self.local_version == self.get_latest_version():
-            print("PGAP from branch {}: version {} is up to date.".format(self.branch, self.local_version))
+            if self.branch == "":
+                print("PGAP version {} is up to date.".format(self.local_version))
+            else:
+                print("PGAP from {} branch, version {} is up to date.".format(self.branch, self.local_version))
             return
         print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
 
