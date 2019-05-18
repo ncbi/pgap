@@ -33,11 +33,6 @@ def is_venv():
     return (hasattr(sys, 'real_prefix') or
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
-# def get_docker_image(version):
-#     return 'ncbi/pgap:{}'.format(version)
-
-
-
 class urlopen_progress:
     def __init__(self, url, teamcity):
         self.remote_file = urlopen(url)
@@ -350,7 +345,10 @@ class Setup:
         return os.path.abspath(outputdir)
         
     def get_docker_cmd(self):
-        return shutil.which(self.args.docker)
+        dockercmd = shutil.which(self.args.docker)
+        if dockercmd == None:
+            sys.exit("Docker not found.")
+        return dockercmd
 
     def get_report_usage(self):
         if (self.args.report_usage_true):
