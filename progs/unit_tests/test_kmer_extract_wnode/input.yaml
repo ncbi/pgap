@@ -1,0 +1,6 @@
+entry: 
+    class: File
+    location: sequences.asn
+entry_jobs: 
+    class: File
+    location: jobs.xml
