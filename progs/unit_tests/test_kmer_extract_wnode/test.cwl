@@ -12,7 +12,7 @@ steps:
             input: entry
             input_jobs: entry_jobs
             kmer_output_dir:  
-                default: .
+                default: outdir # matches dir in entry_jobs
             input_type: 
                 default: seq-entry
         out: [outdir]
