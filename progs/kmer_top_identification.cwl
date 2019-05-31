@@ -1,10 +1,6 @@
 cwlVersion: v1.0 
 label: "kmer_top_identification"
-
-# file: progs/kmer_top_identification.cwl
-
 class: CommandLineTool
-
 baseCommand: kmer_top_identification
 # this is only one example
 # 
@@ -25,10 +21,14 @@ baseCommand: kmer_top_identification
 # 
 # 
 inputs:
+  kmer_cache_sqlite:
+        type: File
+        inputBinding:
+            prefix: -kmer-cache-uri
   N:
-    type: int?
-    inputBinding:
-      prefix: -N
+        type: int?
+        inputBinding:
+            prefix: -N
   distances:
     type: File?
     inputBinding:

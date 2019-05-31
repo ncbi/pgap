@@ -25,7 +25,7 @@ baseCommand: kmer_top_n_extract
 # 
 inputs:
   input:
-    type: File
+    type: File # XML
     inputBinding:
       prefix: -input
   ref_assembly_id:

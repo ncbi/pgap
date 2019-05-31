@@ -1,29 +1,17 @@
 cwlVersion: v1.0 
 label: "submit_kmer_extract"
+doc: > 
+    We need $(inputs.seq_entry) to be a local file to the current subdirectory since the file name goes to
+    output.xml, a notorious file with files.
 
 class: CommandLineTool
+requirements:
+  - class: InitialWorkDirRequirement
+    listing:
+      - entry:  $(inputs.seq_entry)
+        writable: False
+
 baseCommand: submit_kmer_extract
-# this is only one example
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/submit_kmer_extract \
-#     -expected-output \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_seq_entry_extract_wnode.455674802/var/expected_kmer_files \
-#     -S \
-#     GPIPE_SCHED1 \
-#     -D \
-#     GPipeSched_Prod1 \
-#     -U \
-#     gpipe_prod \
-#     -P \
-#     gpipe2007 \
-#     -queue \
-#     GPIPE_BCT.kmer_seq_entry_extract_wnode.455674802.1521225959 \
-#     -kmer-output-dir \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_seq_entry_extract_wnode.455674802/out \
-#     -seq-entry-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_seq_entry_extract_wnode.455674802/inp/seq_entry.mft
 inputs:
   gc_id_list:
     type: File?
@@ -32,10 +20,9 @@ inputs:
   seq_entry:
     type: File?
     inputBinding:
-        prefix: -seq_entry
+        prefix: -seq-entry
   kmer_output_dir:
     type: string?
-    default: output_dir
     inputBinding:
         prefix: -kmer-output-dir
   expected_output:

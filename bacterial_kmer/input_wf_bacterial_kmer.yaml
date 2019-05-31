@@ -12,9 +12,9 @@ ref_assembly_taxid: 243273
 ANI_cutoff: 
     class: File
     location: input/ANI_cutoff.xml
-kmer_cache_path:
-    class: Directory
-    location: input/kmer-cache-minhash
+kmer_cache_sqlite:
+    class: File
+    location: input/kmer.sqlite
 kmer_reference_assemblies:    
     class: File
-    location: input/kmer-reference-assms
+    location: input/reference.gcids

@@ -11,7 +11,6 @@ inputs:
     gencoll_asn: File
     asn_cache: Directory
     kmer_cache_sqlite: File
-    kmer_cache_uri: string
     ref_assembly_taxid: int
     ANI_cutoff: File
     kmer_reference_assemblies: File
@@ -163,19 +162,12 @@ steps:
     in:
       gc_id_list: Extract_Top_Assemblies/gc_id_list
     out: [gencoll_asn]
-  Extract_Input_GenColl_IDs:
-    label: Extract Input Gencoll IDs
-    doc: Input is a target assembly, not to be mixed with list of URIs
-    run: ../task_types/tt_extract_gencoll_ids.cwl
-    in: 
-        assemblies: gencoll_asn
-    out: [gc_id_list]
   Assembly_Assembly_BLASTn:
     label: Assembly Assembly BLASTn
     doc: This is rather standard blast
     run: ../task_types/tt_assm_assm_blastn_wnode.cwl
     in:
-      queries_gc_id_list: Extract_Input_GenColl_IDs/gc_id_list
+      queries_gc_id_list: List_sqlite/keys
       subjects_gc_id_list: Extract_Top_Assemblies/gc_id_list
       # this will brea here
       ref_gencoll_asn: Get_Top_Assemblies_GenColl_ASN/gencoll_asn

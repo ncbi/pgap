@@ -26,6 +26,7 @@ steps:
   kmer_top_identification:
     run: ../progs/kmer_top_identification.cwl
     in:
+      kmer_cache_sqlite: kmer_cache_sqlite
       N:    
         default: 20
       distances: distances
