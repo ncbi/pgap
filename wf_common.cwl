@@ -349,6 +349,8 @@ steps:
                 default: true
             b:
                 default: true
+            y:
+                default: true
         out: [o]
   Prepare_Unannotated_Sequences_asnvalidate_evaluate:
         run: progs/xml_evaluate.cwl
@@ -360,6 +362,12 @@ steps:
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
             ]' }
             ignore_all_errors: ignore_all_errors
         out: [success] 
@@ -842,6 +850,12 @@ steps:
                 and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
             ]' }
         out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
