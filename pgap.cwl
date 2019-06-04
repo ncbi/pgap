@@ -68,6 +68,12 @@ steps:
           var l = inputs.data.listing;
           var n = l.length;
           for (var i = 0; i < n; i++) {
+            if (l[i].basename == 'contam_in_prok_blastdb_dir') {
+              r['contam_in_prok_blastdb_dir'] = l[i];
+            }
+            if (l[i].basename == 'adaptor_fasta.fna') {
+              r['adaptor_fasta'] = l[i];
+            }
             if (l[i].basename == 'uniColl_path') {
               var ul = l[i].listing;
               var un = ul.length;
@@ -83,7 +89,14 @@ steps:
       outputs:
         taxon_db:
           type: File
-    out: [ taxon_db ]
+        adaptor_fasta:
+                type: File
+        contam_in_prok_blastdb_dir:
+                type: Directory
+    out: 
+        - taxon_db
+        - adaptor_fasta 
+        - contam_in_prok_blastdb_dir
 
   prepare_input_template:
     run: prepare_user_input2.cwl
@@ -102,10 +115,21 @@ steps:
             default: 200
         check_internal_ns:
             default: true
-    out: []
+    out: [success]
+  vecscreen:
+        run: vecscreen/vecscreen.cwl
+        in:
+            contig_fasta:   fasta
+            adaptor_fasta:  passdata/adaptor_fasta
+            contam_in_prok_blastdb_dir: passdata/contam_in_prok_blastdb_dir
+            ignore_all_errors: ignore_all_errors
+        out: [success]
   standard_pgap:
     label: PGAP Pipeline
     in:
+      go:
+        - fastaval/success
+        - vecscreen/success
       entries: prepare_input_template/output_entries
       seq_submit: prepare_input_template/output_seq_submit
       supplemental_data: supplemental_data
