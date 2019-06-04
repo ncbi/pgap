@@ -13,6 +13,8 @@ inputs:
   #
   # User specific input
   #
+  go: 
+        type: boolean[]
   entries: File?
   seq_submit: File?
   taxid: int
