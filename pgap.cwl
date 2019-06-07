@@ -8,6 +8,7 @@ doc: |
 label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
   - class: SubworkflowFeatureRequirement
+  - class: MultipleInputFeatureRequirement
 inputs:
   supplemental_data:
     type: Directory
