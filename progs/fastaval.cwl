@@ -47,6 +47,11 @@ inputs:
     doc: Check for internal N's
 outputs:
   out:
-    type: File
-    outputBinding:
-      glob: $(inputs.outname)
+        type: File
+        outputBinding:
+            glob: $(inputs.outname)
+  success:
+        type: boolean
+        outputBinding:
+            outputEval: $(true)
+            
