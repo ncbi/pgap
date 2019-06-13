@@ -96,14 +96,26 @@ class urlopen_progress:
         return buffer
 
 def install_url(url, path, quiet, teamcity):
+    basename = os.path.basename(urlparse(url).path)
     try:
-        response = urlopen_progress(url, quiet, teamcity)
-        with tarfile.open(mode='r|*', fileobj=response) as tar:
+        local_file =  os.path.join(path, basename)
+        if os.path.exists(local_file):
+            if not quiet:
+                print('Extracting local tarball: {}'.format(local_file))
+            fileobj = open(local_file, 'rb')
+        else:
+            if not quiet:
+                print('Downloading and extracting tarball: {}'.format(url))
+            fileobj = urlopen_progress(url, quiet, teamcity)
+        with tarfile.open(mode='r|*', fileobj=fileobj) as tar:
             tar.extractall(path=path)
-    finally:
-        pass
-    #except:
-    #    print("Oops!",sys.exc_info()[0],"occured.")
+    except:
+        sys.stderr.write('''
+ERROR: Failed to extract tarball; to install manually, try something like:
+    curl -OLC - {}
+    tar xvf {}
+'''.format(url, basename))
+        raise
 
 class Pipeline:
 
@@ -409,7 +421,7 @@ class Setup:
 
     def install_data(self):
         if not os.path.exists(self.data_path):
-            print('Downloading PGAP reference data version {}'.format(self.use_version))
+            print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
@@ -424,7 +436,7 @@ class Setup:
 
         if not os.path.exists(self.test_genomes_path):
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
-            print('Downloading PGAP test genomes')
+            print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
@@ -479,12 +491,18 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
 
-    params = Setup(args)
-
     retcode = 0
-    if args.input:
-        p = Pipeline(params, args.input)
-        retcode = p.launch()
+    try:
+        params = Setup(args)
+
+        if args.input:
+            p = Pipeline(params, args.input)
+            retcode = p.launch()
+    except (Exception, KeyboardInterrupt) as exc:
+        if args.debug:
+            raise
+        retcode = 1
+        print(exc)
 
     sys.exit(retcode)
         
