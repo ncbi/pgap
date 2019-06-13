@@ -34,8 +34,15 @@ def is_venv():
             (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
 
 class urlopen_progress:
-    def __init__(self, url, teamcity):
-        self.remote_file = urlopen(url)
+    timeout = 60
+    retries = 10
+
+    def __init__(self, url, quiet, teamcity):
+        self.url = url
+        self.bytes_so_far = 0
+        self.urlopen()
+
+        self.quiet = quiet
         self.teamcity = teamcity
         if teamcity:
             self.EOL = '\n'
@@ -46,13 +53,30 @@ class urlopen_progress:
         total_size = self.remote_file.getheader('Content-Length', 0) # More modern method
 
         self.total_size = int(total_size)
-        self.bytes_so_far = 0
+
+    def urlopen(self):
+        headers = dict()
+        if self.bytes_so_far > 0:
+            headers['Range'] = 'bytes={}-'.format(self.bytes_so_far)
+        request = Request(self.url, headers=headers)
+        self.remote_file = urlopen(request, timeout=self.timeout)
 
     def read(self, n=131072):
-        buffer = self.remote_file.read(n)
-        if not buffer:
-            sys.stdout.write('\n')
-            return ''
+        delay = 1
+        for attempt in range(self.retries):
+            try:
+                if self.remote_file is None:
+                    self.urlopen()
+                buffer = self.remote_file.read(n)
+                if not buffer:
+                    if not self.quiet:
+                        sys.stdout.write('\n')
+                    return ''
+                break
+            except Exception as ex:
+                self.remote_file = None
+                time.sleep(delay)
+                delay += delay
 
         self.bytes_so_far += len(buffer)
         percent = float(self.bytes_so_far) / self.total_size
@@ -66,25 +90,32 @@ class urlopen_progress:
                 self.cur_row = row
                 do_print = True
 
-        if do_print:
+        if do_print and not self.quiet:
             sys.stderr.write("Downloaded %d of %d bytes (%0.2f%%)%s" % (self.bytes_so_far, self.total_size, percent, self.EOL))
 
         return buffer
 
 def install_url(url, path, quiet, teamcity):
+    basename = os.path.basename(urlparse(url).path)
     try:
-        if quiet:
-            with urlopen(url) as response:
-                with tarfile.open(mode='r|*', fileobj=response) as tar:
-                    tar.extractall(path=path)
+        local_file =  os.path.join(path, basename)
+        if os.path.exists(local_file):
+            if not quiet:
+                print('Extracting local tarball: {}'.format(local_file))
+            fileobj = open(local_file, 'rb')
         else:
-            response = urlopen_progress(url, teamcity)
-            with tarfile.open(mode='r|*', fileobj=response) as tar:
-                tar.extractall(path=path)
-    finally:
-        pass
-    #except:
-    #    print("Oops!",sys.exc_info()[0],"occured.")
+            if not quiet:
+                print('Downloading and extracting tarball: {}'.format(url))
+            fileobj = urlopen_progress(url, quiet, teamcity)
+        with tarfile.open(mode='r|*', fileobj=fileobj) as tar:
+            tar.extractall(path=path)
+    except:
+        sys.stderr.write('''
+ERROR: Failed to extract tarball; to install manually, try something like:
+    curl -OLC - {}
+    tar xvf {}
+'''.format(url, basename))
+        raise
 
 class Pipeline:
 
@@ -390,7 +421,7 @@ class Setup:
 
     def install_data(self):
         if not os.path.exists(self.data_path):
-            print('Downloading PGAP reference data version {}'.format(self.use_version))
+            print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
@@ -405,7 +436,7 @@ class Setup:
 
         if not os.path.exists(self.test_genomes_path):
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
-            print('Downloading PGAP test genomes')
+            print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
@@ -460,12 +491,18 @@ def main():
                         help='Debug mode')
     args = parser.parse_args()
 
-    params = Setup(args)
-
     retcode = 0
-    if args.input:
-        p = Pipeline(params, args.input)
-        retcode = p.launch()
+    try:
+        params = Setup(args)
+
+        if args.input:
+            p = Pipeline(params, args.input)
+            retcode = p.launch()
+    except (Exception, KeyboardInterrupt) as exc:
+        if args.debug:
+            raise
+        retcode = 1
+        print(exc)
 
     sys.exit(retcode)
         
