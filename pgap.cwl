@@ -28,9 +28,6 @@ inputs:
         type: boolean?
   
 outputs:
-  gbent:
-    outputSource: standard_pgap/gbent
-    type: File
   gbk:
     outputSource: standard_pgap/gbk
     type: File
