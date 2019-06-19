@@ -51,7 +51,7 @@ steps:
       min_gap: 
         default: 10000
       min_region: 
-        default: 1000
+        default: 100
       query_assembly: gencoll_asn
       ref_assembly_id: 
         default: 0
