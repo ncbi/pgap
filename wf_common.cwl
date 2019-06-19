@@ -815,6 +815,7 @@ steps:
             - OVERLAPPING_GENES
             - EXTRA_GENES
             - N_RUNS
+            - BAD_LOCUS_TAG_FORMAT 
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
