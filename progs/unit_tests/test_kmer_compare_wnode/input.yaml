@@ -1,0 +1,6 @@
+kmer_cache_sqlite:
+    class: File
+    location: subset.sqlite
+input_jobs:
+    class: File
+    location: jobs2.xml    
