@@ -1,6 +1,27 @@
+#
+#   Common input for both tests
+#
 kmer_cache_sqlite:
     class: File
-    location: subset.sqlite
+    location: subset.sqlite # 20 kmers = 19 references + 1 target
+#
+#   test 1: target versus references
+#    
 input_jobs:
     class: File
-    location: jobs2.xml    
+    location: jobs.xml    
+kmer_ref_file: 
+    class: File
+    location: kmer_ref.list
+kmer_tar_file: 
+    class: File
+    location: kmer_target.list
+#
+#   test 2: pairwise
+#    
+input_jobs_pairwise:
+    class: File
+    location: jobs_pairwise.xml        
+kmer_file: 
+    class: File
+    location: kmer.list
