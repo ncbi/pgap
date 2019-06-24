@@ -1,35 +1,30 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow # task type
-#/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/kmer_top_identification \
-#    -N \
-#    20 \
-#    -distances-manifest \
-#    /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n.455674842/inp/distances.mft \
-#    -omatches \
-#    /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n.455674842/tmp/matches \
-#    -oxml \
-#    /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n.455674842/out/top_distances.xml \
-#    -threshold \
-#    0.8
+# kmer_top_identification -N 20 -distances-manifest kmer_top_n.455674842/inp/distances.mft \
+#    -omatches kmer_top_n.455674842/tmp/matches \
+#    -oxml kmer_top_n.455674842/out/top_distances.xml \
+#    -threshold 0.8
+#
 inputs:
     kmer_cache_sqlite: File
     distances: File
+  
 outputs:
-  matches:
-    type: File[]
-    outputSource: kmer_top_identification/matches
-  top_distances:
-    type: File
-    outputSource: kmer_top_identification/top_distances
+    matches:
+        type: File
+        outputSource: kmer_top_identification/matches
+    top_distances:
+        type: File
+        outputSource: kmer_top_identification/top_distances
 steps:
-  kmer_top_identification:
-    run: ../progs/kmer_top_identification.cwl
-    in:
-      kmer_cache_sqlite: kmer_cache_sqlite
-      N:    
-        default: 20
-      distances: distances
-      threshold: 
-        default: 0.8
-    out: [top_distances, matches]
+    kmer_top_identification:
+        run: ../progs/kmer_top_identification.cwl
+        in:
+            kmer_cache_sqlite: kmer_cache_sqlite
+            N:    
+                default: 20
+            distances: distances
+            threshold: 
+                default: 0.8
+        out: [top_distances, matches]
