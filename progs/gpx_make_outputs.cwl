@@ -16,58 +16,18 @@ class: CommandLineTool
 baseCommand: gpx_make_outputs
 # this is only one example
 # 
+# submit_kmer_compare \
+#     -kmer-files-manifest kmer_ref_compare_wnode.455674762/inp/kmer_file_list.mft \
+#     -ref-kmer-files-manifest kmer_ref_compare_wnode.455674762/inp/ref_kmer_file_list.mft
 # 
+# kmer_compare_wnode \
+#     -dist-method minhash \
+#     -minhash-signature minhash \
+#     -score-method boolean \
 # 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/submit_kmer_compare \
-#     -S \
-#     GPIPE_SCHED1 \
-#     -D \
-#     GPipeSched_Prod1 \
-#     -U \
-#     gpipe_prod \
-#     -P \
-#     gpipe2007 \
-#     -queue \
-#     GPIPE_BCT.kmer_ref_compare_wnode.455674762.1521225984 \
-#     -kmer-files-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_ref_compare_wnode.455674762/inp/kmer_file_list.mft \
-#     -ref-kmer-files-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_ref_compare_wnode.455674762/inp/ref_kmer_file_list.mft
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/kmer_compare_wnode \
-#     -dist-method \
-#     minhash \
-#     -minhash-signature \
-#     minhash \
-#     -score-method \
-#     boolean \
-#     -service \
-#     GPipeExec_Prod \
-#     -queue \
-#     GPIPE_BCT.kmer_ref_compare_wnode.455674762.1521225984
-# 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/gpx_make_outputs \
-#     -num-partitions \
-#     32 \
-#     -output \
-#     '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_ref_compare_wnode.455674762/out/distances.##.gz' \
-#     -output-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_ref_compare_wnode.455674762/out/distances.mft \
-#     -S \
-#     GPIPE_SCHED1 \
-#     -D \
-#     GPipeSched_Prod1 \
-#     -U \
-#     gpipe_prod \
-#     -P \
-#     gpipe2007 \
-#     -queue \
-#     GPIPE_BCT.kmer_ref_compare_wnode.455674762.1521225984
-# 
+# gpx_make_outputs -num-partitions 32 \
+#     -output kmer_ref_compare_wnode.455674762/out/distances.##.gz' \
+#     -output-manifest kmer_ref_compare_wnode.455674762/out/distances.mft \
 # 
 # 
 inputs:
