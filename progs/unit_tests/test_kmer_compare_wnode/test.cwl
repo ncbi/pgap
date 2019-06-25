@@ -16,7 +16,7 @@ steps:
         in:
             kmer_cache_sqlite: kmer_cache_sqlite
             kmer_list: kmer_tar_file
-            kmer_ref_list: kmer_ref_file
+            ref_kmer_list: kmer_ref_file
             jobs: input_jobs
             dist_method:
                 default: 'minhash'

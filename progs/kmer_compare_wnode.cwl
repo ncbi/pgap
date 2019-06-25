@@ -11,12 +11,11 @@ baseCommand: kmer_compare_wnode
 # 
 # 
 # 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/submit_kmer_compare \
-#     GPIPE_BCT.kmer_ref_compare_wnode.455674762.1521225984 \
+# submit_kmer_compare \
 #     -kmer-files-manifest kmer_ref_compare_wnode.455674762/inp/kmer_file_list.mft \
 #     -ref-kmer-files-manifest kmer_ref_compare_wnode.455674762/inp/ref_kmer_file_list.mft
 # 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/kmer_compare_wnode \
+# kmer_compare_wnode \
 #     -dist-method \
 #     minhash \
 #     -minhash-signature \
@@ -24,7 +23,7 @@ baseCommand: kmer_compare_wnode
 #     -score-method \
 #     boolean \
 # 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/gpx_make_outputs \
+# gpx_make_outputs \
 #     -num-partitions \
 #     32 \
 #     -output \
@@ -39,7 +38,7 @@ requirements:
       - entryname: kmer-files-manifest.mft
         entry: $(inputs.kmer_list.path)
       - entryname: kmer-ref-files-manifest.mft
-        entry: ${var blob = '# kmer-ref-files-manifest.mft created for kmer_compare_wnode from input kmer_ref_list File\n';  if(inputs.kmer_ref_list == null ) { return blob; } else { return blob +  inputs.kmer_ref_list.path + '\n'; } }
+        entry: ${var blob = '# kmer-ref-files-manifest.mft created for kmer_compare_wnode from input ref_kmer_list File\n';  if(inputs.ref_kmer_list == null ) { return blob; } else { return blob +  inputs.ref_kmer_list.path + '\n'; } }
         
 inputs:
     kmer_cache_sqlite:
@@ -53,7 +52,7 @@ inputs:
         default: kmer-files-manifest.mft
         inputBinding:
             prefix: -kmer-files-manifest
-    kmer_ref_list: 
+    ref_kmer_list: 
         type: File?
     kmer_ref_manifest:
         type: string?

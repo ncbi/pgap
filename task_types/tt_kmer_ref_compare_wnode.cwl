@@ -29,6 +29,8 @@ steps:
         run: ../progs/kmer_compare_wnode.cwl
         in:
             kmer_cache_sqlite: kmer_cache_sqlite
+            kmer_list: kmer_list
+            ref_kmer_list: ref_kmer_list
             jobs: submit_kmer_compare/output
             dist_method: dist_method
             minhash_signature: minhash_signature
