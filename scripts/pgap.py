@@ -169,14 +169,18 @@ class Pipeline:
 
     def create_inputfile(self, local_input):        
         yaml = self.input_dir + '/pgap_input.yaml'
-        shutil.copyfile(local_input, yaml)
-        with open(yaml, 'a') as f:
-            f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+        with open(yaml, 'w') as fOut:
+            with open(local_input, 'r') as fIn:
+                for line in fIn:
+                    if line: # skip empty lines
+                        fOut.write(line.rstrip())
+                        fOut.write(u'\n')
+            fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
-                f.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
             if (self.params.ignore_all_errors == 'true'):
-                f.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
-            f.flush()
+                fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
+            fOut.flush()
         return yaml
         
     def record_runtime(self):
