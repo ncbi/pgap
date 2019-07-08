@@ -5,23 +5,11 @@ class: CommandLineTool
 baseCommand: kmer_top_n_extract
 # this is only one example
 # 
-# 
-# 
-# /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/bin/kmer_top_n_extract \
-#     -input-manifest \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n_extract.455674812/inp/top_distances.mft \
-#     -otop-assms \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n_extract.455674812/out/top-reference-assms \
-#     -otop-assms-xml \
-#     /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/data56/Mycoplasma_genitalium_G37/Mycoplasma_genitalium_External_PGAP.4585524/4829637/kmer_top_n_extract.455674812/out/kmer-tax-report.xml \
-#     -ref-assembly-id \
-#     0 \
-#     -ref-assembly-taxid \
-#     243273 \
-#     -threshold \
-#     0.1
-# 
-# 
+# kmer_top_n_extract \
+#     -input-manifest kmer_top_n_extract.455674812/inp/top_distances.mft \
+#     -otop-assms kmer_top_n_extract.455674812/out/top-reference-assms \
+#     -otop-assms-xml kmer_top_n_extract.455674812/out/kmer-tax-report.xml \
+#     -ref-assembly-id 0 -ref-assembly-taxid 243273 -threshold 0.1
 # 
 inputs:
   input:
@@ -37,7 +25,7 @@ inputs:
     inputBinding:
       prefix: -ref-assembly-taxid
   threshold:
-    type: string?
+    type: float?
     inputBinding:
       prefix: -threshold
   otop_assms_xml:

@@ -41,6 +41,8 @@ inputs:
         type: File
   ignore_all_errors:
         type: boolean?
+  contact_as_author_possible:
+        type: boolean?
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -708,6 +710,7 @@ steps:
             linkMerge: merge_flattened
         it:
             default: true
+        contact_as_author_possible: contact_as_author_possible
         output_impl:
             default: annot-wo-checksum.sqn
     out: [output]

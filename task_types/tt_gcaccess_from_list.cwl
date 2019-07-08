@@ -14,7 +14,7 @@ steps:
     in:
       mode: 
         default: AllSequences
-      release_id: gc_id_list
+      release_id_list: gc_id_list
     out: [gencoll_asn]
 # this is for the future  we might need this in general case    
 #  gc_get_molecules:

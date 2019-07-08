@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 label: "tt_kmer_compare_wnode"  
+doc: 'Pairwise comparison'
 # File: tt_kmer_compare_wnode.cwl
 class: Workflow # task type
 inputs:
@@ -14,7 +15,7 @@ outputs:
     outputSource: gpx_make_outputs/output_file
 steps:
     submit_kmer_compare:
-        run: ../progs/submit_kmer_compare.cwl
+        run: ../progs/submit_kmer_compare_tmp_pairwise.cwl
         in:
             kmer_list: kmer_list
         out: [output]
@@ -31,11 +32,13 @@ steps:
     gpx_make_outputs:
         run: ../progs/gpx_make_outputs.cwl
         in:
-          input_path: kmer_compare_wnode/outdir
-          num_partitions: 
-            default: 1
-          output: 
-            default: "distances.##.gz"
-          output_glob:
-            default: "distances.*.gz"
+            input_path: kmer_compare_wnode/outdir
+            num_partitions: 
+                default: 1
+            output: 
+                default: "distances.##.gz"
+            output_glob:
+                default: "distances.*.gz"
+            unzip:
+                default: "dont-unzip"
         out: [output_file]
