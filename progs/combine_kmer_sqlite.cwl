@@ -15,10 +15,6 @@ inputs:
         default: combined_kmer_cache.sqlite
         inputBinding:
             prefix: -output-kmer-sqlite-file
-    fast:
-        type: boolean
-        inputBinding:
-            prefix: -fast
 outputs:
     combined_cache_sqlite:
         type: File

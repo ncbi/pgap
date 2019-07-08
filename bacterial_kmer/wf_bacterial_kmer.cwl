@@ -76,8 +76,6 @@ steps:
             This new step will combine together reference kmer store and newly created kmer store for a new assembly
         run: ../progs/combine_kmer_sqlite.cwl
         in:
-            fast: 
-                default: true
             kmer_cache_sqlite: 
                 source: [kmer_cache_sqlite, Convert_kmer_files_to_sqlite/out_kmer_cache_sqlite]
                 linkMerge: merge_flattened

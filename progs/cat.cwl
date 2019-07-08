@@ -10,6 +10,7 @@ inputs:
         type: File[]
         inputBinding: 
             position: 1
+            itemSeparator: ' '
     output_file_name:
         type: string
         default: concatenated.file
