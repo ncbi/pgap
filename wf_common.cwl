@@ -737,6 +737,7 @@ steps:
             linkMerge: merge_flattened
         it:
             default: true
+        contact_as_author_possible: contact_as_author_possible
         output_impl:
             default: annot-wo-checksum.sqn
     out: [output]
