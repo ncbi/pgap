@@ -39,11 +39,13 @@ steps:
     gpx_make_outputs:
         run: ../progs/gpx_make_outputs.cwl
         in:
-          input_path: kmer_compare_wnode/outdir
-          num_partitions: 
-            default: 1
-          output: 
-            default: "distances.##.gz"
-          output_glob:
-            default: "distances.*.gz"
+            input_path: kmer_compare_wnode/outdir
+            num_partitions: 
+                default: 1
+            output: 
+                default: "distances.##.gz"
+            output_glob:
+                default: "distances.*.gz"
+            unzip:
+                default: "dont-unzip"
         out: [output_file]

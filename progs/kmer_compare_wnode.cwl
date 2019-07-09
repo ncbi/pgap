@@ -35,10 +35,10 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: kmer-files-manifest.mft
+      - entryname: submit_kmer_compare.kmer-files.mft
         entry: $(inputs.kmer_list.path)
-      - entryname: kmer-ref-files-manifest.mft
-        entry: ${var blob = '# kmer-ref-files-manifest.mft created for kmer_compare_wnode from input ref_kmer_list File\n';  if(inputs.ref_kmer_list == null ) { return blob; } else { return blob +  inputs.ref_kmer_list.path + '\n'; } }
+      - entryname: submit_kmer_compare.ref-kmer-files.mft
+        entry: ${var blob = '# submit_kmer_compare.ref-kmer-files.mft created for kmer_compare_wnode from input ref_kmer_list File\n';  if(inputs.ref_kmer_list == null ) { return blob; } else { return blob +  inputs.ref_kmer_list.path + '\n'; } }
         
 inputs:
     kmer_cache_sqlite:
@@ -49,14 +49,14 @@ inputs:
         type: File
     kmer_manifest:
         type: string?
-        default: kmer-files-manifest.mft
+        default: submit_kmer_compare.kmer-files.mft
         inputBinding:
             prefix: -kmer-files-manifest
     ref_kmer_list: 
         type: File?
     kmer_ref_manifest:
         type: string?
-        default: kmer-ref-files-manifest.mft
+        default: submit_kmer_compare.ref-kmer-files.mft
         inputBinding:
             prefix: -ref-kmer-files-manifest
     dist_method:
