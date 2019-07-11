@@ -29,6 +29,8 @@ steps:
         run: ../progs/kmer_compare_wnode.cwl
         in:
             kmer_cache_sqlite: kmer_cache_sqlite
+            kmer_list: kmer_list
+            ref_kmer_list: ref_kmer_list
             jobs: submit_kmer_compare/output
             dist_method: dist_method
             minhash_signature: minhash_signature
@@ -37,11 +39,13 @@ steps:
     gpx_make_outputs:
         run: ../progs/gpx_make_outputs.cwl
         in:
-          input_path: kmer_compare_wnode/outdir
-          num_partitions: 
-            default: 1
-          output: 
-            default: "distances.##.gz"
-          output_glob:
-            default: "distances.*.gz"
+            input_path: kmer_compare_wnode/outdir
+            num_partitions: 
+                default: 1
+            output: 
+                default: "distances.##.gz"
+            output_glob:
+                default: "distances.*.gz"
+            unzip:
+                default: "dont-unzip"
         out: [output_file]

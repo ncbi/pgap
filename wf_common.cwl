@@ -41,6 +41,8 @@ inputs:
         type: File
   ignore_all_errors:
         type: boolean?
+  contact_as_author_possible:
+        type: boolean?
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -708,6 +710,7 @@ steps:
             linkMerge: merge_flattened
         it:
             default: true
+        contact_as_author_possible: contact_as_author_possible
         output_impl:
             default: annot-wo-checksum.sqn
     out: [output]
@@ -815,6 +818,7 @@ steps:
             - OVERLAPPING_GENES
             - EXTRA_GENES
             - N_RUNS
+            - BAD_LOCUS_TAG_FORMAT 
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output

@@ -4,21 +4,21 @@ label: "gc_get_assembly"
 class: CommandLineTool
 baseCommand: gc_get_assembly
 inputs:
-  mode:
-    type: string?
-    inputBinding:
-      prefix: -mode
-  output:
-    type: File
-    default: gencoll.asn
-    inputBinding:
-      prefix: -o
-  release_id:
-    type: File
-    inputBinding:
-      prefix: -release_id
+    mode:
+        type: string?
+        inputBinding:
+          prefix: -mode
+    output_name:
+        type: string
+        default: gencoll.asn
+        inputBinding:
+          prefix: -o
+    release_id_list:
+        type: File?
+        inputBinding:
+          prefix: -release_id_list
 outputs: 
     gencoll_asn:
         type: File
         outputBinding:
-            glob: $(inputs.output)
+            glob: $(inputs.output_name)

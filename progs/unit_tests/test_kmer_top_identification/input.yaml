@@ -1,0 +1,7 @@
+distances:
+    class: File
+    location: distances.1.gz
+kmer_cache_sqlite:
+    class: File
+    location: subset.sqlite
+

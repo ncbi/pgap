@@ -1,15 +1,9 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-class: Workflow # task type
-# kmer_top_identification -N 20 -distances-manifest kmer_top_n.455674842/inp/distances.mft \
-#    -omatches kmer_top_n.455674842/tmp/matches \
-#    -oxml kmer_top_n.455674842/out/top_distances.xml \
-#    -threshold 0.8
-#
+cwlVersion: v1.0 
+label: "kmer_top_identification.cwl"
+class: Workflow
 inputs:
     kmer_cache_sqlite: File
     distances: File
-  
 outputs:
     matches:
         type: File
@@ -19,7 +13,7 @@ outputs:
         outputSource: kmer_top_identification/top_distances
 steps:
     kmer_top_identification:
-        run: ../progs/kmer_top_identification.cwl
+        run: ../../kmer_top_identification.cwl
         in:
             kmer_cache_sqlite: kmer_cache_sqlite
             N:    
@@ -28,3 +22,4 @@ steps:
             threshold: 
                 default: 0.8
         out: [top_distances, matches]
+
