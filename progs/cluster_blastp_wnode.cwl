@@ -4,6 +4,8 @@ label: "cluster_blastp_wnode"
 class: CommandLineTool
 requirements:
   - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMax: 5000
   - class: InitialWorkDirRequirement
     listing:
       - entry:  ${ var cs=0; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }

@@ -2,6 +2,10 @@ cwlVersion: v1.0
 label: "sparclbl"
 
 class: CommandLineTool
+requirements:
+ - class: ResourceRequirement
+   ramMax: 15000
+
 baseCommand: sparclbl.sh
 inputs:
   s: 
