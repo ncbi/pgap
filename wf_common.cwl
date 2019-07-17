@@ -842,6 +842,7 @@ steps:
         in:
             input: Final_Bacterial_Package_std_validation/outdisc
             xpath_fail: {default: '//*[@severity="FATAL"]' }
+            ignore_all_errors: ignore_all_errors
         out: [] 
   Final_Bacterial_Package_asnvalidate_evaluate:
         run: progs/xml_evaluate.cwl
@@ -860,6 +861,7 @@ steps:
                 and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                 and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
             ]' }
+            ignore_all_errors: ignore_all_errors
         out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
     run: progs/val_stats.cwl
