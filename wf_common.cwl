@@ -10,37 +10,78 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
-  #
-  # User specific input
-  #
-  go: 
+    #
+    # User specific input
+    #
+    go: 
         type: boolean[]
-  entries: File?
-  seq_submit: File?
-  taxid: int
-  gc_assm_name: string
-  locus_tag_prefix: string?
-  dbname: string?
-  report_usage: boolean
+    entries: File?
+    seq_submit: File?
+    taxid: int
+    gc_assm_name: string
+    locus_tag_prefix: string?
+    dbname: string?
+    report_usage: boolean
 
-  #
-  # User independent, static input
-  #
-  blast_rules_db:
-    type: string
-    default: blast_rules_db
-  scatter_gather_nchunks:
-    type: string
-    default: '1'
-  supplemental_data:
-    type: Directory
-    default:
-      class: Directory
-      location: input
-  submol_block_json:
-        type: File
-  ignore_all_errors:
-        type: boolean?
+    #
+    # User independent, static input
+    #
+    blast_rules_db:
+        type: string
+        default: blast_rules_db
+    scatter_gather_nchunks:
+        type: string
+        default: '1'
+    supplemental_data:
+        type: Directory
+        default:
+            class: Directory
+            location: input
+    submol_block_json: File
+    ignore_all_errors: boolean?
+    contact_as_author_possible: boolean?
+    xpath_fail_initial_asndisc: 
+        type: string?
+        doc: 'The default: setting is for standard call of pgap.cwl (for example, from pgap.py)'
+        default: //*[@severity="FATAL"]
+    xpath_fail_initial_asnvalidate: 
+        type: string?
+        doc: 'The default: setting is for standard call of pgap.cwl (for example, from pgap.py)'
+        default: >
+            //*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+            ]
+    xpath_fail_final_asndisc: 
+        type: string?
+        doc: 'The default: setting is for standard call of pgap.cwl (for example, from pgap.py)'
+        default: //*[@severity="FATAL"]
+    xpath_fail_final_asnvalidate: 
+        type: string?
+        doc: 'The default: setting is for standard call of pgap.cwl (for example, from pgap.py)'
+        default: >
+                //*[( @severity="ERROR" or @severity="REJECT" )
+                    and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                    and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                    and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                    and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                    and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                    and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                    and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                    and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                    and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                    and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                ]
+        
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -327,7 +368,7 @@ steps:
         run: progs/xml_evaluate.cwl
         in:
             input: Prepare_Unannotated_Sequences_asndisc_cpp/o
-            xpath_fail: {default: '//*[@severity="FATAL"]' }
+            xpath_fail: xpath_fail_initial_asndisc
             ignore_all_errors: ignore_all_errors
         out: [success] 
   Prepare_Unannotated_Sequences_asnvalidate:
@@ -358,19 +399,7 @@ steps:
         run: progs/xml_evaluate.cwl
         in:
             input: Prepare_Unannotated_Sequences_asnvalidate/o
-            xpath_fail: {default: '//*[
-                ( @severity="ERROR" or @severity="REJECT" )
-                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            ]' }
+            xpath_fail: xpath_fail_initial_asnvalidate
             ignore_all_errors: ignore_all_errors
         out: [success] 
 
@@ -841,26 +870,14 @@ steps:
         run: progs/xml_evaluate.cwl
         in:
             input: Final_Bacterial_Package_std_validation/outdisc
-            xpath_fail: {default: '//*[@severity="FATAL"]' }
+            xpath_fail: xpath_fail_final_asndisc
             ignore_all_errors: ignore_all_errors
         out: [] 
   Final_Bacterial_Package_asnvalidate_evaluate:
         run: progs/xml_evaluate.cwl
         in:
             input: Final_Bacterial_Package_std_validation/outval
-            xpath_fail: {default: '//*[
-                ( @severity="ERROR" or @severity="REJECT" )
-                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            ]' }
+            xpath_fail: xpath_fail_final_asnvalidate
             ignore_all_errors: ignore_all_errors
         out: [] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
