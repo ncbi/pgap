@@ -12,6 +12,8 @@ inputs:
     type: Directory
   - id: contig_fasta
     type: File
+  - id: ignore_all_errors
+    type: boolean?
 steps:
   default_plane:
     run: ../vecscreen/foreign_screening.cwl
@@ -47,7 +49,15 @@ steps:
       graph of classic Gpipe
       it should go _after_ all screenings, so it goes to a separate degenerate 
       "plane" = "task" here
-      
+  screen_evaluate:
+        run: ../progs/screen_evaluate.cwl
+        in:
+            asn: bacterial_screening/feats
+            tab: FSCR_Calls_first_pass/calls
+            ifmt:
+                default: seq-annot
+            ignore_all_errors: ignore_all_errors
+        out: [success]
 outputs:
   out_cache_dir:
     type: Directory
@@ -73,4 +83,6 @@ outputs:
   calls:
     type: File
     outputSource: FSCR_Calls_first_pass/calls
-
+  success:
+        type: boolean
+        outputSource: screen_evaluate/success

@@ -23,6 +23,10 @@ inputs:
         default: 'JSON'
         inputBinding:
             prefix: -ifmt
+    ignore_all_errors:
+        type: boolean?
+        inputBinding:
+            prefix: -ignore-all-errors    
     ofmt:
         type: string
         default: 'JSON'

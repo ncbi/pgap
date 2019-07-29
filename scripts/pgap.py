@@ -131,7 +131,7 @@ class Pipeline:
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
         input_file = '/pgap/user_input/pgap_input.yaml'
 
-        yaml = self.create_inputfile(local_input)
+        self.yaml = self.create_inputfile(local_input)
         
         # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
@@ -143,7 +143,7 @@ class Pipeline:
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,z'.format(data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
-            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(yaml),
+            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(self.yaml),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
         # Debug mount for docker image
@@ -169,14 +169,18 @@ class Pipeline:
 
     def create_inputfile(self, local_input):        
         yaml = self.input_dir + '/pgap_input.yaml'
-        shutil.copyfile(local_input, yaml)
-        with open(yaml, 'a') as f:
-            f.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+        with open(yaml, 'w') as fOut:
+            with open(local_input, 'r') as fIn:
+                for line in fIn:
+                    if line: # skip empty lines
+                        fOut.write(line.rstrip())
+                        fOut.write(u'\n')
+            fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
-                f.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
             if (self.params.ignore_all_errors == 'true'):
-                f.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
-            f.flush()
+                fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
+            fOut.flush()
         return yaml
         
     def record_runtime(self):
@@ -246,6 +250,12 @@ class Pipeline:
                 cmdline = "Docker command: " + " ".join(self.cmd)
                 f.write(cmdline)
                 f.write("\n\n")
+                # Show YAML file in the log
+                f.write("--- Start YAML Input ---\n")
+                with open(self.yaml, 'r') as fIn:
+                    for line in fIn:
+                        f.write(line)
+                f.write("--- End YAML Input ---\n")
                 while proc.poll() == None:
                     while True:
                         try:

@@ -22,12 +22,14 @@ inputs:
      type: boolean?
      inputBinding:
         prefix: -b
-        
+  y:
+     type: boolean?
+     inputBinding:
+        prefix: -y
   E:
      type: string?
      inputBinding:
         prefix: -E
-  
   N:
      type: int?
      inputBinding:

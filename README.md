@@ -38,11 +38,11 @@ Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
 
-### GeneMarkS
+### GeneMarkS-2+
 
-[GeneMarkS: a self-training method for prediction of gene starts in microbial genomes. Implications for finding sequence motifs in regulatory regions.](https://www.ncbi.nlm.nih.gov/pubmed/11410670)\
-Besemer J, Lomsadze A, Borodovsky M.\
-Nucleic Acids Research. 2001;29(12):2607-2618.
+[Modeling leaderless transcription and atypical genes results in more accurate gene prediction in prokaryotes](https://www.ncbi.nlm.nih.gov/pubmed/29773659/)\
+Lomsadze A, Gemayel K, Tang S, Borodovsky M.\
+Genome Research. 2018; 28(7):1079-1089.
 
 ### TIGRFAMs
 
@@ -89,9 +89,9 @@ Please cite NCBI in any work or product based on this material.
 The Docker image contains third-party tools distributed under the
 licensing terms of the respective license holders.
 
-### GeneMarkS
+### GeneMarkS-2+
 
-GeneMarkS is distributed as part of PGAP with limited rights of use
+GeneMarkS-2+ is distributed as part of PGAP with limited rights of use
 and redistribution from the Georgia Tech Research Corporation. See the
 [full text of the license](GeneMarkS_Software_License.txt).
 
