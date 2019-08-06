@@ -1,6 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: fastaval
+baseCommand: fastaval.sh
 label: fastaval
 requirements:
   - class: InlineJavascriptRequirement
@@ -45,6 +45,8 @@ inputs:
     inputBinding:
       prefix: '-check_internal_ns'
     doc: Check for internal N's
+  ignore_all_errors:
+        type: boolean?
 outputs:
   out:
         type: File
