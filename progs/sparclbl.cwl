@@ -5,8 +5,9 @@ class: CommandLineTool
 requirements:
  - class: ResourceRequirement
    ramMax: 15000
+   coresMin: 4
 
-baseCommand: sparclbl.sh
+baseCommand: sparclbl_mp.sh
 inputs:
   s: 
     type: File? # to accomodate output of asn2fasta which is of type [null, File]
