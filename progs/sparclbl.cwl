@@ -5,7 +5,7 @@ class: CommandLineTool
 requirements:
  - class: ResourceRequirement
    ramMax: 15000
-   coresMin: 4
+   coresMin: 1
 
 baseCommand: sparclbl_mp.sh
 inputs:
