@@ -113,6 +113,7 @@ steps:
             default: 200
         check_internal_ns:
             default: true
+        ignore_all_errors: ignore_all_errors
     out: [success]
   vecscreen:
         run: vecscreen/vecscreen.cwl
