@@ -266,8 +266,8 @@ class Pipeline:
                             if (self.params.args.verbose) or pat.match(line):
                                 print(line, end='')
                         except queue.Empty:
+                            time.sleep(0.1)
                             break
-                        time.sleep(0.1)
 
         finally:
             proc.terminate()
