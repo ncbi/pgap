@@ -258,16 +258,24 @@ class Pipeline:
                     for line in fIn:
                         f.write(line)
                 f.write("--- End YAML Input ---\n")
+
+                # Check if child process has terminated
                 while proc.poll() == None:
+                   
+                    # this loop is to avoid (expensive?) checking if process 'proc' terminated
                     while True:
                         try:
-                            line = outq.get(block=False)
+
+                            # either process terminated or it is "thinking"
+                            # let's wait a little bit before checking termination:
+                            line = outq.get(timeout=0.1)
                             f.write(line)
                             if (self.params.args.verbose) or pat.match(line):
                                 print(line, end='')
                         except queue.Empty:
+ 
+                            # go to outer while loop to check proc.poll() == None
                             break
-                        time.sleep(0.1)
 
         finally:
             proc.terminate()
