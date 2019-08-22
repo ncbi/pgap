@@ -52,7 +52,6 @@ steps:
   screen_evaluate:
         run: ../progs/screen_evaluate.cwl
         in:
-            asn: bacterial_screening/feats
             tab: FSCR_Calls_first_pass/calls
             ifmt:
                 default: seq-annot

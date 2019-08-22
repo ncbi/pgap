@@ -2,7 +2,11 @@ cwlVersion: v1.0
 label: "sparclbl"
 
 class: CommandLineTool
-baseCommand: sparclbl.sh
+requirements:
+ - class: ResourceRequirement
+   ramMax: 15000
+
+baseCommand: sparclbl_mp.sh
 inputs:
   s: 
     type: File? # to accomodate output of asn2fasta which is of type [null, File]
