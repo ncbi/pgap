@@ -146,6 +146,14 @@ class Pipeline:
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(self.yaml),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
+        if (self.params.args.cpus):
+            if (platform.system() != "Windows"):
+                self.cmd.extend(['--cpus', self.params.args.cpus])
+            else:
+                self.cmd.extend(['--cpu-count', self.params.args.cpus])
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+            
         # Debug mount for docker image
         if debug:
             log_dir = self.params.outputdir + '/debug/log'
@@ -506,6 +514,10 @@ def main():
                         #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
+    parser.add_argument('-c', '--cpus',
+                        help='Limit the number of CPUs available for execution by the container')
+    parser.add_argument('-m', '--memory',
+                        help='Memory limit; may add an optional suffix which can be one of b, k, m, or g')
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
