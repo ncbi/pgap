@@ -348,17 +348,19 @@ class Setup:
 
 
     def get_remote_versions(self):
-        # Old system, where we checked github releases
-        #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-        #latest = json.load(response)['tag_name']
-
-        # Check docker hub
-        url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
-        response = urlopen(url)
-        json_resp = json.loads(response.read().decode())
         versions = []
-        for i in reversed(json_resp):
-            versions.append(i['name'])
+        if (self.get_branch()):
+            #print("Checking docker hub for latest version.")
+            url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+            response = urlopen(url)
+            json_resp = json.loads(response.read().decode())
+            for i in reversed(json_resp):
+                versions.append(i['name'])
+        else:
+            #print("Checking github releases for latest version.")
+            response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+            latest = json.load(response)['tag_name']
+            versions.append(latest)
         return versions
 
     def check_status(self):
