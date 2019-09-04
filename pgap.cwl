@@ -25,7 +25,9 @@ inputs:
   report_usage: boolean
   submol: File
   ignore_all_errors:
-        type: boolean?
+    type: boolean?
+  no_internet:
+    type: boolean?
   
 outputs:
   gbk:
@@ -104,6 +106,7 @@ steps:
       submol: submol
       taxon_db: passdata/taxon_db
       ignore_all_errors: ignore_all_errors
+      no_internet: no_internet
     out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json, taxid]
   fastaval:
     run: progs/fastaval.cwl

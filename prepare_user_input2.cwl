@@ -17,7 +17,9 @@ inputs:
   taxon_db:
     type: File
   ignore_all_errors:
-        type: boolean?
+    type: boolean?
+  no_internet:
+    type: boolean?
 outputs:
     input_asn_type: 
         type: string
