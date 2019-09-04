@@ -27,6 +27,10 @@ inputs:
         type: boolean?
         inputBinding:
             prefix: -ignore-all-errors    
+    no_internet:
+      type: boolean?            
+        inputBinding:
+          prefix: -no-internet
     ofmt:
         type: string
         default: 'JSON'
