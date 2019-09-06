@@ -146,6 +146,14 @@ class Pipeline:
             '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(self.yaml),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
+        if (self.params.args.cpus):
+            if (platform.system() != "Windows"):
+                self.cmd.extend(['--cpus', self.params.args.cpus])
+            else:
+                self.cmd.extend(['--cpu-count', self.params.args.cpus])
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+            
         # Debug mount for docker image
         if debug:
             log_dir = self.params.outputdir + '/debug/log'
@@ -153,8 +161,10 @@ class Pipeline:
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
 
         self.cmd.extend([self.params.docker_image,
-                'cwltool', '--timestamps',
-                '--outdir', '/pgap/output'])
+                        'cwltool',
+                        '--timestamps',
+                        '--disable-color',
+                        '--outdir', '/pgap/output'])
 
         # Debug flags for cwltool
         if debug:
@@ -341,17 +351,19 @@ class Setup:
 
 
     def get_remote_versions(self):
-        # Old system, where we checked github releases
-        #response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-        #latest = json.load(response)['tag_name']
-
-        # Check docker hub
-        url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
-        response = urlopen(url)
-        json_resp = json.loads(response.read().decode())
         versions = []
-        for i in reversed(json_resp):
-            versions.append(i['name'])
+        if (self.get_branch()):
+            #print("Checking docker hub for latest version.")
+            url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+            response = urlopen(url)
+            json_resp = json.loads(response.read().decode())
+            for i in reversed(json_resp):
+                versions.append(i['name'])
+        else:
+            #print("Checking github releases for latest version.")
+            response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
+            latest = json.load(response)['tag_name']
+            versions.append(latest)
         return versions
 
     def check_status(self):
@@ -517,6 +529,10 @@ def main():
                         #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
+    parser.add_argument('-c', '--cpus',
+                        help='Limit the number of CPUs available for execution by the container')
+    parser.add_argument('-m', '--memory',
+                        help='Memory limit; may add an optional suffix which can be one of b, k, m, or g')
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
