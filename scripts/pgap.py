@@ -23,6 +23,7 @@ import subprocess
 import tarfile
 import threading
 import time
+import yaml
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -143,7 +144,7 @@ class Pipeline:
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,z'.format(data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
-            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(self.yaml),
+            '--volume', '{}:{}:ro,z'.format(self.yaml, input_file ),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
         # Debug mount for docker image
@@ -180,8 +181,6 @@ class Pipeline:
                 fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
             if (self.params.ignore_all_errors == 'true'):
                 fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
-            if (self.params.no_internet == 'true'):
-                fOut.write(u'no_internet: {}\n'.format(self.params.no_internet))
             fOut.flush()
         return yaml
         
@@ -298,7 +297,6 @@ class Setup:
         self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
         self.ignore_all_errors    = self.get_ignore_all_errors()
-        self.no_internet    = self.get_no_internet()
         self.timeout         = self.get_timeout()
         self.check_status()
         if (args.list):
@@ -415,12 +413,6 @@ class Setup:
         else:
             return 'false'
 
-    def get_no_internet(self):
-        if (self.args.no_internet):
-            return 'true'
-        else:
-            return 'false'
-            
     def get_timeout(self):
         def str2sec(s):
             return sum(x * int(t) for x, t in
@@ -502,10 +494,6 @@ def main():
 
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
-                        action='store_true',
-                        help=argparse.SUPPRESS)
-    parser.add_argument("--no-internet", 
-                        dest='no_internet', 
                         action='store_true',
                         help=argparse.SUPPRESS)
                         #help='Ignore all errors in PGAPX.')

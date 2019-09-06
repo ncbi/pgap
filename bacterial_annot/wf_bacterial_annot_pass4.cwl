@@ -48,6 +48,12 @@ inputs:
     # cached for intermediate testing
     # cached_Find_Naming_Protein_Hits:
     #    type: File
+    taxid:
+      type: int
+    blast_hits_cache: 
+      type: File?
+    genus_list: 
+      type: int[]
 steps:
     Find_Naming_Protein_Hits:
         label: "Find Naming Protein Hits"
@@ -107,6 +113,10 @@ steps:
                 default: 10
             word_size: 
                 default: 6
+            taxid: taxid
+            genus_list: genus_list
+            blast_hits_cache: 
+              source: blast_hits_cache
         out: [blast_align] # does not go out
     Find_best_protein_hits:
         label: "Find best protein hits"

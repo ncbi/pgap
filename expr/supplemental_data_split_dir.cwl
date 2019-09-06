@@ -27,12 +27,6 @@ expression: |
         case 'AntiFamLib':
           r['AntiFamLib'] = l[i];
           break;
-        case 'blast_hits.sqlite':
-          r['blast_hits_cache'] = l[i];
-          break;
-        case 'genus-list':
-          r['genus_list'] = l[i];
-          break;
         case 'asn2pas.xsl':
           r['asn2pas_xsl'] = l[i];
           break;
@@ -128,10 +122,6 @@ outputs:
     type: File
   blast_rules_db_dir:
     type: Directory
-  blast_hits_cache:
-    type: File
-  genus_list:
-    type: File?
   CDDdata:
     # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
     type: Directory

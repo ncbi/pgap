@@ -36,6 +36,13 @@ baseCommand: align_filter
 # 
 # 
 # 
+requirements:
+  - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+     - entryname: aligns.mft
+       entry: ${var blob = '# aligns.mft created for align_filter from input "input" Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
+
 inputs:
   asn_cache:
     type: Directory[]
@@ -51,9 +58,12 @@ inputs:
     inputBinding:
       prefix: -ifmt
   input:
-    type: File?
+    type: File[]
+  input_mft:
+    type: string?
+    default: aligns.mft
     inputBinding:
-      prefix: -input
+      prefix: -input-manifest
   nogenbank:
     type: boolean
     inputBinding:

@@ -7,6 +7,11 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
+     - entry: $(inputs.proteins)
+       writable: false
+     - entryname: empty.cache
+       entry: ${ return ''; }
+       writable: true
      - entryname: ids.mft
        entry: |-
         ${
@@ -47,8 +52,17 @@ inputs:
     inputBinding:
       prefix: -orfs-manifest
   sqlite_cache: 
-    type: File
+    type: File?
+    # default: 
+      # class: File
+      # basename: 'empty.cache'
+      # dirname: '.'
+      # contents: ''
+  sqlite_cache_opt:
+    type: string? 
+    default: 'this-should-be-replaced'
     inputBinding:
+      valueFrom: ${ if (inputs.sqlite_cache != null) { return inputs.sqlite_cache.path; } else { return 'empty.cache'; }}
       prefix: -sqlite-cache 
   hits_output_name:
     type: string?
