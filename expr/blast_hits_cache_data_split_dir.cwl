@@ -25,6 +25,9 @@ expression: |
         }
       }
     }
+    else {
+      r['blast_hits_cache'] =  r['genus_list'] = null;
+    }
     return r;
   }
 outputs:
