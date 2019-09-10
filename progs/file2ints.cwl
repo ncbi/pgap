@@ -11,7 +11,20 @@ inputs:
       loadContents: true
 
 expression: |
-  ${ return { "value": parseInt(inputs.input.contents) }; }
+  ${
+    var lines = inputs.input.contents.split("\n");
+    var values=[];
+    for(var i=0; i<lines.length; i++) {
+      if(lines[i].length == 0) {
+        continue;
+      }
+      var myint = parseInt(lines[i]);
+      if(myint != null) {
+        values.push(myint)  ;
+      }
+    }
+    return { "values": values }; 
+  }
 
 outputs:
-  value: int
+  values: int[]
