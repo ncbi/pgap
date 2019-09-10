@@ -6,22 +6,24 @@ requirements: { InlineJavascriptRequirement: {} }
 
 inputs:
   input:
-    type: File
+    type: File?
     inputBinding:
       loadContents: true
 
 expression: |
   ${
-    var lines = inputs.input.contents.split("\n");
     var values=[];
-    for(var i=0; i<lines.length; i++) {
-      if(lines[i].length == 0) {
-        continue;
-      }
-      var myint = parseInt(lines[i]);
-      if(myint != null) {
-        values.push(myint)  ;
-      }
+    if(inputs.input != null) {
+        var lines = inputs.input.contents.split("\n");
+        for(var i=0; i<lines.length; i++) {
+          if(lines[i].length == 0) {
+            continue;
+          }
+          var myint = parseInt(lines[i]);
+          if(myint != null) {
+            values.push(myint)  ;
+          }
+        }
     }
     return { "values": values }; 
   }
