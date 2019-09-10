@@ -7,26 +7,28 @@ requirements:
   InlineJavascriptRequirement: {}
 inputs:
   data:
-    type: Directory
+    type: Directory?
 expression: |
   ${
     var r = {};
-    var l = inputs.data.listing;
-    var n = l.length;
-    for (var i = 0; i < n; i++) {
-      switch (l[i].basename) {
-        case 'blast_hits.sqlite':
-          r['blast_hits_cache'] = l[i];
-          break;
-        case 'genus-list':
-          r['genus_list'] = l[i];
-          break;
+    if(inputs.data != null) {
+      var l = inputs.data.listing;
+      var n = l.length;
+      for (var i = 0; i < n; i++) {
+        switch (l[i].basename) {
+          case 'blast_hits.sqlite':
+            r['blast_hits_cache'] = l[i];
+            break;
+          case 'genus-list':
+            r['genus_list'] = l[i];
+            break;
+        }
       }
     }
     return r;
   }
 outputs:
   blast_hits_cache:
-    type: File
+    type: File?
   genus_list:
     type: File?
