@@ -9,6 +9,8 @@ requirements:
     listing:
      - entry: $(inputs.proteins)
        writable: false
+     - entry: $(inputs.sqlite_cache)
+       writable: true
      - entryname: empty.cache
        entry: ${ return ''; }
        writable: true
