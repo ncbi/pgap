@@ -515,7 +515,7 @@ def main():
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
                         action='store_true',
-                        help=argparse.SUPPRESS)
+                        help='Ignore errors from quality control analysis, in order to obtain a draft annotation.')
     parser.add_argument("--no-internet", 
                         dest='no_internet', 
                         action='store_true',
