@@ -46,7 +46,9 @@ inputs:
       prefix: '-check_internal_ns'
     doc: Check for internal N's
   ignore_all_errors:
-        type: boolean?
+    type: boolean?
+    inputBinding:
+      prefix: '-ignore_all_errors'
 outputs:
   out:
         type: File
