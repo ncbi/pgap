@@ -23,6 +23,7 @@ import subprocess
 import tarfile
 import threading
 import time
+import tempfile
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -177,9 +178,13 @@ class Pipeline:
 
         self.cmd.extend(['pgap.cwl', input_file])
 
-    def create_inputfile(self, local_input):        
-        yaml = self.input_dir + '/pgap_input.yaml'
-        with open(yaml, 'w') as fOut:
+    def create_inputfile(self, local_input):
+        with tempfile.NamedTemporaryFile(mode='w',
+                                         suffix=".yaml",
+                                         prefix="pgap_input_",
+                                         dir=self.input_dir,
+                                         delete=False) as fOut:
+            yaml = fOut.name
             with open(local_input, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
