@@ -38,7 +38,6 @@ inputs:
       prefix: -taxid
   blast_type:
     type: string?
-    default: predicted-protein
     inputBinding:
       prefix: -blast-type
   genus_list: 
@@ -76,6 +75,10 @@ inputs:
     default: not_found.ids
     inputBinding:
       prefix: -not-found-output
+  taxon_db:
+    type: File
+    inputBinding:
+      prefix: -taxon-db
     
 outputs: 
   hits_output:

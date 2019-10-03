@@ -52,6 +52,8 @@ inputs:
       type: int
     blast_hits_cache: 
       type: File?
+    taxon_db: 
+      type: File
     genus_list: 
       type: int[]
 steps:
@@ -117,6 +119,9 @@ steps:
             genus_list: genus_list
             blast_hits_cache: 
               source: blast_hits_cache
+            blast_type:
+              default: 'orf'
+            taxon_db: taxon_db
         out: [blast_align] # does not go out
     Find_best_protein_hits:
         label: "Find best protein hits"

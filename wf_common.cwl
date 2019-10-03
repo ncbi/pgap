@@ -380,6 +380,7 @@ steps:
         scatter_gather_nchunks: scatter_gather_nchunks
         taxid: taxid
         blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache
+        taxon_db: passdata/taxon_db
         genus_list: genus_list_file2ints/values
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
 
@@ -467,6 +468,7 @@ steps:
         scatter_gather_nchunks: scatter_gather_nchunks
         taxid: taxid
         blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache
+        taxon_db: passdata/taxon_db
         genus_list: genus_list_file2ints/values
     out:
         - id: out_annotation

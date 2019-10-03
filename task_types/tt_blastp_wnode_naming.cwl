@@ -43,6 +43,8 @@ inputs:
   batch-size: int?
   taxid: int
   blast_hits_cache: File?
+  blast_type: string?
+  taxon_db: File
   genus_list: int[]
 outputs:
   blast_align:
@@ -58,11 +60,11 @@ steps:
       # we do not need blastdb here, like in classic PGAP, the only reason we supply it there is to derive
       # -naming-db-version parameter:
       taxid: taxid
-      blast_type:
-        default: predicted-protein
+      blast_type: blast_type
       genus_list: genus_list
       orfs: ids
       sqlite_cache: blast_hits_cache
+      taxon_db: taxon_db
     out: [hits_output, not_found_output]
     
   gpx_qsubmit:
