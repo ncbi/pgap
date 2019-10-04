@@ -1,0 +1,6 @@
+sqlite1: 
+    class: File
+    location: 1.sqlite
+sqlite2: 
+    class: File
+    location: 2.sqlite

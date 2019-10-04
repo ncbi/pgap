@@ -1,6 +1,9 @@
 cwlVersion: v1.0
 label: "align_filter_sa"
 class: Workflow # task type
+requirements:
+  - class: ScatterFeatureRequirement
+
 inputs:
   asn_cache: Directory
   prosplign_align: File?
@@ -20,7 +23,9 @@ steps:
       filter: filter
       ifmt: 
         default: seq-align
-      input: align
+      input: 
+        source: [align]
+        linkMerge: merge_flattened
       nogenbank: nogenbank
         
     out: [o]

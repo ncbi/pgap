@@ -7,6 +7,8 @@ label: Seed Search Compartments, execute"
 
 
 requirements:
+  - class: ResourceRequirement
+    ramMax: 4000
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)

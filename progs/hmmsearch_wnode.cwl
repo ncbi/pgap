@@ -5,6 +5,8 @@ class: CommandLineTool
 
 requirements:
   - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMax: 3000
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.hmm_path)

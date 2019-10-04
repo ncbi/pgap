@@ -41,19 +41,40 @@ inputs:
   word_size: int
   ids: File[]
   batch-size: int?
-
+  taxid: int
+  blast_hits_cache: File?
+  blast_type: string?
+  taxon_db: File
+  genus_list: int[]
 outputs:
   blast_align:
-    type: File
-    outputSource: collect_aligns/file_out
+    type: File[]
+    outputSource: [collect_aligns/file_out, retrieve_cached_hits/hits_output]
 
 steps:
+  retrieve_cached_hits: 
+    run: ../progs/orf_hits_cache_retrieve.cwl
+    in:
+      lds2: lds2
+      proteins: proteins
+      # we do not need blastdb here, like in classic PGAP, the only reason we supply it there is to derive
+      # -naming-db-version parameter:
+      taxid: taxid
+      blast_type: blast_type
+      genus_list: genus_list
+      orfs: ids
+      sqlite_cache: blast_hits_cache
+      taxon_db: taxon_db
+    out: [hits_output, not_found_output]
+    
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
       lds2: lds2
       proteins: proteins
-      ids: ids
+      ids: 
+        source: [retrieve_cached_hits/not_found_output]
+        linkMerge: merge_flattened
       affinity: affinity
       asn_cache: asn_cache
       max_batch_length: max_batch_length

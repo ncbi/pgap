@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
-label: assm_assm_blastn_create_jobs.cwl
+label: "assm_assm_blastn_create_jobs"
 class: CommandLineTool
+baseCommand: submit_kmer_compare
 cwlVersion: v1.0
 
 inputs:
