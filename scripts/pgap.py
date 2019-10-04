@@ -24,6 +24,7 @@ import tarfile
 import threading
 import time
 import yaml
+import tempfile
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -178,9 +179,13 @@ class Pipeline:
 
         self.cmd.extend(['pgap.cwl', input_file])
 
-    def create_inputfile(self, local_input):        
-        yaml = self.input_dir + '/pgap_input.yaml'
-        with open(yaml, 'w') as fOut:
+    def create_inputfile(self, local_input):
+        with tempfile.NamedTemporaryFile(mode='w',
+                                         suffix=".yaml",
+                                         prefix="pgap_input_",
+                                         dir=self.input_dir,
+                                         delete=False) as fOut:
+            yaml = fOut.name
             with open(local_input, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
@@ -507,6 +512,13 @@ def main():
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
                         action='store_true',
+<<<<<<< HEAD
+=======
+                        help='Ignore errors from quality control analysis, in order to obtain a draft annotation.')
+    parser.add_argument("--no-internet", 
+                        dest='no_internet', 
+                        action='store_true',
+>>>>>>> origin/master
                         help=argparse.SUPPRESS)
                         #help='Ignore all errors in PGAPX.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
