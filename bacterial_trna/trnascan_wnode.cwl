@@ -36,12 +36,11 @@ inputs:
       prefix: -A
   gcode_othmito:
     type: string?
-    # default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode.othmito
     inputBinding:
       prefix: -g
   binary:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/arch/x86_64/bin/tRNAscan-SE
+    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/bin/tRNAscan-SE
     inputBinding:
       prefix: -tRNAscan
   taxid:

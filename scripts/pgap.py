@@ -512,15 +512,11 @@ def main():
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
                         action='store_true',
-<<<<<<< HEAD
-=======
                         help='Ignore errors from quality control analysis, in order to obtain a draft annotation.')
     parser.add_argument("--no-internet", 
                         dest='no_internet', 
                         action='store_true',
->>>>>>> origin/master
                         help=argparse.SUPPRESS)
-                        #help='Ignore all errors in PGAPX.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
