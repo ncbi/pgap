@@ -139,7 +139,7 @@ class Pipeline:
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
         #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
 
-        self.cmd = [params.dockercmd, 'run', '-i' ]
+        self.cmd = [params.dockercmd, 'run', '-i', '--rm' ]
         if (platform.system() != "Windows"):
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
