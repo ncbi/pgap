@@ -313,6 +313,8 @@ class Setup:
         self.ignore_all_errors    = self.get_ignore_all_errors()
         self.timeout         = self.get_timeout()
         self.check_status()
+        if args.version:
+            sys.exit(0)
         if (args.list):
             self.list_remote_versions()
             return
@@ -536,7 +538,6 @@ def main():
     retcode = 0
     try:
         params = Setup(args)
-
         if args.input:
             p = Pipeline(params, args.input)
             retcode = p.launch()
