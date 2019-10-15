@@ -23,7 +23,6 @@ import subprocess
 import tarfile
 import threading
 import time
-import yaml
 import tempfile
 
 from io import open
