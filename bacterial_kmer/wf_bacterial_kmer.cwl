@@ -10,6 +10,8 @@ inputs:
     Extract_Kmers_From_Input___entry: File
     gencoll_asn: File
     asn_cache: Directory
+    gc_seq_cache: Directory
+    gc_cache: File
     kmer_cache_sqlite: File
     ref_assembly_taxid: int
     ANI_cutoff: File
@@ -178,6 +180,8 @@ steps:
         default: 'subject'
       # settings
       asn_cache: asn_cache
+      gc_seq_cache: gc_seq_cache
+      gc_cache: gc_cache
       compart: 
         default: "true"
       evalue: 
