@@ -17,7 +17,10 @@ inputs:
   taxon_db:
     type: File
   ignore_all_errors:
-        type: boolean?
+    type: boolean?
+  no_internet:
+    type: boolean?
+        
 outputs:
     input_asn_type: 
         type: string
@@ -53,6 +56,7 @@ steps:
             input_fasta: fasta
             taxon_db: taxon_db
             ignore_all_errors: ignore_all_errors
+            no_internet: no_internet
         out: [output_annotation, output_ltp, input_asn_type, taxid]
     file2string_ltp:
         run: progs/file2string.cwl
