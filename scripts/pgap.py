@@ -23,7 +23,6 @@ import subprocess
 import tarfile
 import threading
 import time
-import yaml
 import tempfile
 
 from io import open
@@ -196,6 +195,8 @@ class Pipeline:
                 fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
             if (self.params.ignore_all_errors == 'true'):
                 fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
+            if (self.params.no_internet == 'true'):
+                fOut.write(u'no_internet: {}\n'.format(self.params.no_internet))
             fOut.flush()
         return yaml
         
@@ -312,8 +313,11 @@ class Setup:
         self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
         self.ignore_all_errors    = self.get_ignore_all_errors()
+        self.no_internet     = self.get_no_internet()
         self.timeout         = self.get_timeout()
         self.check_status()
+        if args.version:
+            sys.exit(0)
         if (args.list):
             self.list_remote_versions()
             return
@@ -430,6 +434,12 @@ class Setup:
         else:
             return 'false'
 
+    def get_no_internet(self):
+        if (self.args.no_internet):
+            return 'true'
+        else:
+            return 'false'
+            
     def get_timeout(self):
         def str2sec(s):
             return sum(x * int(t) for x, t in
@@ -537,7 +547,6 @@ def main():
     retcode = 0
     try:
         params = Setup(args)
-
         if args.input:
             p = Pipeline(params, args.input)
             retcode = p.launch()
