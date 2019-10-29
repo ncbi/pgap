@@ -41,6 +41,10 @@ inputs:
         type: int?
         inputBinding:
             prefix: -ref-assembly-taxid
+      tax_synon:
+        type: File
+        inputBinding:
+            prefix: -tax-syn-table
       o:
         type: string?
         default: ani-tax-report.xml

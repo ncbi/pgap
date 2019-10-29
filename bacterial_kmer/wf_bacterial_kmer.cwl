@@ -16,6 +16,7 @@ inputs:
     ref_assembly_taxid: int
     ANI_cutoff: File
     kmer_reference_assemblies: File
+    tax_synon: File
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -221,4 +222,5 @@ steps:
         gencoll_asn: gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
+        tax_synon: tax_synon
     out: [top,annot]
