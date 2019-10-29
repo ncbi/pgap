@@ -126,6 +126,7 @@ steps:
       - selenoproteins
       - species_genome_size
       - taxon_db
+      - tax_synon
       - thresholds
       - uniColl_cache
       - univ_prot_xml

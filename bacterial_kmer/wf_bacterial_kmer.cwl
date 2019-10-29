@@ -10,10 +10,13 @@ inputs:
     Extract_Kmers_From_Input___entry: File
     gencoll_asn: File
     asn_cache: Directory
+    gc_seq_cache: Directory
+    gc_cache: File
     kmer_cache_sqlite: File
     ref_assembly_taxid: int
     ANI_cutoff: File
     kmer_reference_assemblies: File
+    tax_synon: File
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -178,6 +181,8 @@ steps:
         default: 'subject'
       # settings
       asn_cache: asn_cache
+      gc_seq_cache: gc_seq_cache
+      gc_cache: gc_cache
       compart: 
         default: "true"
       evalue: 
@@ -217,4 +222,5 @@ steps:
         gencoll_asn: gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
+        tax_synon: tax_synon
     out: [top,annot]
