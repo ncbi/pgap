@@ -28,7 +28,7 @@ inputs:
         inputBinding:
             prefix: -ignore-all-errors    
     no_internet:
-      type: boolean?            
+        type: boolean?            
         inputBinding:
           prefix: -no-internet
     ofmt:
