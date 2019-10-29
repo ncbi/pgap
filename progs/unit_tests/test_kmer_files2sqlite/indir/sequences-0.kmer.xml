@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<kmer_meta k-size="18">
+  <category name="K-Mer">
+    <int name="DistinctCount">569073</int>
+  </category>
+  <category name="Assembly">
+    <string name="Name">sequences.asn</string>
+  </category>
+</kmer_meta>

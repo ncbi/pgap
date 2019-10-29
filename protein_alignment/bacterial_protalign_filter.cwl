@@ -7,6 +7,8 @@ label: "Filter Full-Coverage Alignments I"
 
 
 requirements:
+  - class: ResourceRequirement
+    ramMax: 8000
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.asn_cache)

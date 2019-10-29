@@ -8,9 +8,7 @@ requirements:
       - entry: $(inputs.asn_cache)
         writable: False
     
-#gpx_qsubmit -asn-cache sequence_cache -overlap 100 -subseq-size 200  -ids sequences.seq_id
 baseCommand: gpx_qsubmit
-arguments: [ -overlap, "100", -subseq-size, "200" ]
 inputs:
   asn_cache:
     type: Directory

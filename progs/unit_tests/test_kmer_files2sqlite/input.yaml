@@ -1,0 +1,3 @@
+kmer_dir: 
+    class: Directory
+    location: indir

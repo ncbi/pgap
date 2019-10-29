@@ -13,6 +13,8 @@ requirements:
         writable: False
       - entry: $(inputs.uniColl_asn_cache)
         writable: False
+  - class: ResourceRequirement
+    ramMax: 15000
     
 baseCommand: prosplign_compart
 

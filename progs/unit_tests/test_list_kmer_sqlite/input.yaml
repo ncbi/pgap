@@ -1,0 +1,3 @@
+kmer_cache_sqlite: 
+    class: File
+    location: local_kmer_cache.sqlite

@@ -4,6 +4,7 @@ id: bacterial_screening
 label: bacterial_screening
 requirements:
   - class: SubworkflowFeatureRequirement
+  - class: ScatterFeatureRequirement
 inputs:
   asn_cache:
     type: Directory
@@ -46,6 +47,8 @@ steps:
     run: ../progs/align_find_frequent_sas.cwl
     label: align_find_frequent_sas
   Filter_contam_in_prok_BLAST_Results:
+    run: ../progs/align_filter.cwl
+    label: align_filter
     in:
       asn_cache:
         source: [asn_cache]
@@ -55,14 +58,13 @@ steps:
       ifmt:
         default: seq-align-set
       input:
-        source: BLAST_Against_contam_in_prok/blast_align
+        source: [BLAST_Against_contam_in_prok/blast_align]
+        linkMerge: merge_flattened
       subject_whitelist:
         source: Find_Frequent_contam_in_prok_Hits/frequent
       nogenbank:
         default: false
     out: [o, onon_match]
-    run: ../progs/align_filter.cwl
-    label: align_filter
   Generate_contam_in_prok_hit_features:
     in:
       input:

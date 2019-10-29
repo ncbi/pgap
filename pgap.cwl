@@ -15,6 +15,8 @@ inputs:
     default:
       class: Directory
       location: input
+  blast_hits_cache_data:
+    type: Directory?
   blast_rules_db:
     type: string
     default: blast_rules_db
@@ -26,7 +28,8 @@ inputs:
   submol: File
   ignore_all_errors:
         type: boolean?
-  
+  no_internet:
+    type: boolean?
 outputs:
   gbk:
     outputSource: standard_pgap/gbk
@@ -104,6 +107,7 @@ steps:
       submol: submol
       taxon_db: passdata/taxon_db
       ignore_all_errors: ignore_all_errors
+      no_internet: no_internet
     out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json, taxid]
   fastaval:
     run: progs/fastaval.cwl

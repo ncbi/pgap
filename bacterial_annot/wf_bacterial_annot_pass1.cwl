@@ -90,13 +90,15 @@ steps:
       #[hmm_hits, jobs, workdir]
 
   Map_HMM_Hits:
-    run: bacterial_hit_mapping.cwl
+    run: ../bacterial_annot/bacterial_hit_mapping.cwl
     in:
       seq_cache: asn_cache
       unicoll_cache: uniColl_cache
       asn_cache: [asn_cache, uniColl_cache]
       # hmm_hits: hmm_hits # Should be from hmmsearch
-      hmm_hits: Search_All_HMMs_I/hmm_hits
+      hmm_hits: 
+        source: [Search_All_HMMs_I/hmm_hits]
+        linkMerge: merge_flattened
       sequences: Get_ORFs/outseqs
       ### this guys below not tested yet
       align_fmt: 

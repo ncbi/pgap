@@ -23,6 +23,7 @@ import subprocess
 import tarfile
 import threading
 import time
+import tempfile
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -137,13 +138,13 @@ class Pipeline:
         # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
         #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
 
-        self.cmd = [params.dockercmd, 'run', '-i' ]
+        self.cmd = [params.dockercmd, 'run', '-i', '--rm' ]
         if (platform.system() != "Windows"):
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,z'.format(data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
-            '--volume', '{}:/pgap/user_input/pgap_input.yaml:ro,z'.format(self.yaml),
+            '--volume', '{}:{}:ro,z'.format(self.yaml, input_file ),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
         if (self.params.args.cpus):
@@ -177,9 +178,13 @@ class Pipeline:
 
         self.cmd.extend(['pgap.cwl', input_file])
 
-    def create_inputfile(self, local_input):        
-        yaml = self.input_dir + '/pgap_input.yaml'
-        with open(yaml, 'w') as fOut:
+    def create_inputfile(self, local_input):
+        with tempfile.NamedTemporaryFile(mode='w',
+                                         suffix=".yaml",
+                                         prefix="pgap_input_",
+                                         dir=self.input_dir,
+                                         delete=False) as fOut:
+            yaml = fOut.name
             with open(local_input, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
@@ -308,9 +313,11 @@ class Setup:
         self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
         self.ignore_all_errors    = self.get_ignore_all_errors()
-        self.no_internet    = self.get_no_internet()
+        self.no_internet     = self.get_no_internet()
         self.timeout         = self.get_timeout()
         self.check_status()
+        if args.version:
+            sys.exit(0)
         if (args.list):
             self.list_remote_versions()
             return
@@ -520,7 +527,6 @@ def main():
                         dest='no_internet', 
                         action='store_true',
                         help=argparse.SUPPRESS)
-                        #help='Ignore all errors in PGAPX.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker executable, which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -541,7 +547,6 @@ def main():
     retcode = 0
     try:
         params = Setup(args)
-
         if args.input:
             p = Pipeline(params, args.input)
             retcode = p.launch()
