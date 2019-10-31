@@ -112,6 +112,7 @@ steps:
       - CDDdata2
       - CDDdata
       - defline_cleanup_rules
+	  - gcextract2_sqlite
       - gene_master_ini
       - genemark_path
       - hmm_path
