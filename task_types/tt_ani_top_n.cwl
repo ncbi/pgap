@@ -9,6 +9,7 @@ inputs:
   asn_cache: Directory
   ref_assembly_taxid: int
   tax_synon: File
+  gcextract2_sqlite: File
 outputs:
   top:
     type: File
@@ -58,4 +59,5 @@ steps:
         default: 0
       ref_assembly_taxid: ref_assembly_taxid
       tax_synon: tax_synon
+	  gcextract2_sqlite: gcextract2_sqlite
     out: [annot, top]
