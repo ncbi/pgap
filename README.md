@@ -1,46 +1,5 @@
 # PGAP
-NCBI Prokaryotic Genome Annotation Pipeline
-
-NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate
-bacterial and archaeal genomes (chromosomes and plasmids).
-
-Genome annotation is a multi-level process that includes prediction of
-protein-coding genes, as well as other functional genome units such as
-structural RNAs, tRNAs, small RNAs, pseudogenes, control regions,
-direct and inverted repeats, insertion sequences, transposons and
-other mobile elements.
-
-NCBI has developed an automatic prokaryotic genome annotation pipeline
-that combines ab initio gene prediction algorithms with homology based
-methods. The first version of NCBI Prokaryotic Genome Automatic
-Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has
-been replaced with an upgraded version that is capable of processing a
-larger data volume.
-
-
-## Instructions
-
-To run the PGAP pipeline you will need Linux, Docker, CWL (Common
-Workflow Language), and about 30GB of supplemental data. We provide
-instructions here for running under the CWL reference implementation,
-cwltool. Full instructions for installing, running, and interpreting
-the results may be found in our [wiki](https://github.com/ncbi/pgap/wiki).
-
-## References
-
-### NCBI
-
-[NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
-Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.\
-Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
-
-[RefSeq: an update on prokaryotic genome annotation and curation.](https://www.ncbi.nlm.nih.gov/pubmed/29112715)\
-Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
-Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
-
-### GeneMarkS-2+
-
-[Modeling leaderless transcription and atypical genes results in more accurate gene prediction in prokaryotes](https://www.ncbi.nlm.nih.gov/pubmed/29773659/)\
+NC results in more accurate gene prediction in prokaryotes](https://www.ncbi.nlm.nih.gov/pubmed/29773659/)\
 Lomsadze A, Gemayel K, Tang S, Borodovsky M.\
 Genome Research. 2018; 28(7):1079-1089.
 
