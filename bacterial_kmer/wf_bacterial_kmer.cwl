@@ -17,7 +17,8 @@ inputs:
     ANI_cutoff: File
     kmer_reference_assemblies: File
     tax_synon: File
-	gcextract2_sqlite: File
+    taxon_db: File
+    gcextract2_sqlite: File
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -167,13 +168,21 @@ steps:
     run: ../task_types/tt_gcaccess_from_list.cwl
     in:
       gc_id_list: Extract_Top_Assemblies/gc_id_list
+      gc_cache: gc_cache
     out: [gencoll_asn]
+  Extract_Input_GenColl_IDs:
+    label: Extract Input GenColl IDs
+    doc: Input is input ASN.1 file for our target assembly
+    run: ../progs/gc_extract_ids.cwl
+    in:
+      input: gencoll_asn
+    out: [output]
   Assembly_Assembly_BLASTn:
     label: Assembly Assembly BLASTn
     doc: This is rather standard blast
     run: ../task_types/tt_assm_assm_blastn_wnode.cwl
     in:
-      queries_gc_id_list: List_sqlite/keys
+      queries_gc_id_list: Extract_Input_GenColl_IDs/output
       subjects_gc_id_list: Extract_Top_Assemblies/gc_id_list
       # this will brea here
       ref_gencoll_asn: Get_Top_Assemblies_GenColl_ASN/gencoll_asn
@@ -185,7 +194,7 @@ steps:
       gc_seq_cache: gc_seq_cache
       gc_cache: gc_cache
       compart: 
-        default: "true"
+        default: true
       evalue: 
         default: 0.0001
       gapextend: 
@@ -201,11 +210,11 @@ steps:
       merge_engine: 
         default: "tree-merger"
       soft_masking:  
-        default: "true"
+        default: 'true'
       task:  
         default: megablast
       use_common_components:  
-        default: "true"
+        default: true
       window_size:  
         default: 150
       word_size:  
@@ -224,5 +233,6 @@ steps:
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
         tax_synon: tax_synon
-		gcextract2_sqlite: gcextract2_sqlite
+        gcextract2_sqlite: gcextract2_sqlite
+        taxon_db: taxon_db
     out: [top,annot]

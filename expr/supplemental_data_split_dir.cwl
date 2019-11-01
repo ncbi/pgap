@@ -111,7 +111,7 @@ expression: |
         case 'GCExtract2.sqlite':
           r['gcextract2_sqlite'] = l[i];
           break;    
-		}
+        }
     }
     return r;
   }
@@ -138,7 +138,7 @@ outputs:
     # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
     type: File
   gcextract2_sqlite:
-	type: File
+    type: File
   gene_master_ini:
     type: File
   genemark_path:

@@ -17,6 +17,10 @@ inputs:
         type: File?
         inputBinding:
           prefix: -release_id_list
+    gc_cache:
+        type: File
+        inputBinding:
+          prefix:  -gc-cache
 outputs: 
     gencoll_asn:
         type: File
