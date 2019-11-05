@@ -778,7 +778,7 @@ steps:
       val_res_den_xml:  passdata/val_res_den_xml
       it:
         default: true
-    out:
+    out:  
       - id: var_proc_annot_stats_xml
       - id: var_proc_annot_details_xml
   Validate_Annotation_xsltproc_asnvalidate:
@@ -925,5 +925,6 @@ outputs:
   sqn:
     type: File
     outputSource:  add_checksum_sqn/output
-    
-
+  proc_annot_stats: 
+    type: File
+    outputSource:  Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml
