@@ -5,6 +5,7 @@ class: Workflow # task type
 inputs:
   top_distances: File
   ref_assembly_taxid: int
+  ref_assembly_id: int
 outputs:
   tax_report:
     type: File
@@ -17,8 +18,7 @@ steps:
     run: ../progs/kmer_top_n_extract.cwl
     in:
       input: top_distances
-      ref_assembly_id: 
-        default: 0 # because input is FASTA, and original value is ${GP_gencoll_release}
+      ref_assembly_id:  ref_assembly_id
       ref_assembly_taxid: ref_assembly_taxid
       threshold: 
         default: 0.1

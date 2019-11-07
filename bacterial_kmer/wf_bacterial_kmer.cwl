@@ -14,6 +14,7 @@ inputs:
     gc_cache: File
     kmer_cache_sqlite: File
     ref_assembly_taxid: int
+    ref_assembly_id: int
     ANI_cutoff: File
     kmer_reference_assemblies: File
     tax_synon: File
@@ -148,6 +149,7 @@ steps:
     in:
       top_distances: Identify_Top_N/top_distances
       ref_assembly_taxid: ref_assembly_taxid
+      ref_assembly_id: ref_assembly_id
     out: [tax_report, gc_id_list]
   Build_Kmer_Tree:
     label: Build Kmer Tree
