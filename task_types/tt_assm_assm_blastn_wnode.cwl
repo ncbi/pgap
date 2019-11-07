@@ -13,6 +13,8 @@ inputs:
   evalue: float?
   gapextend: int?
   gapopen: int?
+  gc_cache: File
+  gc_seq_cache: Directory
   max_bases_per_call: int?
   max_target_seqs: int?
   merge_align_filter: string?
@@ -53,11 +55,14 @@ steps:
   assm_assm_blastn_wnode:
     run: ../progs/assm_assm_blastn_wnode.cwl
     in:
-      asn_cache: asn_cache
+      asn_cache: 
+        source: [asn_cache, gc_seq_cache]
+        linkMerge: merge_flattened
       compart: compart
       evalue: evalue
       gapextend: gapextend
       gapopen: gapopen
+      gc_cache: gc_cache
       max_bases_per_call: max_bases_per_call
       max_target_seqs: max_target_seqs
       merge_align_filter: merge_align_filter

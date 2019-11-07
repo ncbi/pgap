@@ -34,9 +34,6 @@ inputs:
         default: '1'
     supplemental_data:
         type: Directory
-        default:
-            class: Directory
-            location: input
     blast_hits_cache_data:
         type: Directory?
     submol_block_json: File
@@ -126,6 +123,7 @@ steps:
       - selenoproteins
       - species_genome_size
       - taxon_db
+      - tax_synon
       - thresholds
       - uniColl_cache
       - univ_prot_xml

@@ -8,6 +8,7 @@ inputs:
   ANI_cutoff: File
   asn_cache: Directory
   ref_assembly_taxid: int
+  tax_synon: File
 outputs:
   top:
     type: File
@@ -56,4 +57,5 @@ steps:
       ref_assembly_id: 
         default: 0
       ref_assembly_taxid: ref_assembly_taxid
+      tax_synon: tax_synon
     out: [annot, top]

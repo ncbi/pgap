@@ -105,7 +105,9 @@ expression: |
         case 'validation-results.xml':
           r['val_res_den_xml'] = l[i];
           break;
-      }
+        case 'TaxSynon.tsv':
+          r['tax_synon'] = l[i];
+          break;      }
     }
     return r;
   }
@@ -161,6 +163,8 @@ outputs:
   species_genome_size:
     type: File
   taxon_db:
+    type: File
+  tax_synon:
     type: File
   thresholds:
     type: File
