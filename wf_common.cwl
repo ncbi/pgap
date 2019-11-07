@@ -34,9 +34,6 @@ inputs:
         default: '1'
     supplemental_data:
         type: Directory
-        default:
-            class: Directory
-            location: input
     blast_hits_cache_data:
         type: Directory?
     submol_block_json: File
