@@ -4,6 +4,7 @@ label: "gcaccess_from_list"
 class: Workflow # task type
 inputs:
   gc_id_list: File
+  gc_cache: File
 outputs:
   gencoll_asn:
     type: File
@@ -15,6 +16,7 @@ steps:
       mode: 
         default: AllSequences
       release_id_list: gc_id_list
+      gc_cache: gc_cache
     out: [gencoll_asn]
 # this is for the future  we might need this in general case    
 #  gc_get_molecules:

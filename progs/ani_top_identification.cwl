@@ -32,7 +32,7 @@ inputs:
       query_assembly: 
         type: File
         inputBinding:
-            prefix: -ANI_cutoff
+            prefix: -query-assembly
       ref_assembly_id: 
         type: int?
         inputBinding:
@@ -45,6 +45,14 @@ inputs:
         type: File
         inputBinding:
             prefix: -tax-syn-table
+      taxon_db:
+        type: File
+        inputBinding:
+            prefix: -taxon-db
+      gcextract2_sqlite:
+        type: File
+        inputBinding:
+            prefix: -gcextract2-sqlite
       o:
         type: string?
         default: ani-tax-report.xml

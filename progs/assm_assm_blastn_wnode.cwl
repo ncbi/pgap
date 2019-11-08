@@ -2,23 +2,36 @@ cwlVersion: v1.0
 label: "assm_assm_blastn_wnode"
 
 class: CommandLineTool
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
-#      - entry: $(inputs.asn_cache)
-#        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
+requirements:
+   - class: InlineJavascriptRequirement
+   - class: InitialWorkDirRequirement
+     listing:
+
+       - entryname: queries-and-targets.mft
+         entry: |- 
+          ${
+            var blob = '# queries-and-targets.mft created for assm_assm_blastn_wnode from input "target_set" File\n'; 
+            if(inputs.target_set != null) { 
+              for(var i=0; i<inputs.target_set.length; i++) {
+                blob += inputs.target_set[i].path + '\n'; 
+              }
+            } 
+            return blob; 
+          }
 
 baseCommand: assm_assm_blastn_wnode
 inputs:
   input_jobs:
     type: File?
     inputBinding:
-        prefix: -input-jobs 
+        prefix: -input-jobs
+  target_set:
+    type: File[]
+  target_set_manifest:
+    type: string?
+    default: queries-and-targets.mft
+    inputBinding:
+      prefix: -target-set-manifest
   asn_cache:
     type: Directory[]
     inputBinding:
