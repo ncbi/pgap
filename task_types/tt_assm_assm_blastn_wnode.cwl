@@ -43,7 +43,7 @@ steps:
         subjects_gc_id_list: subjects_gc_id_list
     out: [output]
   gpx_qsubmit:
-    run: ../progs/gpx_qsubmit.cwl
+    run: ../progs/gpx_qsubmit-xml.cwl
     in:
       affinity: affinity
       asn_cache: 
@@ -55,6 +55,9 @@ steps:
   assm_assm_blastn_wnode:
     run: ../progs/assm_assm_blastn_wnode.cwl
     in:
+      target_set:
+        source: [gencoll_asn, ref_gencoll_asn]
+        linkMerge: merge_flattened
       asn_cache: 
         source: [asn_cache, gc_seq_cache]
         linkMerge: merge_flattened

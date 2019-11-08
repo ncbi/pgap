@@ -107,7 +107,11 @@ expression: |
           break;
         case 'TaxSynon.tsv':
           r['tax_synon'] = l[i];
-          break;      }
+          break;    
+        case 'GCExtract2.sqlite':
+          r['gcextract2_sqlite'] = l[i];
+          break;    
+        }
     }
     return r;
   }
@@ -132,6 +136,8 @@ outputs:
     type: Directory
   defline_cleanup_rules:
     # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+    type: File
+  gcextract2_sqlite:
     type: File
   gene_master_ini:
     type: File
