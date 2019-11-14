@@ -165,7 +165,9 @@ class Pipeline:
                         'cwltool',
                         '--timestamps',
                         '--disable-color',
-                        '--outdir', '/pgap/output'])
+                        '--preserve-entire-environment',
+                        '--outdir', '/pgap/output'
+                        ])
 
         # Debug flags for cwltool
         if debug:
