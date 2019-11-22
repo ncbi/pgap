@@ -78,6 +78,7 @@ steps:
       ignore_all_errors: ignore_all_errors
       no_internet: no_internet
     out: [output_seq_submit, output_entries, locus_tag_prefix, submol_block_json, taxid]
+  
   Prepare_Seq_entries:
     run: progs/prepare_seq_entry_input.cwl
     in: 
@@ -102,8 +103,7 @@ steps:
       gc_seq_cache: passdata/gc_seq_cache
       gc_cache: passdata/gc_cache
       kmer_cache_sqlite: passdata/kmer_cache_sqlite
-      ref_assembly_taxid: 
-        default: 0
+      ref_assembly_taxid: prepare_input_template/taxid
       ref_assembly_id: 
         default: 0
       ANI_cutoff: passdata/ANI_cutoff

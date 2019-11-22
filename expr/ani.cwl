@@ -26,13 +26,28 @@ expression: |
             }
           }
           break;
+        case 'assemblies.cache':
+          r['gc_seq_cache'] = l[i];
+          break;    
+        case 'gencoll.sqlite':
+          r['gc_cache'] = l[i];
+          break;    
+        case 'kmer.sqlite':
+          r['kmer_cache_sqlite'] = l[i];
+          break;    
+        case 'ANI_cutoff.xml':
+          r['ANI_cutoff'] = l[i];
+          break;    
+        case 'kmer_uri_list':
+          r['kmer_reference_assemblies'] = l[i];
+          break;    
         case 'TaxSynon.tsv':
           r['tax_synon'] = l[i];
           break;    
         case 'GCExtract2.sqlite':
           r['gcextract2_sqlite'] = l[i];
           break;    
-        }
+      }
     }
     return r;
   }
