@@ -481,8 +481,9 @@ class Setup:
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
-            remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
-            install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+            for package in ['all','pgap']:
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
 
     def install_test_genomes(self):
         def get_suffix(branch):
