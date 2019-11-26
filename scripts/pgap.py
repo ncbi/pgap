@@ -24,6 +24,7 @@ import tarfile
 import threading
 import time
 import tempfile
+import contextlib
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -118,6 +119,34 @@ ERROR: Failed to extract tarball; to install manually, try something like:
 '''.format(url, basename))
         raise
 
+def quiet_remove(filename):
+    with contextlib.suppress(FileNotFoundError):
+        os.remove(filename)
+
+def find_failed_step(filename):
+    r = "^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
+    search = re.compile(r)
+    lines = open(filename, "r").readlines()
+    nameStarts = {}
+    start = -1
+    for num, line in enumerate(lines):
+        r = search.match(line)
+        if r:
+            name = r.group("name")
+            if name not in nameStarts:
+                nameStarts[name] = num
+
+            if r.group("status") == "completed permanentFail":
+                start = nameStarts[name]
+                break
+    if start > -1:
+        print("Printing log starting from failed job:\n")
+        for i in range(start, len(lines)):
+            print(lines[i], end="")
+    else:
+        print("Unable to find error in log file.")
+
+        
 class Pipeline:
 
     def __init__(self, params, local_input):
@@ -125,7 +154,7 @@ class Pipeline:
         debug = self.params.args.debug
         
         # Create a work directory.
-        print(self.params.outputdir)
+        print("Output will be placed in:", self.params.outputdir)
         os.mkdir(self.params.outputdir)
 
         data_dir = os.path.abspath(self.params.data_path)
@@ -298,7 +327,11 @@ class Pipeline:
             proc.terminate()
             try:
                 proc.wait(timeout=2)
-                print('docker exited with rc =', proc.returncode)
+                if proc.returncode == 0:
+                    print('PGAP completed successfully.')
+                else:
+                    print('PGAP failed, docker exited with rc =', proc.returncode)
+                    find_failed_step(cwllog)
             except subprocess.TimeoutExpired:
                 print('docker did not exit cleanly.')
         t.join()
@@ -477,6 +510,7 @@ class Setup:
 
     def install_data(self):
         if not os.path.exists(self.data_path):
+            quiet_remove("input")
             print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
@@ -491,6 +525,7 @@ class Setup:
             return "."+self.branch
 
         if not os.path.exists(self.test_genomes_path):
+            quiet_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
