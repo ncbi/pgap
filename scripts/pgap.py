@@ -119,7 +119,7 @@ ERROR: Failed to extract tarball; to install manually, try something like:
 '''.format(url, basename))
         raise
 
-def quite_remove(filename):
+def quiet_remove(filename):
     with contextlib.suppress(FileNotFoundError):
         os.remove(filename)
     
@@ -303,7 +303,10 @@ class Pipeline:
             proc.terminate()
             try:
                 proc.wait(timeout=2)
-                print('docker exited with rc =', proc.returncode)
+                if proc.returncode == 0:
+                    print('PGAP completed successfully.')
+                else:
+                    print('docker exited with rc =', proc.returncode)
             except subprocess.TimeoutExpired:
                 print('docker did not exit cleanly.')
         t.join()
@@ -482,7 +485,7 @@ class Setup:
 
     def install_data(self):
         if not os.path.exists(self.data_path):
-            quite_remove("input")
+            quiet_remove("input")
             print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
@@ -497,7 +500,7 @@ class Setup:
             return "."+self.branch
 
         if not os.path.exists(self.test_genomes_path):
-            quite_remove("test_genomes")
+            quiet_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
