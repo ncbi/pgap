@@ -24,6 +24,7 @@ import tarfile
 import threading
 import time
 import tempfile
+import contextlib
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -118,6 +119,10 @@ ERROR: Failed to extract tarball; to install manually, try something like:
 '''.format(url, basename))
         raise
 
+def quite_remove(filename):
+    with contextlib.suppress(FileNotFoundError):
+        os.remove(filename)
+    
 class Pipeline:
 
     def __init__(self, params, local_input):
@@ -477,6 +482,7 @@ class Setup:
 
     def install_data(self):
         if not os.path.exists(self.data_path):
+            quite_remove("input")
             print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
@@ -491,6 +497,7 @@ class Setup:
             return "."+self.branch
 
         if not os.path.exists(self.test_genomes_path):
+            quite_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
