@@ -11,6 +11,7 @@ requirements:
       - entryname: prot.mft
         entry: ${var blob = '# prot.mft created for bacterial_resolve_conflicts from input prots Array of Files\n'; if ( ! inputs.hasOwnProperty('prots') ) { return blob; }; for (var i = 0; i < inputs.prots.length; i++) { blob += inputs.prots[i].path + '\n'; } return blob; }
 baseCommand: bacterial_resolve_conflicts
+arguments: [ -nogenbank ]
 inputs:
     features: # all external to this node
         type: File[]

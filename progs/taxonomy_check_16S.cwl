@@ -33,6 +33,7 @@ baseCommand: taxonomy_check_16S
 # 
 # 
 # 
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

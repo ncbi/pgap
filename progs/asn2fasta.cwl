@@ -3,6 +3,7 @@ label: "asn2fasta"
 
 class: CommandLineTool
 baseCommand: asn2fasta
+arguments: [ -nogenbank ]
 inputs:
   i: 
     type: File

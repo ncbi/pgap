@@ -10,6 +10,7 @@ requirements:
     
 #gpx_qsubmit -asn-cache sequence_cache -ids-manifest seqids.mft
 baseCommand: gpx_qsubmit
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

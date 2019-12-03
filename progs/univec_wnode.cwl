@@ -12,6 +12,7 @@ requirements:
         writable: False
       - entry:  $(inputs.asn_cache)
         writable: False
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

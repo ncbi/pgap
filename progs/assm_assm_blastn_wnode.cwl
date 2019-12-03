@@ -20,6 +20,7 @@ requirements:
           }
 
 baseCommand: assm_assm_blastn_wnode
+arguments: [ -nogenbank ]
 inputs:
   input_jobs:
     type: File?

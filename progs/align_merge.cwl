@@ -48,6 +48,7 @@ baseCommand: align_merge
 # 
 # 
 # 
+arguments: [ -nogenbank ]
 inputs:
   allow_intersection:
     type: boolean

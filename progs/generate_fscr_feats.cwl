@@ -4,6 +4,7 @@ $namespaces:
   sbg: 'https://www.sevenbridges.com/'
 id: generate_fscr_feats
 baseCommand: generate_fscr_feats
+arguments: [ -nogenbank  ]
 label: generate_fscr_feats
 inputs:
     input:
