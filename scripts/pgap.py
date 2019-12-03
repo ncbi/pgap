@@ -205,7 +205,6 @@ class Pipeline:
                 '--leave-tmpdir',
                 '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
                 '--copy-outputs'])
-            self.record_runtime()
 
         self.cmd.extend(['pgap.cwl', input_file])
 
@@ -231,7 +230,7 @@ class Pipeline:
             fOut.flush()
         return yaml
         
-    def record_runtime(self):
+    def record_runtime(self, f):
         def check_runtime_setting(settings, value, min):
             if settings[value] != 'unlimited' and settings[value] < min:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
@@ -267,14 +266,14 @@ class Pipeline:
         check_runtime_setting(settings, 'memory (GiB)', 8)
         check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
         filename = self.params.outputdir + "/debug/RUNTIME.json"
-        with open(filename, 'w', encoding='utf-8') as f:
+        #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
-            f.write(json.dumps(settings, sort_keys=True, indent=4))
+        f.write(json.dumps(settings, sort_keys=True, indent=4))
         
         
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
-        with open(cwllog, 'w') as f:
+        with open(cwllog, 'w', encoding="utf-8") as f:
             # Show original command line in log
             cmdline = "Original command: " + " ".join(sys.argv)
             f.write(cmdline)
@@ -284,12 +283,15 @@ class Pipeline:
             f.write(cmdline)
             f.write("\n\n")
             # Show YAML file in the log
-            f.write("--- Start YAML Input ---\n")
-            
+            f.write("--- Start YAML Input ---\n")            
             with open(self.yaml, 'r') as fIn:
                 for line in fIn:
                     f.write(line)
             f.write("--- End YAML Input ---\n\n")
+            # Show runtime parameters in the log
+            f.write("--- Start Runtime Report ---\n")            
+            self.record_runtime(f)
+            f.write("\n--- End Runtime Report ---\n\n")            
             f.flush()
             try:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
