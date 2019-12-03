@@ -273,68 +273,36 @@ class Pipeline:
         
         
     def launch(self):
-        def output_reader(proc, outq):
-            for line in iter(proc.stdout.readline, b''):
-                outq.put(line.decode('utf-8'))
-
-        # Run the actual workflow.
-        #print(self.cmd)
-        proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-        outq = queue.Queue()
-        t = threading.Thread(target=output_reader, args=(proc, outq))
-        t.start()
-
         cwllog = self.params.outputdir + '/cwltool.log'
-        pat = re.compile('^\[(\d+-\d+-\d+ \d+:\d+:\d+)\] \[(workflow|step)')
-
-        try:
-            with open(cwllog, 'w') as f:
-                # Show original command line in log
-                cmdline = "Original command: " + " ".join(sys.argv)
-                f.write(cmdline)
-                f.write("\n\n")
-                # Show docker command line in log
-                cmdline = "Docker command: " + " ".join(self.cmd)
-                f.write(cmdline)
-                f.write("\n\n")
-                # Show YAML file in the log
-                f.write("--- Start YAML Input ---\n")
-                with open(self.yaml, 'r') as fIn:
-                    for line in fIn:
-                        f.write(line)
-                f.write("--- End YAML Input ---\n")
-
-                # Check if child process has terminated
-                while proc.poll() == None:
-                   
-                    # this loop is to avoid (expensive?) checking if process 'proc' terminated
-                    while True:
-                        try:
-
-                            # either process terminated or it is "thinking"
-                            # let's wait a little bit before checking termination:
-                            line = outq.get(timeout=0.1)
-                            f.write(line)
-                            if (self.params.args.verbose) or pat.match(line):
-                                print(line, end='')
-                        except queue.Empty:
- 
-                            # go to outer while loop to check proc.poll() == None
-                            break
-
-        finally:
-            proc.terminate()
+        with open(cwllog, 'w') as f:
+            # Show original command line in log
+            cmdline = "Original command: " + " ".join(sys.argv)
+            f.write(cmdline)
+            f.write("\n\n")
+            # Show docker command line in log
+            cmdline = "Docker command: " + " ".join(self.cmd)
+            f.write(cmdline)
+            f.write("\n\n")
+            # Show YAML file in the log
+            f.write("--- Start YAML Input ---\n")
+            
+            with open(self.yaml, 'r') as fIn:
+                for line in fIn:
+                    f.write(line)
+            f.write("--- End YAML Input ---\n\n")
+            f.flush()
             try:
-                proc.wait(timeout=2)
-                if proc.returncode == 0:
+                proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
+                proc.wait()
+            finally:
+                if proc.returncode == None:
+                    print('\nAbnormal termination, stopping all processes.')
+                    proc.terminate()
+                elif proc.returncode == 0:
                     print('PGAP completed successfully.')
                 else:
                     print('PGAP failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
-            except subprocess.TimeoutExpired:
-                print('docker did not exit cleanly.')
-        t.join()
         return proc.returncode
 
 class Setup:
