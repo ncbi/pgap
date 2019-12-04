@@ -150,6 +150,7 @@ steps:
       top_distances: Identify_Top_N/top_distances
       ref_assembly_taxid: ref_assembly_taxid
       ref_assembly_id: ref_assembly_id
+      taxon_db: taxon_db
     out: [tax_report, gc_id_list]
   Build_Kmer_Tree:
     label: Build Kmer Tree
@@ -234,6 +235,7 @@ steps:
         gencoll_asn: gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
+        ref_assembly_id: ref_assembly_id
         tax_synon: tax_synon
         gcextract2_sqlite: gcextract2_sqlite
         taxon_db: taxon_db

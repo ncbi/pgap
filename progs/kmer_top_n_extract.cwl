@@ -28,6 +28,10 @@ inputs:
     type: float?
     inputBinding:
       prefix: -threshold
+  taxon_db:
+    type: File
+    inputBinding:
+      prefix: -taxon-db
   otop_assms_xml:
     type: string
     default: kmer-tax-report.xml 
