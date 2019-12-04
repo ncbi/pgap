@@ -32,6 +32,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -taxon-db
+  gcextract2_sqlite:
+    type: File
+    inputBinding:
+        prefix: -gcextract2-sqlite
   otop_assms_xml:
     type: string
     default: kmer-tax-report.xml 
