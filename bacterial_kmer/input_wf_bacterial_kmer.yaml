@@ -1,20 +1,41 @@
-Extract_Kmers_From_Input___entry: # take this from Prepare Unannotated Sequences/out/sequences.asn
-    class: File
-    location: input/sequences.asn
-gencoll_asn: # take this from Create Assembly From Sequences
-    class: File
-    location: input/gencoll.asn
+Extract_Kmers_From_Input___entry:
+  class: File
+  location: sequences.asn
+gencoll_asn:
+  class: File
+  location: gencoll.asn
+
 asn_cache:
-    class: Directory
-    location: input/sequence_cache
-ref_assembly_taxid: 243273
-    # Mycoplasma genitalium G37, corresponding to the input gencoll_asn file.
-ANI_cutoff: 
-    class: File
-    location: input/ANI_cutoff.xml
+  class: Directory
+  location: sequence_cache
+
+gc_seq_cache:
+  class: Directory
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/ExternalData/Pathogen/kmer-cache-minhash/18.sqlite/production/assemblies.cache 
+
+gc_cache:
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/ExternalData/Pathogen/kmer-cache-minhash/18.sqlite/production/gencoll.sqlite
+
 kmer_cache_sqlite:
-    class: File
-    location: input/kmer.sqlite
-kmer_reference_assemblies:    
-    class: File
-    location: input/reference.gcids
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/ExternalData/Pathogen/kmer-cache-minhash/18.sqlite/production/kmer.sqlite
+ref_assembly_taxid: 2097
+ref_assembly_id: 28128 
+ANI_cutoff: 
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/installations/regr_bct/current/third-party/data/BacterialPipeline/ANI_cutoff/ANI_cutoff.xml
+kmer_reference_assemblies:
+  class: File
+  location: kmer_uri_list
+gcextract2_sqlite:
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/jira/PGAPX-584-ani_top_identification-needs-to-/GCExtract2.sqlite
+taxon_db:
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/ExternalData/BacterialPipeline/uniColl/production/current/taxonomy.sqlite3
+tax_synon:
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/jira/PGAPX-585-save-ProkRefseqTracking-TaxSynon/TaxSynon.tsv
+
+
