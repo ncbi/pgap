@@ -600,7 +600,7 @@ def main():
                         action='store_true',
                         help=argparse.SUPPRESS)
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
-                        help='Docker-compatible executable (e.g. docker, podman), which may include a full path like /usr/bin/docker')
+                        help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--timeout', default='24:00:00', help=argparse.SUPPRESS)
