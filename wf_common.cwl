@@ -111,7 +111,6 @@ steps:
       - CDDdata2
       - CDDdata
       - defline_cleanup_rules
-      - gcextract2_sqlite
       - gene_master_ini
       - genemark_path
       - hmm_path
@@ -126,7 +125,6 @@ steps:
       - selenoproteins
       - species_genome_size
       - taxon_db
-      - tax_synon
       - thresholds
       - uniColl_cache
       - univ_prot_xml

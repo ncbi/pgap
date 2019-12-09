@@ -7,6 +7,7 @@ inputs:
   blast_align: File
   ANI_cutoff: File
   asn_cache: Directory
+  ref_assembly_id: int
   ref_assembly_taxid: int
   taxon_db: File
   tax_synon: File
@@ -33,8 +34,7 @@ steps:
       min_region: 
         default: 100
       query_assembly: gencoll_asn
-      ref_assembly_id: 
-        default: 0
+      ref_assembly_id: ref_assembly_id
       ref_assembly_taxid: ref_assembly_taxid
       tax_synon: tax_synon
       taxon_db: taxon_db
