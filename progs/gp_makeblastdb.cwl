@@ -21,6 +21,7 @@ steps:
         run:
             class: CommandLineTool
             baseCommand: gp_makeblastdb
+            arguments: [ -nogenbank  ]
             inputs:
               asn_cache:
                 type: Directory[]

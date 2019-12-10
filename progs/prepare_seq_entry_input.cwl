@@ -4,6 +4,7 @@ label: "prepare_seq_entry_input"
 doc: ""
 class: CommandLineTool
 baseCommand: prepare_seq_entry_input
+arguments: [ -nogenbank  ]
 requirements: 
   - class: InlineJavascriptRequirement
 

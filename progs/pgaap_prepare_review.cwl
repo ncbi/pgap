@@ -14,6 +14,7 @@ requirements:
         entry: $(inputs.blast_partial_cov.path)
 
 baseCommand: pgaap_prepare_review
+arguments: [ -nogenbank ]
 inputs:
   asn_cache: 
         type: Directory[]

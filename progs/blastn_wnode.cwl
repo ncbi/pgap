@@ -90,6 +90,7 @@ baseCommand: blastn_wnode
 # 
 # 
 # 
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory?

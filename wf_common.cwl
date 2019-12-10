@@ -80,6 +80,8 @@ inputs:
                     and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                     and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
                 ]
+    no_internet:
+      type: boolean?
         
 steps:
   ping_start:
@@ -163,6 +165,7 @@ steps:
       ids: genomic_source/seqid_list
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
+      no_internet: no_internet
     out: [master_desc, sequences]
   Prepare_Unannotated_Sequences_pgapx_input_check:
         run: progs/pgapx_input_check.cwl
@@ -184,7 +187,7 @@ steps:
         run: progs/asndisc_cpp.cwl
         in:
             XML: {default: true}
-            genbank: {default: true}
+            genbank: {default: false}
             P: {default: 't'}
             a: {default: 'c'}
             asn_cache: genomic_source/asncache
@@ -192,6 +195,7 @@ steps:
             i: Prepare_Unannotated_Sequences_text/output
             d:
                 default:
+                    - AUTODEF_USER_OBJECT
                     - FEATURE_LIST
                     - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS 
                     - PARTIAL_CDS_COMPLETE_SEQUENCE
@@ -682,6 +686,7 @@ steps:
         source: [genomic_source/asncache]
       exclude_asndisc_codes: #
         default: 
+            - AUTODEF_USER_OBJECT
             - FEATURE_LIST
             - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS
             - PARTIAL_CDS_COMPLETE_SEQUENCE

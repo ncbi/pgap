@@ -151,6 +151,7 @@ steps:
       ref_assembly_taxid: ref_assembly_taxid
       ref_assembly_id: ref_assembly_id
       taxon_db: taxon_db
+      gcextract2_sqlite: gcextract2_sqlite
     out: [tax_report, gc_id_list]
   Build_Kmer_Tree:
     label: Build Kmer Tree

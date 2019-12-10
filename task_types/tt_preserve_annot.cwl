@@ -1,6 +1,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: preserve_annot
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory[]

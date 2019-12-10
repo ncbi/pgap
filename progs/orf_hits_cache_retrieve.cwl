@@ -3,6 +3,7 @@ cwlVersion: v1.0
 label: orf_hits_cache_retrieve
 class: CommandLineTool
 baseCommand: orf_hits_cache_retrieve
+arguments: [ -nogenbank ]
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

@@ -8,6 +8,7 @@ requirements:
    listing:
      - entryname: input.mft
        entry: ${var blob = '# input.mft created for fscr_calls_pass1 from input input Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
+arguments: [ -nogenbank ]
 
 inputs:
   max_reblast_spans:

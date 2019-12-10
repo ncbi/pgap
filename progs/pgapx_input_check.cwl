@@ -4,6 +4,7 @@ cwlVersion: v1.0
 label: pgapx_input_check
 class: CommandLineTool
 baseCommand: pgapx_input_check
+arguments: [ -nogenbank ]
 inputs:            
   input:
      type: File
