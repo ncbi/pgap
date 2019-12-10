@@ -464,6 +464,7 @@ class Setup:
         return str2sec(self.args.timeout)
 
     def update(self):
+        self.update_self()
         self.install_docker()
         self.install_data()
         self.install_test_genomes()
@@ -503,10 +504,35 @@ class Setup:
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
 
+    def update_self(self):
+        cur_file = sys.argv[0]
+        if self.branch == "":
+            ver = self.use_version
+        else:
+            ver = self.branch
+        url = f"https://github.com/ncbi/pgap/raw/{ver}/scripts/pgap.py"
+        request = Request(url)
+
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                new_pgap = response.read()
+            with open(cur_file, "rb") as f:
+                old_pgap = f.read()
+
+            if new_pgap != old_pgap:
+                print(msg)
+                with open("zzOut", "wb") as f:
+                    f.write(new_pgap)
+                print(f"{cur_file} updated successfully.")
+        except:
+            print(f"Failed to update {cur_file}, ignoring")
+            print(f"Something has gone wrong, please manually download: {url}")
+
     def write_version(self):
         filename = self.rundir + "/VERSION"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
+
 
         
 def main():
