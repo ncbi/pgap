@@ -576,13 +576,15 @@ class Setup:
                 old_pgap = f.read()
 
             if new_pgap != old_pgap:
-                print(msg)
-                with open("zzOut", "wb") as f:
+                print(f"Attempting to update {cur_file}...", end='')
+                with open(cur_file, "wb") as f:
                     f.write(new_pgap)
-                print(f"{cur_file} updated successfully.")
-        except:
+                print("updated successfully.")
+        except Exception as exc:
+            print(exc)
             print(f"Failed to update {cur_file}, ignoring")
             print(f"Something has gone wrong, please manually download: {url}")
+            sys.exit()
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
