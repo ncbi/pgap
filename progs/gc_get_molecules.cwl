@@ -14,6 +14,7 @@ class: CommandLineTool
 #        writable: False
 
 baseCommand: gc_get_molecules
+arguments: [ -nogenbank ]
 # this is only one example
 # 
 # 

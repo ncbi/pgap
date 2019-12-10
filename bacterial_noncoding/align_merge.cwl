@@ -12,7 +12,7 @@ requirements:
     
 #align_merge -blastdb blastdb -asn-cache sequence_cache -filter 'align_length >= 60' -ifmt seq-align-set -input-manifest align.mft -logfile align_merge.log -max-discontinuity 20 -o align.asn -collated -compart -fill-gaps
 baseCommand: align_merge
-arguments: [ -filter, "align_length >= 60", -ifmt, seq-align-set, -max-discontinuity, "20", -collated, -compart, -fill-gaps ]
+arguments: [ -filter, "align_length >= 60", -ifmt, seq-align-set, -max-discontinuity, "20", -collated, -compart, -fill-gaps, -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory

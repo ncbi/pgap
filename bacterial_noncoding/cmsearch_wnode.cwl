@@ -17,6 +17,7 @@ requirements:
 # -rfam-stockholm /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/Rfam/pgap-3.1/Rfam.seed 
 baseCommand: cmsearch_wnode
 #arguments: [ -cmsearch-cpu "0" ]
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

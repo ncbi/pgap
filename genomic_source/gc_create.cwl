@@ -10,6 +10,7 @@ requirements:
 
 #gc_create -unplaced-manifest sequences.mft -asn-cache sequence_cache -gc-assm-name L103 -o gencoll.asn
 baseCommand: gc_create
+arguments: [ -nogenbank ]
 inputs:
   unplaced:
     type: File

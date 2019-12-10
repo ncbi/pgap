@@ -8,6 +8,7 @@ requirements:
      - entry: $(inputs.proteins)
        writable: false
 baseCommand: gp_fetch_sequences
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory[]?

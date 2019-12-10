@@ -12,7 +12,7 @@ requirements:
     
 #ribosomal_align2annot -blastdb blastdb -asn-cache sequence_cache -filter-accept 'pct_identity_gap >= 70' -gap-tolerance 1000 -input-manifest aligns.mft -o annotations.asn -product-name '16S ribosomal RNA' -submission-mode-genbank
 baseCommand: ribosomal_align2annot
-arguments: [ -filter-accept, "pct_identity_gap >= 70", -gap-tolerance, "1000", -submission-mode-genbank ]
+arguments: [ -filter-accept, "pct_identity_gap >= 70", -gap-tolerance, "1000", -submission-mode-genbank, -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory

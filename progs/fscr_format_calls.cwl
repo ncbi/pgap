@@ -1,6 +1,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: fscr_format_calls
+arguments: [ -nogenbank  ]
 label: fscr_format_calls
 
 inputs:

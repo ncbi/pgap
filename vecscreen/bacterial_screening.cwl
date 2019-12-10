@@ -62,8 +62,6 @@ steps:
         linkMerge: merge_flattened
       subject_whitelist:
         source: Find_Frequent_contam_in_prok_Hits/frequent
-      nogenbank:
-        default: false
     out: [o, onon_match]
   Generate_contam_in_prok_hit_features:
     in:

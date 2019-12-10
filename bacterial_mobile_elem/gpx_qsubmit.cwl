@@ -10,7 +10,7 @@ class: CommandLineTool
     
 #gpx_qsubmit -asn-cache sequence_cache -batch-size 1 -ids-manifest seqids.mft
 baseCommand: gpx_qsubmit
-arguments: [ -batch-size, "1" ]
+arguments: [ -batch-size, "1", -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

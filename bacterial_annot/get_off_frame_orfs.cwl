@@ -4,6 +4,7 @@ class: CommandLineTool
     
 #get_off_frame_orfs -aligns-manifest aligns.mft -o prot.ids -seq_entries-manifest seq_entries.mft
 baseCommand: get_off_frame_orfs
+arguments: [ -nogenbank  ]
 inputs:
   aligns:
     type: File

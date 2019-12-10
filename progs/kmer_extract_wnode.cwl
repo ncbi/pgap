@@ -13,6 +13,7 @@ requirements:
         writable: False
 
 baseCommand: kmer_extract_wnode
+arguments: [ -nogenbank ]
 inputs:
   input:
     doc: Used only to be preserved

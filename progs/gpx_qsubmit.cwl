@@ -92,8 +92,9 @@ inputs:
       prefix: -max-batch-length
   nogenbank:
     type: boolean?
+    default: true
     inputBinding:
-      # prefix: -nogenbank # commenting this as a hail mary
+      prefix: -nogenbank
   NxM_threshold:
     type: int?
     inputBinding:

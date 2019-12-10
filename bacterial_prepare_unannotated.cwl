@@ -5,7 +5,7 @@ class: CommandLineTool
 
 #bacterial_prepare_unannotated -asn-cache sequence_cache -gc-assembly-manifest gencoll_asn.mft -ids-manifest ids.mft -master-desc master_desc.asn -o sequences.asn -submit-block-manifest submit_block_template.mft -submission-mode-genbank
 baseCommand: bacterial_prepare_unannotated
-arguments: [ -submission-mode-genbank ]
+arguments: [ -submission-mode-genbank, -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory
@@ -37,6 +37,10 @@ inputs:
     type: File
     inputBinding:
         prefix: -taxon-db
+  no_internet:
+    type: boolean?            
+    inputBinding:
+        prefix: -no-internet
         
 outputs:
   master_desc:

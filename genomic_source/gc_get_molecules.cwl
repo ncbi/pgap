@@ -5,7 +5,7 @@ class: CommandLineTool
 # gc_get_molecules -gc-assembly gencoll.asn -level top-level -filter reference-no-organelle -o ref_no_organelle.gi
 
 baseCommand: gc_get_molecules
-arguments: [ -level, top-level ]
+arguments: [ -level, top-level, -nogenbank ]
 inputs:
   gc_assembly:
     type: File
