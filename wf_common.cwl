@@ -195,6 +195,7 @@ steps:
             i: Prepare_Unannotated_Sequences_text/output
             d:
                 default:
+                    - AUTODEF_USER_OBJECT
                     - FEATURE_LIST
                     - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS 
                     - PARTIAL_CDS_COMPLETE_SEQUENCE
@@ -685,6 +686,7 @@ steps:
         source: [genomic_source/asncache]
       exclude_asndisc_codes: #
         default: 
+            - AUTODEF_USER_OBJECT
             - FEATURE_LIST
             - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS
             - PARTIAL_CDS_COMPLETE_SEQUENCE
