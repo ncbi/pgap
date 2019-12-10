@@ -404,7 +404,7 @@ class Setup:
         else:
             #print("Checking github releases for latest version.")
             response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
-            latest = json.load(response)['tag_name']
+            latest = json.loads(response.read().decode())['tag_name']
             versions.append(latest)
         return versions
 
