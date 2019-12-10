@@ -9,6 +9,7 @@ requirements:
         writable: False
     
 baseCommand: gpx_qsubmit
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

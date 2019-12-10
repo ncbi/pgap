@@ -5,6 +5,7 @@ class: CommandLineTool
 
 #gp_getorf -allowable-starts from-stop-to-stop -asn-cache sequence_cache -ifmt seq-entries-b -input-manifest inseq.mft -max-seq-gap 10000 -minsize 45 -seq-output entries.asnb
 baseCommand: gp_getorf
+arguments: [ -nogenbank ]
 inputs:
   allowable_starts:
     type: string?

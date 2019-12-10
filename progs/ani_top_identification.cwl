@@ -4,6 +4,7 @@ label: "ani_top_identification"
 # file: progs/ani_top_identification.cwl
 class: CommandLineTool
 baseCommand: ani_top_identification
+arguments: [ -nogenbank ]
 inputs:
       ANI_cutoff:   
         type: File

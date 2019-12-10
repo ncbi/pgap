@@ -12,7 +12,7 @@ requirements:
 
 #blastn_wnode -asn-cache sequence_cache -evalue 0.01 -max_target_seqs 250 -service GPipeExec_Prod -soft_masking true -task blastn -word_size 12 -swap-rows -queue GPIPE_BCT.blastn_wnode.455674932.1521225902
 baseCommand: blastn_wnode
-arguments: [ -evalue, "0.01", -max_target_seqs, "250", -soft_masking, "true", -task, blastn, -word_size, "12", -swap-rows ]
+arguments: [ -evalue, "0.01", -max_target_seqs, "250", -soft_masking, "true", -task, blastn, -word_size, "12", -swap-rows, -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory

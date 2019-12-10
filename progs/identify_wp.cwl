@@ -3,6 +3,7 @@ label: "identify_wp"
 
 class: CommandLineTool
 baseCommand: identify_wp
+arguments: [ -nogenbank ]
 inputs:
   wp_hashes:
     type: File

@@ -142,5 +142,6 @@ steps:
       taxid: prepare_input_template/taxid
       submol_block_json: prepare_input_template/submol_block_json
       ignore_all_errors: ignore_all_errors
+      no_internet: no_internet
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl
