@@ -576,7 +576,7 @@ class Setup:
                 old_pgap = f.read()
 
             if new_pgap != old_pgap:
-                print(f"Attempting to update {cur_file}...", end='')
+                print(f"Attempting to update <{cur_file}> ...", end='')
                 with open(cur_file, "wb") as f:
                     f.write(new_pgap)
                 print("updated successfully.")
