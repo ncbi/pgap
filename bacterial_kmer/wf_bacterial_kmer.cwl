@@ -231,7 +231,9 @@ steps:
     label: "Identify Top N ANI"
     run: ../task_types/tt_ani_top_n.cwl
     in:
-        asn_cache: asn_cache
+        asn_cache: 
+          source: [asn_cache, gc_seq_cache]
+          linkMerge: merge_flattened
         ANI_cutoff: ANI_cutoff
         gencoll_asn: gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align

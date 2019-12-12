@@ -6,7 +6,7 @@ inputs:
   gencoll_asn: File
   blast_align: File
   ANI_cutoff: File
-  asn_cache: Directory
+  asn_cache: Directory[]
   ref_assembly_id: int
   ref_assembly_taxid: int
   taxon_db: File

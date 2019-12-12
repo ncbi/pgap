@@ -14,10 +14,11 @@ inputs:
         type: int?
         inputBinding:
             prefix: -N
-      asn_cache: 
-        type: Directory?
+      asn_cache:
+        type: Directory[]
         inputBinding:
-            prefix: -asn-cache
+          prefix: -asn-cache
+          itemSeparator: ","
       input: 
         type: File?
         inputBinding:
