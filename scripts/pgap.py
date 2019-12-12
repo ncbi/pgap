@@ -563,7 +563,8 @@ class Setup:
     def update_self(self):
         cur_file = sys.argv[0]
         if self.branch == "":
-            ver = self.use_version
+            #ver = self.use_version
+            ver = "prod"
         else:
             ver = self.branch
         url = f"https://github.com/ncbi/pgap/raw/{ver}/scripts/pgap.py"
@@ -580,6 +581,9 @@ class Setup:
                 with open(cur_file, "wb") as f:
                     f.write(new_pgap)
                 print("updated successfully.")
+                print("Please restart update.")
+                sys.exit()
+                
         except Exception as exc:
             print(exc)
             print(f"Failed to update {cur_file}, ignoring")
