@@ -544,7 +544,7 @@ class Setup:
             if self.branch != "":
                 suffix = self.branch + "."
             if self.use_version > "2019-11-25.build4172":
-                for package in ['all','pgap']:
+                for package in ['all', 'ani', 'pgap']:
                     remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
                     install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
             else:
