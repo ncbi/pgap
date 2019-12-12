@@ -149,8 +149,9 @@ def find_failed_step(filename):
         
 class Pipeline:
 
-    def __init__(self, params, local_input):
+    def __init__(self, params, local_input, pipeline):
         self.params = params
+        self.cwlfile = f"{pipeline}.cwl"
         
         # Create a work directory.
         print("Output will be placed in:", self.params.outputdir)
@@ -184,7 +185,7 @@ class Pipeline:
                 '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
                 '--copy-outputs'])
 
-        self.cmd.extend(['pgap.cwl', self.input_file])
+        self.cmd.extend([self.cwlfile, self.input_file])
 
     def make_docker_cmd(self):
         self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
@@ -542,10 +543,14 @@ class Setup:
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
-            for package in ['all','pgap']:
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+            if self.use_version > "2019-11-25.build4172":
+                for package in ['all','pgap']:
+                    remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+            else:
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}.tgz'.format(self.use_version, suffix)
                 install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
-
+                
     def install_test_genomes(self):
         def get_suffix(branch):
             if branch == "":
@@ -611,6 +616,9 @@ def main():
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
+    ani_group = parser.add_mutually_exclusive_group()
+    ani_group.add_argument('--ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--ani-only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -652,8 +660,12 @@ def main():
     try:
         params = Setup(args)
         if args.input:
-            p = Pipeline(params, args.input)
-            retcode = p.launch()
+            if args.ani or args.ani_only:
+                p = Pipeline(params, args.input, "ani")
+                retcode = p.launch()
+            if not args.ani_only:
+                p = Pipeline(params, args.input, "pgap")
+                retcode = p.launch()
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
             raise
