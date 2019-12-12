@@ -149,8 +149,9 @@ def find_failed_step(filename):
         
 class Pipeline:
 
-    def __init__(self, params, local_input):
+    def __init__(self, params, local_input, pipeline):
         self.params = params
+        self.cwlfile = f"{pipeline}.cwl"
         
         # Create a work directory.
         print("Output will be placed in:", self.params.outputdir)
@@ -184,7 +185,7 @@ class Pipeline:
                 '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
                 '--copy-outputs'])
 
-        self.cmd.extend(['pgap.cwl', self.input_file])
+        self.cmd.extend([self.cwlfile, self.input_file])
 
     def make_docker_cmd(self):
         self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
@@ -520,6 +521,7 @@ class Setup:
         return str2sec(self.args.timeout)
 
     def update(self):
+        self.update_self()
         self.install_docker()
         self.install_data()
         self.install_test_genomes()
@@ -541,10 +543,14 @@ class Setup:
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
-            for package in ['all','pgap']:
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+            if self.use_version > "2019-11-25.build4172":
+                for package in ['all', 'ani', 'pgap']:
+                    remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+            else:
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}.tgz'.format(self.use_version, suffix)
                 install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
-
+                
     def install_test_genomes(self):
         def get_suffix(branch):
             if branch == "":
@@ -559,10 +565,41 @@ class Setup:
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
 
+    def update_self(self):
+        cur_file = sys.argv[0]
+        if self.branch == "":
+            #ver = self.use_version
+            ver = "prod"
+        else:
+            ver = self.branch
+        url = f"https://github.com/ncbi/pgap/raw/{ver}/scripts/pgap.py"
+        request = Request(url)
+
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                new_pgap = response.read()
+            with open(cur_file, "rb") as f:
+                old_pgap = f.read()
+
+            if new_pgap != old_pgap:
+                print(f"Attempting to update <{cur_file}> ...", end='')
+                with open(cur_file, "wb") as f:
+                    f.write(new_pgap)
+                print("updated successfully.")
+                print("Please restart update.")
+                sys.exit()
+                
+        except Exception as exc:
+            print(exc)
+            print(f"Failed to update {cur_file}, ignoring")
+            print(f"Something has gone wrong, please manually download: {url}")
+            sys.exit()
+
     def write_version(self):
         filename = self.rundir + "/VERSION"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
+
 
         
 def main():
@@ -579,6 +616,9 @@ def main():
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
+    ani_group = parser.add_mutually_exclusive_group()
+    ani_group.add_argument('--ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--ani-only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -620,8 +660,12 @@ def main():
     try:
         params = Setup(args)
         if args.input:
-            p = Pipeline(params, args.input)
-            retcode = p.launch()
+            if args.ani or args.ani_only:
+                p = Pipeline(params, args.input, "ani")
+                retcode = p.launch()
+            if not args.ani_only:
+                p = Pipeline(params, args.input, "pgap")
+                retcode = p.launch()
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
             raise
