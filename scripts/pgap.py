@@ -323,7 +323,7 @@ class Pipeline:
         
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
-        with open(cwllog, 'w', encoding="utf-8") as f:
+        with open(cwllog, 'a', encoding="utf-8") as f:
             # Show original command line in log
             cmdline = "Original command: " + " ".join(sys.argv)
             f.write(cmdline)
