@@ -381,9 +381,10 @@ class Setup:
         self.get_docker_info()
         if self.local_version != self.use_version:
             self.update()
+
         # Create a work directory.
         print("Output will be placed in:", self.params.outputdir)
-        os.mkdir(self.params.outputdir)
+        os.mkdir(self.outputdir)
         
 
     def get_branch(self):
