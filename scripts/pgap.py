@@ -152,6 +152,7 @@ class Pipeline:
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"{pipeline}.cwl"
+        self.pipename = pipeline.upper()
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
@@ -347,9 +348,9 @@ class Pipeline:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
-                    print('PGAP completed successfully.')
+                    print(f'{self.pipename} completed successfully.')
                 else:
-                    print('PGAP failed, docker exited with rc =', proc.returncode)
+                    print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
         return proc.returncode
 
