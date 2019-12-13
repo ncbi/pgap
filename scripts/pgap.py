@@ -383,7 +383,7 @@ class Setup:
             self.update()
 
         # Create a work directory.
-        print("Output will be placed in:", self.params.outputdir)
+        print("Output will be placed in:", self.outputdir)
         os.mkdir(self.outputdir)
         
 
