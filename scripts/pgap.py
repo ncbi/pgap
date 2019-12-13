@@ -153,10 +153,6 @@ class Pipeline:
         self.params = params
         self.cwlfile = f"{pipeline}.cwl"
         
-        # Create a work directory.
-        print("Output will be placed in:", self.params.outputdir)
-        os.mkdir(self.params.outputdir)
-
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
         self.input_file = '/pgap/user_input/pgap_input.yaml'
@@ -385,6 +381,10 @@ class Setup:
         self.get_docker_info()
         if self.local_version != self.use_version:
             self.update()
+        # Create a work directory.
+        print("Output will be placed in:", self.params.outputdir)
+        os.mkdir(self.params.outputdir)
+        
 
     def get_branch(self):
         if (self.args.dev):
