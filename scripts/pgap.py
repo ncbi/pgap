@@ -152,11 +152,8 @@ class Pipeline:
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"{pipeline}.cwl"
+        self.pipename = pipeline.upper()
         
-        # Create a work directory.
-        print("Output will be placed in:", self.params.outputdir)
-        os.mkdir(self.params.outputdir)
-
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
         self.input_file = '/pgap/user_input/pgap_input.yaml'
@@ -323,7 +320,7 @@ class Pipeline:
         
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
-        with open(cwllog, 'w', encoding="utf-8") as f:
+        with open(cwllog, 'a', encoding="utf-8") as f:
             # Show original command line in log
             cmdline = "Original command: " + " ".join(sys.argv)
             f.write(cmdline)
@@ -351,9 +348,9 @@ class Pipeline:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
-                    print('PGAP completed successfully.')
+                    print(f'{self.pipename} completed successfully.')
                 else:
-                    print('PGAP failed, docker exited with rc =', proc.returncode)
+                    print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
         return proc.returncode
 
@@ -385,6 +382,11 @@ class Setup:
         self.get_docker_info()
         if self.local_version != self.use_version:
             self.update()
+
+        # Create a work directory.
+        print("Output will be placed in:", self.outputdir)
+        os.mkdir(self.outputdir)
+        
 
     def get_branch(self):
         if (self.args.dev):
