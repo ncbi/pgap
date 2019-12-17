@@ -539,19 +539,20 @@ class Setup:
 
 
     def install_data(self):
-        if not os.path.exists(self.data_path):
-            quiet_remove("input")
-            print('Installing PGAP reference data version {}'.format(self.use_version))
             suffix = ""
             if self.branch != "":
                 suffix = self.branch + "."
+
             if self.use_version > "2019-11-25.build4172":
                 for package in ['all', 'ani', 'pgap']:
                     remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
                     install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
             else:
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}.tgz'.format(self.use_version, suffix)
-                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                if not os.path.exists(self.data_path):
+                    quiet_remove("input")
+                    print('Installing PGAP reference data version {}'.format(self.use_version))
+                    remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}.tgz'.format(self.use_version, suffix)
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
                 
     def install_test_genomes(self):
         def get_suffix(branch):
