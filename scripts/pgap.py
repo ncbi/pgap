@@ -545,6 +545,7 @@ class Setup:
             suffix = self.branch + "."
 
         if self.use_version > "2019-11-25.build4172":
+            
             for package in ['all', 'ani', 'pgap']:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
                 remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
@@ -632,8 +633,8 @@ def main():
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     ani_group = parser.add_mutually_exclusive_group()
-    ani_group.add_argument('--ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
-    ani_group.add_argument('--ani-only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--tax-check',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--tax-check-only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
