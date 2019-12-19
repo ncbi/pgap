@@ -380,8 +380,7 @@ class Setup:
         self.outputdir = self.get_output_dir()
         #self.docker_cmd, self.docker_user_remap = self.get_docker_info()
         self.get_docker_info()
-        if (self.local_version != self.use_version) or
-            not self.check_install_data():
+        if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
 
         # Create a work directory.
@@ -601,7 +600,7 @@ class Setup:
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
             open(guard_file, 'a').close()
 
-def update_self(self):
+    def update_self(self):
         if self.args.teamcity:
             print("Not trying to update self, because the --teamcity flag is enabled.")
             # Never update self when running teamcity
