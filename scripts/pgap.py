@@ -573,6 +573,11 @@ class Setup:
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
 
     def update_self(self):
+        if self.args.teamcity:
+            # Never update self when running teamcity
+            # Also useful when locally editing and testing this file.
+            return
+
         cur_file = sys.argv[0]
         if self.branch == "":
             #ver = self.use_version
