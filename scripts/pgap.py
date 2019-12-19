@@ -590,7 +590,7 @@ class Setup:
                 return ""
             return "."+self.branch
 
-        guard_file = f"{self.test_genomes}/.complete"
+        guard_file = f"{self.test_genomes_path}/.complete"
         if not os.path.isfile(guard_file):
             quiet_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
