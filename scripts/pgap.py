@@ -546,8 +546,11 @@ class Setup:
 
         if self.use_version > "2019-11-25.build4172":
             for package in ['all', 'ani', 'pgap']:
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
-                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                if not os.path.isfile(guard_file):
+                    remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                    open(guard_file, 'a').close()
         else:
             if not os.path.exists(self.data_path):
                 quiet_remove("input")
