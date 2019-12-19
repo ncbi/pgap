@@ -436,7 +436,7 @@ class Setup:
         if self.local_version == None:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return False
-        if self.no_internet:
+        if self.args.no_internet:
             print("--no-internet flag enabled, not checking remote versions.")
             return True
         if self.local_version == self.get_latest_version():
