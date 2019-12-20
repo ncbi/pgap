@@ -212,6 +212,8 @@ steps:
                     - OVERLAPPING_GENES
                     - EXTRA_GENES
                     - N_RUNS
+                    - TAX_LOOKUP_MISMATCH
+                    - TAX_LOOKUP_MISSING
         out: [o]
   Prepare_Unannotated_Sequences_asndisc_evaluate:
         run: progs/xml_evaluate.cwl
@@ -704,6 +706,8 @@ steps:
             - EXTRA_GENES
             - N_RUNS
             - BAD_LOCUS_TAG_FORMAT 
+            - TAX_LOOKUP_MISMATCH
+            - TAX_LOOKUP_MISSING
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
