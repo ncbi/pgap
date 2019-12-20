@@ -380,7 +380,7 @@ class Setup:
         self.outputdir = self.get_output_dir()
         #self.docker_cmd, self.docker_user_remap = self.get_docker_info()
         self.get_docker_info()
-        if self.local_version != self.use_version:
+        if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
 
         # Create a work directory.
@@ -435,14 +435,18 @@ class Setup:
     def check_status(self):
         if self.local_version == None:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
-            return
+            return False
+        if self.args.no_internet:
+            print("--no-internet flag enabled, not checking remote versions.")
+            return True
         if self.local_version == self.get_latest_version():
             if self.branch == "":
                 print("PGAP version {} is up to date.".format(self.local_version))
             else:
                 print("PGAP from {} branch, version {} is up to date.".format(self.branch, self.local_version))
-            return
+            return True
         print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
+        return True
 
     def list_remote_versions(self):
         print("Available versions:")
@@ -538,6 +542,20 @@ class Setup:
         except CalledProcessError:
             print(r)
 
+    # This and install data should probably be refactored
+    def check_install_data(self):
+        if self.use_version > "2019-11-25.build4172":
+            if self.args.ani:
+                packages = ['all', 'ani', 'pgap']
+            elif self.args.ani_only:
+                packages = ['all', 'ani']
+            else:
+                packages = ['all', 'pgap']
+            for package in packages:
+                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                if not os.path.isfile(guard_file):
+                    return False
+        return True
 
     def install_data(self):
         suffix = ""
@@ -545,14 +563,25 @@ class Setup:
             suffix = self.branch + "."
 
         if self.use_version > "2019-11-25.build4172":
-            for package in ['all', 'ani', 'pgap']:
+            if self.args.ani:
+                packages = ['all', 'ani', 'pgap']
+            elif self.args.ani_only:
+                packages = ['all', 'ani']
+            else:
+                packages = ['all', 'pgap']
+            for package in packages:
+                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
                 remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
-                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                if not os.path.isfile(guard_file):
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                    open(guard_file, 'a').close()
+                else:
+                    print(f"Skipping already installed tarball: {remote_path}")
         else:
             if not os.path.exists(self.data_path):
                 quiet_remove("input")
                 print('Installing PGAP reference data version {}'.format(self.use_version))
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}.tgz'.format(self.use_version, suffix)
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
                 install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
                 
     def install_test_genomes(self):
@@ -561,15 +590,23 @@ class Setup:
                 return ""
             return "."+self.branch
 
-        if not os.path.exists(self.test_genomes_path):
+        guard_file = f"{self.test_genomes_path}/.complete"
+        if not os.path.isfile(guard_file):
             quiet_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
+            open(guard_file, 'a').close()
 
     def update_self(self):
+        if self.args.teamcity:
+            print("Not trying to update self, because the --teamcity flag is enabled.")
+            # Never update self when running teamcity
+            # Also useful when locally editing and testing this file.
+            return
+
         cur_file = sys.argv[0]
         if self.branch == "":
             #ver = self.use_version
@@ -621,8 +658,8 @@ def main():
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     ani_group = parser.add_mutually_exclusive_group()
-    ani_group.add_argument('--ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
-    ani_group.add_argument('--ani-only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--tax-check', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--tax-check-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
