@@ -18,7 +18,7 @@ steps:
             style:
                 default: master
             gbload:
-                default: true
+                default: false
         out: [output]
 outputs:
     output: 

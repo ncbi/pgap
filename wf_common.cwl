@@ -664,7 +664,7 @@ steps:
         style:
             default: master
         gbload:
-            default: true
+            default: false
     out: [output]
   Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
