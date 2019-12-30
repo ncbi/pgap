@@ -42,7 +42,7 @@ steps:
       state:
         default: "start"
       workflow:
-        default: "pgap"
+        default: "ani"
       instring: gc_assm_name
     out: [stdout, outstring, uuid_out]
   fastaval:
@@ -113,3 +113,20 @@ steps:
       gcextract2_sqlite: passdata/gcextract2_sqlite
       
     out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report]
+
+  ping_stop:
+    run: progs/pinger.cwl
+    in:
+      report_usage: report_usage
+      uuid_in: ping_start/uuid_out
+      state:
+        default: "stop"
+      workflow:
+        default: "ani"
+      # Note: the input on the following line should be the same as all of the outputs
+      # for this workflow, so we ensure this is the final step.
+      infile:
+        - bacterial_kmer/Identify_Top_N_ANI_annot
+        - bacterial_kmer/Identify_Top_N_ANI_top
+        - bacterial_kmer/Extract_Top_Assemblies___tax_report
+    out: [stdout]
