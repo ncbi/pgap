@@ -42,7 +42,7 @@ steps:
       state:
         default: "start"
       workflow:
-        default: "ani"
+        default: "ani-analysis"
       instring: gc_assm_name
     out: [stdout, outstring, uuid_out]
   fastaval:
@@ -122,7 +122,7 @@ steps:
       state:
         default: "stop"
       workflow:
-        default: "ani"
+        default: "ani-analysis"
       # Note: the input on the following line should be the same as all of the outputs
       # for this workflow, so we ensure this is the final step.
       infile:
