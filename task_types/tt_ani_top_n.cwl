@@ -4,6 +4,7 @@ label: "ani_top_n"
 class: Workflow # task type
 inputs:
   gencoll_asn: File
+  ref_gencoll_asn: File
   blast_align: File
   ANI_cutoff: File
   asn_cache: Directory[]
@@ -34,6 +35,7 @@ steps:
       min_region: 
         default: 100
       query_assembly: gencoll_asn
+      ref_assemblies: ref_gencoll_asn
       ref_assembly_id: ref_assembly_id
       ref_assembly_taxid: ref_assembly_taxid
       tax_synon: tax_synon

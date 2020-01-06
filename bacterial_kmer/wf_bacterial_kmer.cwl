@@ -236,6 +236,7 @@ steps:
           linkMerge: merge_flattened
         ANI_cutoff: ANI_cutoff
         gencoll_asn: gencoll_asn
+        ref_gencoll_asn: Get_Top_Assemblies_GenColl_ASN/gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
         ref_assembly_id: ref_assembly_id

@@ -35,6 +35,10 @@ inputs:
         type: File
         inputBinding:
             prefix: -query-assembly
+      ref_assemblies: 
+        type: File
+        inputBinding:
+            prefix: -ref-assemblies
       ref_assembly_id: 
         type: int?
         inputBinding:
