@@ -12,7 +12,7 @@ requirements:
         entry: $(inputs.annotation.path)
 
 baseCommand: bact_best_evidence_alignments
-arguments: [-support-threshold, 25.0]
+arguments: [-support-threshold, "25.0"]
 inputs:
   annotation:
     type: File
