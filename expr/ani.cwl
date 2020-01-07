@@ -47,12 +47,18 @@ expression: |
         case 'GCExtract2.sqlite':
           r['gcextract2_sqlite'] = l[i];
           break;    
+        case 'ani-report.xsl':
+          r['ani_report_transform'] = l[i];
+          break;    
+          
       }
     }
     return r;
   }
 outputs:
   ANI_cutoff:
+    type: File
+  ani_report_transform:
     type: File
   gc_cache:
     type: File

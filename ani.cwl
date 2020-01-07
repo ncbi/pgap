@@ -61,6 +61,7 @@ steps:
     run: expr/ani.cwl
     out:
       - ANI_cutoff
+      - ani_report_transform
       - gc_cache
       - gc_seq_cache
       - gcextract2_sqlite
@@ -111,5 +112,6 @@ steps:
       tax_synon: passdata/tax_synon
       taxon_db: passdata/taxon_db
       gcextract2_sqlite: passdata/gcextract2_sqlite
+      ani_report_transform: passdata/ani_report_transform
       
     out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report]
