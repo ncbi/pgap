@@ -29,9 +29,13 @@ outputs:
   ani_tax_report:
     type: File
     outputSource: bacterial_kmer/Identify_Top_N_ANI_top
+  ani_tax_report_text:
+    type: File
+    outputSource: bacterial_kmer/Identify_Top_N_ANI_top_txt
   kmer_tax_report:
     type: File
     outputSource: bacterial_kmer/Extract_Top_Assemblies___tax_report
+    Identify_Top_N_ANI_top_txt
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -114,4 +118,4 @@ steps:
       gcextract2_sqlite: passdata/gcextract2_sqlite
       ani_report_transform: passdata/ani_report_transform
       
-    out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report]
+    out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report, Identify_Top_N_ANI_top_txt]
