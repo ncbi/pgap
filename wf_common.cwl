@@ -61,6 +61,7 @@ inputs:
                 and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
                 and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
                 and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
             ]
     xpath_fail_final_asndisc: 
         type: string?
@@ -83,6 +84,7 @@ inputs:
                     and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
                     and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
                     and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                    and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
                 ]
     no_internet:
       type: boolean?
