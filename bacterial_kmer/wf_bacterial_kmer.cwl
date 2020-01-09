@@ -20,6 +20,7 @@ inputs:
     tax_synon: File
     taxon_db: File
     gcextract2_sqlite: File
+    ani_report_transform: File
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -27,6 +28,9 @@ outputs:
     Identify_Top_N_ANI_top:
         type: File
         outputSource: Identify_Top_N_ANI/top
+    Identify_Top_N_ANI_top_txt:
+        type: File
+        outputSource: Identify_Top_N_ANI_transform/output
     Extract_Top_Assemblies___tax_report:
         type: File
         outputSource: Extract_Top_Assemblies/tax_report
@@ -231,9 +235,12 @@ steps:
     label: "Identify Top N ANI"
     run: ../task_types/tt_ani_top_n.cwl
     in:
-        asn_cache: asn_cache
+        asn_cache: 
+          source: [asn_cache, gc_seq_cache]
+          linkMerge: merge_flattened
         ANI_cutoff: ANI_cutoff
         gencoll_asn: gencoll_asn
+        ref_gencoll_asn: Get_Top_Assemblies_GenColl_ASN/gencoll_asn
         blast_align: Assembly_Assembly_BLASTn/blast_align
         ref_assembly_taxid: ref_assembly_taxid
         ref_assembly_id: ref_assembly_id
@@ -241,3 +248,12 @@ steps:
         gcextract2_sqlite: gcextract2_sqlite
         taxon_db: taxon_db
     out: [top,annot]
+  Identify_Top_N_ANI_transform:
+    doc: transform ANI taxcheck report XML file to Genbank suitable (SMART equivalent) text report
+    run: ../progs/xsltproc.cwl
+    in:
+      xml: Identify_Top_N_ANI/top
+      xslt: ani_report_transform
+      output_name:
+        default: 'ani-tax-report.txt'
+    out: [output]

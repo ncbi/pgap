@@ -59,6 +59,9 @@ inputs:
                 and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                 and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                 and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
             ]
     xpath_fail_final_asndisc: 
         type: string?
@@ -79,6 +82,9 @@ inputs:
                     and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                     and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                     and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                    and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                    and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                    and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
                 ]
     no_internet:
       type: boolean?
@@ -208,6 +214,8 @@ steps:
                     - OVERLAPPING_GENES
                     - EXTRA_GENES
                     - N_RUNS
+                    - TAX_LOOKUP_MISMATCH
+                    - TAX_LOOKUP_MISSING
         out: [o]
   Prepare_Unannotated_Sequences_asndisc_evaluate:
         run: progs/xml_evaluate.cwl
@@ -658,7 +666,7 @@ steps:
         style:
             default: master
         gbload:
-            default: true
+            default: false
     out: [output]
   Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
@@ -700,6 +708,8 @@ steps:
             - EXTRA_GENES
             - N_RUNS
             - BAD_LOCUS_TAG_FORMAT 
+            - TAX_LOOKUP_MISMATCH
+            - TAX_LOOKUP_MISSING
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
