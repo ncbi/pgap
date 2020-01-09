@@ -45,7 +45,7 @@ steps:
       state:
         default: "start"
       workflow:
-        default: "pgap"
+        default: "ani-analysis"
       instring: gc_assm_name
     out: [stdout, outstring, uuid_out]
   fastaval:
@@ -118,3 +118,20 @@ steps:
       ani_report_transform: passdata/ani_report_transform
       
     out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report, Identify_Top_N_ANI_top_txt]
+
+  ping_stop:
+    run: progs/pinger.cwl
+    in:
+      report_usage: report_usage
+      uuid_in: ping_start/uuid_out
+      state:
+        default: "stop"
+      workflow:
+        default: "ani-analysis"
+      # Note: the input on the following line should be the same as all of the outputs
+      # for this workflow, so we ensure this is the final step.
+      infile:
+        - bacterial_kmer/Identify_Top_N_ANI_annot
+        - bacterial_kmer/Identify_Top_N_ANI_top
+        - bacterial_kmer/Extract_Top_Assemblies___tax_report
+    out: [stdout]
