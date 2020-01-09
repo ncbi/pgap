@@ -35,7 +35,6 @@ outputs:
   kmer_tax_report:
     type: File
     outputSource: bacterial_kmer/Extract_Top_Assemblies___tax_report
-    Identify_Top_N_ANI_top_txt
 steps:
   ping_start:
     run: progs/pinger.cwl
