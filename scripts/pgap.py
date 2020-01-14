@@ -205,7 +205,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
         self.cmd.append(self.params.docker_image)
 
@@ -230,7 +230,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
         self.cmd.append(self.params.docker_image)
 
@@ -246,7 +246,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
         self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
 
@@ -658,8 +658,8 @@ def main():
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     ani_group = parser.add_mutually_exclusive_group()
-    ani_group.add_argument('--tax-check', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
-    ani_group.add_argument('--tax-check-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
