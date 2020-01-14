@@ -205,7 +205,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
         self.cmd.append(self.params.docker_image)
 
@@ -230,7 +230,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
         self.cmd.append(self.params.docker_image)
 
@@ -246,7 +246,7 @@ class Pipeline:
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
         self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
 
