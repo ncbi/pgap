@@ -301,9 +301,15 @@ class Pipeline:
         match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
         settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
         cpus = 0
-        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
+        for match in re.finditer(r'^processor\s+:\s+(.*)\n', output, re.MULTILINE):
             cpus += 1
-            settings['cpu model'] = match.group(1)
+
+        match = re.search(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE)
+        settings['cpu model'] = match.group(1)
+
+        match = re.search(r'^flags\s+:\s+(.*)\n', output, re.MULTILINE)
+        settings['cpu flags'] = match.group(1)
+        
         settings['CPU cores'] = cpus
         settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
         check_runtime_setting(settings, 'open files', 8000)
@@ -316,7 +322,7 @@ class Pipeline:
         #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
         f.write(json.dumps(settings, sort_keys=True, indent=4))
-        
+        sys.exit()
         
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
