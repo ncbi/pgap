@@ -347,8 +347,10 @@ steps:
       inseq: Prepare_Unannotated_Sequences/sequences
       hmm_path: passdata/hmm_path
       hmms_tab: passdata/hmms_tab
+      selenoproteins: passdata/selenoproteins
       scatter_gather_nchunks: scatter_gather_nchunks
       uniColl_cache: passdata/uniColl_cache
+      naming_sqlite: passdata/naming_sqlite
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
       nogenbank:
@@ -359,7 +361,7 @@ steps:
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: passdata/genemark_path
       thresholds: passdata/thresholds
-    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids]
+    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
   spurious_annot_1: # PLANE
     run: spurious_annot/wf_spurious_annot_pass1.cwl
@@ -418,6 +420,7 @@ steps:
         scatter_gather_nchunks: scatter_gather_nchunks
         prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
+        models1: bacterial_annot/models1
         raw_seqs: Prepare_Unannotated_Sequences/sequences
         thresholds: passdata/thresholds
         naming_sqlite: passdata/naming_sqlite
