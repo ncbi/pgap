@@ -20,6 +20,9 @@ inputs:
     annotation:
         type: File
         label: "Resolve Annotation Conflicts/annotation"
+    models1:
+        type: File
+        label: "Run GeneMark Training/models"
     raw_seqs: 
         type: File
         label: #Prepare Unannotated Sequences/raw_seqs"
@@ -47,7 +50,7 @@ steps:
         label: "Find Best Evidence Alignments"
         run: ../progs/bact_best_evidence_alignments.cwl  
         in:
-            annotation: annotation
+            annotation: [annotation, models1]
             asn_cache: [uniColl_cache, sequence_cache]  # ${GP_cache_dir},${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache
                 # type: Directory[]
             align:  [hmm_aligns, prot_aligns] # -input-manifest 
@@ -100,7 +103,7 @@ steps:
                 # type: Directory[]
             genemark_annot: Run_GeneMark/preliminary_models
             max_overlap:
-                default: 113
+                default: 120
             max_unannotated_region:
                 default: 5000
             models_name: # -out
