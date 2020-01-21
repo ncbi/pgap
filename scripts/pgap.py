@@ -322,7 +322,6 @@ class Pipeline:
         #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
         f.write(json.dumps(settings, sort_keys=True, indent=4))
-        sys.exit()
         
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
