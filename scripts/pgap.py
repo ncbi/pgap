@@ -551,11 +551,11 @@ class Setup:
     def check_install_data(self):
         if self.use_version > "2019-11-25.build4172":
             if self.args.ani:
-                packages = ['all', 'ani', 'pgap']
+                packages = ['ani', 'pgap']
             elif self.args.ani_only:
-                packages = ['all', 'ani']
+                packages = ['ani']
             else:
-                packages = ['all', 'pgap']
+                packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
                 if not os.path.isfile(guard_file):
@@ -569,11 +569,11 @@ class Setup:
 
         if self.use_version > "2019-11-25.build4172":
             if self.args.ani:
-                packages = ['all', 'ani', 'pgap']
+                packages = ['ani', 'pgap']
             elif self.args.ani_only:
-                packages = ['all', 'ani']
+                packages = ['ani']
             else:
-                packages = ['all', 'pgap']
+                packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
                 remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
