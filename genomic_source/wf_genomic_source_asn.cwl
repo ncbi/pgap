@@ -60,11 +60,9 @@ steps:
     in:
       gc_assembly: Create_Assembly_From_Sequences/gencoll_asn
       filter:
-        #default: ["all", "all-no-organelle", "non-reference-no-organelle", "organelle", "reference-no-organelle"]
-        default: "reference-no-organelle"
+        default: "all"
       outfile:
-        #default: ["all.gi", "no_organelle.gi", "no_ref_no_organelle.gi", "organelle.gi", "ref_no_organelle.gi"]
-        default: "ref_no_organelle.gi"
+        default: "all.gi"
     out: [seqid_list]
       
   Extract_Assembly_Information_XML:
