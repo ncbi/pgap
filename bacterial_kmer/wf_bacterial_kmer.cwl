@@ -21,6 +21,7 @@ inputs:
     taxon_db: File
     gcextract2_sqlite: File
     ani_report_transform: File
+    ignore_all_errors: boolean?
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -257,3 +258,12 @@ steps:
       output_name:
         default: 'ani-tax-report.txt'
     out: [output]
+  Evaluate_ANI_report:
+    run: ../progs/xml_evaluate.cwl
+    in:
+      input: Identify_Top_N_ANI/top
+      xpath_fail: 
+        default: >
+          /tax-check/results[@status='MISASSIGNED' or @status='CONTAMINATED']
+      ignore_all_errors: ignore_all_errors
+    out: []

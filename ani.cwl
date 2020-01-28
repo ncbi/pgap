@@ -116,7 +116,7 @@ steps:
       taxon_db: passdata/taxon_db
       gcextract2_sqlite: passdata/gcextract2_sqlite
       ani_report_transform: passdata/ani_report_transform
-      
+      ignore_all_errors: ignore_all_errors
     out:     [Identify_Top_N_ANI_annot, Identify_Top_N_ANI_top, Extract_Top_Assemblies___tax_report, Identify_Top_N_ANI_top_txt]
 
   ping_stop:
