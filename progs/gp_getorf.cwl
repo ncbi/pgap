@@ -32,7 +32,7 @@ inputs:
       prefix: -max-seq-gap
   minsize:
     type: int?
-    default: 45
+    default: 42
     inputBinding:
       prefix: -minsize
   outfile:
