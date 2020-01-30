@@ -414,6 +414,7 @@ steps:
   bacterial_annot_3:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
     in:
+        AntiFamLib: passdata/AntiFamLib
         uniColl_cache: passdata/uniColl_cache
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
@@ -440,6 +441,7 @@ steps:
         - id: Search_Naming_HMMs_hmm_hits
         - id: Assign_Naming_HMM_to_Proteins_assignments
         - id: Name_by_WPs_names
+        - id: PGAP_plus_ab_initio_annotation
 
   spurious_annot_2:
     run: spurious_annot/wf_spurious_annot_pass2.cwl
@@ -450,7 +452,7 @@ steps:
       AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
-      Run_GeneMark_models: bacterial_annot_3/Run_GeneMark_Post_models
+      input_models: bacterial_annot_3/PGAP_plus_ab_initio_annotation
     out:
       - AntiFam_tainted_proteins___oseqids
       - Good_AntiFam_filtered_annotations_out
@@ -773,7 +775,7 @@ steps:
       annot_request_id:
         default: -1 # this is dummy annot_request_id
       hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits
-      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models
+      hmm_search_proteins: bacterial_annot_3/PGAP_plus_ab_initio_annotation
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  passdata/univ_prot_xml
       val_res_den_xml:  passdata/val_res_den_xml
