@@ -125,6 +125,7 @@ steps:
       - naming_hmms_combined
       - naming_hmms_tab
       - naming_sqlite
+      - package_versions
       - rfam_amendments
       - rfam_model_path
       - rfam_stockholm
@@ -137,6 +138,15 @@ steps:
       - val_res_den_xml
       - wp_hashes
 
+  log_package_versions:
+    run: progs/catlog.cwl
+    in:
+      input: 
+        source: 
+          - passdata/package_versions
+        linkMerge: merge_flattened
+    out: []
+    
   blast_hits_cache_data_split_dir:
     in:
       data: blast_hits_cache_data

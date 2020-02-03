@@ -45,6 +45,9 @@ expression: |
         case 'GeneMark':
           r['genemark_path'] = l[i];
           break;
+        case 'packages.versions':
+          r['package_versions'] = l[i];
+          break;
         case 'rfam-amendments.xml':
           r['rfam_amendments'] = l[i];
           break;
@@ -148,6 +151,8 @@ outputs:
     type: File
   naming_sqlite:
     # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+    type: File
+  package_versions:
     type: File
   rfam_amendments:
     type: File
