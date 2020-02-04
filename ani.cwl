@@ -23,9 +23,6 @@ inputs:
   no_internet:
     type: boolean?
 outputs:
-  annot:
-    type: File
-    outputSource: bacterial_kmer/Identify_Top_N_ANI_annot
   ani_tax_report:
     type: File
     outputSource: bacterial_kmer/Identify_Top_N_ANI_top
