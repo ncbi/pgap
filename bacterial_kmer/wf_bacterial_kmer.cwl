@@ -21,7 +21,6 @@ inputs:
     taxon_db: File
     gcextract2_sqlite: File
     ani_report_transform: File
-    ignore_all_errors: boolean?
 outputs:
     Identify_Top_N_ANI_annot:
         type: File
@@ -35,6 +34,9 @@ outputs:
     Extract_Top_Assemblies___tax_report:
         type: File
         outputSource: Extract_Top_Assemblies/tax_report
+    errors:
+        type: File?
+        outputSource: Evaluate_ANI_report/xml_output
 steps:
   # 
   # Internal PGAP step "Get Reference Assemblies" ommitted it's a const, repplaced by 
@@ -265,5 +267,9 @@ steps:
       xpath_fail: 
         default: >
           /tax-check/results[@status='MISASSIGNED' or @status='CONTAMINATED']
-      ignore_all_errors: ignore_all_errors
-    out: []
+      ignore_all_errors: 
+        default: false
+      xml_output_output:
+        default: errors.xml
+    out: [xml_output]
+
