@@ -684,7 +684,7 @@ def main():
     parser.add_argument("--no-internet", 
                         dest='no_internet', 
                         action='store_true',
-                        help=argparse.SUPPRESS)
+                        help='Disable internet access for all programs in pipeline.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
                         help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
