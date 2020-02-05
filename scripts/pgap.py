@@ -714,9 +714,9 @@ def main():
                 retcode = p.launch()
                 if( args.ignore_all_errors == False ):
                     # analyze ani output here
-                    if not os.path.exists(self.args.output):
+                    if not os.path.exists(args.output):
                         raise
-                    errors_xml_fn = os.path.join(self.args.output, "errors.xml")
+                    errors_xml_fn = os.path.join(args.output, "errors.xml")
                     if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0:
                         raise
             if not args.ani_only:
