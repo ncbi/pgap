@@ -151,7 +151,10 @@ class Pipeline:
 
     def __init__(self, params, local_input, pipeline):
         self.params = params
-        self.cwlfile = f"{pipeline}.cwl"
+        if pipeline == "pgap":
+            self.cwlfile = f"pgap/{pipeline}.cwl"
+        elif pipeline == "taxcheck":
+            self.cwlfile = f"taxcheck/{pipeline}.cwl"
         self.pipename = pipeline.upper()
         
         self.data_dir = os.path.abspath(self.params.data_path)
@@ -707,7 +710,7 @@ def main():
         params = Setup(args)
         if args.input:
             if args.ani or args.ani_only:
-                p = Pipeline(params, args.input, "ani")
+                p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
                 if( args.ignore_all_errors == False ):
                     # analyze ani output here
