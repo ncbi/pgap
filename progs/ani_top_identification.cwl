@@ -4,6 +4,7 @@ label: "ani_top_identification"
 # file: progs/ani_top_identification.cwl
 class: CommandLineTool
 baseCommand: ani_top_identification
+arguments: [ -nogenbank ]
 inputs:
       ANI_cutoff:   
         type: File
@@ -13,10 +14,11 @@ inputs:
         type: int?
         inputBinding:
             prefix: -N
-      asn_cache: 
-        type: Directory?
+      asn_cache:
+        type: Directory[]
         inputBinding:
-            prefix: -asn-cache
+          prefix: -asn-cache
+          itemSeparator: ","
       input: 
         type: File?
         inputBinding:
@@ -33,6 +35,10 @@ inputs:
         type: File
         inputBinding:
             prefix: -query-assembly
+      ref_assemblies: 
+        type: File
+        inputBinding:
+            prefix: -ref-assemblies
       ref_assembly_id: 
         type: int?
         inputBinding:

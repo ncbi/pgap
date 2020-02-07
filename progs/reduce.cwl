@@ -3,6 +3,7 @@ label: "reduce"
 
 class: CommandLineTool
 baseCommand: reduce
+arguments: [ -nogenbank  ]
 inputs:
   aligns:
     type: File

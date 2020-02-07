@@ -18,6 +18,7 @@ requirements:
 
 baseCommand: cmsearch_wnode
 #arguments: [ -cmsearch-cpu "0" ]
+arguments: [ -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

@@ -149,31 +149,52 @@ def find_failed_step(filename):
         
 class Pipeline:
 
-    def __init__(self, params, local_input):
+    def __init__(self, params, local_input, pipeline):
         self.params = params
-        debug = self.params.args.debug
+        if pipeline == "pgap":
+            self.cwlfile = f"pgap/{pipeline}.cwl"
+        elif pipeline == "taxcheck":
+            self.cwlfile = f"taxcheck/{pipeline}.cwl"
+        self.pipename = pipeline.upper()
         
-        # Create a work directory.
-        print("Output will be placed in:", self.params.outputdir)
-        os.mkdir(self.params.outputdir)
-
-        data_dir = os.path.abspath(self.params.data_path)
+        self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
-        input_file = '/pgap/user_input/pgap_input.yaml'
+        self.input_file = '/pgap/user_input/pgap_input.yaml'
 
         self.yaml = self.create_inputfile(local_input)
         
-        # cwltool --timestamps --default-container ncbi/pgap-utils:2018-12-31.build3344
-        # --tmpdir-prefix ./tmpdir/ --leave-tmpdir --tmp-outdir-prefix ./tmp-outdir/
-        #--copy-outputs --outdir ./outdir pgap.cwl pgap_input.yaml 2>&1 | tee cwltool.log
+        if (self.params.docker_type == 'singularity'):
+            self.make_singularity_cmd()
+        elif (self.params.docker_type == 'podman'):
+            self.make_podman_cmd()
+        else:
+            self.make_docker_cmd()
+        
+        self.cmd.extend(['cwltool',
+                        '--timestamps',
+                        '--disable-color',
+                        '--preserve-entire-environment',
+                        '--outdir', '/pgap/output'
+                        ])
 
-        self.cmd = [params.docker_cmd, 'run', '-i', '--rm' ]
-        if params.docker_user_remap:
+        # Debug flags for cwltool
+        if self.params.args.debug:
+            self.cmd.extend([
+                '--tmpdir-prefix', '/pgap/output/debug/tmpdir/',
+                '--leave-tmpdir',
+                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
+                '--copy-outputs'])
+
+        self.cmd.extend([self.cwlfile, self.input_file])
+
+    def make_docker_cmd(self):
+        self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
+        if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
-            '--volume', '{}:/pgap/input:ro,z'.format(data_dir),
+            '--volume', '{}:/pgap/input:ro,z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
-            '--volume', '{}:{}:ro,z'.format(self.yaml, input_file ),
+            '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
         if (self.params.args.cpus):
@@ -185,30 +206,54 @@ class Pipeline:
             self.cmd.extend(['--memory', self.params.args.memory])
             
         # Debug mount for docker image
-        if debug:
+        if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
+        self.cmd.append(self.params.docker_image)
 
-        self.cmd.extend([self.params.docker_image,
-                        'cwltool',
-                        '--timestamps',
-                        '--disable-color',
-                        '--preserve-entire-environment',
-                        '--outdir', '/pgap/output'
-                        ])
 
-        # Debug flags for cwltool
-        if debug:
-            self.cmd.extend([
-                '--tmpdir-prefix', '/pgap/output/debug/tmpdir/',
-                '--leave-tmpdir',
-                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
-                '--copy-outputs'])
-            self.record_runtime()
+    def make_podman_cmd(self):
+        self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
 
-        self.cmd.extend(['pgap.cwl', input_file])
+        self.cmd.extend([
+            '--volume', '{}:/pgap/input:ro'.format(self.data_dir),
+            '--volume', '{}:/pgap/user_input'.format(self.input_dir),
+            '--volume', '{}:{}:ro'.format(self.yaml, self.input_file ),
+            '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
+        if (self.params.args.cpus):
+            if (platform.system() != "Windows"):
+                self.cmd.extend(['--cpus', self.params.args.cpus])
+            else:
+                self.cmd.extend(['--cpu-count', self.params.args.cpus])
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+            
+        # Debug mount for docker image
+        if self.params.args.debug:
+            log_dir = self.params.outputdir + '/debug/log'
+            os.makedirs(log_dir, exist_ok=True)
+            self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
+        self.cmd.append(self.params.docker_image)
+
+    def make_singularity_cmd(self):
+        self.cmd = [self.params.docker_cmd, 'exec' ]
+        
+        self.cmd.extend([
+            '--bind', '{}:/pgap/input:ro'.format(self.data_dir),
+            '--bind', '{}:/pgap/user_input'.format(self.input_dir),
+            '--bind', '{}:{}:ro'.format(self.yaml, self.input_file ),
+            '--bind', '{}:/pgap/output:rw'.format(self.params.outputdir)])
+
+        # Debug mount for docker image
+        if self.params.args.debug:
+            log_dir = self.params.outputdir + '/debug/log'
+            os.makedirs(log_dir, exist_ok=True)
+            self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
+        self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
+
+        
     def create_inputfile(self, local_input):
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
@@ -231,14 +276,18 @@ class Pipeline:
             fOut.flush()
         return yaml
         
-    def record_runtime(self):
+    def record_runtime(self, f):
         def check_runtime_setting(settings, value, min):
             if settings[value] != 'unlimited' and settings[value] < min:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
-        cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
-                'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
-        # output = subprocess.check_output(cmd)
+        if (self.params.docker_type == 'singularity'):
+            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), "docker://"+self.params.docker_image,
+                   'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
+        else:
+            cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
+                   'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
+
         result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
         if result.returncode != 0:
             return
@@ -255,9 +304,15 @@ class Pipeline:
         match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
         settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
         cpus = 0
-        for match in re.finditer(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE):
+        for match in re.finditer(r'^processor\s+:\s+(.*)\n', output, re.MULTILINE):
             cpus += 1
-            settings['cpu model'] = match.group(1)
+
+        match = re.search(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE)
+        settings['cpu model'] = match.group(1)
+
+        match = re.search(r'^flags\s+:\s+(.*)\n', output, re.MULTILINE)
+        settings['cpu flags'] = match.group(1)
+        
         settings['CPU cores'] = cpus
         settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
         check_runtime_setting(settings, 'open files', 8000)
@@ -267,74 +322,44 @@ class Pipeline:
         check_runtime_setting(settings, 'memory (GiB)', 8)
         check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
         filename = self.params.outputdir + "/debug/RUNTIME.json"
-        with open(filename, 'w', encoding='utf-8') as f:
+        #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
-            f.write(json.dumps(settings, sort_keys=True, indent=4))
-        
+        f.write(json.dumps(settings, sort_keys=True, indent=4))
         
     def launch(self):
-        def output_reader(proc, outq):
-            for line in iter(proc.stdout.readline, b''):
-                outq.put(line.decode('utf-8'))
-
-        # Run the actual workflow.
-        #print(self.cmd)
-        proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-        outq = queue.Queue()
-        t = threading.Thread(target=output_reader, args=(proc, outq))
-        t.start()
-
         cwllog = self.params.outputdir + '/cwltool.log'
-        pat = re.compile('^\[(\d+-\d+-\d+ \d+:\d+:\d+)\] \[(workflow|step)')
-
-        try:
-            with open(cwllog, 'w') as f:
-                # Show original command line in log
-                cmdline = "Original command: " + " ".join(sys.argv)
-                f.write(cmdline)
-                f.write("\n\n")
-                # Show docker command line in log
-                cmdline = "Docker command: " + " ".join(self.cmd)
-                f.write(cmdline)
-                f.write("\n\n")
-                # Show YAML file in the log
-                f.write("--- Start YAML Input ---\n")
-                with open(self.yaml, 'r') as fIn:
-                    for line in fIn:
-                        f.write(line)
-                f.write("--- End YAML Input ---\n")
-
-                # Check if child process has terminated
-                while proc.poll() == None:
-                   
-                    # this loop is to avoid (expensive?) checking if process 'proc' terminated
-                    while True:
-                        try:
-
-                            # either process terminated or it is "thinking"
-                            # let's wait a little bit before checking termination:
-                            line = outq.get(timeout=0.1)
-                            f.write(line)
-                            if (self.params.args.verbose) or pat.match(line):
-                                print(line, end='')
-                        except queue.Empty:
- 
-                            # go to outer while loop to check proc.poll() == None
-                            break
-
-        finally:
-            proc.terminate()
+        with open(cwllog, 'a', encoding="utf-8") as f:
+            # Show original command line in log
+            cmdline = "Original command: " + " ".join(sys.argv)
+            f.write(cmdline)
+            f.write("\n\n")
+            # Show docker command line in log
+            cmdline = "Docker command: " + " ".join(self.cmd)
+            f.write(cmdline)
+            f.write("\n\n")
+            # Show YAML file in the log
+            f.write("--- Start YAML Input ---\n")            
+            with open(self.yaml, 'r') as fIn:
+                for line in fIn:
+                    f.write(line)
+            f.write("--- End YAML Input ---\n\n")
+            # Show runtime parameters in the log
+            f.write("--- Start Runtime Report ---\n")            
+            self.record_runtime(f)
+            f.write("\n--- End Runtime Report ---\n\n")            
+            f.flush()
             try:
-                proc.wait(timeout=2)
-                if proc.returncode == 0:
-                    print('PGAP completed successfully.')
+                proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
+                proc.wait()
+            finally:
+                if proc.returncode == None:
+                    print('\nAbnormal termination, stopping all processes.')
+                    proc.terminate()
+                elif proc.returncode == 0:
+                    print(f'{self.pipename} completed successfully.')
                 else:
-                    print('PGAP failed, docker exited with rc =', proc.returncode)
+                    print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
-            except subprocess.TimeoutExpired:
-                print('docker did not exit cleanly.')
-        t.join()
         return proc.returncode
 
 class Setup:
@@ -361,9 +386,16 @@ class Setup:
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
-        self.docker_cmd, self.docker_user_remap = self.get_docker_info()
-        if self.local_version != self.use_version:
+        #self.docker_cmd, self.docker_user_remap = self.get_docker_info()
+        self.get_docker_info()
+        if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
+
+        # Create a work directory.
+        if args.input:
+            print("Output will be placed in:", self.outputdir)
+            os.mkdir(self.outputdir)
+        
 
     def get_branch(self):
         if (self.args.dev):
@@ -411,14 +443,18 @@ class Setup:
     def check_status(self):
         if self.local_version == None:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
-            return
+            return False
+        if self.args.no_internet:
+            print("--no-internet flag enabled, not checking remote versions.")
+            return True
         if self.local_version == self.get_latest_version():
             if self.branch == "":
                 print("PGAP version {} is up to date.".format(self.local_version))
             else:
                 print("PGAP from {} branch, version {} is up to date.".format(self.branch, self.local_version))
-            return
+            return True
         print("The latest version of PGAP is {}, you are using version {}, please update.".format(self.get_latest_version(), self.local_version))
+        return True
 
     def list_remote_versions(self):
         print("Available versions:")
@@ -451,19 +487,25 @@ class Setup:
         return os.path.abspath(outputdir)
         
     def get_docker_info(self):
-        docker_cmd = shutil.which(self.args.docker)
-        if docker_cmd == None:
+        self.docker_cmd = shutil.which(self.args.docker)
+        if self.docker_cmd == None:
             sys.exit("Docker not found.")
-        result = subprocess.run([docker_cmd, '--version'], check=True, stdout=subprocess.PIPE)
+        result = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE)
         docker_alternative = result.stdout.decode('utf-8').split(maxsplit=1)[0]
         if docker_alternative == 'Docker':
-            user_remap = platform.system() != "Windows"
+            self.docker_user_remap = platform.system() != "Windows"
+            self.docker_type = 'docker'
         elif docker_alternative == 'podman':
-            user_remap = False
+            self.docker_user_remap = False
+            self.docker_type = 'podman'
+        elif docker_alternative == 'singularity':
+            self.docker_user_remap = False
+            self.docker_type = 'singularity'
         else:
-            user_remap = False
+            self.docker_user_remap = False
+            self.docker_type = 'docker'
             print('WARNING: {} support as Docker alternative has not been tested'.format(docker_alternative))
-        return (docker_cmd, user_remap)
+        #return (docker_cmd, docker_user_remap)
 
     def get_report_usage(self):
         if (self.args.report_usage_true):
@@ -494,6 +536,7 @@ class Setup:
         return str2sec(self.args.timeout)
 
     def update(self):
+        self.update_self()
         self.install_docker()
         self.install_data()
         self.install_test_genomes()
@@ -507,35 +550,105 @@ class Setup:
         except CalledProcessError:
             print(r)
 
+    # This and install data should probably be refactored
+    def check_install_data(self):
+        if self.use_version > "2019-11-25.build4172":
+            if self.args.ani:
+                packages = ['ani', 'pgap']
+            elif self.args.ani_only:
+                packages = ['ani']
+            else:
+                packages = ['pgap']
+            for package in packages:
+                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                if not os.path.isfile(guard_file):
+                    return False
+        return True
 
     def install_data(self):
-        if not os.path.exists(self.data_path):
-            quiet_remove("input")
-            print('Installing PGAP reference data version {}'.format(self.use_version))
-            suffix = ""
-            if self.branch != "":
-                suffix = self.branch + "."
-            remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
-            install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+        suffix = ""
+        if self.branch != "":
+            suffix = self.branch + "."
 
+        if self.use_version > "2019-11-25.build4172":
+            if self.args.ani:
+                packages = ['ani', 'pgap']
+            elif self.args.ani_only:
+                packages = ['ani']
+            else:
+                packages = ['pgap']
+            for package in packages:
+                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                if not os.path.isfile(guard_file):
+                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                    open(guard_file, 'a').close()
+                else:
+                    print(f"Skipping already installed tarball: {remote_path}")
+        else:
+            if not os.path.exists(self.data_path):
+                quiet_remove("input")
+                print('Installing PGAP reference data version {}'.format(self.use_version))
+                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
+                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+                
     def install_test_genomes(self):
         def get_suffix(branch):
             if branch == "":
                 return ""
             return "."+self.branch
 
-        if not os.path.exists(self.test_genomes_path):
+        guard_file = f"{self.test_genomes_path}/.complete"
+        if not os.path.isfile(guard_file):
             quiet_remove("test_genomes")
             URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
             install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
+            open(guard_file, 'a').close()
+
+    def update_self(self):
+        if self.args.teamcity:
+            print("Not trying to update self, because the --teamcity flag is enabled.")
+            # Never update self when running teamcity
+            # Also useful when locally editing and testing this file.
+            return
+
+        cur_file = sys.argv[0]
+        if self.branch == "":
+            #ver = self.use_version
+            ver = "prod"
+        else:
+            ver = self.branch
+        url = f"https://github.com/ncbi/pgap/raw/{ver}/scripts/pgap.py"
+        request = Request(url)
+
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                new_pgap = response.read()
+            with open(cur_file, "rb") as f:
+                old_pgap = f.read()
+
+            if new_pgap != old_pgap:
+                print(f"Attempting to update <{cur_file}> ...", end='')
+                with open(cur_file, "wb") as f:
+                    f.write(new_pgap)
+                print("updated successfully.")
+                print("Please restart update.")
+                sys.exit()
+                
+        except Exception as exc:
+            print(exc)
+            print(f"Failed to update {cur_file}, ignoring")
+            print(f"Something has gone wrong, please manually download: {url}")
+            sys.exit()
 
     def write_version(self):
         filename = self.rundir + "/VERSION"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
+
 
         
 def main():
@@ -552,6 +665,9 @@ def main():
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
+    ani_group = parser.add_mutually_exclusive_group()
+    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -571,9 +687,9 @@ def main():
     parser.add_argument("--no-internet", 
                         dest='no_internet', 
                         action='store_true',
-                        help=argparse.SUPPRESS)
+                        help='Disable internet access for all programs in pipeline.')
     parser.add_argument('-D', '--docker', metavar='path', default='docker',
-                        help='Docker-compatible executable (e.g. docker, podman), which may include a full path like /usr/bin/docker')
+                        help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--timeout', default='24:00:00', help=argparse.SUPPRESS)
@@ -593,8 +709,19 @@ def main():
     try:
         params = Setup(args)
         if args.input:
-            p = Pipeline(params, args.input)
-            retcode = p.launch()
+            if args.ani or args.ani_only:
+                p = Pipeline(params, args.input, "taxcheck")
+                retcode = p.launch()
+                if( args.ignore_all_errors == False ):
+                    # analyze ani output here
+                    if not os.path.exists(args.output):
+                        raise
+                    errors_xml_fn = os.path.join(args.output, "errors.xml")
+                    if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0:
+                        raise
+            if not args.ani_only:
+                p = Pipeline(params, args.input, "pgap")
+                retcode = p.launch()
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
             raise

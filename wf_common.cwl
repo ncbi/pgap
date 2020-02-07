@@ -59,6 +59,9 @@ inputs:
                 and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                 and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                 and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
             ]
     xpath_fail_final_asndisc: 
         type: string?
@@ -79,7 +82,12 @@ inputs:
                     and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                     and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
                     and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                    and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                    and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                    and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
                 ]
+    no_internet:
+      type: boolean?
         
 steps:
   ping_start:
@@ -109,7 +117,6 @@ steps:
       - CDDdata2
       - CDDdata
       - defline_cleanup_rules
-      - gcextract2_sqlite
       - gene_master_ini
       - genemark_path
       - hmm_path
@@ -118,19 +125,28 @@ steps:
       - naming_hmms_combined
       - naming_hmms_tab
       - naming_sqlite
+      - package_versions
       - rfam_amendments
       - rfam_model_path
       - rfam_stockholm
       - selenoproteins
       - species_genome_size
       - taxon_db
-      - tax_synon
       - thresholds
       - uniColl_cache
       - univ_prot_xml
       - val_res_den_xml
       - wp_hashes
 
+  log_package_versions:
+    run: progs/catlog.cwl
+    in:
+      input: 
+        source: 
+          - passdata/package_versions
+        linkMerge: merge_flattened
+    out: []
+    
   blast_hits_cache_data_split_dir:
     in:
       data: blast_hits_cache_data
@@ -165,6 +181,7 @@ steps:
       ids: genomic_source/seqid_list
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
+      no_internet: no_internet
     out: [master_desc, sequences]
   Prepare_Unannotated_Sequences_pgapx_input_check:
         run: progs/pgapx_input_check.cwl
@@ -186,7 +203,7 @@ steps:
         run: progs/asndisc_cpp.cwl
         in:
             XML: {default: true}
-            genbank: {default: true}
+            genbank: {default: false}
             P: {default: 't'}
             a: {default: 'c'}
             asn_cache: genomic_source/asncache
@@ -194,6 +211,7 @@ steps:
             i: Prepare_Unannotated_Sequences_text/output
             d:
                 default:
+                    - AUTODEF_USER_OBJECT
                     - FEATURE_LIST
                     - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS 
                     - PARTIAL_CDS_COMPLETE_SEQUENCE
@@ -206,6 +224,8 @@ steps:
                     - OVERLAPPING_GENES
                     - EXTRA_GENES
                     - N_RUNS
+                    - TAX_LOOKUP_MISMATCH
+                    - TAX_LOOKUP_MISSING
         out: [o]
   Prepare_Unannotated_Sequences_asndisc_evaluate:
         run: progs/xml_evaluate.cwl
@@ -337,8 +357,10 @@ steps:
       inseq: Prepare_Unannotated_Sequences/sequences
       hmm_path: passdata/hmm_path
       hmms_tab: passdata/hmms_tab
+      selenoproteins: passdata/selenoproteins
       scatter_gather_nchunks: scatter_gather_nchunks
       uniColl_cache: passdata/uniColl_cache
+      naming_sqlite: passdata/naming_sqlite
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
       nogenbank:
@@ -349,7 +371,7 @@ steps:
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: passdata/genemark_path
       thresholds: passdata/thresholds
-    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids]
+    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
   spurious_annot_1: # PLANE
     run: spurious_annot/wf_spurious_annot_pass1.cwl
@@ -402,12 +424,14 @@ steps:
   bacterial_annot_3:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
     in:
+        AntiFamLib: passdata/AntiFamLib
         uniColl_cache: passdata/uniColl_cache
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
         scatter_gather_nchunks: scatter_gather_nchunks
         prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
         annotation: bacterial_annot/annotation
+        models1: bacterial_annot/models1
         raw_seqs: Prepare_Unannotated_Sequences/sequences
         thresholds: passdata/thresholds
         naming_sqlite: passdata/naming_sqlite
@@ -427,6 +451,7 @@ steps:
         - id: Search_Naming_HMMs_hmm_hits
         - id: Assign_Naming_HMM_to_Proteins_assignments
         - id: Name_by_WPs_names
+        - id: PGAP_plus_ab_initio_annotation
 
   spurious_annot_2:
     run: spurious_annot/wf_spurious_annot_pass2.cwl
@@ -437,7 +462,7 @@ steps:
       AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
-      Run_GeneMark_models: bacterial_annot_3/Run_GeneMark_Post_models
+      input_models: bacterial_annot_3/PGAP_plus_ab_initio_annotation
     out:
       - AntiFam_tainted_proteins___oseqids
       - Good_AntiFam_filtered_annotations_out
@@ -656,7 +681,7 @@ steps:
         style:
             default: master
         gbload:
-            default: true
+            default: false
     out: [output]
   Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
@@ -684,6 +709,7 @@ steps:
         source: [genomic_source/asncache]
       exclude_asndisc_codes: #
         default: 
+            - AUTODEF_USER_OBJECT
             - FEATURE_LIST
             - BACTERIAL_PARTIAL_NONEXTENDABLE_PROBLEMS
             - PARTIAL_CDS_COMPLETE_SEQUENCE
@@ -697,6 +723,8 @@ steps:
             - EXTRA_GENES
             - N_RUNS
             - BAD_LOCUS_TAG_FORMAT 
+            - TAX_LOOKUP_MISMATCH
+            - TAX_LOOKUP_MISSING
       inent: Final_Bacterial_Package_dumb_down_as_required/outent
       ingb: Final_Bacterial_Package_sqn2gbent/output
       insqn: Final_Bacterial_Package_ent2sqn/output
@@ -757,7 +785,7 @@ steps:
       annot_request_id:
         default: -1 # this is dummy annot_request_id
       hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits
-      hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models
+      hmm_search_proteins: bacterial_annot_3/PGAP_plus_ab_initio_annotation
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  passdata/univ_prot_xml
       val_res_den_xml:  passdata/val_res_den_xml

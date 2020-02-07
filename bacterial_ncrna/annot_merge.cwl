@@ -10,7 +10,7 @@ requirements:
 
 #annot_merge -asn-cache sequence_cache -input-manifest annots.mft -output annots.asn -output-manifest annots.mft -unique
 baseCommand: annot_merge
-arguments: [ -unique ]
+arguments: [ -unique, -nogenbank ]
 inputs:
   asn_cache:
     type: Directory

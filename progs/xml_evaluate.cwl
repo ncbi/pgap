@@ -4,7 +4,7 @@ class: CommandLineTool
 baseCommand: xml_evaluate
 requirements:
   - class: InlineJavascriptRequirement
-
+stdout: $(inputs.stdout_redir)
 inputs:            
         
   input:
@@ -23,7 +23,9 @@ inputs:
      type: string?
      inputBinding:
         prefix: -input-path
-  
+  stdout_redir:
+     type: string?
+     default: stdout
   xpath_fail:
      type: string?
      inputBinding:
@@ -69,9 +71,7 @@ inputs:
         prefix: -logfile
 outputs:
   xml_output:
-      type: File?
-      outputBinding:
-          glob: $(inputs.xml_output_output)
+      type: stdout
 
   logfile:
       type: File?

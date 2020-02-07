@@ -9,12 +9,13 @@ requirements:
       - entryname: align.mft
         entry: ${var blob = '# align.mft created for bact_best_evidence_alignments from input align Array of Files\n'; for (var i = 0; i < inputs.align.length; i++) { blob += inputs.align[i].path + '\n'; } return blob; }
       - entryname: annotation.mft
-        entry: $(inputs.annotation.path)
+        entry: ${var blob = '# annotation.mft created for bact_best_evidence_alignments from input annotation Array of Files\n'; for (var i = 0; i < inputs.annotation.length; i++) { blob += inputs.annotation[i].path + '\n'; } return blob; }
 
 baseCommand: bact_best_evidence_alignments
+arguments: [-support-threshold, "25.0"]
 inputs:
   annotation:
-    type: File
+    type: File[]
   annotation_manifest:
     type: string
     default: annotation.mft

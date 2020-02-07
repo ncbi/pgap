@@ -24,7 +24,7 @@ requirements:
           
 #hmmsearch_wnode -lds2 LDS2 -asn-cache sequence_cache -backlog 1 -fam fam.mft -hmmsearch-path ./bin/ -cut_ga -input-jobs jobs.xml -O output
 baseCommand: hmmsearch_wnode
-arguments: [ -backlog, "1", -cut_ga ]
+arguments: [ -backlog, "1", -cut_ga, -nogenbank  ]
 inputs:
   hmm_path:
     type: Directory

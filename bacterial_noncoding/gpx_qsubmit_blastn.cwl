@@ -12,7 +12,7 @@ requirements:
     
 #gpx_qsubmit -affinity subject -asn-cache sequence_cache -max-batch-length 50000 -o jobs.xml -db ../../input/16S_rRNA/blastdb -ids sequences.seq_id
 baseCommand: gpx_qsubmit
-arguments: [ -affinity, subject, -max-batch-length, "50000" ]
+arguments: [ -affinity, subject, -max-batch-length, "50000", -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory

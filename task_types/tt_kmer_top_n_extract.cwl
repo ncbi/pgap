@@ -6,6 +6,8 @@ inputs:
   top_distances: File
   ref_assembly_taxid: int
   ref_assembly_id: int
+  taxon_db: File
+  gcextract2_sqlite: File
 outputs:
   tax_report:
     type: File
@@ -20,6 +22,8 @@ steps:
       input: top_distances
       ref_assembly_id:  ref_assembly_id
       ref_assembly_taxid: ref_assembly_taxid
+      taxon_db: taxon_db
+      gcextract2_sqlite: gcextract2_sqlite
       threshold: 
         default: 0.1
     out: [tax_report , gc_id_list]

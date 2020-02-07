@@ -6,9 +6,7 @@ bacterial and archaeal genomes (chromosomes and plasmids).
 
 Genome annotation is a multi-level process that includes prediction of
 protein-coding genes, as well as other functional genome units such as
-structural RNAs, tRNAs, small RNAs, pseudogenes, control regions,
-direct and inverted repeats, insertion sequences, transposons and
-other mobile elements.
+structural RNAs, tRNAs, small RNAs and pseudogenes.
 
 NCBI has developed an automatic prokaryotic genome annotation pipeline
 that combines ab initio gene prediction algorithms with homology based
@@ -17,6 +15,7 @@ Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has
 been replaced with an upgraded version that is capable of processing a
 larger data volume.
 
+Get started by watching this [webinar](https://www.youtube.com/watch?v=pNn_-_46lpI)!
 
 ## Instructions
 

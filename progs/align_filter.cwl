@@ -66,6 +66,7 @@ inputs:
       prefix: -input-manifest
   nogenbank:
     type: boolean
+    default: true
     inputBinding:
       prefix: -nogenbank
   subject_whitelist: 

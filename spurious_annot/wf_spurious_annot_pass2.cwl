@@ -11,7 +11,7 @@ inputs:
   Extract_Model_Proteins_lds2: File
   AntiFamLib: Directory
   sequence_cache: Directory
-  Run_GeneMark_models: File
+  input_models: File
   scatter_gather_nchunks: string
 outputs:
   AntiFam_tainted_proteins___oseqids:
@@ -61,7 +61,7 @@ steps:
         run: ../progs/bact_filter_preserved.cwl
         in:
             # Run GeneMark 	bacterial_annot 	models 	ASNB_SEQ_ENTRY 	annotation
-            annotation: Run_GeneMark_models # -input
+            annotation: input_models # -input
             ifmt:  # -ifmt
                 default: seq-entry
             # Good, AntiFam filtered proteins 	spurious_annot 	gilist 	SEQID_LIST 	only_those_ids

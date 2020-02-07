@@ -58,6 +58,10 @@ inputs:
     type: File
     inputBinding:
       prefix: -pre-annot
+  product_id_prefix:
+    type: string?
+    inputBinding:
+      prefix: -product-id-prefix
 outputs:
     models:
         type: File

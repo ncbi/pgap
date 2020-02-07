@@ -45,6 +45,9 @@ expression: |
         case 'GeneMark':
           r['genemark_path'] = l[i];
           break;
+        case 'packages.versions':
+          r['package_versions'] = l[i];
+          break;
         case 'rfam-amendments.xml':
           r['rfam_amendments'] = l[i];
           break;
@@ -105,12 +108,6 @@ expression: |
         case 'validation-results.xml':
           r['val_res_den_xml'] = l[i];
           break;
-        case 'TaxSynon.tsv':
-          r['tax_synon'] = l[i];
-          break;    
-        case 'GCExtract2.sqlite':
-          r['gcextract2_sqlite'] = l[i];
-          break;    
         }
     }
     return r;
@@ -137,8 +134,6 @@ outputs:
   defline_cleanup_rules:
     # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
     type: File
-  gcextract2_sqlite:
-    type: File
   gene_master_ini:
     type: File
   genemark_path:
@@ -157,6 +152,8 @@ outputs:
   naming_sqlite:
     # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
     type: File
+  package_versions:
+    type: File
   rfam_amendments:
     type: File
   rfam_model_path:
@@ -169,8 +166,6 @@ outputs:
   species_genome_size:
     type: File
   taxon_db:
-    type: File
-  tax_synon:
     type: File
   thresholds:
     type: File
