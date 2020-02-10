@@ -1,7 +1,7 @@
 # PGAP
 NCBI Prokaryotic Genome Annotation Pipeline
 
-NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate
+The NCBI Prokaryotic Genome Annotation Pipeline is designed to annotate
 bacterial and archaeal genomes (chromosomes and plasmids).
 
 Genome annotation is a multi-level process that includes prediction of
@@ -10,16 +10,19 @@ structural RNAs, tRNAs, small RNAs and pseudogenes.
 
 NCBI has developed an automatic prokaryotic genome annotation pipeline
 that combines ab initio gene prediction algorithms with homology based
-methods. The first version of NCBI Prokaryotic Genome Automatic
-Annotation Pipeline (PGAAP; see Pubmed Article) developed in 2005 has
-been replaced with an upgraded version that is capable of processing a
-larger data volume.
+methods. The first version of NCBI Prokaryotic Genome Pipeline was developed 
+in 2001 and is regularly upgraded to improve structural and functional 
+annotation quality ([Haft DH et al 2018](https://www.ncbi.nlm.nih.gov/pubmed/29112715), 
+[Tatusova T et al 2016](https://www.ncbi.nlm.nih.gov/pubmed/27342282)). Recent 
+improvements utilize curated protein profile hidden Markov models (HMMs), 
+including TIGRFAMS and new HMMs for antimicrobial resistance proteins, and 
+curated complex domain architectures for functional annotation of proteins. 
 
 Get started by watching this [webinar](https://www.youtube.com/watch?v=pNn_-_46lpI)!
 
 ## Instructions
 
-To run the PGAP pipeline you will need Linux, Docker, CWL (Common
+To run the PGAP pipeline you will need Linux, or some compatible container technology, CWL (Common
 Workflow Language), and about 30GB of supplemental data. We provide
 instructions here for running under the CWL reference implementation,
 cwltool. Full instructions for installing, running, and interpreting
@@ -36,6 +39,11 @@ Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 [RefSeq: an update on prokaryotic genome annotation and curation.](https://www.ncbi.nlm.nih.gov/pubmed/29112715)\
 Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
+
+[Using average nucleotide identity to improve taxonomic assignments in prokaryotic genomes at the NCBI.](https://www.ncbi.nlm.nih.gov/pubmed/29792589)\
+Ciufo S, Kannan S, Sharma S, Badretdin A, Clark K, Turner S, Brover S, Schoch 
+CL, Kimchi A, DiCuccio M.\
+Int J Syst Evol Microbiol. 2018 Jul;68(7):2386-2392.
 
 ### GeneMarkS-2+
 
