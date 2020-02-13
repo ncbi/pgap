@@ -23,7 +23,7 @@ inputs:
     inputBinding:
       prefix: -alignments
   annotation:
-    type: File?
+    type: File
   annotation_manifest:
     type: string
     default: annotation.mft
@@ -48,7 +48,6 @@ inputs:
       prefix: -min_seq_len
   marked_annotation_name:
     type: string?
-    default: marked-annotation.asn
     inputBinding:
       prefix: -marked-annotation
   preliminary_models_name: 
@@ -78,7 +77,7 @@ inputs:
       prefix: -tmp
 outputs:
     marked_annotation:
-        type: File
+        type: File?
         outputBinding:
             glob: $(inputs.marked_annotation_name)
     preliminary_models:

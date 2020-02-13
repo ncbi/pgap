@@ -160,9 +160,8 @@ steps:
             source: [asn_cache, uniColl_cache]
             linkMerge: merge_flattened
         sequences: inseq
+        annotation: Resolve_Annotation_Conflicts/annotation
         genemark_path: genemark_path # ${GP_HOME}/third-party/GeneMark 
-        marked_annotation_name:
-                default: marked-annotation.asn
         min_seq_len:
             default: 200
         preliminary_models_name: # -out
@@ -173,7 +172,7 @@ steps:
             # type: Directory
         nogenbank: 
             default: true
-    out: [out_hmm_params, preliminary_models, marked_annotation] 
+    out: [out_hmm_params, preliminary_models] 
   Run_GeneMark_Training_post: 
         label: "Run GeneMark Training (genemark_post)"
         run: ../progs/genemark_post.cwl  
@@ -192,7 +191,6 @@ steps:
                 default: models_training.asn
             out_product_ids_name: 
                 default: all-proteins.ids
-            pre_annot: Run_GeneMark_Training/marked_annotation
             selenocysteines: selenoproteins
             selenocysteines_db: selenocysteines_db
             short_model_limit:

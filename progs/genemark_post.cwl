@@ -55,7 +55,7 @@ inputs:
     inputBinding:
       prefix: -genemark-annot
   pre_annot: # Run_GeneMark/marked_annotation
-    type: File
+    type: File?
     inputBinding:
       prefix: -pre-annot
   product_id_prefix:
