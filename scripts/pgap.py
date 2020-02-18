@@ -543,9 +543,13 @@ class Setup:
         self.write_version()
 
     def install_docker(self):
-        print('Downloading (as needed) Docker image {}'.format(self.docker_image))
+        if self.docker_type == 'singularity':
+            docker_url = "docker://" + self.docker_image
+        else:
+            docker_url = self.docker_image
+        print('Downloading (as needed) Docker image {}'.format(docker_url))
         try:
-            r = subprocess.run([self.docker_cmd, 'pull', self.docker_image], check=True)
+            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True)
             #print(r)
         except CalledProcessError:
             print(r)
