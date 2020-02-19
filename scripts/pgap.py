@@ -546,7 +546,7 @@ class Setup:
         if self.docker_type == 'singularity':
             sif = self.docker_image.replace("ncbi/pgap:", "pgap_") + ".sif"
             try:
-                r = subprocess.run([self.docker_cmd, 'sif', 'list', sif], check=True)
+                subprocess.run([self.docker_cmd, 'sif', 'list', sif], check=True)
                 print("Singularity sif files exists, not updating.")
                 return
             except subprocess.CalledProcessError:
