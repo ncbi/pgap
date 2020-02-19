@@ -544,6 +544,13 @@ class Setup:
 
     def install_docker(self):
         if self.docker_type == 'singularity':
+            sif = self.docker_image.replace("ncbi/pgap:", "pgap_")
+            try:
+                r = subprocess.run([self.docker_cmd, 'sif', 'list', sif], check=True)
+                print("Singularity sif files exists, not updating.")
+                return
+            except subprocess.CalledProcessError:
+                pass
             docker_url = "docker://" + self.docker_image
         else:
             docker_url = self.docker_image
@@ -551,7 +558,7 @@ class Setup:
         try:
             r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True)
             #print(r)
-        except CalledProcessError:
+        except subprocess.CalledProcessError:
             print(r)
 
     # This and install data should probably be refactored
