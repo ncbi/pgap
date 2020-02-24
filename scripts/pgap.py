@@ -591,7 +591,10 @@ class Setup:
                 packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                if package == "pgap":
+                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}.tgz"
+                else:
+                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
                 if not os.path.isfile(guard_file):
                     install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
                     open(guard_file, 'a').close()
