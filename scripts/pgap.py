@@ -592,7 +592,7 @@ class Setup:
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
                 if package == "pgap":
-                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}.tgz"
+                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}tgz"
                 else:
                     remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
                 if not os.path.isfile(guard_file):
