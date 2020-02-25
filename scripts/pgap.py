@@ -543,11 +543,23 @@ class Setup:
         self.write_version()
 
     def install_docker(self):
-        print('Downloading (as needed) Docker image {}'.format(self.docker_image))
+        if self.docker_type == 'singularity':
+            sif = self.docker_image.replace("ncbi/pgap:", "pgap_") + ".sif"
+            try:
+                subprocess.run([self.docker_cmd, 'sif', 'list', sif],
+                               check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print("Singularity sif files exists, not updating.")
+                return
+            except subprocess.CalledProcessError:
+                pass
+            docker_url = "docker://" + self.docker_image
+        else:
+            docker_url = self.docker_image
+        print('Downloading (as needed) Docker image {}'.format(docker_url))
         try:
-            r = subprocess.run([self.docker_cmd, 'pull', self.docker_image], check=True)
+            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True)
             #print(r)
-        except CalledProcessError:
+        except subprocess.CalledProcessError:
             print(r)
 
     # This and install data should probably be refactored
@@ -579,7 +591,10 @@ class Setup:
                 packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}{}.tgz'.format(self.use_version, suffix, package)
+                if package == "pgap":
+                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}.tgz"
+                else:
+                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
                 if not os.path.isfile(guard_file):
                     install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
                     open(guard_file, 'a').close()
