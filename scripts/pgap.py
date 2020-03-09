@@ -63,7 +63,7 @@ class urlopen_progress:
         request = Request(self.url, headers=headers)
         self.remote_file = urlopen(request, timeout=self.timeout)
 
-    def read(self, n=131072):
+    def read(self, n=4194304):
         delay = 1
         for attempt in range(self.retries):
             try:
@@ -627,7 +627,11 @@ class Setup:
         if self.args.teamcity:
             print("Not trying to update self, because the --teamcity flag is enabled.")
             # Never update self when running teamcity
-            # Also useful when locally editing and testing this file.
+            return
+
+        if self.args.no_self_up:
+            print("Not trying to update self, because the --no-self-update flag is enabled.")
+            # Useful when locally editing and testing this file.
             return
 
         cur_file = sys.argv[0]
@@ -711,6 +715,9 @@ def main():
                         #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
+    parser.add_argument('--no-self-update', action='store_true',
+                        dest='no_self_up',
+                        help='Do not attempt to update this script')
     parser.add_argument('-c', '--cpus',
                         help='Limit the number of CPUs available for execution by the container')
     parser.add_argument('-m', '--memory',
