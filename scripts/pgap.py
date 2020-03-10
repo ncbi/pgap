@@ -63,7 +63,7 @@ class urlopen_progress:
         request = Request(self.url, headers=headers)
         self.remote_file = urlopen(request, timeout=self.timeout)
 
-    def read(self, n=4194304):
+    def read(self, n=8388608):
         delay = 1
         for attempt in range(self.retries):
             try:
