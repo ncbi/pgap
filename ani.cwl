@@ -22,6 +22,11 @@ inputs:
         type: boolean?
   no_internet:
     type: boolean?
+  make_uuid:
+    type: boolean?
+    default: true
+  uuid_in:
+    type: File?
 outputs:
   ani_tax_report:
     type: File
@@ -37,8 +42,8 @@ steps:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
-      make_uuid:
-        default: true
+      make_uuid: make_uuid
+      uuid_in: uuid_in
       state:
         default: "start"
       workflow:
