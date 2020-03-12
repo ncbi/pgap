@@ -4,7 +4,7 @@ doc: "Prepare Unannotated Sequences"
 class: CommandLineTool
 
 baseCommand: bacterial_prepare_unannotated
-arguments: [ -submission-mode-genbank, -nogenbank, -update-biosource   ]
+arguments: [ -submission-mode-genbank, -nogenbank  ]
 inputs:
   asn_cache:
     type: Directory
