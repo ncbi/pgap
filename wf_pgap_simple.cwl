@@ -72,6 +72,11 @@ inputs:
   submit_block_template_static: File
   molinfo_complete_asn: File
   molinfo_wgs_asn: File
+  make_uuid:
+    type: boolean?
+    default: true
+  uuid_in:
+    type: File?
 steps:
   prepare_input_template:
     run: prepare_user_input.cwl
@@ -92,7 +97,8 @@ steps:
         report_usage: report_usage
         supplemental_data: supplemental_data
         blast_rules_db: blast_rules_db
-        
+        make_uuid: make_uuid
+        uuid_in: uuid_in        
         # hmm_path: hmm_path
         # hmms_tab: hmms_tab
         # naming_hmms_tab: naming_hmms_tab

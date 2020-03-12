@@ -88,14 +88,18 @@ inputs:
                 ]
     no_internet:
       type: boolean?
-        
+    make_uuid:
+      type: boolean?
+      default: true
+    uuid_in:
+      type: File?
 steps:
   ping_start:
     run: progs/pinger.cwl
     in:
       report_usage: report_usage
-      make_uuid:
-        default: true
+      make_uuid: make_uuid
+      uuid_in: uuid_in
       state:
         default: "start"
       workflow:
