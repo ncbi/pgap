@@ -30,6 +30,11 @@ inputs:
         type: boolean?
   no_internet:
     type: boolean?
+  make_uuid:
+    type: boolean?
+    default: true
+  uuid_in:
+    type: File?
 outputs:
   gbk:
     outputSource: standard_pgap/gbk
@@ -143,5 +148,7 @@ steps:
       submol_block_json: prepare_input_template/submol_block_json
       ignore_all_errors: ignore_all_errors
       no_internet: no_internet
+      make_uuid: make_uuid
+      uuid_in: uuid_in
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
     run: wf_common.cwl

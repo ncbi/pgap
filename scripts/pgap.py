@@ -273,6 +273,10 @@ class Pipeline:
                 fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             if (self.params.no_internet == 'true'):
                 fOut.write(u'no_internet: {}\n'.format(self.params.no_internet))
+            uuidfile = self.params.outputdir + "/uuid.txt"
+            if os.path.exists(uuidfile) and os.stat(uuidfile).st_size != 0:
+                fOut.write(u'make_uuid: false\n')
+                fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
             fOut.flush()
         return yaml
         
