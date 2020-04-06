@@ -738,7 +738,7 @@ def main():
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
-                if( args.ignore_all_errors == False ):
+                if  args.ignore_all_errors == False:
                     # analyze ani output here
                     if not os.path.exists(args.output):
                         raise
@@ -748,6 +748,9 @@ def main():
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
+                if retcode == 0:
+                    for errors_xml_fn in glob.glob(os.path.join(args.output, "*.xml")):
+                        os.remove(errors_xml_fn)
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
             raise

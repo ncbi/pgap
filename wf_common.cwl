@@ -93,6 +93,7 @@ inputs:
       default: true
     uuid_in:
       type: File?
+    
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -237,7 +238,9 @@ steps:
             input: Prepare_Unannotated_Sequences_asndisc_cpp/o
             xpath_fail: xpath_fail_initial_asndisc
             ignore_all_errors: ignore_all_errors
-        out: [success] 
+            stdout_redir: 
+              default: 'initial_asndisc_diag.xml'
+        out: [success, xml_output] 
   Prepare_Unannotated_Sequences_asnvalidate:
         run: progs/asnvalidate.cwl
         in:
@@ -268,7 +271,9 @@ steps:
             input: Prepare_Unannotated_Sequences_asnvalidate/o
             xpath_fail: xpath_fail_initial_asnvalidate
             ignore_all_errors: ignore_all_errors
-        out: [success] 
+            stdout_redir: 
+              default: 'initial_asnval_diag.xml'
+        out: [success, xml_output] 
 
   Cache_Entrez_Gene: # ORIGINAL TASK NAME: Cache Entrez Gene # default 1
     label: "Cache Entrez Gene"
@@ -756,14 +761,18 @@ steps:
             input: Final_Bacterial_Package_std_validation/outdisc
             xpath_fail: xpath_fail_final_asndisc
             ignore_all_errors: ignore_all_errors
-        out: [] 
+            stdout_redir: 
+              default: 'final_asndisc_diag.xml'
+        out: [xml_output] 
   Final_Bacterial_Package_asnvalidate_evaluate:
         run: progs/xml_evaluate.cwl
         in:
             input: Final_Bacterial_Package_std_validation/outval
             xpath_fail: xpath_fail_final_asnvalidate
             ignore_all_errors: ignore_all_errors
-        out: [] 
+            stdout_redir: 
+              default: 'final_asnval_diag.xml'
+        out: [success, xml_output] 
   Final_Bacterial_Package_val_stats: # TESTED (unit test)
     run: progs/val_stats.cwl
     in:
@@ -957,3 +966,16 @@ outputs:
   proc_annot_stats: 
     type: File
     outputSource:  Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml
+  initial_asndisc_error_diag:
+    type: File?
+    outputSource:  Prepare_Unannotated_Sequences_asndisc_evaluate/xml_output 
+  initial_asnval_error_diag:
+    type: File?
+    outputSource:  Prepare_Unannotated_Sequences_asnvalidate_evaluate/xml_output 
+  final_asndisc_error_diag:
+    type: File?
+    outputSource:  Final_Bacterial_Package_asndisc_evaluate/xml_output 
+  final_asnval_error_diag:
+    type: File?
+    outputSource:  Final_Bacterial_Package_asnvalidate_evaluate/xml_output 
+    

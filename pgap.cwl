@@ -57,6 +57,18 @@ outputs:
   protein_fasta:
     outputSource:  standard_pgap/protein_fasta
     type: File?
+  initial_asndisc_error_diag:
+    type: File?
+    outputSource: standard_pgap/initial_asndisc_error_diag 
+  initial_asnval_error_diag:
+    type: File?
+    outputSource: standard_pgap/initial_asnval_error_diag 
+  final_asndisc_error_diag:
+    type: File?
+    outputSource: standard_pgap/final_asndisc_error_diag
+  final_asnval_error_diag:
+    type: File?
+    outputSource: standard_pgap/final_asnval_error_diag  
 steps:
   passdata:
     in:
