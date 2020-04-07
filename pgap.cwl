@@ -162,5 +162,5 @@ steps:
       no_internet: no_internet
       make_uuid: make_uuid
       uuid_in: uuid_in
-    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn]
+    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag]
     run: wf_common.cwl
