@@ -268,7 +268,7 @@ steps:
         default: >
           /tax-check/results[@status='MISASSIGNED' or @status='CONTAMINATED']
       ignore_all_errors: 
-        default: false
+        default: true
       stdout_redir:
         default: errors.xml
     out: [xml_output]
