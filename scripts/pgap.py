@@ -151,10 +151,7 @@ class Pipeline:
 
     def __init__(self, params, local_input, pipeline):
         self.params = params
-        if pipeline == "pgap":
-            self.cwlfile = f"pgap/{pipeline}.cwl"
-        elif pipeline == "taxcheck":
-            self.cwlfile = f"taxcheck/{pipeline}.cwl"
+        self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
         
         self.data_dir = os.path.abspath(self.params.data_path)
