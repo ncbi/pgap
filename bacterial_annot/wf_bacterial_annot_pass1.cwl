@@ -64,7 +64,7 @@ outputs:
     type: File
     outputSource: Resolve_Annotation_Conflicts/annotation
   out_hmm_params: 
-    type: File
+    type: File?
     outputSource: Run_GeneMark_Training/out_hmm_params
   models1: 
     type: File

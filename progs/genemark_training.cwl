@@ -85,7 +85,7 @@ outputs:
         outputBinding:
             glob: $(inputs.preliminary_models_name)
     out_hmm_params:
-        type: File
+        type: File?
         outputBinding:
             glob: $(inputs.tmp)/$(inputs.out_hmm_params_name)
 

@@ -33,7 +33,7 @@ inputs:
     naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
         type: File
     hmm_params: # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
-        type: File
+        type: File?
     selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
         type: Directory
     selenocysteines_db:

@@ -39,7 +39,7 @@ inputs:
     inputBinding:
       prefix: -genemark-path
   hmm_params:
-    type: File
+    type: File?
     inputBinding:
       prefix: -hmm-params
   min_seq_len:
