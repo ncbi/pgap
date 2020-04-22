@@ -263,6 +263,8 @@ class Pipeline:
                     if line: # skip empty lines
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
+            if (self.params.args.skesa and self.pipename != "ASSEMBLE"):
+                fOut.write(u'fasta: { class: File, location: /pgap/output/contigs.out }\n')
             fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
@@ -685,9 +687,14 @@ def main():
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
+    skesa_group = parser.add_mutually_exclusive_group()
+    skesa_group.add_argument('--assemble', dest='skesa',  action='store_true', help="Assemble before annotating. YAML must include 'reads' or 'srr' parameters.")
+    skesa_group.add_argument('--assemble-only', dest='skesa_only', action='store_true', help="Assemble step only. YAML must include 'reads' or 'srr' parameters.")
+
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
     ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -732,6 +739,11 @@ def main():
     try:
         params = Setup(args)
         if args.input:
+            if args.skesa or args.skesa_only:
+                p = Pipeline(params, args.input, "assemble")
+                retcode = p.launch()
+            if args.skesa_only:
+                sys.exit(retcode)
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
