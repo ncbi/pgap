@@ -40,7 +40,7 @@ steps:
   skesa_assemble:
     run: progs/skesa.cwl
     in:
-      reads: fasta
+      reads: reads
       sra_run: srr
       contigs_out_name: ping_start/outstring
     out: [contigs_out]
