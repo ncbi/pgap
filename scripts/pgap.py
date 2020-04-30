@@ -149,6 +149,10 @@ def find_failed_step(filename):
         
 class Pipeline:
 
+    def __del__():
+        if os.path.exists(self.yaml):
+            os.remove(self.yaml)
+            
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
