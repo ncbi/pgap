@@ -36,6 +36,9 @@ inputs:
   uuid_in:
     type: File?
 outputs:
+  calls:
+    outputSource: vecscreen/calls
+    type: File
   gbk:
     outputSource: standard_pgap/gbk
     type: File
@@ -143,7 +146,7 @@ steps:
             adaptor_fasta:  passdata/adaptor_fasta
             contam_in_prok_blastdb_dir: passdata/contam_in_prok_blastdb_dir
             ignore_all_errors: ignore_all_errors
-        out: [success]
+        out: [success, calls]
   standard_pgap:
     label: PGAP Pipeline
     in:
