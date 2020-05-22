@@ -479,20 +479,18 @@ class Setup:
         return self.local_version
 
     def get_output_dir(self):
-        def numbers( dirs ):
-            for dirname in dirs:
-                name, ext = os.path.splitext(dirname)
-                yield int(ext[1:])
-        if not os.path.exists(self.args.output):
-            return os.path.abspath(self.args.output)
-        alldirs = glob.glob(self.args.output + ".*")
-        if not alldirs:
-            return os.path.abspath(self.args.output + ".1")
-        count = max( numbers( alldirs ) )
-        count += 1
-        outputdir = "{}.{}".format(self.args.output, str(count))
-        return os.path.abspath(outputdir)
-        
+        outputdir = os.path.abspath(self.args.output)
+        if os.path.exists(outputdir):
+            parent, base = os.path.split(outputdir)
+            counter = 0
+            for sibling in os.listdir(parent):
+                if sibling.startswith(base + '.'):
+                    ext = sibling[len(base)+1:]
+                    if ext.isdecimal():
+                       counter = max(counter, int(ext))
+            outputdir = os.path.join(parent, base+'.'+str(counter+1))
+        return outputdir
+
     def get_docker_info(self):
         self.docker_cmd = shutil.which(self.args.docker)
         if self.docker_cmd == None:
