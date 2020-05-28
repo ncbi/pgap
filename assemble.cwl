@@ -23,6 +23,9 @@ outputs:
   contigs:
     type: File
     outputSource: skesa_assemble/contigs_out
+  uuid_out:
+    type: File
+    outputSource: ping_start/uuid_out
 steps:
   ping_start:
     run: progs/pinger.cwl
