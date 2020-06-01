@@ -160,10 +160,14 @@ class Pipeline:
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
+        # input file location inside docker instance:
         self.input_file = '/pgap/user_input/pgap_input.yaml'
-
+        submol =  self.get_submol(local_input)
+        if ( submol != None ):
+            self.submol = self.create_submolfile(submol)
+        else:
+            self.submol = None
         self.yaml = self.create_inputfile(local_input)
-        
         if (self.params.docker_type == 'singularity'):
             self.make_singularity_cmd()
         elif (self.params.docker_type == 'podman'):
@@ -253,7 +257,63 @@ class Pipeline:
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
         self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
-
+        
+    def get_submol(self, local_input):
+        with open(local_input, 'r') as fIn:
+            processing_submol = False
+            for line in fIn:
+                if line: # skip empty lines
+                    if 'submol:' in line: # we need to replace submol/location with new file
+                        processing_submol = True
+                    if 'location:' in line and processing_submol == True:
+                        line = line.replace('location: ','')
+                        submol_file=line
+                        submol_file=submol_file.strip()
+                        return submol_file
+        return None
+        
+    def regexp_file(self, filename, field):
+        
+        with open(filename, 'r') as fIn:
+            for line in fIn:
+                if(re.search(field,line)):
+                    return True
+        return False;
+        
+    def create_submolfile(self, local_submol):
+        has_authors = self.regexp_file(local_submol, '^authors:')
+        has_contact_info = self.regexp_file(local_submol, '^contact_info:')
+        with tempfile.NamedTemporaryFile(mode='w',
+                                         suffix=".yaml",
+                                         prefix="pgap_submol_",
+                                         dir=self.input_dir,
+                                         delete=False) as fOut:
+            yaml = os.path.basename(fOut.name)
+            with open(local_submol, 'r') as fIn:
+                for line in fIn:
+                    if line: # skip empty lines
+                        fOut.write(line.rstrip())
+                        fOut.write(u'\n')
+            if  has_authors == False:
+                fOut.write(u'authors:\n')
+                fOut.write(u'    - author:\n')
+                fOut.write(u"        first_name: 'Jane'\n")
+                fOut.write(u"        last_name: 'Doe'\n")
+            if  has_contact_info == False:
+                fOut.write(u'contact_info:\n')
+                fOut.write(u"        first_name: 'Jane'\n")
+                fOut.write(u"        last_name: 'Doe'\n")
+                fOut.write(u"        email: 'jane_doe@gmail.com'\n")
+                fOut.write(u"        organization: 'Institute of Klebsiella foobarensis research'\n")
+                fOut.write(u"        department: 'Department of Using NCBI'\n")
+                fOut.write(u"        phone: '301-555-0245'\n")
+                fOut.write(u"        street: '1234 Main St'\n")
+                fOut.write(u"        city: 'Docker'\n")
+                fOut.write(u"        postal_code: '12345'\n")
+                fOut.write(u"        country: 'Lappland'\n")
+            fOut.flush()
+        return yaml
+            
         
     def create_inputfile(self, local_input):
         with tempfile.NamedTemporaryFile(mode='w',
@@ -263,8 +323,15 @@ class Pipeline:
                                          delete=False) as fOut:
             yaml = fOut.name
             with open(local_input, 'r') as fIn:
+                processing_submol = False
                 for line in fIn:
                     if line: # skip empty lines
+                        if 'submol:' in line: # we need to replace submol/location with new file
+                            processing_submol = True
+                        if 'location:' in line and processing_submol == True:
+                            processing_submol = False
+                            pos = line.index('location: ')
+                            line = ' ' * pos + u'location: '+self.submol + '\n'
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
             if (self.params.args.skesa and self.pipename != "ASSEMBLE"):
