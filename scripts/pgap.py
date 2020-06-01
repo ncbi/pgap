@@ -269,7 +269,7 @@ class Pipeline:
                         line = line.replace('location: ','')
                         submol_file=line
                         submol_file=submol_file.strip()
-                        return submol_file
+                        return os.path.join(os.path.dirname(local_input), submol_file)
         return None
         
     def regexp_file(self, filename, field):
