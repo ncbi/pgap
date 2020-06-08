@@ -16,7 +16,7 @@ inputs:
   hmms_tab: File
   uniColl_cache: Directory
   trna_annots: File
-  naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
+  naming_sqlite: 
         type: File
   ncrna_annots: File
   nogenbank: boolean
@@ -56,7 +56,7 @@ outputs:
     outputSource: Extract_ORF_Proteins/seqids
   prot_ids:
     type: File
-    outputSource: Get_off_frame_ORFs/prot_ids
+    outputSource: Filter_ORFs/prot_ids
   protein_aligns: 
     type: File
     outputSource: Resolve_Annotation_Conflicts/protein_aligns
@@ -123,9 +123,9 @@ steps:
          default: true
     out: [aligns]
 
-  Get_off_frame_ORFs:
-    run: get_off_frame_orfs.cwl
-    label: "Get_off_frame_ORFs task node"
+  Filter_ORFs:
+    run: ../progs/cds_filter.cwl
+    label: "Filter ORFs task node"
     in:
       aligns: Map_HMM_Hits/aligns
       seq_entries: Get_ORFs/outseqs

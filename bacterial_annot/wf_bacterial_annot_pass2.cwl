@@ -21,7 +21,7 @@ inputs:
         label: "Extract ORF Proteins/prot_ids"
         type: File
     prot_ids_B1: 
-        label: "Get off-frame ORFs/prot_ids"
+        label: "Filter ORFs/prot_ids"
         type: File
     prot_ids_B2: 
         label: "AntiFam tainted proteins I/oseqids"
@@ -59,15 +59,15 @@ outputs:
         outputSource: Map_Naming_Hits/aligns
         
 steps:
-    Remove_off_frame_ORFs: 
-        label: "Remove off-frame ORFs"
+    Remove_AntiFam_ORFs: 
+        label: "Remove AntiFam ORFs"
         run: ../progs/set_operation.cwl  # validated
         in:
             A: 
                 source: [prot_ids_A]
                 linkMerge: merge_flattened
             B: 
-                source: [prot_ids_B1, prot_ids_B2]
+                source: [prot_ids_B1]
                 linkMerge: merge_flattened
             operation:
                 default: '-' # subracts B from A
@@ -79,7 +79,7 @@ steps:
         in:
             scatter_gather_nchunks: scatter_gather_nchunks
             ids: 
-                source: [Remove_off_frame_ORFs/output]
+                source: [Remove_AntiFam_ORFs/output]
                 linkMerge: merge_flattened
             lds2: lds2
             proteins: proteins
