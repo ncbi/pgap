@@ -149,9 +149,10 @@ def find_failed_step(filename):
         
 class Pipeline:
 
-    def __del__():
-        if os.path.exists(self.yaml):
-            os.remove(self.yaml)
+    def cleaunup(self):
+        for file in [self.yaml, self.submol]:
+            if file != None and os.path.exists(file):
+                os.remove(file)
             
     def __init__(self, params, local_input, pipeline):
         self.params = params
@@ -628,6 +629,7 @@ class Setup:
         else:
             docker_url = self.docker_image
         print('Downloading (as needed) Docker image {}'.format(docker_url))
+        r=None;
         try:
             r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True)
             #print(r)
@@ -811,11 +813,13 @@ def main():
             if args.skesa or args.skesa_only:
                 p = Pipeline(params, args.input, "assemble")
                 retcode = p.launch()
+                p.cleaunup()
             if args.skesa_only:
                 sys.exit(retcode)
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
+                p.cleaunup()
                 if  args.ignore_all_errors == False:
                     # analyze ani output here
                     if not os.path.exists(args.output):
@@ -826,6 +830,7 @@ def main():
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
+                p.cleaunup()
                 if retcode == 0:
                     for errors_xml_fn in glob.glob(os.path.join(args.output, "*.xml")):
                         os.remove(errors_xml_fn)
