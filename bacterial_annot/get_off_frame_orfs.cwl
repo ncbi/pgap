@@ -1,10 +1,10 @@
 cwlVersion: v1.0
-label: "cds_filter"
+label: "Get off-frame ORFs"
 class: CommandLineTool
     
-#cds_filter -aligns-manifest aligns.mft -o prot.ids -seq_entries-manifest seq_entries.mft
-baseCommand: cds_filter
-arguments: [ -nogenbank, -max-len, "7500"  ]
+#get_off_frame_orfs -aligns-manifest aligns.mft -o prot.ids -seq_entries-manifest seq_entries.mft
+baseCommand: get_off_frame_orfs
+arguments: [ -nogenbank  ]
 inputs:
   aligns:
     type: File
