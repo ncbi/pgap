@@ -826,9 +826,6 @@ def main():
                         submol_modified = os.path.join(args.output, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
-                    submol =  self.get_submol(local_input)
-                    if ( submol != None ):
-                        copy(submol, output)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
