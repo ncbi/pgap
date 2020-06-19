@@ -36,6 +36,7 @@ inputs:
   no_merge: boolean
   ofmt: string
   seg: string
+  soft_masking: string
   threshold: int
   top_by_score: int
   word_size: int
@@ -114,6 +115,7 @@ steps:
       nogenbank: nogenbank
       ofmt: ofmt
       seg: seg
+      soft_masking: soft_masking
       threshold: threshold
       top_by_score: top_by_score
       word_size: word_size

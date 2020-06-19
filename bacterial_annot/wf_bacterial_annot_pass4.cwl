@@ -108,7 +108,9 @@ steps:
             ofmt: 
                 default: asn-binary
             seg: 
-                default: no
+                default:  '30 2.2 2.5'
+            soft_masking:
+                default: 'yes'
             threshold: 
                 default: 21
             top_by_score: 

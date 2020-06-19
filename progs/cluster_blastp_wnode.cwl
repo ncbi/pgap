@@ -101,7 +101,7 @@ inputs:
     inputBinding:
       prefix: -seg
   soft_masking:
-    type: boolean?
+    type: string?
     inputBinding:
       prefix: -soft_masking
   threshold:
