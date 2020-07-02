@@ -24,13 +24,13 @@ outputs:
   #   outputSource: bacterial_noncoding_16S/asncache
   annotations_5s:
     type: File
-    outputSource: bacterial_noncoding_5S/annots
+    outputSource: annot_ribo_operons/output_5S
   annotations_16s:
     type: File
-    outputSource: bacterial_noncoding_16S/annotations
+    outputSource: annot_ribo_operons/output_16S
   annotations_23s:
     type: File
-    outputSource: bacterial_noncoding_23S/annotations
+    outputSource: annot_ribo_operons/output_23S
     
 steps:
   bacterial_noncoding_5S:
@@ -72,4 +72,11 @@ steps:
         default: annotations_23s.asn
     out: [annotations]
 
+  annot_ribo_operons:
+    run: ../progs/annot_ribo_operons.cwl
+    in:
+      input_5S: bacterial_noncoding_5S/annots
+      input_16S: bacterial_noncoding_16S/annotations
+      input_23S: bacterial_noncoding_23S/annotations
+    out: [output_5S, output_16S, output_23S]
     
