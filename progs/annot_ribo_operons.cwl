@@ -1,7 +1,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: annot_ribo_operons.cwl
-label: annot_ribo_operons.cwl
+baseCommand: annot_ribo_operons
+label: annot_ribo_operons
 
 inputs:
   input_5S:
