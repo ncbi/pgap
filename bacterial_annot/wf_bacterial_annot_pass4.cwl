@@ -100,7 +100,7 @@ steps:
             max_jobs: 
                 default: 1
             max_target_seqs: 
-                default: 1000000
+                default: 50
             no_merge: 
                 default: false
             nogenbank: 
