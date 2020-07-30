@@ -181,6 +181,9 @@ steps:
           annotation: 
             source:
               - Run_GeneMark_Post/models
+            linkMerge: merge_flattened
+          ab_initio:
+            source:
               - Good_ab_initio_annotations/out_annotation
             linkMerge: merge_flattened
         out: [out_annotation]
