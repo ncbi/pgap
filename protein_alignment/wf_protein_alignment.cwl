@@ -26,10 +26,10 @@ outputs:
     outputSource: Get_Proteins/universal_clusters
   align:  
     type: File
-    outputSource: Filter_Protein_Alignments_I/align
+    outputSource: Filter_Protein_Alignments/align
   align_non_match:  
     type: File
-    outputSource: Filter_Protein_Alignments_I/align_non_match
+    outputSource: Filter_Protein_Alignments/align_non_match
 
 steps:
   Get_Proteins:
@@ -90,7 +90,7 @@ steps:
         default: '1G'      
     out: [ sorted_aligns ]
 
-  Filter_Full_Coverage_Alignments_I:
+  Filter_Full_Coverage_Alignments:
     run: bacterial_protalign_filter.cwl
     in:
       asn_cache: asn_cache
@@ -103,15 +103,15 @@ steps:
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      seed_hits: Filter_Full_Coverage_Alignments_I/blast_partial_cov
+      seed_hits: Filter_Full_Coverage_Alignments/blast_partial_cov
       gc_assembly: gc_assembly
     out: [ prosplign_align ]
 
-  Filter_Protein_Alignments_I:
+  Filter_Protein_Alignments:
     run: wf_align_filter.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      blast_full: Filter_Full_Coverage_Alignments_I/blast_full_cov
+      blast_full: Filter_Full_Coverage_Alignments/blast_full_cov
       prosplign: compart_filter_prosplign/prosplign_align
     out: [ align, align_non_match ]

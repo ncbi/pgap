@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Find ProSplign Alignments I, gather"
+label: "Find ProSplign Alignments, gather"
 
 
 baseCommand: gpx_qdump

@@ -28,14 +28,14 @@ inputs:
     default: annotation.mft
     inputBinding:
       prefix: -annotation-mft
-  blast_full_cov: # Filter Full-Coverage Alignments I/align_full_cov.asn
+  blast_full_cov: # Filter Full-Coverage Alignments/align_full_cov.asn
     type: File
   blast_full_cov_mft:
     type: string
     default: blast_full_cov.mft
     inputBinding:
       prefix: -blast-full-cov-mft
-  blast_partial_cov: # Filter Full-Coverage Alignments I/align_full_cov.asn
+  blast_partial_cov: # Filter Full-Coverage Alignments/align_full_cov.asn
     type: File
   blast_partial_cov_mft:
     type: string

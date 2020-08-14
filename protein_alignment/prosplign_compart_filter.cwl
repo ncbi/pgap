@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Filter Protein Seeds I, compart filter"
+label: "Filter Protein Seeds, compart filter"
 
 
 requirements:

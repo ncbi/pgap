@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Find ProSplign Alignments I, scatter"
+label: "Find ProSplign Alignments, scatter"
 
 
 requirements:

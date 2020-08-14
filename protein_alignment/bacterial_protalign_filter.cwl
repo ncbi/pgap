@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Filter Full-Coverage Alignments I"
+label: "Filter Full-Coverage Alignments"
 
 
 requirements:

@@ -73,8 +73,8 @@ steps:
                 default: '-' # subracts B from A
         out: [output] # does not go out
         
-    Find_Naming_Protein_Hits_I: # 30 minutes
-        label: "Find Naming Protein Hits I"
+    Find_Naming_Protein_Hits_for_struct: # 30 minutes
+        label: "Find Naming Protein Hits for struct"
         run: ../task_types/tt_blastp_wnode_naming.cwl
         in:
             scatter_gather_nchunks: scatter_gather_nchunks
@@ -141,7 +141,7 @@ steps:
         label: "Map Naming Hits"
         run: ../bacterial_annot/bacterial_hit_mapping.cwl
         in:
-            hmm_hits: Find_Naming_Protein_Hits_I/blast_align
+            hmm_hits: Find_Naming_Protein_Hits_for_struct/blast_align
             sequences: annotation
             align_fmt:
                 default: seq-align-set

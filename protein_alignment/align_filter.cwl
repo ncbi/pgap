@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Filter Protein Alignments I"
+label: "Filter Protein Alignments"
 
 
 requirements:

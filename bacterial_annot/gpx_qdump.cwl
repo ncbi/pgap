@@ -1,5 +1,5 @@
 cwlVersion: v1.0
-label: "Search All HMMs I, gather"
+label: "Search All HMMs, gather"
 class: CommandLineTool
     
 #gpx_qdump -output hmm_hits.asn -unzip '*' -input-path output/

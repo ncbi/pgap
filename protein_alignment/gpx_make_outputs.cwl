@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Seed Protein Alignments I, gather"
+label: "Seed Protein Alignments, gather"
 
     
 baseCommand: gpx_make_outputs

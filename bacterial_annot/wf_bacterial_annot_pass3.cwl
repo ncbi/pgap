@@ -18,7 +18,7 @@ inputs:
         label: "Map HMM Hits/align"
     prot_aligns:
         type: File
-        label: "Filter Protein Alignments I/align"
+        label: "Filter Protein Alignments/align"
     annotation:
         type: File
         label: "Resolve Annotation Conflicts/annotation"

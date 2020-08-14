@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Seed Protein Alignments I, scatter"
+label: "Seed Protein Alignments, scatter"
 
 
 requirements:

@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: Workflow
 
-label: "Filter Protein Alignments I"
+label: "Filter Protein Alignments"
 
 inputs:
   asn_cache: Directory

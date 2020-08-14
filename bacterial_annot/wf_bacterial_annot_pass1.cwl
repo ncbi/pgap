@@ -44,7 +44,7 @@ outputs:
     outputSource: Map_HMM_Hits/aligns
   hmm_hits: 
     type: File
-    outputSource: Search_All_HMMs_I/hmm_hits
+    outputSource: Search_All_HMMs/hmm_hits
   proteins:
     type: File
     outputSource: Extract_ORF_Proteins/proteins
@@ -86,8 +86,8 @@ steps:
     out: [proteins, lds2, seqids]
 
   # Skipped due to compute cost, for now
-  Search_All_HMMs_I:
-    label: "Search All HMMs I"
+  Search_All_HMMs:
+    label: "Search All HMMs"
     run: ../task_types/tt_hmmsearch_wnode.cwl
     in:
       proteins: Extract_ORF_Proteins/proteins
@@ -109,7 +109,7 @@ steps:
       asn_cache: [asn_cache, uniColl_cache]
       # hmm_hits: hmm_hits # Should be from hmmsearch
       hmm_hits: 
-        source: [Search_All_HMMs_I/hmm_hits]
+        source: [Search_All_HMMs/hmm_hits]
         linkMerge: merge_flattened
       sequences: Get_ORFs/outseqs
       ### this guys below not tested yet

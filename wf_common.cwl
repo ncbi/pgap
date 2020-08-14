@@ -438,7 +438,7 @@ steps:
         sequence_cache: genomic_source/asncache
         hmm_aligns: bacterial_annot/aligns
         scatter_gather_nchunks: scatter_gather_nchunks
-        prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments I/align"
+        prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments/align"
         annotation: bacterial_annot/annotation
         models1: bacterial_annot/models1
         raw_seqs: Prepare_Unannotated_Sequences/sequences

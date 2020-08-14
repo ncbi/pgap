@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: Workflow
 
-label: "Seed Protein Alignments I"
+label: "Seed Protein Alignments"
 
 inputs:
   asn_cache: Directory
