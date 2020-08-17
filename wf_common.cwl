@@ -123,7 +123,6 @@ steps:
       - CDDdata
       - defline_cleanup_rules
       - gene_master_ini
-      - genemark_path
       - hmm_path
       - hmms_tab
       - naming_blast_db

@@ -42,9 +42,6 @@ expression: |
         case 'gene_master.ini':
           r['gene_master_ini'] = l[i];
           break;
-        case 'GeneMark':
-          r['genemark_path'] = l[i];
-          break;
         case 'packages.versions':
           r['package_versions'] = l[i];
           break;
@@ -136,8 +133,6 @@ outputs:
     type: File
   gene_master_ini:
     type: File
-  genemark_path:
-    type: Directory
   hmm_path:
     type: Directory
   hmms_tab:
