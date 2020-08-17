@@ -378,7 +378,8 @@ steps:
       Generate_16S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_16s
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
-      genemark_path: passdata/genemark_path
+      genemark_path: 
+        default: '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/'
       thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
@@ -450,7 +451,8 @@ steps:
         hmms_tab: passdata/naming_hmms_tab
         wp_hashes: passdata/wp_hashes
         taxon_db: passdata/taxon_db
-        genemark_path: passdata/genemark_path
+        genemark_path: 
+          default: '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/'        
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
