@@ -22,7 +22,7 @@ A clear and concise description of what you expected to happen.
  - Docker (or other container runner) version. [e.g. ``docker --version``]
 
 **Log Files**
-Please rerun pgap.py with the ``--debug`` flag and attach the ``cwltool.log`` from the output directory.
+Please rerun pgap.py with the ``--debug`` flag and attach an archive (e.g. zip or tarball) of the logs in the directory: ``debug/tmp-outdir/*/*.log``.
 
 **Additional context**
 Add any other context about the problem here.
