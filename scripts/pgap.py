@@ -459,7 +459,6 @@ class Setup:
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
-        #self.docker_cmd, self.docker_user_remap = self.get_docker_info()
         self.get_docker_info()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
@@ -558,25 +557,25 @@ class Setup:
         return outputdir
 
     def get_docker_info(self):
-        self.docker_cmd = shutil.which(self.args.docker)
+        docker_type_alternatives = ['docker', 'podman', 'singularity']
+        if self.args.docker:
+            self.docker_cmd = shutil.which(self.args.docker)
+        else:
+            for docker in docker_type_alternatives:
+                self.docker_cmd = shutil.which(docker)
+                if self.docker_cmd != None:
+                    break
         if self.docker_cmd == None:
             sys.exit("Docker not found.")
-        result = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE)
-        docker_alternative = result.stdout.decode('utf-8').split(maxsplit=1)[0]
-        if docker_alternative == 'Docker':
-            self.docker_user_remap = platform.system() != "Windows"
-            self.docker_type = 'docker'
-        elif docker_alternative == 'podman':
-            self.docker_user_remap = False
-            self.docker_type = 'podman'
-        elif docker_alternative == 'singularity':
-            self.docker_user_remap = False
-            self.docker_type = 'singularity'
-        else:
-            self.docker_user_remap = False
-            self.docker_type = 'docker'
-            print('WARNING: {} support as Docker alternative has not been tested'.format(docker_alternative))
-        #return (docker_cmd, docker_user_remap)
+
+        version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        self.docker_type = version.split(maxsplit=1)[0].lower()
+        if self.docker_type not in docker_type_alternatives:
+            self.docker_type = os.path.basename(os.path.realpath(self.docker_cmd)).lower()
+            if self.docker_type not in docker_type_alternatives:
+                self.docker_type = 'docker'
+                print('WARNING: {} ({}) support as Docker alternative has not been tested'.format(version, self.docker_cmd))
+        self.docker_user_remap = (self.docker_type == 'docker' and platform.system() != "Windows")
 
     def get_report_usage(self):
         if (self.args.report_usage_true):
@@ -780,7 +779,7 @@ def main():
                         dest='no_internet', 
                         action='store_true',
                         help='Disable internet access for all programs in pipeline.')
-    parser.add_argument('-D', '--docker', metavar='path', default='docker',
+    parser.add_argument('-D', '--docker', metavar='path',
                         help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
