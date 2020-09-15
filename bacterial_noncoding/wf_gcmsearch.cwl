@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-label: "Run genomic CMsearch (5S rRNA)"
+label: "Run genomic CMsearch"
 cwlVersion: v1.0
 class: Workflow
 
@@ -16,36 +16,36 @@ inputs:
 outputs:
   annots:
     type: File
-    outputSource: Post_process_CMsearch_annotations_5S_rRNA/annots 
+    outputSource: Post_process_CMsearch_annotations_rRNA/annots 
     
 steps:
-  Run_genomic_CMsearch_5S_rRNA_submit:
+  Run_genomic_CMsearch_rRNA_submit:
     run: gpx_qsubmit_gcmsearch.cwl
     in:
       asn_cache: asn_cache
       seqids: seqids
     out: [jobs]
   
-  Run_genomic_CMsearch_5S_rRNA_wnode:
+  Run_genomic_CMsearch_rRNA_wnode:
     run: cmsearch_wnode.cwl
     in:
       asn_cache: asn_cache
-      input_jobs: Run_genomic_CMsearch_5S_rRNA_submit/jobs
+      input_jobs: Run_genomic_CMsearch_rRNA_submit/jobs
       model_path: model_path
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
       taxon_db: taxon_db
     out: [outdir]
 
-  Run_genomic_CMsearch_5S_rRNA_dump:
+  Run_genomic_CMsearch_rRNA_dump:
     run: gpx_qdump.cwl
     in:
-      input_path: Run_genomic_CMsearch_5S_rRNA_wnode/outdir
+      input_path: Run_genomic_CMsearch_rRNA_wnode/outdir
     out: [annots]
 
-  Post_process_CMsearch_annotations_5S_rRNA:
+  Post_process_CMsearch_annotations_rRNA:
     run: annot_merge.cwl
     in:
       asn_cache: asn_cache
-      input: Run_genomic_CMsearch_5S_rRNA_dump/annots
+      input: Run_genomic_CMsearch_rRNA_dump/annots
     out: [annots]

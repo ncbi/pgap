@@ -113,9 +113,9 @@ steps:
       data: supplemental_data
     run: expr/supplemental_data_split_dir.cwl
     out:
-      - 16s_blastdb_dir
-      - 23s_blastdb_dir
       - 5s_model_path
+      - 16s_model_path
+      - 23s_model_path
       - AntiFamLib
       - asn2pas_xsl
       - blast_rules_db_dir
@@ -334,9 +334,9 @@ steps:
         - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       seqids: genomic_source/seqid_list
-      16s_blastdb_dir: passdata/16s_blastdb_dir
-      23s_blastdb_dir: passdata/23s_blastdb_dir
-      model_path: passdata/5s_model_path
+      model_path_5s: passdata/5s_model_path
+      model_path_16s: passdata/16s_model_path
+      model_path_23s: passdata/23s_model_path
       rfam_amendments: passdata/rfam_amendments
       rfam_stockholm: passdata/rfam_stockholm
       taxon_db: passdata/taxon_db

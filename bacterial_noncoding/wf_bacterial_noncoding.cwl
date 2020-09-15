@@ -11,9 +11,9 @@ inputs:
         type: boolean[]
   asn_cache: Directory
   seqids: File
-  16s_blastdb_dir: Directory
-  23s_blastdb_dir: Directory
-  model_path: File
+  model_path_5s: File
+  model_path_16s: File
+  model_path_23s: File
   rfam_amendments: File
   rfam_stockholm: File
   taxon_db: File
@@ -38,39 +38,34 @@ steps:
     in:
       asn_cache: asn_cache
       seqids: seqids
-      model_path: model_path
+      model_path: model_path_5s
       rfam_amendments: rfam_amendments
       rfam_stockholm: rfam_stockholm
       taxon_db: taxon_db
     out: [ annots ]
 
   bacterial_noncoding_16S:
-    run: wf_blastn.cwl
+    run: wf_gcmsearch.cwl
     in:
       asn_cache: asn_cache
       seqids: seqids
-      blastdb_dir: 16s_blastdb_dir
-      blastdb:
-        default: blastdb
-      product_name: 
-        default: "16S ribosomal RNA"
-      outname:
-        default: annotations_16s.asn
-    out: [annotations]
-
+      model_path: model_path_16s
+      rfam_amendments: rfam_amendments
+      rfam_stockholm: rfam_stockholm
+      taxon_db: taxon_db
+    out: [ annots ]
+    
   bacterial_noncoding_23S:
-    run: wf_blastn.cwl
+    run: wf_gcmsearch.cwl
     in:
       asn_cache: asn_cache
       seqids: seqids
-      blastdb_dir: 23s_blastdb_dir
-      blastdb:
-        default: Ribosom23S
-      product_name: 
-        default: "23S ribosomal RNA"
-      outname:
-        default: annotations_23s.asn
-    out: [annotations]
+      model_path: model_path_23s
+      rfam_amendments: rfam_amendments
+      rfam_stockholm: rfam_stockholm
+      taxon_db: taxon_db
+    out: [ annots ]
+
 
   annot_ribo_operons:
     run: ../progs/annot_ribo_operons.cwl

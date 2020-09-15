@@ -24,6 +24,12 @@ expression: |
         case 'RF00001.cm':
           r['5s_model_path'] = l[i];
           break;
+        case 'SSU.cm':
+          r['16s_model_path'] = l[i];
+          break;
+        case 'LSU.cm':
+          r['23s_model_path'] = l[i];
+          break;
         case 'AntiFamLib':
           r['AntiFamLib'] = l[i];
           break;
@@ -110,11 +116,11 @@ expression: |
     return r;
   }
 outputs:
-  16s_blastdb_dir:
-    type: Directory
-  23s_blastdb_dir:
-    type: Directory
   5s_model_path:
+    type: File
+  16s_model_path:
+    type: File
+  23s_model_path:
     type: File
   AntiFamLib:
     type: Directory
