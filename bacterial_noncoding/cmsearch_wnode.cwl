@@ -1,5 +1,5 @@
 cwlVersion: v1.0
-label: "Run genomic CMsearch (5S rRNA), execution"
+label: "Run genomic CMsearch, execution"
 class: CommandLineTool
 
 requirements:
@@ -17,7 +17,7 @@ requirements:
 # -rfam-stockholm /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/Rfam/pgap-3.1/Rfam.seed 
 baseCommand: cmsearch_wnode
 #arguments: [ -cmsearch-cpu "0" ]
-arguments: [ -nogenbank ]
+arguments: [ -nogenbank, -use-alignment-output ]
 inputs:
   asn_cache:
     type: Directory
