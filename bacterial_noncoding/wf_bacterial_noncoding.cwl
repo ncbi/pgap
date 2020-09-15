@@ -71,7 +71,7 @@ steps:
     run: ../progs/annot_ribo_operons.cwl
     in:
       input_5S: bacterial_noncoding_5S/annots
-      input_16S: bacterial_noncoding_16S/annotations
-      input_23S: bacterial_noncoding_23S/annotations
+      input_16S: bacterial_noncoding_16S/annots
+      input_23S: bacterial_noncoding_23S/annots
     out: [output_5S, output_16S, output_23S]
     
