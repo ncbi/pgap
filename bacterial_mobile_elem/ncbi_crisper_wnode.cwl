@@ -16,7 +16,7 @@ inputs:
       prefix: -input-jobs
   crisper_path:
     type: string?
-    default: /opt/crispr/1.01/bin/
+    default: /opt/crispr/1.02/bin/
     inputBinding:
       prefix: -ncbi-crisper-path
   output_dir:
