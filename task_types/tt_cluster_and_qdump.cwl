@@ -68,7 +68,7 @@ steps:
       top_by_score: top_by_score
       word_size: word_size
       workers_per_cpu:
-        default: 1.0
+        default: 0.5
     out: [outdir]
 
   gpx_qdump:
