@@ -1,16 +1,17 @@
+#  /pgap/input reference comes from run-test-remotely.sh
+#  keep this setting sync'ed with --volume mapping in the aforementioned script
+#
 asn_cache: 
   - class: Directory
-    # this is relative to input.yaml directory
-    location: ../????/input/uniColl_path/cache  
+    location: /pgap/input/uniColl_path/cache  
   - class: Directory
     location: sequence_cache
 blastdb_dir:
   - class: Directory
-    # this is relative to input.yaml directory
-    location: ../????/input/uniColl_path/blastdb_dir
+    location: /pgap/input/uniColl_path/blastdb_dir
   - class: Directory
     # twice the same directory because it is paired with another array: of blast database names (basenames of .pal files)
-    location: ../????/input/uniColl_path/blastdb_dir
+    location: /pgap/input/uniColl_path/blastdb_dir
 input_jobs:
   class: File
   location: jobsaa.xml
