@@ -49,19 +49,20 @@ inputs:
         default: >
             //*[
                 ( @severity="ERROR" or @severity="REJECT" )
-                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                 and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
                 and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
                 and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                 and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
                 and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
                 and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
                 and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
             ]
     xpath_fail_final_asndisc: 
         type: string?
@@ -72,19 +73,20 @@ inputs:
         doc: 'The default: setting is for standard call of pgap.cwl (for example, from pgap.py)'
         default: >
                 //*[( @severity="ERROR" or @severity="REJECT" )
-                    and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-                    and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-                    and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
                     and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-                    and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-                    and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
                     and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
                     and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
                     and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-                    and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
                     and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
                     and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
                     and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+                    and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                    and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+                    and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                    and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                    and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                    and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                    and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
                 ]
     no_internet:
       type: boolean?
