@@ -1,0 +1,20 @@
+asn_cache: 
+  - class: Directory
+    # this is relative to input.yaml directory
+    location: ../????/input/uniColl_path/cache  
+  - class: Directory
+    location: sequence_cache
+blastdb_dir:
+  - class: Directory
+    # this is relative to input.yaml directory
+    location: ../????/input/uniColl_path/blastdb_dir
+  - class: Directory
+    # twice the same directory because it is paired with another array: of blast database names (basenames of .pal files)
+    location: ../????/input/uniColl_path/blastdb_dir
+input_jobs:
+  class: File
+  location: jobsaa.xml
+lds2:
+  class: File
+  location: LDS2
+
