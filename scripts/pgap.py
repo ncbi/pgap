@@ -819,7 +819,7 @@ def main():
                 retcode = p.launch()
                 p.cleaunup()
                 if retcode == 0:
-                    for errors_xml_fn in glob.glob(os.path.join(args.output, "*.xml")):
+                    for errors_xml_fn in glob.glob(os.path.join(args.output, "errors.xml")):
                         os.remove(errors_xml_fn)
                     if(p.submol != None):
                         submol_modified = os.path.join(args.output, p.submol)
