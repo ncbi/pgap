@@ -16,11 +16,15 @@ inputs:
   align_filter: 
     type: string
     default: 'score>0 && pct_identity_gapopen_only > 35' 
-  allow_intersection: boolean
+  allow_intersection: 
+    type: boolean
+    default: false
   comp_based_stats: 
     type: string # F/T
     default: 'F'
-  compart: boolean
+  compart: 
+    type: boolean
+    default: false
   dbsize: 
     type: string # can't int, because too large
     default: '6000000000'
