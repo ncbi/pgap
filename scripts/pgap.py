@@ -201,7 +201,10 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro,z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
             '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
+            '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
+
+        
 
         if (self.params.args.cpus):
             if (platform.system() != "Windows"):
@@ -226,6 +229,7 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input'.format(self.input_dir),
             '--volume', '{}:{}:ro'.format(self.yaml, self.input_file ),
+            '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
         if (self.params.args.cpus):
@@ -250,6 +254,7 @@ class Pipeline:
             '--bind', '{}:/pgap/input:ro'.format(self.data_dir),
             '--bind', '{}:/pgap/user_input'.format(self.input_dir),
             '--bind', '{}:{}:ro'.format(self.yaml, self.input_file ),
+            '--bind', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
             '--bind', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
         # Debug mount for docker image
