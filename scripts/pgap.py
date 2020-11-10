@@ -789,7 +789,7 @@ def main():
     parser.add_argument('-c', '--cpus', type=int,
                         help='Limit the number of CPUs available for execution by the container')
     parser.add_argument('-m', '--memory',
-                        help='Memory limit; may add an optional suffix which can be one of b, k, m, or g')
+                        help='Memory limit (Docker and PodMan only, ignored on Singularity); may add an optional suffix which can be one of b, k, m, or g')
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
