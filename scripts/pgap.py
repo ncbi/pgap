@@ -175,7 +175,10 @@ class Pipeline:
             self.make_podman_cmd()
         else:
             self.make_docker_cmd()
-        
+
+        if (self.params.args.cpus):
+            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(self.params.args.cpus-1)])
+ 
         self.cmd.extend(['cwltool',
                         '--timestamps',
                         '--disable-color',
@@ -204,13 +207,6 @@ class Pipeline:
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
 
-        
-
-        if (self.params.args.cpus):
-            if (platform.system() != "Windows"):
-                self.cmd.extend(['--cpus', self.params.args.cpus])
-            else:
-                self.cmd.extend(['--cpu-count', self.params.args.cpus])
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
             
@@ -232,11 +228,6 @@ class Pipeline:
             '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
 
-        if (self.params.args.cpus):
-            if (platform.system() != "Windows"):
-                self.cmd.extend(['--cpus', self.params.args.cpus])
-            else:
-                self.cmd.extend(['--cpu-count', self.params.args.cpus])
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
             
@@ -795,7 +786,7 @@ def main():
     parser.add_argument('--no-self-update', action='store_true',
                         dest='no_self_up',
                         help='Do not attempt to update this script')
-    parser.add_argument('-c', '--cpus',
+    parser.add_argument('-c', '--cpus', type=int,
                         help='Limit the number of CPUs available for execution by the container')
     parser.add_argument('-m', '--memory',
                         help='Memory limit; may add an optional suffix which can be one of b, k, m, or g')
