@@ -13,7 +13,7 @@ requirements:
         writable: False
 
 baseCommand: bacterial_prot_src
-arguments: [ -no-phage, -nogenbank, -fallback-taxonomy ]
+arguments: [ -no-phage, -nogenbank ]
 
 inputs:
   uniColl_asn_cache:
