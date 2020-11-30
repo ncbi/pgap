@@ -76,6 +76,15 @@ expression: |
             switch (ul[j].basename) {
               case 'blast_dir':
                 r['identification_db_dir'] = ul[j];
+                var wl = ul[i].listing;
+                var wn = wl.length;
+                for (var h = 0; h < wn; h++) {
+                  switch (wl[h].basename) {
+                    case 'order-specific.mft':
+                      r['all_order_specific_blastdb_file'] = wl[h];
+                      break;
+                  }
+                }
                 break;
               case 'real_hmms':
                 r['hmm_path'] = ul[j];
@@ -91,9 +100,6 @@ expression: |
                 break;
               case 'naming.sqlite':
                 r['naming_sqlite'] = ul[j];
-                break;
-              case 'order-specific.mft':
-                r['all_order_specific_blastdb_file'] = ul[j];
                 break;
               case 'taxonomy.sqlite3':
                 r['taxon_db'] = ul[j];
