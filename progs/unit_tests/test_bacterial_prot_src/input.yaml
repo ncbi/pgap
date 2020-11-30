@@ -1,0 +1,17 @@
+
+uniColl_asn_cache: 
+  class: Directory
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/workspaces/teamcity/PgapUtilsDockerBuild/dev/1438/input-2020-11-25.build2777/uniColl_path/cache
+naming_sqlite: 
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/workspaces/teamcity/PgapUtilsDockerBuild/dev/1438/input-2020-11-25.build2777/uniColl_path/naming.sqlite
+tax_sql_file:
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/workspaces/teamcity/PgapUtilsDockerBuild/dev/1438/input-2020-11-25.build2777/uniColl_path/taxonomy.sqlite3
+blastdb_dir: 
+  class: Directory
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/workspaces/teamcity/PgapUtilsDockerBuild/dev/1438/input-2020-11-25.build2777/uniColl_path/blast_dir
+all_order_specific_blastdb_file: 
+  class: File
+  location: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/dev/automated_builds/workspaces/teamcity/PgapUtilsDockerBuild/dev/1438/input-2020-11-25.build2777/uniColl_path/order-specific.mft
+

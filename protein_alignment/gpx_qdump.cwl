@@ -7,7 +7,7 @@ label: "Seed Search Compartments, gather"
 
 
 baseCommand: gpx_qdump
-arguments: [ -unzip, '*' ]
+arguments: [ -unzip, '*', -produce-empty-file ]
 inputs:
   input_path:
     type: Directory

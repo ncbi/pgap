@@ -4,7 +4,7 @@ class: CommandLineTool
     
 #gpx_qdump -output cmsearch.asn -output-manifest placements.mft -unzip '*' 
 baseCommand: gpx_qdump
-arguments: [ -unzip, '*' ]
+arguments: [ -unzip, '*', -produce-empty-file ]
 inputs:
   input_path:
     type: Directory

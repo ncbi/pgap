@@ -8,7 +8,7 @@ class: CommandLineTool
     # listing:
       # - entry:  $(inputs.lds2)
         # writable: True
-
+arguments: [ -produce-empty-file]
 baseCommand: gpx_qdump
 inputs:
   input_path:

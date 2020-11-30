@@ -22,9 +22,7 @@ requirements:
     listing:
       - entry:  $(inputs.proteins)
         writable: False
-      - entry:  ${ var cs=0; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
-        writable: False
-      - entry:  ${ var cs=1; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
+      - entry:  $(inputs.blastdb_dir)
         writable: False
       - entry:  ${ var cs=0; var s=inputs.asn_cache.length-1; var as = cs; if(as >= s) {as = s }; return inputs.asn_cache[as]; }
         writable: False
@@ -54,9 +52,9 @@ inputs:
     # this part for testing only, it is not compatible with -db-manifest setting below
     inputBinding:
       prefix: -db
-      valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb_dir.length; i++) { blob += inputs.blastdb_dir[i].path + '/' + inputs.blastdb[i]; if(i != inputs.blastdb_dir.length-1) blob += ','; } return blob; }
+      valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb.length; i++) { blob += inputs.blastdb_dir.path + '/' + inputs.blastdb[i]; if(i != inputs.blastdb.length-1) blob += ','; } return blob; }
   blastdb_dir:
-    type: Directory[]?
+    type: Directory?
   # this won't work because we create manifest in requirement: section simultaneously with declaring input directories "stable"
   # and "stability" is not achieved until we are done with requirements part (I guess)
   # blastdb_manifest:

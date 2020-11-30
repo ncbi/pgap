@@ -1,12 +1,13 @@
 cwlVersion: v1.0
-label: "blastp_wnode_naming"
+label: "blastp_wnode_struct"
 class: Workflow # task type
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
+    
 inputs:
   scatter_gather_nchunks: string
-#  scatter_gather_chunk_size: string
+  #  scatter_gather_chunk_size: string
   blastdb_dir: Directory
   blastdb: string[]
   # cluster_blastp_wnode_output: Directory? # shortcut to bypass cluster_blastp
@@ -42,31 +43,16 @@ inputs:
 outputs:
   blast_align:
     type: File[]
-    outputSource: [collect_aligns/file_out, retrieve_cached_hits/hits_output]
+    outputSource: cluster_and_qdump/blast_align
 
 steps:
-  retrieve_cached_hits: 
-    run: ../progs/orf_hits_cache_retrieve.cwl
-    in:
-      lds2: lds2
-      proteins: proteins
-      # we do not need blastdb here, like in classic PGAP, the only reason we supply it there is to derive
-      # -naming-db-version parameter:
-      taxid: taxid
-      blast_type: blast_type
-      genus_list: genus_list
-      orfs: ids
-      sqlite_cache: blast_hits_cache
-      taxon_db: taxon_db
-    out: [hits_output, not_found_output]
-    
   gpx_qsubmit:
     run: ../progs/gpx_qsubmit.cwl
     in:
       lds2: lds2
       proteins: proteins
       ids: 
-        source: [retrieve_cached_hits/not_found_output]
+        source: [ids]
         linkMerge: merge_flattened
       affinity: affinity
       asn_cache: asn_cache
@@ -110,6 +96,8 @@ steps:
       soft_masking: soft_masking
       threshold: threshold
       top_by_score: top_by_score
+      short_protein_threshold: 
+        default: 30
       word_size: word_size
     out: [blast_align]
     

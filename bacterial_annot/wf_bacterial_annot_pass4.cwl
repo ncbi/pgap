@@ -21,8 +21,6 @@ inputs:
         type: Directory
     uniColl_cache:
         type: Directory
-    naming_blast_db: # NamingDatabase
-        type: Directory
     naming_sqlite: # see bacterial_annot_pass3
         type: File
     hmm_assignments:  # XML assignments
@@ -39,15 +37,15 @@ inputs:
         type: File
     defline_cleanup_rules: # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
         type: File
-    blast_rules_db_dir:
-        type: Directory
     blast_rules_db: 
+        label: "parameter to store the literal 'blast_rules_db'"
         type: string
+        default: blast_rules_db
+    blastdb:
+        label: "Input blastdb databases"
+        type: string[]        
     identification_db_dir:
         type: Directory
-    # cached for intermediate testing
-    # cached_Find_Naming_Protein_Hits:
-    #    type: File
     taxid:
       type: int
     blast_hits_cache: 
@@ -68,11 +66,12 @@ steps:
                 linkMerge: merge_flattened
             lds2: lds2
             proteins: proteins
-            blastdb_dir: 
-                source: [blast_rules_db_dir, identification_db_dir] # production
-                linkMerge: merge_flattened
+            blastdb_dir: identification_db_dir
             blastdb:
-                default: [blastdb, blast_rules_db]
+              source: #will this fly?
+                - blastdb # Get_Proteins/selected_blastdb
+                - blast_rules_db
+              linkMerge: merge_flattened
             # cluster_blastp_wnode_output: cluster_blastp_wnode_output # shortcut
             # literal parameters
             affinity: 
@@ -140,7 +139,7 @@ steps:
                 default: true
         out: [o]
     Assign_Clusters_to_Proteins_sort:
-        label: "Assign Clusters to Proteins"
+        label: "Assign Clusters to Proteins: pre-sort alignments"
         run: ../progs/align_sort.cwl
         in:
             input: Find_best_protein_hits/o
@@ -155,7 +154,7 @@ steps:
             # internal: tmp
         out: [output]
     Assign_Clusters_to_Proteins:
-        label: "Assign Clusters to Proteins"
+        label: "Assign Clusters to Proteins: actual task"
         run: ../progs/assign_cluster.cwl
         in:
             asn_cache: [sequence_cache, uniColl_cache]
@@ -170,9 +169,9 @@ steps:
             hits: Assign_Clusters_to_Proteins_sort/output
             margin:
                 default: 0.05
-            namedb_dir: naming_blast_db # NamingDatabase
+            namedb_dir: identification_db_dir # NamingDatabase
             namedb:
-                default: blastdb
+                default: blast_rules_db
             seg:
                 default: no
             sure_cutoff:

@@ -32,9 +32,7 @@ steps:
       blastdb:
         source: [blastdb]
         linkMerge: merge_flattened
-      blastdb_dir:
-        source: [blastdb_dir]
-        linkMerge: merge_flattened
+      blastdb_dir: blastdb_dir
       ids:
         source: [gilist]
         linkMerge: merge_flattened

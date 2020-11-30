@@ -8,9 +8,7 @@ requirements:
     ramMax: 5000
   - class: InitialWorkDirRequirement
     listing:
-      - entry:  ${ var cs=0; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
-        writable: False
-      - entry:  ${ var cs=1; var s=inputs.blastdb_dir.length-1; var as = cs; if(as >= s) {as = s }; return inputs.blastdb_dir[as]; }
+      - entry:  $(inputs.blastdb_dir) 
         writable: False
       - entry:  ${ var cs=0; var s=inputs.asn_cache.length-1; var as = cs; if(as >= s) {as = s }; return inputs.asn_cache[as]; }
         writable: False
@@ -41,7 +39,7 @@ inputs:
     inputBinding:
       prefix: -backlog
   blastdb_dir:
-    type: Directory[]
+    type: Directory
   comp_based_stats:  # F/T
     type: string
     inputBinding:
@@ -108,6 +106,10 @@ inputs:
     type: int?
     inputBinding:
       prefix: -threshold
+  short_protein_threshold:
+    type: int?
+    inputBinding:
+      prefix:  -short-protein-threshold
   top_by_score:
     type: int?
     inputBinding:

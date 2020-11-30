@@ -22,6 +22,14 @@ inputs:
     type: File
     inputBinding:
       prefix: -submit-block
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
+  no_internet:
+    type: boolean?            
+    inputBinding:
+        prefix: -no-internet
   master_desc_name:
     type: string?
     default: master-desc.asn
@@ -32,15 +40,12 @@ inputs:
     default: sequences.asn
     inputBinding:
       prefix: -o
-  taxon_db:
-    type: File
+  plasmids_name:
+    type: string?
+    default: plasmids.seqids
     inputBinding:
-        prefix: -taxon-db
-  no_internet:
-    type: boolean?            
-    inputBinding:
-        prefix: -no-internet
-        
+      prefix: -plasmids
+  
 outputs:
   master_desc:
     type: File
@@ -50,4 +55,9 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.sequences_name)
+  plasmids:
+    type: File
+    outputBinding:
+      glob: $(inputs.plasmids_name)
+   
    

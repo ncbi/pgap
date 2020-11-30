@@ -75,8 +75,7 @@ expression: |
           for (var j = 0; j < un; j++) {
             switch (ul[j].basename) {
               case 'blast_dir':
-                r['blast_rules_db_dir'] = ul[j];
-                r['naming_blast_db'] = ul[j];
+                r['identification_db_dir'] = ul[j];
                 break;
               case 'real_hmms':
                 r['hmm_path'] = ul[j];
@@ -92,6 +91,9 @@ expression: |
                 break;
               case 'naming.sqlite':
                 r['naming_sqlite'] = ul[j];
+                break;
+              case 'order-specific.mft':
+                r['all_order_specific_blastdb_file'] = ul[j];
                 break;
               case 'taxonomy.sqlite3':
                 r['taxon_db'] = ul[j];
@@ -124,9 +126,11 @@ outputs:
     type: File
   AntiFamLib:
     type: Directory
+  all_order_specific_blastdb_file:
+    type: File
   asn2pas_xsl:
     type: File
-  blast_rules_db_dir:
+  identification_db_dir:
     type: Directory
   CDDdata:
     # ${GP_HOME}/third-party/data/CDD/cdd - this is rpsblastdb
@@ -143,8 +147,6 @@ outputs:
     type: Directory
   hmms_tab:
     type: File
-  naming_blast_db: # NamingDatabase
-    type: Directory
   naming_hmms_combined:
     # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
     type: Directory

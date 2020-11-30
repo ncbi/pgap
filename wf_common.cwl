@@ -26,9 +26,6 @@ inputs:
     #
     # User independent, static input
     #
-    blast_rules_db:
-        type: string
-        default: blast_rules_db
     scatter_gather_nchunks:
         type: string
         default: '1'
@@ -119,15 +116,15 @@ steps:
       - 16s_model_path
       - 23s_model_path
       - AntiFamLib
+      - all_order_specific_blastdb_file
       - asn2pas_xsl
-      - blast_rules_db_dir
+      - identification_db_dir
       - CDDdata2
       - CDDdata
       - defline_cleanup_rules
       - gene_master_ini
       - hmm_path
       - hmms_tab
-      - naming_blast_db
       - naming_hmms_combined
       - naming_hmms_tab
       - naming_sqlite
@@ -143,7 +140,15 @@ steps:
       - univ_prot_xml
       - val_res_den_xml
       - wp_hashes
-
+  # 
+  # massage passdata output here
+  #
+  Get_Order_Specific_Strings:
+    label: "Get List of Order Specific Databases in the form of string[]"
+    run: progs/file2basenames.cwl
+    in: 
+      input: passdata/all_order_specific_blastdb_file
+    out: [values]
   log_package_versions:
     run: progs/catlog.cwl
     in:
@@ -152,7 +157,6 @@ steps:
           - passdata/package_versions
         linkMerge: merge_flattened
     out: []
-    
   blast_hits_cache_data_split_dir:
     in:
       data: blast_hits_cache_data
@@ -165,6 +169,7 @@ steps:
     in:
       input: blast_hits_cache_data_split_dir/genus_list
     out: [values]
+  # end of massaging passdata output
   genomic_source: # PLANE
     run: genomic_source/wf_genomic_source_asn.cwl
     in:
@@ -174,7 +179,6 @@ steps:
       gc_assm_name: ping_start/outstring
       taxon_db: passdata/taxon_db
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]
-
   #
   #  Pseudo plane "default 1"
   #
@@ -188,7 +192,7 @@ steps:
       submit_block: genomic_source/submit_block_template
       taxon_db: passdata/taxon_db
       no_internet: no_internet
-    out: [master_desc, sequences]
+    out: [master_desc, sequences, plasmids]
   Prepare_Unannotated_Sequences_pgapx_input_check:
         run: progs/pgapx_input_check.cwl
         in:  
@@ -304,6 +308,17 @@ steps:
   #
   # end of pseudo plane "default 1"
   #
+  Get_Proteins: 
+    label: "Get Proteins"
+    run: wf_bacterial_prot_src.cwl
+    in:
+      uniColl_asn_cache: passdata/uniColl_cache
+      naming_sqlite: passdata/naming_sqlite
+      taxid: taxid
+      tax_sql_file: passdata/taxon_db
+      blastdb_dir: passdata/identification_db_dir
+      all_order_specific_blastdb: Get_Order_Specific_Strings/values
+    out: [universal_clusters, all_prots, selected_blastdb]
   bacterial_ncrna: # PLANE
     run: bacterial_ncrna/wf_gcmsearch.cwl
     in:
@@ -405,12 +420,13 @@ steps:
         prot_ids_A: bacterial_annot/seqids
         prot_ids_B1: bacterial_annot/prot_ids
         prot_ids_B2: spurious_annot_1/AntiFam_tainted_proteins_I___oseqids
-        blast_rules_db_dir: passdata/blast_rules_db_dir
-        blast_rules_db: blast_rules_db
-        identification_db_dir: passdata/naming_blast_db
+        identification_db_dir: passdata/identification_db_dir
+        blastdb: Get_Proteins/selected_blastdb
         annotation: bacterial_annot/outseqs
         sequence_cache: genomic_source/asncache
         unicoll_cache: passdata/uniColl_cache
+        raw_seqs: Prepare_Unannotated_Sequences/sequences
+        plasmids: Prepare_Unannotated_Sequences/plasmids
         scatter_gather_nchunks: scatter_gather_nchunks
         taxid: taxid
         blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache
@@ -426,13 +442,13 @@ steps:
         - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
       asn_cache: genomic_source/asncache
       uniColl_asn_cache: passdata/uniColl_cache
-      naming_sqlite: passdata/naming_sqlite
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
       tax_sql_file: passdata/taxon_db
       gc_assembly: genomic_source/gencoll_asn
       compartments: bacterial_annot_2/aligns
-    out: [universal_clusters, align, align_non_match]
+      all_prots: Get_Proteins/all_prots
+    out: [align, align_non_match]
 
   bacterial_annot_3:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
@@ -493,7 +509,7 @@ steps:
         Good_AntiFam_filtered_proteins_gilist: spurious_annot_2/Good_AntiFam_filtered_proteins_output
         sequence_cache: genomic_source/asncache
         uniColl_cache: passdata/uniColl_cache
-        naming_blast_db: passdata/naming_blast_db
+        identification_db_dir: passdata/identification_db_dir
         naming_sqlite: passdata/naming_sqlite
         hmm_assignments:  bacterial_annot_3/Assign_Naming_HMM_to_Proteins_assignments
         wp_assignments:  bacterial_annot_3/Name_by_WPs_names
@@ -502,9 +518,7 @@ steps:
         CDDdata2: passdata/CDDdata2
         thresholds: passdata/thresholds
         defline_cleanup_rules: passdata/defline_cleanup_rules
-        blast_rules_db_dir: passdata/blast_rules_db_dir
-        blast_rules_db: blast_rules_db
-        identification_db_dir: passdata/naming_blast_db
+        blastdb: Get_Proteins/selected_blastdb
         scatter_gather_nchunks: scatter_gather_nchunks
         taxid: taxid
         blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache

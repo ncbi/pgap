@@ -14,7 +14,7 @@ requirements:
 
 inputs:
   input_jobs: File
-  blastdb_dir: Directory[]
+  blastdb_dir: Directory
   lds2: File
   proteins: File
   asn_cache: Directory[]
@@ -35,6 +35,7 @@ inputs:
   threshold: int
   top_by_score: int
   word_size: int
+  short_protein_threshold: int?
 
 outputs:
   blast_align:
@@ -65,6 +66,7 @@ steps:
       seg: seg
       soft_masking: soft_masking
       threshold: threshold
+      short_protein_threshold: short_protein_threshold
       top_by_score: top_by_score
       word_size: word_size
       workers_per_cpu:

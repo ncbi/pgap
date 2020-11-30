@@ -4,7 +4,7 @@ class: CommandLineTool
     
 #gpx_qdump -output ncbi_crispr.out -output-manifest annots.mft -unzip '*'
 baseCommand: gpx_qdump
-arguments: [ -unzip, '*', -failed-jobs-tolerate-failures ]
+arguments: [ -unzip, '*', -failed-jobs-tolerate-failures, -produce-empty-file ]
 inputs:
   input_path:
     type: Directory

@@ -17,9 +17,6 @@ inputs:
       location: input
   blast_hits_cache_data:
     type: Directory?
-  blast_rules_db:
-    type: string
-    default: blast_rules_db
   fasta: File
   gc_assm_name: 
     type: string

@@ -13,34 +13,21 @@ inputs:
         type: boolean[]
   asn_cache: Directory
   uniColl_asn_cache: Directory
-  naming_sqlite: File
-  blastdb_dir: Directory
+  blastdb_dir: Directory # genomic
   taxid: int
   tax_sql_file: File
   gc_assembly: File
   compartments: File
+  all_prots: File
 
 outputs:
-  universal_clusters:  
-    type: File
-    outputSource: Get_Proteins/universal_clusters
   align:  
     type: File
     outputSource: Filter_Protein_Alignments/align
   align_non_match:  
     type: File
     outputSource: Filter_Protein_Alignments/align_non_match
-
 steps:
-  Get_Proteins:
-    run: bacterial_prot_src.cwl
-    in:
-      uniColl_asn_cache: uniColl_asn_cache
-      naming_sqlite: naming_sqlite
-      taxid: taxid
-      tax_sql_file: tax_sql_file
-    out: [ universal_clusters, all_prots ]
-  
   Compute_Gencode:
     run: ../progs/compute_gencode.cwl
     in:
@@ -69,7 +56,7 @@ steps:
       db_gencode: Compute_Gencode_int/value
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
-      seqids: Get_Proteins/all_prots
+      seqids: all_prots # Get_Proteins/all_prots
       blastdb_dir: blastdb_dir
     out: [ blast_align ]
 

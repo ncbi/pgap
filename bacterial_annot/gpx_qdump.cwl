@@ -4,7 +4,7 @@ class: CommandLineTool
     
 #gpx_qdump -output hmm_hits.asn -unzip '*' -input-path output/
 baseCommand: gpx_qdump
-arguments: [ -unzip, '*' ]
+arguments: [ -unzip, '*' , -produce-empty-file]
 inputs:
   input_path:
     type: Directory
