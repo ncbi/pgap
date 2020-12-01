@@ -76,7 +76,7 @@ expression: |
             switch (ul[j].basename) {
               case 'blast_dir':
                 r['identification_db_dir'] = ul[j];
-                var wl = ul[i].listing;
+                var wl = ul[j].listing;
                 var wn = wl.length;
                 for (var h = 0; h < wn; h++) {
                   switch (wl[h].basename) {
