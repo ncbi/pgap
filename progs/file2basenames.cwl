@@ -18,12 +18,13 @@ expression: |
         lines = inputs.input.contents.split("\n");
     }
     for(var i = 0; i<lines.length; i++) {
-      var last_slash_i = lines[i].lastIndexOf("/");
+      var basename = lines[i];
+      var last_slash_i = basename.lastIndexOf("/");
       if(last_slash_i>-1) {
-        var basename = lines[i].substr(last_slash_i + 1).trim();
-        if(basename.length > 0) {
-          values.push (basename);
-        }
+        basename = basename.substr(last_slash_i + 1).trim();
+      }
+      if(basename.length > 0) {
+        values.push (basename);
       }
     }
     return { "values": values }; 
