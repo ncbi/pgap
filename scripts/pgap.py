@@ -181,6 +181,7 @@ class Pipeline:
  
         self.cmd.extend(['cwltool',
                         '--timestamps',
+                        '--debug',
                         '--disable-color',
                         '--preserve-entire-environment',
                         '--outdir', '/pgap/output'
