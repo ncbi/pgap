@@ -1,8 +1,0 @@
-fasta:
-  class: File
-  location: user_genome/genome.fa
-submol:
-    class: File
-    location: user_genome/submol.yaml
-taxid: 562
-gc_assm_name: MG37
