@@ -216,6 +216,8 @@ class Pipeline:
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
+        if self.params.args.container_name:
+            self.cmd.extend(['--name', self.params.args.container_name])
         self.cmd.append(self.params.docker_image)
 
 
@@ -767,7 +769,10 @@ def main():
                         help='Set the report_usage flag in the YAML to true.')
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
                         help='Set the report_usage flag in the YAML to false.')
-
+    parser.add_argument("--container-name", 
+                        dest='container_name', 
+                        action='store_true',
+                        help='Specify a container name that will be used instead of automatically generated.')
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
                         action='store_true',
@@ -794,6 +799,7 @@ def main():
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug mode')
+                        
     args = parser.parse_args()
 
     retcode = 0
