@@ -771,7 +771,6 @@ def main():
                         help='Set the report_usage flag in the YAML to false.')
     parser.add_argument("--container-name", 
                         dest='container_name', 
-                        action='store_true',
                         help='Specify a container name that will be used instead of automatically generated.')
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
