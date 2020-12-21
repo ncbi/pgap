@@ -47,6 +47,11 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: -nogenbank
+  order:
+    type: File?
+    inputBinding:
+      prefix: -order
+    
 
 outputs:
   outfull:

@@ -178,7 +178,7 @@ steps:
       # taxid: taxid
       gc_assm_name: ping_start/outstring
       taxon_db: passdata/taxon_db
-    out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]
+    out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template, order]
   #
   #  Pseudo plane "default 1"
   #
@@ -603,7 +603,7 @@ steps:
         default: true
       nogenbank:
         default: true
-
+      order: genomic_source/order
     out: [outfull]
   Final_Bacterial_Package_dumb_down_as_required:
     run: progs/dumb_down_as_required.cwl
