@@ -31,6 +31,9 @@ outputs:
   submit_block_template:
     type: File
     outputSource: Prepare_Seq_entries/submit_block
+  order:
+    type: File
+    outputSource: Prepare_Seq_entries/order
 steps:
   Prepare_Seq_entries:
     run: ../progs/prepare_seq_entry_input.cwl
