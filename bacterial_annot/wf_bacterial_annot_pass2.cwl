@@ -234,6 +234,9 @@ steps:
                 default: true
             no_compart:
                 default: false
+            outfile:
+              default: "mapped-aligns.asn"
+
             # bogus because requirements from this are imported down
             proteins: proteins
         out: [aligns]

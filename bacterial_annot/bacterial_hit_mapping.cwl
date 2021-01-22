@@ -51,8 +51,7 @@ inputs:
     inputBinding:
       prefix: -sequences
   outfile:
-    type: string?
-    default: "mapped-hmm-hits.asn"
+    type: string
     inputBinding:
       prefix: -o
   # bogus:

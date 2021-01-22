@@ -114,13 +114,16 @@ steps:
       sequences: Get_ORFs/outseqs
       ### this guys below not tested yet
       align_fmt: 
-         default: seq-align
+        default: seq-align
       expansion_ratio:
-         default: 0.0
+        default: 0.0
       no_compart:
-         default: true
+        default: true
       nogenbank:
-         default: true
+        default: true
+      outfile:
+        default: "mapped-hmm-hits.asn"
+         
     out: [aligns]
 
   Get_off_frame_ORFs:
