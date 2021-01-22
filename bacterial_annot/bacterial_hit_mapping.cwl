@@ -1,5 +1,5 @@
 cwlVersion: v1.0
-label: "Map HMM Hits"
+label: "bacterial_hit_mapping"
 
 class: CommandLineTool
 requirements:
