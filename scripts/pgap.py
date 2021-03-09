@@ -631,6 +631,7 @@ class Setup:
             #print(r)
         except subprocess.CalledProcessError:
             print(r)
+            sys.exit(1)
 
     # This and install data should probably be refactored
     def check_install_data(self):
