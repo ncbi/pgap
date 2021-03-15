@@ -25,7 +25,7 @@ inputs:
   Generate_23S_rRNA_Annotation_annotation: File
   Post_process_CMsearch_annotations_annots_5S: File
   thresholds: File
-  genemark_path: Directory
+  genemark_path: string
   # Cached computational steps
   #hmm_hits: File
   scatter_gather_nchunks: string

@@ -469,9 +469,7 @@ steps:
         wp_hashes: passdata/wp_hashes
         taxon_db: passdata/taxon_db
         genemark_path: 
-          default:
-            class: Directory
-            location: '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/'        
+          default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
