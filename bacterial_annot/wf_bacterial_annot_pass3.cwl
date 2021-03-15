@@ -45,7 +45,7 @@ inputs:
         type: File
     wp_hashes: File #    input/wp-hashes.sqlite
     taxon_db: File # input/taxonomy.sqlite3
-    genemark_path: Directory
+    genemark_path: string
     scatter_gather_nchunks: string
 steps:
     Extract_ab_initio_Proteins:
@@ -130,7 +130,7 @@ steps:
             asn_cache: [uniColl_cache, sequence_cache]  # ${GP_cache_dir},${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache
                 # type: Directory[]
             genemark_path: genemark_path # ${GP_HOME}/third-party/GeneMark 
-                # type: Directory
+                # type: string
             hmm_params: hmm_params 
             marked_annotation_name:
                 default: marked-annotation.asn

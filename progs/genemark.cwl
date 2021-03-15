@@ -35,7 +35,7 @@ inputs:
       prefix: -asn-cache
       itemSeparator: ","
   genemark_path:
-    type: Directory
+    type: string   
     inputBinding:
       prefix: -genemark-path
   hmm_params:

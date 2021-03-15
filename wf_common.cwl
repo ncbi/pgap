@@ -395,9 +395,7 @@ steps:
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: 
-        default:
-          class: Directory
-          location: '/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/'        
+        default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
       thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
