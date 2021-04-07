@@ -1,0 +1,58 @@
+[1;30mINFO[0m /home/badrazat/python3.7/venv/bin/cwltool 3.0.20210319143721
+[1;30mINFO[0m Resolved 'test.v1.2.cwl' to 'file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test.v1.2.cwl'
+[1;30mDEBUG[0m [32mParsed job order from command line: {
+    "id": "test.v1.2.cwl",
+    "input": {
+        "class": "Directory",
+        "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1"
+    }
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] initializing from file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test.v1.2.cwl[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] {
+    "input": {
+        "class": "Directory",
+        "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+        "basename": "test1"
+    }
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] path mappings is {
+    "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1": [
+        "/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+        "/tmp/ebbxfa0h/stg98055966-d0b9-435c-a2dc-3d61bf131b67/test1",
+        "Directory",
+        true
+    ]
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] command line bindings is [
+    {
+        "position": [
+            -1000000,
+            0
+        ],
+        "datum": "ls"
+    },
+    {
+        "position": [
+            1,
+            "input"
+        ],
+        "datum": {
+            "class": "Directory",
+            "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+            "basename": "test1",
+            "path": "/tmp/ebbxfa0h/stg98055966-d0b9-435c-a2dc-3d61bf131b67/test1",
+            "dirname": "/tmp/ebbxfa0h/stg98055966-d0b9-435c-a2dc-3d61bf131b67"
+        }
+    }
+][0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] initial work dir {}[0m
+[1;30mINFO[0m [job test.v1.2.cwl] /tmp/akw4rvqx$ ls \
+    /tmp/ebbxfa0h/stg98055966-d0b9-435c-a2dc-3d61bf131b67/test1
+test2
+[1;30mDEBUG[0m [32mCould not collect memory usage, job ended before monitoring began.[0m
+[1;30mINFO[0m [job test.v1.2.cwl] completed success
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] outputs {}[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] Removing input staging directory /tmp/ebbxfa0h[0m
+[1;30mDEBUG[0m [32m[job test.v1.2.cwl] Removing temporary directory /tmp/i0jezkko[0m
+{}
+[1;30mINFO[0m Final process status is success

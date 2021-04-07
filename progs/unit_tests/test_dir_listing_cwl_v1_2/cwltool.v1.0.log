@@ -1,0 +1,106 @@
+[1;30mINFO[0m /home/badrazat/python3.7/venv/bin/cwltool 3.0.20210319143721
+[1;30mINFO[0m Resolved 'test.v1.0.cwl' to 'file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test.v1.0.cwl'
+[1;30mDEBUG[0m [32mParsed job order from command line: {
+    "id": "test.v1.0.cwl",
+    "input": {
+        "class": "Directory",
+        "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1"
+    }
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] initializing from file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test.v1.0.cwl[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] {
+    "input": {
+        "class": "Directory",
+        "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+        "basename": "test1",
+        "listing": [
+            {
+                "class": "Directory",
+                "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2",
+                "basename": "test2",
+                "listing": [
+                    {
+                        "class": "File",
+                        "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2/file1",
+                        "basename": "file1",
+                        "size": 0
+                    }
+                ]
+            }
+        ]
+    }
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] path mappings is {
+    "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1": [
+        "/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+        "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1",
+        "Directory",
+        true
+    ],
+    "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2": [
+        "/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2",
+        "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1/test2",
+        "Directory",
+        false
+    ],
+    "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2/file1": [
+        "/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2/file1",
+        "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1/test2/file1",
+        "File",
+        false
+    ]
+}[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] command line bindings is [
+    {
+        "position": [
+            -1000000,
+            0
+        ],
+        "datum": "ls"
+    },
+    {
+        "position": [
+            1,
+            "input"
+        ],
+        "datum": {
+            "class": "Directory",
+            "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1",
+            "basename": "test1",
+            "listing": [
+                {
+                    "class": "Directory",
+                    "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2",
+                    "basename": "test2",
+                    "listing": [
+                        {
+                            "class": "File",
+                            "location": "file:///panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/github/repos/pgap-dev/progs/unit_tests/test_dir_listing_cwl_v1_2/test1/test2/file1",
+                            "basename": "file1",
+                            "size": 0,
+                            "path": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1/test2/file1",
+                            "dirname": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1/test2",
+                            "nameroot": "file1",
+                            "nameext": ""
+                        }
+                    ],
+                    "path": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1/test2",
+                    "dirname": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1"
+                }
+            ],
+            "path": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1",
+            "dirname": "/tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b"
+        }
+    }
+][0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] initial work dir {}[0m
+[1;30mINFO[0m [job test.v1.0.cwl] /tmp/faqm47_u$ ls \
+    /tmp/we57uxdu/stgd3ad3212-5cbb-4674-ad63-2c7a007d4c1b/test1
+test2
+[1;30mDEBUG[0m [32mCould not collect memory usage, job ended before monitoring began.[0m
+[1;30mINFO[0m [job test.v1.0.cwl] completed success
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] outputs {}[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] Removing input staging directory /tmp/we57uxdu[0m
+[1;30mDEBUG[0m [32m[job test.v1.0.cwl] Removing temporary directory /tmp/tk3gq_xo[0m
+{}
+[1;30mINFO[0m Final process status is success
