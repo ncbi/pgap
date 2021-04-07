@@ -8,6 +8,8 @@ doc: PGAP pipeline for external usage, powered via containers
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
+  - class: LoadListingRequirement
+    loadListing: deep_listing
 
 inputs:
     #

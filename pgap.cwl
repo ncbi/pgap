@@ -9,6 +9,8 @@ label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
+  - class: LoadListingRequirement
+    loadListing: deep_listing
 inputs:
   supplemental_data:
     type: Directory

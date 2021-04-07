@@ -6,6 +6,9 @@ doc: |
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
+  - class: LoadListingRequirement
+    loadListing: deep_listing
+
 inputs:
   supplemental_data:
     type: Directory
