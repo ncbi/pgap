@@ -1,4 +1,5 @@
 label: "val_format"
+cwlVersion: v1.0
 class: CommandLineTool
     # these guys were not tested yet:
     # ncbi/gpdev                         2018-06-07.prod.build138     9c0cc08e797d        42 hours ago        1.25GB
