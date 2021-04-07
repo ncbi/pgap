@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: extract_gencoll_ids
 # File: tt_extract_gencoll_ids.cwl
 class: Workflow # task type

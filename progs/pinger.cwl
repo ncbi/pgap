@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "pinger"
 class: CommandLineTool
 baseCommand: pinger.sh

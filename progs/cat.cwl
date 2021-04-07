@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 baseCommand: cat
 class: CommandLineTool
 doc: concatenates input File[] to output File

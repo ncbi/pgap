@@ -3,7 +3,7 @@ $namespaces:
 id: align_find_frequent
 label: align_find_frequent_sas
 class: CommandLineTool
-cwlVersion: v1.0
+cwlVersion: v1.2
 baseCommand: align_find_frequent
 doc: ''
 inputs: 

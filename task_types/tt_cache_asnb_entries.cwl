@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "cache_asnb_entries"
 class: Workflow # task type
 inputs:

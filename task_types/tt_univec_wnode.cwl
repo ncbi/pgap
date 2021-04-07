@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2
 id: tt_univec_wnode
 doc: univ_wnode
 label: univec_wnode

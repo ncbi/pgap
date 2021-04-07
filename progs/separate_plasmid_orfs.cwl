@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "separate_plasmid_orfs"
 class: CommandLineTool
 baseCommand: separate_plasmid_orfs

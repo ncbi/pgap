@@ -1,4 +1,4 @@
-cwlVersion: v1.0 
+cwlVersion: v1.2
 label: "bacterial_resolve_conflicts"
 
 class: CommandLineTool

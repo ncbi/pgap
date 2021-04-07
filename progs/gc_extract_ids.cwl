@@ -2,7 +2,7 @@
 label: "gc_extract_ids"
 class: CommandLineTool
 baseCommand: gc_extract_ids
-cwlVersion: v1.0
+cwlVersion: v1.2
 inputs:
   input:
     type: File

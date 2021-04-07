@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "assm_assm_blastn_wnode"
 class: Workflow # task type
 inputs:

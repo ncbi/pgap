@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "bact_univ_prot_stats"
 
 class: CommandLineTool

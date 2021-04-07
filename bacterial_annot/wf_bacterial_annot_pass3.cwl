@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: "Bacterial Annotation, pass 3, structural annotation, functional annotation: ab initio GeneMark, by WP, by HMM (second pass)"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 requirements:
     - class: SubworkflowFeatureRequirement

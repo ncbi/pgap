@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2
 doc: |
   PGAP pipeline for external usage, powered via containers,
   simple user input:  (FASTA + yaml only, no template)

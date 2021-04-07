@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "tt_fscr_calls_pass1"
 class: Workflow # task type
 inputs:

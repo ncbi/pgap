@@ -1,4 +1,4 @@
-cwlVersion: v1.0 
+cwlVersion: v1.2
 label: "bact_entries_merge"
 class: CommandLineTool
 baseCommand: bact_entries_merge

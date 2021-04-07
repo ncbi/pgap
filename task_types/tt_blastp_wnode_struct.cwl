@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "blastp_wnode_struct"
 class: Workflow # task type
 requirements:

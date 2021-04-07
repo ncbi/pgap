@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "gcaccess_from_list"
 # File: task+types/tt_gcaccess_from_list.cwl
 class: Workflow # task type

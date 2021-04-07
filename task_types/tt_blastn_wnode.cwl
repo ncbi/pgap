@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "tt_blastn_wnode"
 class: Workflow # task type
 requirements:

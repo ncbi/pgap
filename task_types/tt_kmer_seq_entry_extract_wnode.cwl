@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "kmer_seq_entry_extract_wnode"
 class: Workflow # task type
 inputs:

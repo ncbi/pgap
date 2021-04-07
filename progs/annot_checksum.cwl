@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 class: CommandLineTool
 baseCommand: annot_checksum
-cwlVersion: v1.0
+cwlVersion: v1.2
 inputs:
     input:
         type: File?

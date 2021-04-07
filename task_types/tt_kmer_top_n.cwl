@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow # task type
 # kmer_top_identification -N 20 -distances-manifest kmer_top_n.455674842/inp/distances.mft \
 #    -omatches kmer_top_n.455674842/tmp/matches \

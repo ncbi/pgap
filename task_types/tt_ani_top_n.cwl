@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "ani_top_n"
 # file: task_types/tt_ani_top_n.cwl
 class: Workflow # task type

@@ -1,4 +1,4 @@
-cwlVersion: v1.0 
+cwlVersion: v1.2
 label: "add_prot_names_to_annot"
 
 class: CommandLineTool

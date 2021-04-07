@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "yaml2json"
 class: CommandLineTool
 baseCommand: yaml2json.py

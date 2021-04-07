@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2
 id: foreign_screening
 label: foreign_screening
 requirements:

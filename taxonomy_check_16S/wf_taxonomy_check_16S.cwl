@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: taxonomy_check_16S
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 requirements: 
     - class: SubworkflowFeatureRequirement    

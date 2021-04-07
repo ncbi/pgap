@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: "Run tRNAScan"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 
 requirements:

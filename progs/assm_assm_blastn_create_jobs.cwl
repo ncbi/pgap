@@ -2,7 +2,7 @@
 label: "assm_assm_blastn_create_jobs"
 class: CommandLineTool
 baseCommand: assm_assm_blastn_create_jobs
-cwlVersion: v1.0
+cwlVersion: v1.2
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement

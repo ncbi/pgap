@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "align_filter_sa"
 class: Workflow # task type
 requirements:

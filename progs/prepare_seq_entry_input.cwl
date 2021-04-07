@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "prepare_seq_entry_input"
 doc: ""
 class: CommandLineTool

@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 label: "Prepare user input"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 doc: Prepare user input for  NCBI-PGAP pipeline
 

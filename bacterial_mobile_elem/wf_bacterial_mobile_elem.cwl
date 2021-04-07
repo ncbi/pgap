@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: "Execute CRISPR"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 
 #requirements:

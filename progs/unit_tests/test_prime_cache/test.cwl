@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: "Create Genomic Collection for Bacterial Pipeline"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 
 requirements:

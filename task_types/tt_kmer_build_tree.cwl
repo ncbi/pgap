@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: kmer_build_tree
 class: Workflow # task type
 inputs:

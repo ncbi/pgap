@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner4
 label: combine_kmer_sqlite.cwl
 doc: Combine together reference kmer store and newly created kmer store for a new assembly
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 baseCommand: combine_kmer_sqlite
 inputs:

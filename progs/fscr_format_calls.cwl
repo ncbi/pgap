@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 baseCommand: fscr_format_calls
 arguments: [ -nogenbank, -no-taxon-access ]

@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "kmer_top_n_extract"
 # file: tt_kmer_top_n_extract.cwl
 class: Workflow # task type

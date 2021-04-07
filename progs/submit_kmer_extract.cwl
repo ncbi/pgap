@@ -1,4 +1,4 @@
-cwlVersion: v1.0 
+cwlVersion: v1.2
 label: "submit_kmer_extract"
 doc: > 
     We need $(inputs.seq_entry) to be a local file to the current subdirectory since the file name goes to

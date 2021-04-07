@@ -1,4 +1,4 @@
-cwlVersion: v1.0 
+cwlVersion: v1.2
 label: "gpx_make_outputs"
 
 class: CommandLineTool

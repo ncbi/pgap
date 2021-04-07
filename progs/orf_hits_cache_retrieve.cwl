@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: orf_hits_cache_retrieve
 class: CommandLineTool
 baseCommand: orf_hits_cache_retrieve

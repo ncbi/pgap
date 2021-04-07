@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 label: "PGAP Pipeline, simple user input"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 doc: |
     PGAP pipeline for external usage, powered via containers, 

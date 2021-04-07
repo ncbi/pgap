@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 label: "Bacterial Annotation, pass 1, genemark training, by HMMs (first pass)"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 
 requirements:

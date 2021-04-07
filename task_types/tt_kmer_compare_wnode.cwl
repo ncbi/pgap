@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "tt_kmer_compare_wnode"  
 doc: 'Pairwise comparison'
 # File: tt_kmer_compare_wnode.cwl

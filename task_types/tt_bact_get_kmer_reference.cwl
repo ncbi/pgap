@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "bact_get_kmer_reference"
 # File: task_types/tt_bact_get_kmer_reference.cwl
 class: Workflow # task type

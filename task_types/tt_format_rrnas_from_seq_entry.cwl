@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "format_rrnas_from_seq_entry"
 class: Workflow # task type
 inputs:

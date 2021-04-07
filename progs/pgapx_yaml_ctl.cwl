@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "pgapx_yaml_ctl"
 doc: "Converts input JSON file to ASN.1 template"
 class: CommandLineTool

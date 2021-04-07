@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "kmer_gc_extract_wnode"
 # File "task_types/tt_kmer_gc_extract_wnode.cwl"
 # caller steps:

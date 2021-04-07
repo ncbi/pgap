@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: asn_translator
 class: CommandLineTool
 baseCommand: asn_translator

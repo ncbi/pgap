@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "pgaap_prepare_review"
 
 class: CommandLineTool

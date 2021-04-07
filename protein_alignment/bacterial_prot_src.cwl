@@ -1,6 +1,6 @@
 #!/usr/bin/ent cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 
 label: "Get Proteins, bacterial_prot_src"

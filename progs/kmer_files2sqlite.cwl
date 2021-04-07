@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner4
 label: kmer_files2sqlite.cwl
-cwlVersion: v1.0
+cwlVersion: v1.2
 doc: |
         Convert input .kmer.gz (kmer_file) and .xml (kmer_metadata_file)
         into new sqlite database

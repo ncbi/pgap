@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: "kmer_cache_retrieve"
 # file: task_types/tt_kmer_cache_retrieve.cwl
 class: Workflow # task type

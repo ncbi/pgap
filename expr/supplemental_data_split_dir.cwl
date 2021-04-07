@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 label: "Split input directory into subpath flows"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: ExpressionTool
 requirements:
   InlineJavascriptRequirement: {}

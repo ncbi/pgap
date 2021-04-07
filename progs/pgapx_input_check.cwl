@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 label: pgapx_input_check
 class: CommandLineTool
 baseCommand: pgapx_input_check

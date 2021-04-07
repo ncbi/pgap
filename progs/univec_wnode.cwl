@@ -1,5 +1,5 @@
 class: CommandLineTool
-cwlVersion: v1.0
+cwlVersion: v1.2
 $namespaces:
   sbg: 'https://www.sevenbridges.com/'
 id: univec_wnode

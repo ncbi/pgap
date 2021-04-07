@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 
 label: "Split input directory into subpath flows for top level user workflow ani.cwl"
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: ExpressionTool
 requirements:
   InlineJavascriptRequirement: {}
