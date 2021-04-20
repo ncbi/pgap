@@ -20,6 +20,7 @@ inputs:
   blastdb: string[]
   scatter_gather_nchunks: string
   gencoll_asn: File
+  gc_id_list_orth: File
 outputs:
   output:
     type: File
@@ -32,19 +33,11 @@ steps:
       input: input
       output_name: { default: 'input_text.asn' }
     out: [output]
-  get_prokaryotic_assembly_for_orthology:
-    label: "Get Prokaryotic Assembly For Orthology"
-    run: ../progs/get_orthologous_assembly.cwl
-    in: 
-      unicoll_sqlite: naming_sqlite
-      taxon_db: taxon_db
-      taxid: taxid
-    out: [output]
   get_assemblies_for_orthologs_gencoll_asn:
     label: "Get Assemblies for Orthologs GenColl ASN"
     run: ../task_types/tt_gcaccess_from_list.cwl
     in:
-      gc_id_list: get_prokaryotic_assembly_for_orthology/output
+      gc_id_list: gc_id_list_orth
       gc_cache: gc_cache
     out: [gencoll_asn]
   get_ortholog_nucleotide_ids:
@@ -175,7 +168,9 @@ steps:
     run: ../progs/propagate_symbols_to_genes.cwl
     in:
       orthologs: find_prokarotic_orthologs/orthologs
-      input: input
+      input: prepare_annotation_input/output
+      it:  
+        default: true
       
     out: [output]
       

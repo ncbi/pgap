@@ -75,10 +75,6 @@ inputs:
      inputBinding:
         prefix: -output
   
-  output_manifest_output:
-     type: string?
-     inputBinding:
-        prefix: -output-manifest
         
 outputs:
        
@@ -88,11 +84,7 @@ outputs:
           glob: $(inputs.logfile_output)
   
   output:
-      type: File?
+      type: File
       outputBinding:
           glob: $(inputs.output_name)
   
-  output_manifest:
-      type: File?
-      outputBinding:
-          glob: $(inputs.output_manifest_output)

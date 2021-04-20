@@ -27,6 +27,11 @@ inputs:
     default: 0.9
     inputBinding:
       prefix: -s_coverage_threshold
+  it:
+    type: boolean?
+    default: false
+    inputBinding:
+      prefix: -it
   output_name:
     type: string?
     default: propagated_gene_symbols_annot.asn
