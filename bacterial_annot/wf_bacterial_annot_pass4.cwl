@@ -206,13 +206,12 @@ steps:
             input: Prepare_SPARCLBL_input/prot_ids
             lds2: lds2
             proteins: proteins
-            out_asn_name: proteins_sparcl.asn
-        out: [output]
+        out: [out_proteins]
     Assign_SPARCL_Architecture_Names_to_Proteins_asn2fasta:
         label: "Assign SPARCL Architecture Names to Proteins"
         run: ../progs/asn2fasta.cwl
         in:
-            i: Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences/output
+            i: Assign_SPARCL_Architecture_Names_to_Proteins_gp_fetch_sequences/out_proteins
             serial:
                 default: binary
             type:   
