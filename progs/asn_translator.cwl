@@ -69,8 +69,9 @@ inputs:
      inputBinding:
         prefix: -logfile
   
-  output_output:
+  output_name:
      type: string?
+     default: asn_translated.asn
      inputBinding:
         prefix: -output
   
@@ -89,7 +90,7 @@ outputs:
   output:
       type: File?
       outputBinding:
-          glob: $(inputs.output_output)
+          glob: $(inputs.output_name)
   
   output_manifest:
       type: File?

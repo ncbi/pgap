@@ -20,20 +20,20 @@ inputs:
     inputBinding:
         prefix: -input
   lds2: 
-    type: File
+    type: File?
     inputBinding:
         prefix: -lds2        
   proteins: 
-    type: File
-  out_proteins_name:
+    type: File?
+  out_asn_name:
     type: string?
-    default: output_proteins.asn
+    default: out_asn_name.asn
     inputBinding:
         prefix: -o        
 outputs:
-    out_proteins:
+    output:
         type: File
         outputBinding:
-            glob: $(inputs.out_proteins_name)
+            glob: $(inputs.out_asn_name)
 
     

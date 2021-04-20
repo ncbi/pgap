@@ -2,17 +2,6 @@ cwlVersion: v1.2
 label: "gc_get_molecules"
 
 class: CommandLineTool
-#
-# You might need something like this:
-#
-# requirements:
-#  - class: InitialWorkDirRequirement
-#    listing:
-#      - entry: $(inputs.asn_cache)
-#        writable: True
-#      - entry: $(inputs.blastdb_dir)
-#        writable: False
-
 baseCommand: gc_get_molecules
 arguments: [ -nogenbank ]
 inputs:
@@ -35,7 +24,7 @@ inputs:
     type: string?
     default: assembly.molecules.ids
     inputBinding:
-      prefix: -output
+      prefix: -o
       
 outputs:
   molecules:
