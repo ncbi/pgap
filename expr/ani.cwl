@@ -4,7 +4,9 @@ label: "Split input directory into subpath flows for top level user workflow ani
 cwlVersion: v1.2
 class: ExpressionTool
 requirements:
-  InlineJavascriptRequirement: {}
+  - class: InlineJavascriptRequirement
+  - class: NetworkAccess
+    networkAccess: true  
 inputs:
   data:
     type: Directory

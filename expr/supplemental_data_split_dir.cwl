@@ -42,6 +42,9 @@ expression: |
         case 'cdd_add':
           r['CDDdata2'] = l[i];
           break;
+        case 'gencoll.sqlite':
+          r['gc_cache'] = l[i];
+          break;    
         case 'product_rules.prt':
           r['defline_cleanup_rules'] = l[i];
           break;
@@ -107,6 +110,9 @@ expression: |
               case 'cache':
                 r['uniColl_cache'] = ul[j];
                 break;
+              case 'nuc_cache':
+                r['uniColl_nuc_cache'] = ul[j];
+                break;
               case 'universal.xml':
                 r['univ_prot_xml'] = ul[j];
                 break;
@@ -147,6 +153,8 @@ outputs:
   defline_cleanup_rules:
     # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
     type: File
+  gc_cache:
+    type: File
   gene_master_ini:
     type: File
   hmm_path:
@@ -179,6 +187,8 @@ outputs:
   thresholds:
     type: File
   uniColl_cache:
+    type: Directory
+  uniColl_nuc_cache:
     type: Directory
   univ_prot_xml:
     type: File

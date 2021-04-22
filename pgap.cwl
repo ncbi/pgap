@@ -11,6 +11,9 @@ requirements:
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement
     loadListing: deep_listing
+  - class: NetworkAccess
+    networkAccess: true
+    
 inputs:
   supplemental_data:
     type: Directory

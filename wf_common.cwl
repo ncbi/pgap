@@ -10,7 +10,8 @@ requirements:
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement
     loadListing: deep_listing
-
+  - class: NetworkAccess
+    networkAccess: true
 inputs:
     #
     # User specific input
@@ -124,6 +125,7 @@ steps:
       - CDDdata2
       - CDDdata
       - defline_cleanup_rules
+      - gc_cache
       - gene_master_ini
       - hmm_path
       - hmms_tab
@@ -139,6 +141,7 @@ steps:
       - taxon_db
       - thresholds
       - uniColl_cache
+      - uniColl_nuc_cache
       - univ_prot_xml
       - val_res_den_xml
       - wp_hashes
@@ -562,6 +565,24 @@ steps:
   # ###############################################
   # # AMR plane is for later stages skipping
   # ###############################################
+  bacterial_orthology_conditional:
+    run: bacterial_orthology/wf_bacterial_orthology_conditional.cwl
+    in:
+      input: Add_Locus_Tags/output
+      taxid: taxid
+      naming_sqlite: passdata/naming_sqlite
+      taxon_db: passdata/taxon_db
+      gc_cache: passdata/gc_cache
+      asn_cache: 
+        source: [passdata/uniColl_nuc_cache]
+        linkMerge: merge_flattened
+      blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache
+      genus_list: genus_list_file2ints/values
+      blastdb:
+        default: [blastdb]
+      scatter_gather_nchunks: scatter_gather_nchunks
+      gencoll_asn: genomic_source/gencoll_asn
+    out: [output]
   Add_Locus_Tags:
     run: progs/add_locus_tags.cwl
     in:
@@ -580,7 +601,7 @@ steps:
   Final_Bacterial_Package_asn_cleanup:
     run: progs/asn_cleanup.cwl
     in:
-      inp_annotation: Add_Locus_Tags/output # production
+      inp_annotation: bacterial_orthology_conditional/output # production
       serial:
         default: binary
     out: [annotation]

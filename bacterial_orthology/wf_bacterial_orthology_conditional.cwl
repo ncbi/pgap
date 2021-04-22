@@ -16,7 +16,7 @@ inputs:
   taxon_db: File
   gc_cache: File
   asn_cache: Directory[]
-  blast_hits_cache: File
+  blast_hits_cache: File?
   genus_list: int[]
   blastdb: string[]
   scatter_gather_nchunks: string
