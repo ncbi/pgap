@@ -25,13 +25,13 @@ inputs:
     type: boolean
     inputBinding:
       prefix: -nogenbank
-  selenocysteines:
+  selenoproteins:
     type: Directory
-  selenocysteines_db:
+  selenoproteins_db:
     type: string
     inputBinding:
-      prefix: -selenocysteines
-      valueFrom: $(inputs.selenocysteines.path)/$(inputs.selenocysteines_db)
+      prefix: -selenoproteins
+      valueFrom: $(inputs.selenoproteins.path)/$(inputs.selenoproteins_db)
   short_model_limit:
     type: int?
     inputBinding:
