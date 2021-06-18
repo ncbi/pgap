@@ -12,10 +12,6 @@ steps:
         run: ../..//asn_cleanup.cwl
         in:
             inp_annotation:  seq_entry
-            type1: 
-                default: 'seq-entry'
-            serial: 
-                default: 'text'
             outformat:
                 default: 'text' 
             out_annotation_name:
@@ -25,10 +21,6 @@ steps:
         run: ../..//asn_cleanup.cwl
         in:
             inp_annotation:  seq_submit
-            type1: 
-                default: 'seq-submit'
-            serial: 
-                default: 'text'
             outformat:
                 default: 'text' 
             out_annotation_name:
@@ -38,8 +30,6 @@ steps:
         run: ../..//asn_cleanup.cwl
         in:
             inp_annotation:  seq_entry
-            serial: 
-                default: 'text'
             outformat:
                 default: 'text' 
             out_annotation_name:
@@ -49,8 +39,6 @@ steps:
         run: ../..//asn_cleanup.cwl
         in:
             inp_annotation:  seq_submit
-            serial: 
-                default: 'text'
             outformat:
                 default: 'text' 
             out_annotation_name:

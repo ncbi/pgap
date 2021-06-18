@@ -77,9 +77,6 @@ steps:
         run: progs/asn_cleanup.cwl
         in:
             inp_annotation:  pgapx_yaml_ctl/output_annotation
-            type1: file2string_input_asn_type/value
-            serial: 
-                default: 'text'
             outformat:
                 default: 'text' 
             out_annotation_name:
