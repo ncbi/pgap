@@ -18,10 +18,6 @@ inputs:
      type: boolean?
      inputBinding:
         prefix: -z
-  b:
-     type: boolean?
-     inputBinding:
-        prefix: -b
   y:
      type: boolean?
      inputBinding:
@@ -50,10 +46,6 @@ inputs:
      inputBinding:
         prefix: -R
   
-  a:
-     type: string?
-     inputBinding:
-        prefix: -a
   
   asn_cache:
      type: Directory?

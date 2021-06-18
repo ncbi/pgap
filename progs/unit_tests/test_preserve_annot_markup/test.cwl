@@ -48,8 +48,6 @@ steps:
       # inp_annotation: bacterial_annot_4_out_annotation_bypass # , this bypass does not work: SQD-4522
       # using oroginal input from official buildrun template (that is from fam_report output)
       inp_annotation: fam_report_bypass
-      serial: 
-        default: binary
     out: [annotation]
 
   Final_Bacterial_Package_final_bact_asn: # TESTED (as part of "last couple of nodes" test

@@ -258,8 +258,6 @@ steps:
                 default: 0
             R:
                 default: 5
-            a:
-                default: 'e'
             i: Prepare_Unannotated_Sequences/sequences
             o_output:
                 default: 'sequences.val'
@@ -269,8 +267,6 @@ steps:
             U:
                 default: true
             Z:
-                default: true
-            b:
                 default: true
             y:
                 default: true
@@ -602,8 +598,6 @@ steps:
     run: progs/asn_cleanup.cwl
     in:
       inp_annotation: bacterial_orthology_conditional/output # production
-      serial:
-        default: binary
     out: [annotation]
 
   Final_Bacterial_Package_final_bact_asn:
