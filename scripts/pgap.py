@@ -484,9 +484,11 @@ class Setup:
         return "pgap-"+self.branch
 
     def get_dir(self):
+        location = os.path.dirname(os.path.realpath(__file__))
         if self.branch == "":
-            return "."
-        return "./"+self.branch
+            return location
+        return os.path.join(location, self.branch)
+
 
     def get_local_version(self):
         filename = self.rundir + "/VERSION"
