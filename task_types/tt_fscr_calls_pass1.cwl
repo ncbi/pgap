@@ -2,8 +2,6 @@ cwlVersion: v1.2
 label: "tt_fscr_calls_pass1"
 class: Workflow # task type
 inputs:
-  contigs:
-    type: File
   input:
     type: File[]
   asn_cache:
@@ -14,10 +12,9 @@ steps:
     run: ../progs/fscr_calls_pass1.cwl
     label: fscr_calls_pass1
     in:
-        contigs: contigs
         input: input
         asn_cache: asn_cache
-        max_reblast_spans: 
+        max_reblast_spans:
             default: 50000
         repeat_threshold:
             default: 300
@@ -28,7 +25,7 @@ steps:
     in:
         calls: fscr_calls_pass1/calls
     out: [o]
-    
+
 outputs:
   calls:
     type: File
