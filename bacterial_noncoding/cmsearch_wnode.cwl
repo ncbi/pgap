@@ -10,14 +10,9 @@ requirements:
   - class: ResourceRequirement
     ramMax: 3000
 
-#cmsearch_wnode -asn-cache sequence_cache -cmsearch-cpu 0 -input-jobs jobs.xml\
-# -cmsearch-path /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/infernal/arch/x86_64/bin/ \
-# -model-path /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/Rfam/pgap-3.1/CMs/RF00001.cm \
-# -rfam-amendments /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/etc/bacterial_pipeline/rfam-amendments.xml \
-# -rfam-stockholm /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/2018-03-13.build2663/third-party/data/Rfam/pgap-3.1/Rfam.seed 
+
 baseCommand: cmsearch_wnode
-#arguments: [ -cmsearch-cpu "0" ]
-arguments: [ -nogenbank, -use-alignment-output ]
+arguments: [ -nogenbank, -use-alignment-output, -rfam-version, '14.4' ]
 inputs:
   asn_cache:
     type: Directory
