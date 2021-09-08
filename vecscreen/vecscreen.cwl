@@ -40,13 +40,14 @@ steps:
   FSCR_Calls_first_pass:
     run: ../task_types/tt_fscr_calls_pass1.cwl
     in:
+        contigs: default_plane/contig_ids_out
         input: [bacterial_screening/feats, default_plane/feats]
-        asn_cache: default_plane/out_cache_dir
+        asn_cache: default_plane/out_cache_dir 
     out: [calls]
     doc: >-
       corresponds to part of default plane in foreign contamination screening
       graph of classic Gpipe
-      it should go _after_ all screenings, so it goes to a separate degenerate
+      it should go _after_ all screenings, so it goes to a separate degenerate 
       "plane" = "task" here
   screen_evaluate:
         run: ../progs/screen_evaluate.cwl
@@ -72,7 +73,7 @@ outputs:
   filtered_align:
     type: File
     outputSource: bacterial_screening/filtered_align
-  hits:
+  hits: 
     type: File
     outputSource: default_plane/hits
   adaptor_blastdb_dir:
