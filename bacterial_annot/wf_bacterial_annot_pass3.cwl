@@ -36,7 +36,7 @@ inputs:
         type: File?
     selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
         type: Directory
-    selenocysteines_db:
+    selenoproteins_db:
         type: string
         default: blastdb
     naming_hmms_combined: # ${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming_hmms_combined.mft
@@ -120,6 +120,9 @@ steps:
             unicoll_sqlite: naming_sqlite
             nogenbank: 
                 default: true
+            selenoproteins: selenoproteins
+            selenoproteins_db: selenoproteins_db
+                
         out: [out_align]  # -o
     Run_GeneMark:
         label: "Run GeneMark"
@@ -166,8 +169,8 @@ steps:
             product_id_prefix:
                 default: 'PGAP'
             pre_annot: Run_GeneMark/marked_annotation
-            selenocysteines: selenoproteins
-            selenocysteines_db: selenocysteines_db
+            selenoproteins: selenoproteins
+            selenoproteins_db: selenoproteins_db
             short_model_limit:
                 default: 180
             unicoll_sqlite: naming_sqlite

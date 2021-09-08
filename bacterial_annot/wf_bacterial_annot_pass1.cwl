@@ -30,10 +30,10 @@ inputs:
   #hmm_hits: File
   scatter_gather_nchunks: string
   selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
-        type: Directory
-  selenocysteines_db:
-        type: string
-        default: blastdb
+      type: Directory
+  selenoproteins_db:
+      type: string
+      default: blastdb
   
 outputs:
   outseqs:
@@ -194,8 +194,8 @@ steps:
                 default: models_training.asn
             out_product_ids_name: 
                 default: all-proteins.ids
-            selenocysteines: selenoproteins
-            selenocysteines_db: selenocysteines_db
+            selenoproteins: selenoproteins
+            selenoproteins_db: selenoproteins_db
             short_model_limit:
                 default: 180
             unicoll_sqlite: naming_sqlite

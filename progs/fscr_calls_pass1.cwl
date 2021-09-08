@@ -19,12 +19,8 @@ inputs:
     type: int?
     inputBinding:
       prefix: '-repeat-threshold'
-  contigs:
-    type: File
-    inputBinding:
-      prefix: '-contigs'
   input:
-    type: File[] 
+    type: File[]
   input_manifest:
     type: string?
     default: input.mft
@@ -49,9 +45,9 @@ inputs:
     default: masked_locs.asn
     inputBinding:
       prefix: '-masked-locs'
-    
-      
-outputs:  
+
+
+outputs:
   calls:
     type: File
     outputBinding:
