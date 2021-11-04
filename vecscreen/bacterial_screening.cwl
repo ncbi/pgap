@@ -60,7 +60,7 @@ steps:
       input:
         source: [BLAST_Against_contam_in_prok/blast_align]
         linkMerge: merge_flattened
-      subject_whitelist:
+      subject_allowlist:
         source: Find_Frequent_contam_in_prok_Hits/frequent
     out: [o, onon_match]
   Generate_contam_in_prok_hit_features:
