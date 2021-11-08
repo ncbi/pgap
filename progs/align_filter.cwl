@@ -69,10 +69,10 @@ inputs:
     default: true
     inputBinding:
       prefix: -nogenbank
-  subject_whitelist: 
+  subject_allowlist: 
     type: File?
     inputBinding:
-      prefix: -subject-whitelist
+      prefix: -subject-allowlist
   onon_match_name: 
     type: string
     default: align-nomatch.asn
