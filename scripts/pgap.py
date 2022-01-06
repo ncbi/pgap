@@ -12,6 +12,7 @@ except:
 
 import argparse
 import atexit
+import contextlib
 import glob
 import json
 import os
@@ -24,7 +25,9 @@ import tarfile
 import threading
 import time
 import tempfile
-import contextlib
+import xml
+import xml.dom.minidom
+
 
 from io import open
 from urllib.parse import urlparse, urlencode
@@ -165,7 +168,7 @@ class Pipeline:
         self.input_file = '/pgap/user_input/pgap_input.yaml'
         submol =  self.get_submol(local_input)
         if ( submol != None ):
-            self.submol = self.create_submolfile(submol)
+            self.submol = self.create_submolfile(submol, params.ani_output, params.args.auto_correct_tax)
         else:
             self.submol = None
         self.yaml = self.create_inputfile(local_input)
@@ -278,11 +281,30 @@ class Pipeline:
             for line in fIn:
                 if(re.search(field,line)):
                     return True
-        return False;
-        
-    def create_submolfile(self, local_submol):
+        return False
+    def get_genus_species(self, xml_file):
+        genus_species = None
+        try:
+            doc = xml.dom.minidom.parse(xml_file)
+            predicted_taxid = doc.getElementsByTagName('predicted-taxid')[0]
+            if predicted_taxid.getAttribute('confidence')=='HIGH':
+                genus_species = predicted_taxid.getAttribute('org-name')
+        except:
+            genus_species = None
+        return genus_species
+
+    def create_submolfile(self, local_submol, ani_output, auto_correct_tax):
         has_authors = self.regexp_file(local_submol, '^authors:')
         has_contact_info = self.regexp_file(local_submol, '^contact_info:')
+        genus_species = None
+        if auto_correct_tax:
+            if ani_output != None: 
+                genus_species = self.get_genus_species(ani_output)
+                if genus_species != None:
+                    print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
+                else:
+                    print('ERROR: ANI analysis failed to detect species with high confidence, thus we will not be able to run PGAP')
+                    raise
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_submol_",
@@ -292,6 +314,10 @@ class Pipeline:
             with open(local_submol, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
+                        if auto_correct_tax and genus_species != None and re.match(r'\s+genus_species:', line):
+                            print('replacing organism in line: {}'.format(line.rstrip()))
+                            line = re.sub(r'genus_species:.*', "genus_species: '{}'".format(genus_species), line)
+                            print('with organism: {}'.format(genus_species))
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
             if  has_authors == False:
@@ -438,6 +464,7 @@ class Setup:
 
     def __init__(self, args):
         self.args = args
+        self.ani_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
         self.rundir          = self.get_dir()
@@ -647,6 +674,7 @@ class Setup:
                 packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                return True # DEBUG only do not commit
                 if not os.path.isfile(guard_file):
                     return False
         return True
@@ -784,6 +812,12 @@ def main():
                         dest='no_internet', 
                         action='store_true',
                         help='Disable internet access for all programs in pipeline.')
+    parser.add_argument("--auto-correct-tax", 
+                        dest='auto_correct_tax', 
+                        action='store_true',
+                        help='''
+                        If flag is set, run  ANI first, then PGAP, overriding the organism name provided by the user in the input YAML with the value returned by ANI Predicted organism. Obviously both actions need to be requested for this flag to take effect
+                        ''')
     parser.add_argument('-D', '--docker', metavar='path',
                         help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -817,9 +851,19 @@ def main():
                     # analyze ani output here
                     if not os.path.exists(args.output):
                         raise
+                    params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
+                    if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
+                        True
+                    else:
+                        params.ani_output = None 
+                    
                     errors_xml_fn = os.path.join(args.output, "errors.xml")
-                    if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0:
+                    # if there are errors
+                    # and we do not want to recover them when it is recoverable
+                    #  then bail
+                    if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
                         raise
+                    
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
