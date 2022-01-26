@@ -305,8 +305,8 @@ class Pipeline:
                 if genus_species != None:
                     print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
                 else:
-                    print('ERROR: ANI analysis failed to detect species with high confidence, thus we will not be able to run PGAP')
-                    raise
+                    print('ERROR: ANI analysis failed to assign a species with high confidence, thus PGAP will not execute')
+                    sys.exit(1)
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_submol_",
@@ -850,9 +850,12 @@ def main():
                 retcode = p.launch()
                 p.cleaunup()
                 if  args.ignore_all_errors == False:
+                    # args.output for some reason not always available 
+                    time.sleep(1) 
                     # analyze ani output here
                     if not os.path.exists(args.output):
-                        raise
+                        print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
+                        sys.exit(1)
                     params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
                     if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
                         True
@@ -864,7 +867,8 @@ def main():
                     # and we do not want to recover them when it is recoverable
                     #  then bail
                     if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
-                        raise
+                        print("ERROR: abort: there are errors in {}".format(errors_xml_fn))
+                        sys.exit(1)
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
