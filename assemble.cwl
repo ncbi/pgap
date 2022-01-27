@@ -2,7 +2,7 @@
 class: Workflow
 cwlVersion: v1.2
 doc: |
-  Assemble a set of reads using SKESA
+  Assemble a set of reads using SKESA  
 requirements:
   - class: MultipleInputFeatureRequirement
 inputs:
