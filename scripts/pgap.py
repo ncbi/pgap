@@ -261,7 +261,11 @@ class Pipeline:
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
-        self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
+
+        if self.params.args.container_path:
+            self.cmd.extend(["--pwd", "/pgap", self.params.docker_image])
+        else:
+            self.cmd.extend(["--pwd", "/pgap", "docker://" + self.params.docker_image])
         
     def get_submol(self, local_input):
         with open(local_input, 'r') as fIn:
@@ -382,7 +386,7 @@ class Pipeline:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
         if (self.params.docker_type == 'singularity'):
-            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), "docker://"+self.params.docker_image,
+            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), self.params.docker_image,
                    'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
         else:
             cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
@@ -484,7 +488,10 @@ class Setup:
             self.list_remote_versions()
             return
         self.use_version = self.get_use_version()
-        self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
+        if self.args.container_path:
+            self.docker_image = self.args.container_path
+        else:
+            self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
         self.outputdir = self.get_output_dir()
@@ -806,6 +813,9 @@ def main():
     parser.add_argument("--container-name", 
                         dest='container_name', 
                         help='Specify a container name that will be used instead of automatically generated.')
+    parser.add_argument("--container-path", 
+                        dest='container_path', 
+                        help='Override path to image.')
     parser.add_argument("--ignore-all-errors", 
                         dest='ignore_all_errors', 
                         action='store_true',
