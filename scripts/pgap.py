@@ -305,7 +305,7 @@ class Pipeline:
                 if genus_species != None:
                     print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
                 else:
-                    print('ERROR: ANI analysis failed to assign a species with high confidence, thus PGAP will not execute')
+                    print('ERROR: taxcheck failed to assign a species with high confidence, thus PGAP will not execute. See {}'.format(ani_output))
                     sys.exit(1)
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
@@ -867,7 +867,12 @@ def main():
                     # and we do not want to recover them when it is recoverable
                     #  then bail
                     if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
-                        print("ERROR: abort: there are errors in {}".format(errors_xml_fn))
+                        error_file = None
+                        if params.ani_output != None:
+                            error_file = params.ani_output
+                        else: 
+                            error_file = errors_xml_fn
+                        print("ERROR: taxcheck calls the genome misassigned or contaminated, thus PGAP will not execute. See {}".format(error_file))
                         sys.exit(1)
                     
             if not args.ani_only:
