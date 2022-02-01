@@ -234,7 +234,7 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:Z'.format(self.input_dir),
             '--volume', '{}:{}:ro,Z'.format(self.yaml, self.input_file ),
-            '--volume', '{}:/tmp:rw,Z'.format(os.getenv("TMPDIR", "/tmp")),
+            '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw,Z'.format(self.params.outputdir)])
 
         if (self.params.args.memory):
