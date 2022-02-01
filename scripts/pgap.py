@@ -231,11 +231,11 @@ class Pipeline:
         self.cmd.extend(['run', '-i', '--rm' ])
 
         self.cmd.extend([
-            '--volume', '{}:/pgap/input:ro'.format(self.data_dir),
-            '--volume', '{}:/pgap/user_input:rw'.format(self.input_dir),
-            '--volume', '{}:{}:ro'.format(self.yaml, self.input_file ),
-            '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
-            '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
+            '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
+            '--volume', '{}:/pgap/user_input:Z'.format(self.input_dir),
+            '--volume', '{}:{}:ro,Z'.format(self.yaml, self.input_file ),
+            '--volume', '{}:/tmp:rw,Z'.format(os.getenv("TMPDIR", "/tmp")),
+            '--volume', '{}:/pgap/output:rw,Z'.format(self.params.outputdir)])
 
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
