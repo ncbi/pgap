@@ -229,7 +229,7 @@ class Pipeline:
 
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro'.format(self.data_dir),
-            '--volume', '{}:/pgap/user_input'.format(self.input_dir),
+            '--volume', '{}:/pgap/user_input:rw'.format(self.input_dir),
             '--volume', '{}:{}:ro'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
             '--volume', '{}:/pgap/output:rw'.format(self.params.outputdir)])
