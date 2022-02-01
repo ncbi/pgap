@@ -225,7 +225,10 @@ class Pipeline:
 
 
     def make_podman_cmd(self):
-        self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
+        self.cmd = [self.params.docker_cmd]
+        if self.params.args.debug:
+            self.cmd.extend(['--log-level',  'debug'])
+        self.cmd.extend(['run', '-i', '--rm' ])
 
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro'.format(self.data_dir),
