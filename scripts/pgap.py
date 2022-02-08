@@ -389,7 +389,8 @@ class Pipeline:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
         if (self.params.docker_type == 'singularity'):
-            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), self.params.docker_image,
+            singularity_docker_image = self.params.docker_image if self.params.args.container_path else "docker://"+self.params.docker_image
+            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), singularity_docker_image,
                    'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
         else:
             cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
