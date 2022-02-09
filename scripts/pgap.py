@@ -168,7 +168,7 @@ class Pipeline:
         self.input_file = '/pgap/user_input/pgap_input.yaml'
         submol =  self.get_submol(local_input)
         if ( submol != None ):
-            self.submol = self.create_submolfile(submol, params.ani_output, params.args.auto_correct_tax)
+            self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
         self.yaml = self.create_inputfile(local_input)
@@ -302,7 +302,7 @@ class Pipeline:
             genus_species = None
         return genus_species
 
-    def create_submolfile(self, local_submol, ani_output, auto_correct_tax):
+    def create_submolfile(self, local_submol, ani_output, ani_hr_output, auto_correct_tax):
         has_authors = self.regexp_file(local_submol, '^authors:')
         has_contact_info = self.regexp_file(local_submol, '^contact_info:')
         genus_species = None
@@ -312,7 +312,12 @@ class Pipeline:
                 if genus_species != None:
                     print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
                 else:
-                    print('ERROR: taxcheck failed to assign a species with high confidence, thus PGAP will not execute. See {}'.format(ani_output))
+                    if ani_hr_output != None:
+                        chosen_ani_output_type = ani_hr_output
+                    else:
+                        chosen_ani_output_type = ani_output
+                    print('ERROR: taxcheck failed to assign a species with high confidence, thus PGAP will not execute. See {}'.format(chosen_ani_output_type))
+                        
                     sys.exit(1)
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
@@ -475,6 +480,8 @@ class Setup:
     def __init__(self, args):
         self.args = args
         self.ani_output = None
+        # human readable ANI output file
+        self.ani_hr_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
         self.rundir          = self.get_dir()
@@ -871,10 +878,15 @@ def main():
                         print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
                         sys.exit(1)
                     params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
+                    params.ani_hr_output = os.path.join(args.output, "ani-tax-report.txt")
                     if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
                         True
                     else:
                         params.ani_output = None 
+                    if os.path.exists(params.ani_hr_output) and os.path.getsize(params.ani_hr_output) > 0:
+                        True
+                    else:
+                        params.ani_hr_output = None 
                     
                     errors_xml_fn = os.path.join(args.output, "errors.xml")
                     # if there are errors
