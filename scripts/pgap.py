@@ -894,7 +894,9 @@ def main():
                     #  then bail
                     if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
                         error_file = None
-                        if params.ani_output != None:
+                        if params.ani_hr_output != None:
+                            error_file = params.ani_hr_output
+                        elif params.ani_output != None:
                             error_file = params.ani_output
                         else: 
                             error_file = errors_xml_fn
