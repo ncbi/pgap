@@ -12,13 +12,15 @@ NCBI has developed an automatic prokaryotic genome annotation pipeline
 that combines ab initio gene prediction algorithms with homology based
 methods. The first version of NCBI Prokaryotic Genome Pipeline was developed 
 in 2001 and is regularly upgraded to improve structural and functional 
-annotation quality ([Haft DH et al 2018](https://www.ncbi.nlm.nih.gov/pubmed/29112715), 
-[Tatusova T et al 2016](https://www.ncbi.nlm.nih.gov/pubmed/27342282)). Recent 
-improvements utilize curated protein profile hidden Markov models (HMMs), 
-including TIGRFAMS and new HMMs for antimicrobial resistance proteins, and 
-curated complex domain architectures for functional annotation of proteins. 
+annotation quality ([Li W, O'Neill KR et al 2021](https://www.ncbi.nlm.nih.gov/pubmed/33270901)). Recent 
+improvements include utilization of curated protein profile hidden Markov models (HMMs), 
+and curated complex domain architectures for functional annotation of proteins and 
+annotation of Enzyme Commission numbers and Gene Ontology terms.
 
 Get started by watching this [webinar](https://www.youtube.com/watch?v=pNn_-_46lpI)!
+
+| Need to assemble the genome too? Use [RAPT](https://github.com/ncbi/rapt) for producing an annotated genome starting from short reads|
+| --- |
 
 ## Instructions
 
@@ -32,13 +34,16 @@ the results may be found in our [wiki](https://github.com/ncbi/pgap/wiki).
 
 ### NCBI
 
-[NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
-Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.\
-Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
+[Expanding the Prokaryotic Genome Annotation Pipeline reach with protein family model curation.](https://www.ncbi.nlm.nih.gov/pubmed/33270901)\
+Li W, O'Neill KR, Haft DH, DiCuccio M, Chetvernin V, Badretdin A, Coulouris G, Chitsaz F, Derbyshire MK, Durkin AS, Gonzales NR, Gwadz M, Lanczycki CJ, Song JS, Thanki N, Wang J, Yamashita RA, Yang M, Zheng C, Marchler-Bauer A, Thibaud-Nissen F. RefSeq:  Nucleic Acids Res. 2021 Jan 8;49(D1):D1020-D1028.
 
 [RefSeq: an update on prokaryotic genome annotation and curation.](https://www.ncbi.nlm.nih.gov/pubmed/29112715)\
 Haft DH, DiCuccio M, Badretdin A, Brover V, Chetvernin V, O'Neill K, Li W, Chitsaz F, Derbyshire MK, Gonzales NR, Gwadz M, Lu F, Marchler GH, Song JS, Thanki N, Yamashita RA, Zheng C, Thibaud-Nissen F, Geer LY, Marchler-Bauer A, Pruitt KD.\
 Nucleic Acids Res. 2018 Jan 4;46(D1):D851-D860.
+
+[NCBI prokaryotic genome annotation pipeline.](https://www.ncbi.nlm.nih.gov/pubmed/27342282)\
+Tatusova T, DiCuccio M, Badretdin A, Chetvernin V, Nawrocki EP, Zaslavsky L, Lomsadze A, Pruitt KD, Borodovsky M, Ostell J.\
+Nucleic Acids Res. 2016 Aug 19;44(14):6614-24. Epub 2016 Jun 24.
 
 [Using average nucleotide identity to improve taxonomic assignments in prokaryotic genomes at the NCBI.](https://www.ncbi.nlm.nih.gov/pubmed/29792589)\
 Ciufo S, Kannan S, Sharma S, Badretdin A, Clark K, Turner S, Brover S, Schoch 
