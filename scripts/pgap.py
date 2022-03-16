@@ -694,7 +694,6 @@ class Setup:
                 packages = ['pgap']
             for package in packages:
                 guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
-                return True # DEBUG only do not commit
                 if not os.path.isfile(guard_file):
                     return False
         return True
