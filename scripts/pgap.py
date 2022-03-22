@@ -100,7 +100,7 @@ class urlopen_progress:
 
         return buffer
 
-def install_url(url, path, quiet, teamcity):
+def install_url(url, path, quiet, teamcity, guard_file):
     basename = os.path.basename(urlparse(url).path)
     try:
         local_file =  os.path.join(path, basename)
@@ -121,6 +121,8 @@ ERROR: Failed to extract tarball; to install manually, try something like:
     tar xvf {}
 '''.format(url, basename))
         raise
+    if guard_file != None:
+        open(guard_file, 'a').close()
 
 def quiet_remove(filename):
     with contextlib.suppress(FileNotFoundError):
@@ -656,9 +658,16 @@ class Setup:
 
     def update(self):
         self.update_self()
-        self.install_docker()
-        self.install_data()
-        self.install_test_genomes()
+        threads = list()
+        docker_thread = threading.Thread(target = self.install_docker)
+        docker_thread.start()
+        threads.append(docker_thread)
+        self.install_data(threads)
+        genomes_thread = threading.Thread(target = self.install_test_genomes)
+        genomes_thread.start()
+        threads.append(genomes_thread)
+        for thread in threads:
+            thread.join()
         self.write_version()
 
     def install_docker(self):
@@ -698,35 +707,29 @@ class Setup:
                     return False
         return True
 
-    def install_data(self):
+    def install_data(self, threads):
         suffix = ""
         if self.branch != "":
             suffix = self.branch + "."
 
-        if self.use_version > "2019-11-25.build4172":
-            if self.args.ani:
-                packages = ['ani', 'pgap']
-            elif self.args.ani_only:
-                packages = ['ani']
-            else:
-                packages = ['pgap']
-            for package in packages:
-                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
-                if package == "pgap":
-                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}tgz"
-                else:
-                    remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
-                if not os.path.isfile(guard_file):
-                    install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
-                    open(guard_file, 'a').close()
-                else:
-                    print(f"Skipping already installed tarball: {remote_path}")
+        if self.args.ani:
+            packages = ['ani', 'pgap']
+        elif self.args.ani_only:
+            packages = ['ani']
         else:
-            if not os.path.exists(self.data_path):
-                quiet_remove("input")
-                print('Installing PGAP reference data version {}'.format(self.use_version))
-                remote_path = 'https://s3.amazonaws.com/pgap/input-{}.{}tgz'.format(self.use_version, suffix)
-                install_url(remote_path, self.rundir, self.args.quiet, self.args.teamcity)
+            packages = ['pgap']
+        for package in packages:
+            guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+            if package == "pgap":
+                remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}tgz"
+            else:
+                remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
+            if not os.path.isfile(guard_file):
+                url_thread = threading.Thread(target = self.install_url, args=(remote_path, self.rundir, self.args.quiet, self.args.teamcity, guard_file, ))
+                url_thread.start()
+                threads.append(url_thread)
+            else:
+                print(f"Skipping already installed tarball: {remote_path}")
                 
     def install_test_genomes(self):
         def get_suffix(branch):
