@@ -725,7 +725,7 @@ class Setup:
             else:
                 remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
             if not os.path.isfile(guard_file):
-                url_thread = threading.Thread(target = self.install_url, args=(remote_path, self.rundir, self.args.quiet, self.args.teamcity, guard_file, ))
+                url_thread = threading.Thread(target = install_url, args=(remote_path, self.rundir, self.args.quiet, self.args.teamcity, guard_file, ))
                 url_thread.start()
                 threads.append(url_thread)
             else:
