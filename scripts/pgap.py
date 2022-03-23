@@ -744,7 +744,7 @@ class Setup:
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
-            install_url(URL, self.rundir, self.args.quiet, self.args.teamcity)
+            install_url(URL, self.rundir, self.args.quiet, self.args.teamcity, guard_file = None)
             open(guard_file, 'a').close()
 
     def update_self(self):
