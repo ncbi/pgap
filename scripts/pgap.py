@@ -488,8 +488,10 @@ class Setup:
         self.repo            = self.get_repo()
         self.rundir          = self.get_dir()
         self.local_version   = self.get_local_version()
-        if self.args.no_internet or self.args.no_self_up: self.remote_versions = [self.local_version]
-        else: self.remote_versions = self.get_remote_versions()
+        if self.args.no_internet:
+            self.remote_versions = [self.local_version]
+        else:
+            self.remote_versions = self.get_remote_versions()
         self.report_usage    = self.get_report_usage()
         self.ignore_all_errors    = self.get_ignore_all_errors()
         self.no_internet     = self.get_no_internet()
