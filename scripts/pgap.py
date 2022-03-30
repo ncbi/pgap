@@ -486,7 +486,7 @@ class Setup:
         self.ani_hr_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.rundir          = self.get_dir()
+        self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
         self.local_version   = self.get_local_version()
         if self.args.no_internet:
             self.remote_versions = [self.local_version]
@@ -507,8 +507,8 @@ class Setup:
             self.docker_image = self.args.container_path
         else:
             self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
-        self.data_path = '{}/input-{}'.format(self.rundir, self.use_version)
-        self.test_genomes_path = '{}/test_genomes-{}'.format(self.rundir, self.use_version)
+        self.data_path = '{}/input-{}'.format(self.install_dir, self.use_version)
+        self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.get_docker_info()
         if (self.local_version != self.use_version) or not self.check_install_data():
@@ -534,15 +534,8 @@ class Setup:
             return "pgap"
         return "pgap-"+self.branch
 
-    def get_dir(self):
-        location = os.path.dirname(os.path.realpath(__file__))
-        if self.branch == "":
-            return location
-        return os.path.join(location, self.branch)
-
-
     def get_local_version(self):
-        filename = self.rundir + "/VERSION"
+        filename = self.install_dir + "/VERSION"
         if os.path.isfile(filename):
             with open(filename, encoding='utf-8') as f:
                 return f.read().strip()
@@ -704,7 +697,7 @@ class Setup:
             else:
                 packages = ['pgap']
             for package in packages:
-                guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+                guard_file = f"{self.install_dir}/input-{self.use_version}/.{package}_complete"
                 if not os.path.isfile(guard_file):
                     return False
         return True
@@ -721,13 +714,13 @@ class Setup:
         else:
             packages = ['pgap']
         for package in packages:
-            guard_file = f"{self.rundir}/input-{self.use_version}/.{package}_complete"
+            guard_file = f"{self.install_dir}/input-{self.use_version}/.{package}_complete"
             if package == "pgap":
                 remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}tgz"
             else:
                 remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
             if not os.path.isfile(guard_file):
-                url_thread = threading.Thread(target = install_url, args=(remote_path, self.rundir, self.args.quiet, self.args.teamcity, guard_file, ))
+                url_thread = threading.Thread(target = install_url, args=(remote_path, self.install_dir, self.args.quiet, self.args.teamcity, guard_file, ))
                 url_thread.start()
                 threads.append(url_thread)
             else:
@@ -746,7 +739,7 @@ class Setup:
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
-            install_url(URL, self.rundir, self.args.quiet, self.args.teamcity, guard_file = None)
+            install_url(URL, self.install_dir, self.args.quiet, self.args.teamcity, guard_file = None)
             open(guard_file, 'a').close()
 
     def update_self(self):
@@ -790,7 +783,7 @@ class Setup:
             sys.exit()
 
     def write_version(self):
-        filename = self.rundir + "/VERSION"
+        filename = self.install_dir + "/VERSION"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(u'{}\n'.format(self.use_version))
 
