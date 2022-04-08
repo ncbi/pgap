@@ -511,6 +511,7 @@ class Setup:
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.get_docker_info()
+        self.update_self()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
 
