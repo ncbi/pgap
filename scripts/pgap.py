@@ -511,6 +511,7 @@ class Setup:
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.get_docker_info()
+        self.update_self()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
 
@@ -657,6 +658,8 @@ class Setup:
         docker_thread = threading.Thread(target = self.install_docker)
         docker_thread.start()
         threads.append(docker_thread)
+        # precreate the directory where the tarfile will be unloaded.
+        os.makedirs(f"{self.install_dir}/input-{self.use_version}/uniColl_path")
         self.install_data(threads)
         genomes_thread = threading.Thread(target = self.install_test_genomes)
         genomes_thread.start()
@@ -867,38 +870,44 @@ def main():
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
                 p.cleaunup()
-                if  args.ignore_all_errors == False:
-                    # args.output for some reason not always available 
-                    time.sleep(1) 
-                    # analyze ani output here
-                    if not os.path.exists(args.output):
-                        print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
+                # args.output for some reason not always available 
+                time.sleep(1) 
+                # analyze ani output here
+                if not os.path.exists(args.output):
+                    print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
+                    if  args.ignore_all_errors == False:
                         sys.exit(1)
-                    params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
-                    params.ani_hr_output = os.path.join(args.output, "ani-tax-report.txt")
-                    if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
-                        True
                     else:
-                        params.ani_output = None 
-                    if os.path.exists(params.ani_hr_output) and os.path.getsize(params.ani_hr_output) > 0:
-                        True
-                    else:
-                        params.ani_hr_output = None 
-                    
-                    errors_xml_fn = os.path.join(args.output, "errors.xml")
-                    # if there are errors
-                    # and we do not want to recover them when it is recoverable
-                    #  then bail
-                    if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
-                        error_file = None
-                        if params.ani_hr_output != None:
-                            error_file = params.ani_hr_output
-                        elif params.ani_output != None:
-                            error_file = params.ani_output
-                        else: 
-                            error_file = errors_xml_fn
-                        print("ERROR: taxcheck calls the genome misassigned or contaminated, thus PGAP will not execute. See {}".format(error_file))
+                        print("Ignoring")
+                params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
+                params.ani_hr_output = os.path.join(args.output, "ani-tax-report.txt")
+                if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
+                    True
+                else:
+                    params.ani_output = None 
+                if os.path.exists(params.ani_hr_output) and os.path.getsize(params.ani_hr_output) > 0:
+                    True
+                else:
+                    params.ani_hr_output = None 
+                
+                errors_xml_fn = os.path.join(args.output, "errors.xml")
+                # if there are errors
+                # and we do not want to recover them when it is recoverable
+                #  then bail
+                if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
+                    error_file = None
+                    if params.ani_hr_output != None:
+                        error_file = params.ani_hr_output
+                    elif params.ani_output != None:
+                        error_file = params.ani_output
+                    else: 
+                        error_file = errors_xml_fn
+                    print("ERROR: taxcheck calls the genome misassigned or contaminated. See {}".format(error_file))
+                    if  args.ignore_all_errors == False:
+                        print("thus PGAP will not execute")
                         sys.exit(1)
+                    else:
+                        print("Ignoring")
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")

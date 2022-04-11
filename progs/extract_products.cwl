@@ -2,6 +2,7 @@ cwlVersion: v1.2
 label: "extract_products"
 
 class: CommandLineTool
+arguments: [-exclude-readthrough]
 baseCommand: extract_products
 inputs:
   input:
