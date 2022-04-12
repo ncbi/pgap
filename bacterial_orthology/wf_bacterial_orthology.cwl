@@ -101,8 +101,6 @@ steps:
       affinity: 
           default: subject
       asn_cache: asn_cache
-      align_filter: 
-          default: 'score>0 && pct_identity_gapopen_only > 35' 
       allow_intersection: 
           default: true
       comp_based_stats:   
@@ -114,13 +112,13 @@ steps:
       delay:
           default: 0
       evalue: 
-          default: 0.1
+          default: 0.001
       max_batch_length: 
           default: 10000
       max_jobs: 
           default: 1
       max_target_seqs: 
-          default: 50
+          default: 250
       no_merge: 
           default: false
       nogenbank: 
@@ -128,13 +126,9 @@ steps:
       ofmt: 
           default: asn-binary
       seg: 
-          default:  '30 2.2 2.5'
-      soft_masking:
-          default: 'yes'
+          default:  'no'
       threshold: 
           default: 21
-      top_by_score: 
-          default: 10
       word_size: 
           default: 6
       taxid: taxid
