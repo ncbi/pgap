@@ -32,6 +32,8 @@ inputs:
   check_exome:
     type: boolean
     default: true
+    inputBinding:
+      prefix: -check_exome
   o_orthologs:
     type: string?
     default: orthologs.rpt
