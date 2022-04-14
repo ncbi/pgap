@@ -27,7 +27,7 @@ inputs:
       prefix: -asn-cache
       itemSeparator: ","
   align_filter: 
-    type: string
+    type: string?
     inputBinding:
       prefix: -align_filter
   allow_intersection:

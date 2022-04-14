@@ -16,7 +16,7 @@ inputs:
   asn_cache: Directory[]
   max_batch_length: int
   nogenbank: boolean
-  align_filter: string
+  align_filter: string?
   allow_intersection: boolean
   comp_based_stats: string # F/T
   compart: boolean
@@ -28,9 +28,9 @@ inputs:
   no_merge: boolean
   ofmt: string
   seg: string
-  soft_masking: string
+  soft_masking: string?
   threshold: int
-  top_by_score: int
+  top_by_score: int?
   word_size: int
   ids: File[]
   batch-size: int?
