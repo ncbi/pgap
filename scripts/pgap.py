@@ -659,7 +659,7 @@ class Setup:
         docker_thread.start()
         threads.append(docker_thread)
         # precreate the directory where the tarfile will be unloaded.
-        os.makedirs(f"{self.install_dir}/input-{self.use_version}/uniColl_path")
+        os.makedirs(f"{self.install_dir}/input-{self.use_version}/uniColl_path", exist_ok=True)
         self.install_data(threads)
         genomes_thread = threading.Thread(target = self.install_test_genomes)
         genomes_thread.start()
