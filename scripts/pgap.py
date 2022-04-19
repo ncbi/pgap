@@ -15,6 +15,7 @@ import atexit
 import contextlib
 import glob
 import json
+import multiprocessing as mp
 import os
 import platform
 import queue
@@ -22,7 +23,6 @@ import re
 import shutil
 import subprocess
 import tarfile
-import threading
 import time
 import tempfile
 import xml
@@ -655,17 +655,22 @@ class Setup:
     def update(self):
         self.update_self()
         threads = list()
-        docker_thread = threading.Thread(target = self.install_docker)
+        docker_thread = mp.Process(target = self.install_docker, name='docker image pull')
         docker_thread.start()
         threads.append(docker_thread)
         # precreate the directory where the tarfile will be unloaded.
         os.makedirs(f"{self.install_dir}/input-{self.use_version}/uniColl_path", exist_ok=True)
         self.install_data(threads)
-        genomes_thread = threading.Thread(target = self.install_test_genomes)
+        genomes_thread = mp.Process(target = self.install_test_genomes, name='test genomes installation')
         genomes_thread.start()
         threads.append(genomes_thread)
+        global_exit_value = 0
         for thread in threads:
             thread.join()
+            if thread.exitcode != 0:
+                global_exit_value = thread.exitcode
+        if global_exit_value != 0:
+            raise Exception(f'installation of some or all of components failed. Please remove {self.data_path}, {self.install_dir}/test_genomes, {self.test_genomes_path} directories and try again.')
         self.write_version()
 
     def install_docker(self):
@@ -723,7 +728,7 @@ class Setup:
             else:
                 remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
             if not os.path.isfile(guard_file):
-                url_thread = threading.Thread(target = install_url, args=(remote_path, self.install_dir, self.args.quiet, self.args.teamcity, guard_file, ))
+                url_thread = mp.Process(target = install_url, name='{package} installation',args=(remote_path, self.install_dir, self.args.quiet, self.args.teamcity, guard_file, ))
                 url_thread.start()
                 threads.append(url_thread)
             else:
