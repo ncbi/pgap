@@ -653,6 +653,8 @@ class Setup:
         return str2sec(self.args.timeout)
 
     def update(self):
+        print(f"installation directory: {self.install_dir}")
+        subprocess.run(["/bin/df", "-k", self.install_dir])
         self.update_self()
         threads = list()
         docker_thread = mp.Process(target = self.install_docker, name='docker image pull')
