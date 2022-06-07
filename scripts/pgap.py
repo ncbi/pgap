@@ -486,7 +486,12 @@ class Setup:
         self.ani_hr_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
+
+        if platform.system() == 'Windows':
+            self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['USERPROFILE']+'/.pgap')
+        else:
+            self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
+
         self.local_version   = self.get_local_version()
         if self.args.no_internet:
             self.remote_versions = [self.local_version]
