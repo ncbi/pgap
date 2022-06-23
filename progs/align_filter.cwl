@@ -34,7 +34,6 @@ inputs:
     default: aligns.mft
     inputBinding:
       prefix: -input-manifest
-  subject_allowlist.mft
   nogenbank:
     type: boolean
     default: true
