@@ -11,7 +11,7 @@ requirements:
      - entryname: aligns.mft
        entry: ${var blob = '# aligns.mft created for align_filter from input "input" Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
      - entryname: subject_allowlist.mft
-       entry: ${var blob = '# subject_allowlist.mft created for align_filter from input "subject_allowlist" File\n'; if ( subject_allowlist == null) { return blob; } else { blob += inputs.subject_allowlist.path + '\n';  return blob; }}
+       entry: ${var blob = '# subject_allowlist.mft created for align_filter from input "subject_allowlist" File\n'; if ( inputs.subject_allowlist == null) { return blob; } else { blob += inputs.subject_allowlist.path + '\n';  return blob; }}
 
 inputs:
   asn_cache:
