@@ -174,9 +174,9 @@ class Pipeline:
         else:
             self.submol = None
         self.yaml = self.create_inputfile(local_input)
-        if (self.params.docker_type == 'singularity'):
+        if self.params.docker_type in ['singularity', 'apptainer']:
             self.make_singularity_cmd()
-        elif (self.params.docker_type == 'podman'):
+        elif self.params.docker_type == 'podman':
             self.make_podman_cmd()
         else:
             self.make_docker_cmd()
@@ -395,7 +395,7 @@ class Pipeline:
             if settings[value] != 'unlimited' and settings[value] < min:
                 print('WARNING: {} is less than the recommended value of {}'.format(value, min))
 
-        if (self.params.docker_type == 'singularity'):
+        if (self.params.docker_type in ['singularity', 'apptainer']):
             singularity_docker_image = self.params.docker_image if self.params.args.container_path else "docker://"+self.params.docker_image
             cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), singularity_docker_image,
                    'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
@@ -486,7 +486,12 @@ class Setup:
         self.ani_hr_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
-        self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
+
+        if platform.system() == 'Windows':
+            self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['USERPROFILE']+'/.pgap')
+        else:
+            self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
+
         self.local_version   = self.get_local_version()
         if self.args.no_internet:
             self.remote_versions = [self.local_version]
@@ -604,7 +609,7 @@ class Setup:
         return outputdir
 
     def get_docker_info(self):
-        docker_type_alternatives = ['docker', 'podman', 'singularity']
+        docker_type_alternatives = ['docker', 'podman', 'singularity', 'apptainer']
         if self.args.docker:
             self.docker_cmd = shutil.which(self.args.docker)
         else:
@@ -653,6 +658,8 @@ class Setup:
         return str2sec(self.args.timeout)
 
     def update(self):
+        print(f"installation directory: {self.install_dir}")
+        subprocess.run(["/bin/df", "-k", self.install_dir])
         self.update_self()
         threads = list()
         docker_thread = mp.Process(target = self.install_docker, name='docker image pull')
@@ -674,7 +681,7 @@ class Setup:
         self.write_version()
 
     def install_docker(self):
-        if self.docker_type == 'singularity':
+        if self.docker_type in ['singularity', 'apptainer']:
             sif = self.docker_image.replace("ncbi/pgap:", "pgap_") + ".sif"
             try:
                 subprocess.run([self.docker_cmd, 'sif', 'list', sif],
@@ -847,7 +854,7 @@ def main():
                         If flag is set, run  ANI first, then PGAP, overriding the organism name provided by the user in the input YAML with the value returned by ANI Predicted organism. Obviously both actions need to be requested for this flag to take effect
                         ''')
     parser.add_argument('-D', '--docker', metavar='path',
-                        help='Docker-compatible executable (e.g. docker, podman, singularity), which may include a full path like /usr/bin/docker')
+                        help='Docker-compatible executable (e.g. docker, podman, apptainer), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
                         help='Output directory to be created, which may include a full path')
     parser.add_argument('-t', '--timeout', default='24:00:00', help=argparse.SUPPRESS)
