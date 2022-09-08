@@ -486,6 +486,7 @@ class Setup:
         self.ani_hr_output = None
         self.branch          = self.get_branch()
         self.repo            = self.get_repo()
+        self.registry_docker_hub_version = "v2"
 
         if platform.system() == 'Windows':
             self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['USERPROFILE']+'/.pgap')
@@ -552,11 +553,18 @@ class Setup:
         versions = []
         if (self.get_branch()):
             #print("Checking docker hub for latest version.")
-            url = 'https://registry.hub.docker.com/v1/repositories/ncbi/{}/tags'.format(self.repo)
+            url = f'https://registry.hub.docker.com/{self.registry_docker_hub_version}/repositories/ncbi/{self.repo}/tags'
             response = urlopen(url)
             json_resp = json.loads(response.read().decode())
-            for i in reversed(json_resp):
-                versions.append(i['name'])
+            if self.registry_docker_hub_version == 'v2':
+                # looks like these are already sorted in right order in this version 
+                for result in json_resp['results']:
+                    versions.append(result['name'])
+            elif self.registry_docker_hub_version == 'v1':
+                for i in reversed(json_resp):
+                     versions.append(i['name'])
+            else:
+                raise Exception(f'INTERNAL ERROR: chosen docker hub  registry version {self.registry_docker_hub_version} is not supporter.')
         else:
             #print("Checking github releases for latest version.")
             response = urlopen('https://api.github.com/repos/ncbi/pgap/releases/latest')
