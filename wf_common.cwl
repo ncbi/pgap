@@ -124,7 +124,9 @@ steps:
       - identification_db_dir
       - CDDdata2
       - CDDdata
+      - checkm_data_path
       - defline_cleanup_rules
+      - filter_for_raw_checkm
       - gc_cache
       - gene_master_ini
       - hmm_path

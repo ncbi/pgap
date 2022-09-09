@@ -39,8 +39,14 @@ expression: |
         case 'CDD2':
           r['CDDdata'] = l[i];
           break;
+        case 'checkm':
+          r['checkm_data_path'] = l[i];
+          break;
         case 'cdd_add':
           r['CDDdata2'] = l[i];
+          break;
+        case 'filter-for-raw-checkm.xml':
+          r['filter_for_raw_checkm'] = l[i];
           break;
         case 'gencoll.sqlite':
           r['gc_cache'] = l[i];
@@ -150,8 +156,12 @@ outputs:
   CDDdata2:
     # ${GP_HOME}/third-party/data/cdd_add
     type: Directory
+  checkm_data_path:
+    type: Directory
   defline_cleanup_rules:
     # defline_cleanup_rules # ${GP_HOME}/etc/product_rules.prt
+    type: File
+  filter_for_raw_checkm:
     type: File
   gc_cache:
     type: File
