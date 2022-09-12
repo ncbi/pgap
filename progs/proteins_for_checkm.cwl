@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.2
 class: CommandLineTool
+baseCommand: proteins_for_checkm
 inputs:
   seqids:
     type: File
