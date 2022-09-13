@@ -7,12 +7,6 @@ doc: >
     of relying on a presence of actual non-empty container of objects
 
 class: CommandLineTool
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entry:  $(inputs.proteins)
-        writable: False
 
 baseCommand: gpx_qsubmit
 inputs:
