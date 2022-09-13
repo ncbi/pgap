@@ -51,8 +51,9 @@ requirements:
       - entryname: ids.mft
         entry:  |-
           ${
-            var blob = '# ids.mft created for gpx_qsubmit from input ids Array of Files\n';
+            var blob = null;
             if ( inputs.ids != null) {
+              blob = '# ids.mft created for gpx_qsubmit from input ids Array of Files\n';
               for (var i = 0; i < inputs.ids.length; i++) {
                 blob += inputs.ids[i].path  + '\n';
               }
@@ -83,8 +84,9 @@ inputs:
       prefix: -db
       valueFrom: |-
         ${ 
-          var blob = ''; 
+          var blob = null; 
           if(inputs.blastdb != null) {
+            blob = ''; 
             for (var i = 0; i < inputs.blastdb.length; i++) { 
               blob += inputs.blastdb_dir.path + '/' + inputs.blastdb[i]; 
               if(i != inputs.blastdb.length-1) blob += ','; 
