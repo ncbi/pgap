@@ -18,7 +18,7 @@ outputs:
     outputSource: gpx_qdump/output
 steps:
   gpx_qsubmit:
-    run: ../progs/gpx_qsubmit.cwl
+    run: ../progs/gpx_qsubmit_proteins_xml.cwl
     in:
       xml_jobs: assm_to_prots
     out: [jobs]
