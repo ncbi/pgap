@@ -49,7 +49,7 @@ requirements:
             }
         writable: False
       - entryname: ids.mft
-        entry:  !-
+        entry:  |-
           ${
             var blob = '# ids.mft created for gpx_qsubmit from input ids Array of Files\n';
             if ( inputs.ids != null) {
@@ -81,7 +81,7 @@ inputs:
     # this part for testing only, it is not compatible with -db-manifest setting below
     inputBinding:
       prefix: -db
-      valueFrom: !-
+      valueFrom: |-
         ${ 
           var blob = ''; 
           if(inputs.blastdb != null) {
