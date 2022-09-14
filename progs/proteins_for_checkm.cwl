@@ -16,9 +16,22 @@ inputs:
     type: int
     inputBinding:
       prefix: -taxid
+  output_seqids_name:
+    type: string?
+    default: "annotation.seqids"
+    inputBinding:
+      prefix: -output-seqids
+  local:
+    type: boolean?
+    default: true
 outputs:
   jobs:
     type: File
     outputBinding:
       glob: $(inputs.jobs_name)    
+  output_seqids:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_seqids_name)    
+      
 

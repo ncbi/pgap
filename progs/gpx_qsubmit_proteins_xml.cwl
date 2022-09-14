@@ -5,9 +5,7 @@ doc: >
     
     We need to have a flavored file because gpx_qsubmit reacts on the presence of a particular form of input instead
     of relying on a presence of actual non-empty container of objects
-
 class: CommandLineTool
-
 baseCommand: gpx_qsubmit
 inputs:
   xml_jobs:
@@ -26,3 +24,4 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_xml_jobs)    
+  

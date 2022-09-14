@@ -695,6 +695,7 @@ steps:
       checkm_data_path: passdata/checkm_data_path
       filter_for_raw_checkm: passdata/filter_for_raw_checkm
       taxid: taxid
+      taxon_db: passdata/taxon_db
     out: [checkm_raw, checkm_results]
   add_checksum_gbent:
         label: Add Checksum to Genbank class ENT

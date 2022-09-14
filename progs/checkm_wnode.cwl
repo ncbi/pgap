@@ -9,6 +9,9 @@ requirements:
       # this is needed for lds2 for proteins file to be present in the same dir as lds2 file
       - entry: $(inputs.proteins)
         writable: False
+      # this is needed for input_jobs for XML file to be present in the same dir as input_jobs file
+      - entry: $(inputs.seqids)
+        writable: False
 
 inputs:
   input_jobs: 
@@ -43,7 +46,13 @@ inputs:
     type: File
     inputBinding:
       prefix: -lds2
+  taxon_db:
+    type: File
+    inputBinding:
+        prefix: -taxon-db
+      
   proteins: File
+  seqids: File
 outputs:
   outdir:
     type: Directory

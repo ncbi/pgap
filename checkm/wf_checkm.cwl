@@ -13,6 +13,7 @@ inputs:
   checkm_data_path: Directory
   filter_for_raw_checkm: File
   taxid: int
+  taxon_db: File
 outputs:
   checkm_raw: 
     type: File
@@ -41,7 +42,7 @@ steps:
     in:
       seqids: extract_final_proteins/seqids
       taxid: taxid
-    out: [jobs]
+    out: [jobs, output_seqids]
   run_checkm:
     label: 'Run CheckM'
     run: ../task_types/tt_checkm_wnode.cwl
@@ -51,5 +52,7 @@ steps:
       proteins: extract_final_proteins/proteins
       checkm_data_path: checkm_data_path
       filter_for_raw_checkm: filter_for_raw_checkm
+      taxon_db: taxon_db
+      seqids: convert_seqids_to_jobs/output_seqids
     out: [checkm_raw, checkm_results]
 

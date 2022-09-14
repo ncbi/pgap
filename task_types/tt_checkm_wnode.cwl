@@ -9,6 +9,8 @@ inputs:
   proteins: File
   checkm_data_path: Directory
   filter_for_raw_checkm: File
+  taxon_db: File
+  seqids: File
 outputs: 
   checkm_raw:
     type: File
@@ -29,6 +31,8 @@ steps:
       checkm_data_path: checkm_data_path
       lds2: lds2
       proteins: proteins
+      taxon_db: taxon_db
+      seqids: seqids
     out: [outdir]    
   gpx_qdump:
     run: ../progs/gpx_qdump.cwl
