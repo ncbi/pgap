@@ -24,6 +24,8 @@ inputs:
   local:
     type: boolean?
     default: true
+    inputBinding:
+      prefix: -local
 outputs:
   jobs:
     type: File
