@@ -9,6 +9,7 @@ inputs:
   oproteins: string?
   olds2: string?
   oseqids: string?
+  it: boolean?
 
 outputs:
   proteins:
@@ -29,6 +30,7 @@ steps:
       oproteins: oproteins
       olds2: olds2
       oseqids: oseqids
+      it: it
     out: [ proteins, lds2, seqids ]
     run:
       class: CommandLineTool
@@ -58,6 +60,10 @@ steps:
           default: "proteins.seq_ids"
           inputBinding:
             prefix: -oseqids
+        it: 
+          type: boolean?
+          inputBinding:
+            prefix: -it
 
       outputs:
         proteins:
