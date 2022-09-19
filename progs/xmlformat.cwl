@@ -24,7 +24,7 @@ inputs:
       prefix: -text-only
   out_name:
     type: string?
-    default: checkm_raw.txt 
+    default: checkm.txt 
     inputBinding:
       prefix: -out
   entry_point_name:
