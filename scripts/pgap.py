@@ -945,7 +945,8 @@ def main():
         if args.debug:
             raise
         retcode = 1
-        print(exc)
+        import traceback
+        traceback.print_exc()
 
     sys.exit(retcode)
         
