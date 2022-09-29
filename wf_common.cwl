@@ -124,7 +124,9 @@ steps:
       - identification_db_dir
       - CDDdata2
       - CDDdata
+      - checkm_data_path
       - defline_cleanup_rules
+      - filter_for_raw_checkm
       - gc_cache
       - gene_master_ini
       - hmm_path
@@ -684,6 +686,17 @@ steps:
       out_name:
             default: annot-gb-wo-checksum.ent
     out: [output]
+  checkm:
+    label: 'Run CheckM in PGAP graph'
+    doc: 'Identify completeness of genome based on core HMM models in CheckM'
+    run: checkm/wf_checkm.cwl
+    in:
+      models: Final_Bacterial_Package_sqn2gbent/output
+      checkm_data_path: passdata/checkm_data_path
+      filter_for_raw_checkm: passdata/filter_for_raw_checkm
+      taxid: taxid
+      taxon_db: passdata/taxon_db
+    out: [checkm_raw, checkm_results]
   add_checksum_gbent:
         label: Add Checksum to Genbank class ENT
         run: progs/annot_checksum.cwl
@@ -1012,4 +1025,10 @@ outputs:
   final_asnval_error_diag:
     type: File?
     outputSource:  Final_Bacterial_Package_asnvalidate_evaluate/xml_output 
-    
+  checkm_raw: 
+    type: File
+    outputSource: checkm/checkm_raw
+  checkm_results: 
+    type: File
+    outputSource: checkm/checkm_results
+  

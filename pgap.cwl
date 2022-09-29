@@ -74,6 +74,13 @@ outputs:
   final_asnval_error_diag:
     type: File?
     outputSource: standard_pgap/final_asnval_error_diag  
+  checkm_raw: 
+    type: File
+    outputSource: standard_pgap/checkm_raw
+  checkm_results: 
+    type: File
+    outputSource: standard_pgap/checkm_results
+    
 steps:
   passdata:
     in:
@@ -167,5 +174,5 @@ steps:
       no_internet: no_internet
       make_uuid: make_uuid
       uuid_in: uuid_in
-    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag]
+    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
     run: wf_common.cwl
