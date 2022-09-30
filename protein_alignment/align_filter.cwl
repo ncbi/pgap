@@ -18,6 +18,7 @@ baseCommand: align_filter
 
 arguments: [ -filter, "pct_identity_gapopen_only >= 50 AND ( (query_start<=20 AND SUB(query_length, query_end)<=20) OR pct_identity_gapopen_only >= 60 ) AND (SUB(subject_end, subject_start) > 90 || SUB(subject_end, subject_start) > MUL(query_length,1.5) || num_ident >=60) AND (query_length > 30 || (pct_identity_gap >= 80 AND SUB(subject_end, subject_start) >= MUL(query_length,2.4)))",  -ifmt, seq-align, -nogenbank ]
 
+arguments: ["pct_identity_gapopen_only >= 50 AND NOT (pct_coverage < 20 and (query_entropy < 0.3 OR query_seg_pct > 60)) AND ( (query_start<=20 AND SUB(query_length, query_end)<=20) OR pct_identity_gapopen_only >= 60 ) AND (SUB(subject_end, subject_start) > 90 || SUB(subject_end, subject_start) > MUL(query_length,1.5) || num_ident >=60) AND (query_length > 30 || (pct_identity_gap >= 80 AND SUB(subject_end, subject_start) >= MUL(query_length,2.4)))",  -ifmt, seq-align, -nogenbank]
 inputs:
   asn_cache:
     type: Directory
