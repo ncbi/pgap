@@ -77,9 +77,6 @@ outputs:
   checkm_raw: 
     type: File
     outputSource: standard_pgap/checkm_raw
-  checkm_results: 
-    type: File
-    outputSource: standard_pgap/checkm_results
     
 steps:
   passdata:
