@@ -835,7 +835,7 @@ class Setup:
 
 def remove_empty_files(rootdir):
     for f in os.listdir(rootdir):
-        fullname = os.path.join(root, f)
+        fullname = os.path.join(rootdir, f)
         if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
             quiet_remove(fullname)
                 
