@@ -834,11 +834,10 @@ class Setup:
 
 
 def remove_empty_files(rootdir):
-    for root, dirs, files in os.walk(rootdir):
-        for f in files:
-            fullname = os.path.join(root, f)
-            if os.path.getsize(fullname) == 0:
-                quiet_remove(fullname)
+    for f in os.listdir(rootdir):
+        fullname = os.path.join(root, f)
+        if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
+            quiet_remove(fullname)
                 
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
