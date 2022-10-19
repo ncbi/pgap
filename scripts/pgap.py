@@ -493,8 +493,7 @@ class Pipeline:
                         {"file": "final_asndisc_diag.xml", "remove": True},
                         {"file": "final_asnval_diag.xml", "remove": True},
                         {"file": "initial_asndisc_diag.xml", "remove": True},
-                        {"file": "initial_asnval_diag.xml", "remove": True},
-                        {"file": "errors.xml", "remove": True}
+                        {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
                 self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
