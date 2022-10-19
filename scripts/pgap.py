@@ -448,7 +448,7 @@ class Pipeline:
         for output_pair in output_files:
             fullname = os.path.join(output, output_pair["file"])
             if os.path.exists(fullname) and os.path.getsize(fullname) > 0:
-                print(f'FILE: {output_pair.file}')
+                print(f'FILE: {output_pair["file"]}')
                 with open(fullname, 'r') as f:
                     print(f.read())
                 if output_pair["remove"]:
