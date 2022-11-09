@@ -440,7 +440,21 @@ class Pipeline:
         #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
         f.write(json.dumps(settings, sort_keys=True, indent=4))
+             
+    def report_output_files(self, output, output_files):
+        # output_files = [
+        # {"file": "", "remove": True},
+        # ]
+        for output_pair in output_files:
+            fullname = os.path.join(output, output_pair["file"])
+            if os.path.exists(fullname) and os.path.getsize(fullname) > 0:
+                print(f'FILE: {output_pair["file"]}')
+                with open(fullname, 'r') as f:
+                    print(f.read())
+                if output_pair["remove"]:
+                    os.remove(fullname)
         
+
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
         with open(cwllog, 'a', encoding="utf-8") as f:
@@ -475,6 +489,13 @@ class Pipeline:
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
+                output_files = [
+                        {"file": "final_asndisc_diag.xml", "remove": True},
+                        {"file": "final_asnval_diag.xml", "remove": True},
+                        {"file": "initial_asndisc_diag.xml", "remove": True},
+                        {"file": "initial_asnval_diag.xml", "remove": True}
+                    ]
+                self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
 
 class Setup:
@@ -811,7 +832,12 @@ class Setup:
             f.write(u'{}\n'.format(self.use_version))
 
 
-        
+def remove_empty_files(rootdir):
+    for f in os.listdir(rootdir):
+        fullname = os.path.join(rootdir, f)
+        if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
+            quiet_remove(fullname)
+                
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
@@ -928,6 +954,7 @@ def main():
                         sys.exit(1)
                     else:
                         print("Ignoring")
+                    remove_empty_files(args.output)
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
@@ -940,6 +967,7 @@ def main():
                         submol_modified = os.path.join(args.output, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
+                remove_empty_files(args.output)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
