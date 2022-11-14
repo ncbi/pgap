@@ -532,6 +532,9 @@ class Setup:
         self.use_version = self.get_use_version()
         if self.args.container_path:
             self.docker_image = self.args.container_path
+        elif self.docker_type == 'podman':
+            # see PGAPX-1073
+            self.docker_image = "docker.io/ncbi/{}:{}".format(self.repo, self.use_version)
         else:
             self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.install_dir, self.use_version)
