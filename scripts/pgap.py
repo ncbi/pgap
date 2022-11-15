@@ -532,15 +532,16 @@ class Setup:
         self.use_version = self.get_use_version()
         if self.args.container_path:
             self.docker_image = self.args.container_path
-        elif self.docker_type == 'podman':
-            # see PGAPX-1073
-            self.docker_image = "docker.io/ncbi/{}:{}".format(self.repo, self.use_version)
         else:
             self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.install_dir, self.use_version)
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.get_docker_info()
+        if self.docker_type == 'podman':
+            # see PGAPX-1073
+            self.docker_image = "docker.io/ncbi/{}:{}".format(self.repo, self.use_version)
+        
         self.update_self()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
