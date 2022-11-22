@@ -62,6 +62,12 @@ outputs:
   protein_fasta:
     outputSource:  standard_pgap/protein_fasta
     type: File?
+  cds_nucleotide_fasta:
+    outputSource: standard_pgap/cds_nucleotide_fasta
+    type: File?
+  cds_protein_fasta:
+    outputSource:  standard_pgap/cds_protein_fasta
+    type: File?
   initial_asndisc_error_diag:
     type: File?
     outputSource: standard_pgap/initial_asndisc_error_diag 
@@ -171,5 +177,5 @@ steps:
       no_internet: no_internet
       make_uuid: make_uuid
       uuid_in: uuid_in
-    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
+    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, cds_nucleotide_fasta, cds_protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
     run: wf_common.cwl

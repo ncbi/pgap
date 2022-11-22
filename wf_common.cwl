@@ -757,6 +757,28 @@ steps:
             prot_fasta_name:
                 default: annot.faa
     out: [prot_fasta]
+  Generate_Annotation_Reports_cds_nuc_fasta:
+    run: progs/asn2fasta.cwl
+    in:
+      i: Final_Bacterial_Package_sqn2gbent/output
+      type:
+        default: seq-entry
+      feats:
+        default: fasta_cds_na
+      fasta_name:
+        default: annot.ffn
+    out: [fasta]
+  Generate_Annotation_Reports_cds_prot_fasta:
+    run: progs/asn2fasta.cwl
+    in:
+      i: Final_Bacterial_Package_sqn2gbent/output
+      type:
+          default: seq-entry
+      feats:
+          default: fasta_cds_aa
+      fasta_name:
+          default: annot.ffa
+    out: [fasta]
   Final_Bacterial_Package_std_validation:
     run: progs/std_validation.cwl
     in:
@@ -1007,6 +1029,12 @@ outputs:
   protein_fasta:
     type: File?
     outputSource: Generate_Annotation_Reports_prot_fasta/prot_fasta
+  cds_nucleotide_fasta:
+    type: File?
+    outputSource: Generate_Annotation_Reports_cds_nuc_fasta/fasta
+  cds_protein_fasta:
+    type: File?
+    outputSource: Generate_Annotation_Reports_cds_prot_fasta/fasta
   sqn:
     type: File
     outputSource:  add_checksum_sqn/output
