@@ -403,7 +403,7 @@ class Pipeline:
             cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
                    'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
 
-        result = subprocess.run(cmd, input=subprocess.DEVNULL, check=True, stdout=subprocess.PIPE)
+        result = subprocess.run(cmd, stdin=subprocess.DEVNULL, check=True, stdout=subprocess.PIPE)
         if result.returncode != 0:
             return
         output = result.stdout.decode('utf-8')
@@ -653,7 +653,7 @@ class Setup:
         if self.docker_cmd == None:
             sys.exit("Docker not found.")
 
-        version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE, input=subprocess.DEVNULL).stdout.decode('utf-8')
+        version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL).stdout.decode('utf-8')
         self.docker_type = version.split(maxsplit=1)[0].lower()
         if self.docker_type not in docker_type_alternatives:
             self.docker_type = os.path.basename(os.path.realpath(self.docker_cmd)).lower()
@@ -692,7 +692,7 @@ class Setup:
 
     def update(self):
         print(f"installation directory: {self.install_dir}")
-        subprocess.run(["/bin/df", "-k", self.install_dir], input=subprocess.DEVNULL)
+        subprocess.run(["/bin/df", "-k", self.install_dir], stdin=subprocess.DEVNULL)
         self.update_self()
         threads = list()
         docker_thread = mp.Process(target = self.install_docker, name='docker image pull')
@@ -718,7 +718,7 @@ class Setup:
             sif = self.docker_image.replace("ncbi/pgap:", "pgap_") + ".sif"
             try:
                 subprocess.run([self.docker_cmd, 'sif', 'list', sif],
-                               check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, input=subprocess.DEVNULL)
+                               check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
                 print("Singularity sif files exists, not updating.")
                 return
             except subprocess.CalledProcessError:
@@ -729,7 +729,7 @@ class Setup:
         print('Downloading (as needed) Docker image {}'.format(docker_url))
         r=None;
         try:
-            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True, input=subprocess.DEVNULL)
+            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True, stdin=subprocess.DEVNULL)
             #print(r)
         except subprocess.CalledProcessError:
             print(r)
