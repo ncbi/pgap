@@ -748,6 +748,12 @@ steps:
         nuc_fasta_name:
             default: annot.fna
     out: [nuc_fasta]
+  Generate_Annotation_Reports_gff_enhanced:
+    run: progs/produce_enhanced_gff.cwl
+    in:
+        gff: Generate_Annotation_Reports_gff/output
+        fasta: Generate_Annotation_Reports_nuc_fasta/nuc_fasta
+    out: [output]
   Generate_Annotation_Reports_prot_fasta:
     run: progs/asn2fasta.cwl
     in:
@@ -1020,6 +1026,9 @@ outputs:
   gff:
     type: File
     outputSource:  Generate_Annotation_Reports_gff/output
+  gff_enhanced:
+    type: File
+    outputSource:  Generate_Annotation_Reports_gff_enhanced/output
   gbk:
     type: File
     outputSource:  Generate_Annotation_Reports_gbk/output

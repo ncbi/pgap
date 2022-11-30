@@ -12,7 +12,7 @@ requirements:
         entry: ${ return inputs.separator + '\n'; }
 inputs:
   gff:
-    type: File
+    type: File?
     inputBinding: 
       position: 1
   separator:
@@ -24,7 +24,7 @@ inputs:
     inputBinding: 
       position: 2
   fasta:
-    type: File
+    type: File?
     inputBinding:
       position: 3
   output_name:
