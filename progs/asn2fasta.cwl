@@ -13,6 +13,10 @@ inputs:
     type: string
     inputBinding:
         prefix: -type 
+  feats:
+    type: string?
+    inputBinding:
+        prefix: -feats
   serial: 
     type: string?
     inputBinding:
