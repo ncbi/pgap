@@ -1,0 +1,6 @@
+gff:
+  class: File
+  location: annot.gff
+fasta:
+  class: File
+  location: annot.fna

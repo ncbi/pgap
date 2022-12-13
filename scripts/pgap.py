@@ -403,7 +403,7 @@ class Pipeline:
             cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
                    'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
 
-        result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
+        result = subprocess.run(cmd, stdin=subprocess.DEVNULL, check=True, stdout=subprocess.PIPE)
         if result.returncode != 0:
             return
         output = result.stdout.decode('utf-8')
@@ -440,7 +440,21 @@ class Pipeline:
         #with open(filename, 'w', encoding='utf-8') as f:
             #f.write(u'{}\n'.format(settings))
         f.write(json.dumps(settings, sort_keys=True, indent=4))
+             
+    def report_output_files(self, output, output_files):
+        # output_files = [
+        # {"file": "", "remove": True},
+        # ]
+        for output_pair in output_files:
+            fullname = os.path.join(output, output_pair["file"])
+            if os.path.exists(fullname) and os.path.getsize(fullname) > 0:
+                print(f'FILE: {output_pair["file"]}')
+                with open(fullname, 'r') as f:
+                    print(f.read())
+                if output_pair["remove"]:
+                    os.remove(fullname)
         
+
     def launch(self):
         cwllog = self.params.outputdir + '/cwltool.log'
         with open(cwllog, 'a', encoding="utf-8") as f:
@@ -475,6 +489,13 @@ class Pipeline:
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
+                output_files = [
+                        {"file": "final_asndisc_diag.xml", "remove": True},
+                        {"file": "final_asnval_diag.xml", "remove": True},
+                        {"file": "initial_asndisc_diag.xml", "remove": True},
+                        {"file": "initial_asnval_diag.xml", "remove": True}
+                    ]
+                self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
 
 class Setup:
@@ -517,6 +538,10 @@ class Setup:
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
         self.outputdir = self.get_output_dir()
         self.get_docker_info()
+        if self.docker_type == 'podman':
+            # see PGAPX-1073
+            self.docker_image = "docker.io/ncbi/{}:{}".format(self.repo, self.use_version)
+        
         self.update_self()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
@@ -628,7 +653,7 @@ class Setup:
         if self.docker_cmd == None:
             sys.exit("Docker not found.")
 
-        version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL).stdout.decode('utf-8')
         self.docker_type = version.split(maxsplit=1)[0].lower()
         if self.docker_type not in docker_type_alternatives:
             self.docker_type = os.path.basename(os.path.realpath(self.docker_cmd)).lower()
@@ -667,7 +692,7 @@ class Setup:
 
     def update(self):
         print(f"installation directory: {self.install_dir}")
-        subprocess.run(["/bin/df", "-k", self.install_dir])
+        subprocess.run(["/bin/df", "-k", self.install_dir], stdin=subprocess.DEVNULL)
         self.update_self()
         threads = list()
         docker_thread = mp.Process(target = self.install_docker, name='docker image pull')
@@ -693,7 +718,7 @@ class Setup:
             sif = self.docker_image.replace("ncbi/pgap:", "pgap_") + ".sif"
             try:
                 subprocess.run([self.docker_cmd, 'sif', 'list', sif],
-                               check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                               check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
                 print("Singularity sif files exists, not updating.")
                 return
             except subprocess.CalledProcessError:
@@ -704,7 +729,7 @@ class Setup:
         print('Downloading (as needed) Docker image {}'.format(docker_url))
         r=None;
         try:
-            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True)
+            r = subprocess.run([self.docker_cmd, 'pull', docker_url], check=True, stdin=subprocess.DEVNULL)
             #print(r)
         except subprocess.CalledProcessError:
             print(r)
@@ -811,7 +836,12 @@ class Setup:
             f.write(u'{}\n'.format(self.use_version))
 
 
-        
+def remove_empty_files(rootdir):
+    for f in os.listdir(rootdir):
+        fullname = os.path.join(rootdir, f)
+        if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
+            quiet_remove(fullname)
+                
 def main():
     parser = argparse.ArgumentParser(description='Run PGAP.')
     parser.add_argument('input', nargs='?',
@@ -928,6 +958,7 @@ def main():
                         sys.exit(1)
                     else:
                         print("Ignoring")
+                    remove_empty_files(args.output)
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
@@ -940,6 +971,7 @@ def main():
                         submol_modified = os.path.join(args.output, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
+                remove_empty_files(args.output)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
