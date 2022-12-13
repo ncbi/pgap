@@ -772,7 +772,7 @@ steps:
       feats:
         default: fasta_cds_na
       fasta_name:
-        default: annot.ffn
+        default: annot_cds_from_genomic.fna
     out: [fasta]
   Generate_Annotation_Reports_cds_prot_fasta:
     run: progs/asn2fasta.cwl
@@ -783,7 +783,7 @@ steps:
       feats:
           default: fasta_cds_aa
       fasta_name:
-          default: annot.ffa
+          default: annot_translated_cds.faa
     out: [fasta]
   Final_Bacterial_Package_std_validation:
     run: progs/std_validation.cwl
