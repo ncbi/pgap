@@ -86,6 +86,9 @@ outputs:
   checkm_raw: 
     type: File
     outputSource: standard_pgap/checkm_raw
+  fastaval_errors:
+    type: File
+    outputSource: fastaval/out
     
 steps:
   passdata:
@@ -153,7 +156,7 @@ steps:
         check_internal_ns:
             default: true
         ignore_all_errors: ignore_all_errors
-    out: [success]
+    out: [success, out]
   vecscreen:
         run: vecscreen/vecscreen.cwl
         in:
