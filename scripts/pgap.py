@@ -151,7 +151,16 @@ def find_failed_step(filename):
     else:
         print("Unable to find error in log file.")
 
-        
+def get_cpus(self):
+    if 'SLURM_CPUS_PER_TASK' in os.environ:
+        return int(os.environ['SLURM_CPUS_PER_TASK'])
+    elif 'NSLOTS' in os.environ:
+        return int(os.environ['NSLOTS'])
+    elif self.params.args.cpus:
+        return self.params.args.cpus 
+    else:
+        return 0 
+       
 class Pipeline:
 
     def cleaunup(self):
@@ -181,8 +190,9 @@ class Pipeline:
         else:
             self.make_docker_cmd()
 
-        if (self.params.args.cpus):
-            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(self.params.args.cpus-1)])
+        cpusEnv = get_cpus(self)
+        if (cpusEnv):
+            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(cpusEnv - 1)])
  
         self.cmd.extend(['cwltool',
                         '--timestamps',
