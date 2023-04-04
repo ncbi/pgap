@@ -7,6 +7,7 @@ doc: |
   simple user input:  (FASTA + yaml only, no template)
 label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
+  - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement

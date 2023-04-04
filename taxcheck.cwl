@@ -4,6 +4,7 @@ cwlVersion: v1.2
 doc: |
   Perform taxonomic identification tasks on an input genome
 requirements:
+  - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement
