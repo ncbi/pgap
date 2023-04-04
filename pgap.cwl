@@ -23,9 +23,6 @@ inputs:
   blast_hits_cache_data:
     type: Directory?
   fasta: File
-  gc_assm_name: 
-    type: string
-    default: my_gc_assm_name
   report_usage: boolean
   submol: File
   ignore_all_errors:
@@ -174,7 +171,8 @@ steps:
       entries: prepare_input_template/output_entries
       seq_submit: prepare_input_template/output_seq_submit
       supplemental_data: supplemental_data
-      gc_assm_name: gc_assm_name
+      gc_assm_name: 
+        valueFrom: $(inputs.fasta.basename)
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: prepare_input_template/taxid
