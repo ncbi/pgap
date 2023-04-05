@@ -174,7 +174,8 @@ steps:
       seq_submit: prepare_input_template/output_seq_submit
       supplemental_data: supplemental_data
       gc_assm_name: 
-        valueFrom: $(inputs.fasta.basename)
+        source: "#fasta"
+        valueFrom: $(inputs.value.basename)
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: prepare_input_template/taxid
