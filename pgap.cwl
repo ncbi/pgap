@@ -175,7 +175,7 @@ steps:
       supplemental_data: supplemental_data
       gc_assm_name: 
         source: "#fasta"
-        valueFrom: $(inputs.value.basename)
+        valueFrom: $(inputs.gc_assm_name.basename)
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: prepare_input_template/taxid

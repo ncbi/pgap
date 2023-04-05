@@ -107,7 +107,7 @@ steps:
       seq_submit: prepare_input_template/output_seq_submit
       gc_assm_name: 
         source: "#fasta"
-        valueFrom: $(inputs.value.basename)
+        valueFrom: $(inputs.gc_assm_name.basename)
       taxon_db: passdata/taxon_db
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]  
   bacterial_kmer:
