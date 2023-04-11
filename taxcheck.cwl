@@ -4,6 +4,8 @@ cwlVersion: v1.2
 doc: |
   Perform taxonomic identification tasks on an input genome
 requirements:
+  - class: InlineJavascriptRequirement
+  - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement
@@ -103,7 +105,9 @@ steps:
     in:
       entries: prepare_input_template/output_entries
       seq_submit: prepare_input_template/output_seq_submit
-      gc_assm_name: ping_start/outstring
+      gc_assm_name: 
+        source: "#fasta"
+        valueFrom: $(inputs.gc_assm_name.basename)
       taxon_db: passdata/taxon_db
     out: [gencoll_asn, seqid_list, stats_report, asncache, ids_out, submit_block_template]  
   bacterial_kmer:

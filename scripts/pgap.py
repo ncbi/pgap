@@ -867,8 +867,8 @@ def main():
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     ani_group = parser.add_mutually_exclusive_group()
-    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
-    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Calculate Average Nucleotide Identity")
+    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Calculate Average Nucleotide Identity without running PGAP")
 
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
@@ -878,9 +878,9 @@ def main():
 
     report_group = parser.add_mutually_exclusive_group()
     report_group.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
-                        help='Set the report_usage flag in the YAML to true.')
+                        help='Report anonymized usage metadata to NCBI.')
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
-                        help='Set the report_usage flag in the YAML to false.')
+                        help='Do not report anonymized usage metadata to NCBI.')
     parser.add_argument("--container-name", 
                         dest='container_name', 
                         help='Specify a container name that will be used instead of automatically generated.')
@@ -899,7 +899,7 @@ def main():
                         dest='auto_correct_tax', 
                         action='store_true',
                         help='''
-                        If flag is set, run  ANI first, then PGAP, overriding the organism name provided by the user in the input YAML with the value returned by ANI Predicted organism. Obviously both actions need to be requested for this flag to take effect
+                        Override user-specified organism name with ANI predicted organism. Requires --taxcheck.
                         ''')
     parser.add_argument('-D', '--docker', metavar='path',
                         help='Docker-compatible executable (e.g. docker, podman, apptainer), which may include a full path like /usr/bin/docker')
