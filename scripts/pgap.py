@@ -128,9 +128,11 @@ def quiet_remove(filename):
     with contextlib.suppress(FileNotFoundError):
         os.remove(filename)
 
-def find_failed_step(filename):
+def find_failed_step(filename, output_file_name):
+
     r = "^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
     search = re.compile(r)
+    ofh = open(output_file_name, "w");
     lines = open(filename, "r").readlines()
     nameStarts = {}
     start = -1
@@ -145,11 +147,11 @@ def find_failed_step(filename):
                 start = nameStarts[name]
                 break
     if start > -1:
-        print("Printing log starting from failed job:\n")
+        print("Printing log starting from failed job:\n", file=ofh)
         for i in range(start, len(lines)):
-            print(lines[i], end="")
+            print(lines[i], end="", file=ofh)
     else:
-        print("Unable to find error in log file.")
+        print("Unable to find error in log file.", file=ofh)
 
 def get_cpus(self):
     if 'SLURM_CPUS_PER_TASK' in os.environ:
@@ -491,6 +493,7 @@ class Pipeline:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
             finally:
+                failed_step_generated = False 
                 if proc.returncode == None:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
@@ -498,13 +501,17 @@ class Pipeline:
                     print(f'{self.pipename} completed successfully.')
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
-                    find_failed_step(cwllog)
+                    failed_step_log = self.params.args.output + '/cwltool.failed_step.log'
+                    find_failed_step(cwllog, failed_step_log)
+                    failed_step_generated = True
                 output_files = [
                         {"file": "final_asndisc_diag.xml", "remove": True},
                         {"file": "final_asnval_diag.xml", "remove": True},
                         {"file": "initial_asndisc_diag.xml", "remove": True},
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
+                if failed_step_generated:
+                    output_file.append( {"file": "cwltool.failed_step.log", "remove": False})
                 self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
 
