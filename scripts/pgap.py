@@ -163,7 +163,7 @@ def get_cpus(self):
        
 class Pipeline:
 
-    def cleaunup(self):
+    def cleanup(self):
         for file in [self.yaml, self.submol]:
             if file != None and os.path.exists(file):
                 os.remove(file)
@@ -851,25 +851,63 @@ def remove_empty_files(rootdir):
         fullname = os.path.join(rootdir, f)
         if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
             quiet_remove(fullname)
-                
+
+def create_simple_input_yaml_file(fasta_location, genus_species, output_filename='input.yaml'):
+    # Note: The args are not validated here, as they are validated when the generated YAML files are ingested in the pipeline.
+    submol_content = f'''\
+organism:
+    genus_species: {genus_species}
+'''
+    with open('submol.yaml', 'w') as f:
+        f.write(submol_content)
+
+    yaml_content = f'''\
+fasta:
+    class: File
+    location: {fasta_location}
+submol:
+    class: File
+    location: submol.yaml
+'''
+    with open(output_filename, 'w') as f:
+        f.write(yaml_content)
+
+    return os.path.abspath(output_filename)
+       
 def main():
-    parser = argparse.ArgumentParser(description='Run PGAP.')
-    parser.add_argument('input', nargs='?',
-                        help='Input YAML file to process.')
+
+    parser = argparse.ArgumentParser(description="Input must be provided as:\n"
+                                                 " 1. a fasta/organism pair, e.g.\n"
+                                                 "    pgap.py ... -g input.fasta -s 'Escherichia coli'\n"
+                                                 "or\n"
+                                                 " 2. a YAML configuration file, e.g.\n"
+                                                 "    pgap.py ... input.yaml\n"
+                                                 , formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-g', '--genome', type=str, help='Path to genomic fasta')
+
+    parser.add_argument('-s', '--organism', type=str, help='Binomial name')
+    parser.add_argument('input', nargs='?', help=argparse.SUPPRESS)
+                        
+
     parser.add_argument('-V', '--version', action='store_true',
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-
+    
     version_group = parser.add_mutually_exclusive_group()
     version_group.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
     version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
 
     ani_group = parser.add_mutually_exclusive_group()
-    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Calculate Average Nucleotide Identity")
-    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Calculate Average Nucleotide Identity without running PGAP")
-
+    ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
+    ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    
+    parser.add_argument("--auto-correct-tax", 
+                        dest='auto_correct_tax', 
+                        action='store_true',
+                        help='Use the ANI predicted organism instead of the user-provided organism; requires --taxcheck.')
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -895,12 +933,6 @@ def main():
                         dest='no_internet', 
                         action='store_true',
                         help='Disable internet access for all programs in pipeline.')
-    parser.add_argument("--auto-correct-tax", 
-                        dest='auto_correct_tax', 
-                        action='store_true',
-                        help='''
-                        Override user-specified organism name with ANI predicted organism. Requires --taxcheck.
-                        ''')
     parser.add_argument('-D', '--docker', metavar='path',
                         help='Docker-compatible executable (e.g. docker, podman, apptainer), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -922,6 +954,16 @@ def main():
                         
     args = parser.parse_args()
 
+    # Check for the different no_yaml_group arguments scenarios.
+    if (args.genome and not args.organism) or (not args.genome and args.organism):
+        parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
+    elif not args.input and args.genome and args.organism:
+        args.input = create_simple_input_yaml_file(args.genome, args.organism)
+    elif args.input and args.genome and args.organism:
+        parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
+            "in combination with either the -s/--organism or -g/--genome arguments. "
+            "The -s/--organism and the -g/--genome arguments replace the YAML file argument input.")
+
     retcode = 0
     try:
         params = Setup(args)
@@ -929,7 +971,7 @@ def main():
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
-                p.cleaunup()
+                p.cleanup()
                 # args.output for some reason not always available 
                 time.sleep(1) 
                 # analyze ani output here
@@ -973,7 +1015,7 @@ def main():
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
-                p.cleaunup()
+                p.cleanup()
                 if retcode == 0:
                     for errors_xml_fn in glob.glob(os.path.join(args.output, "errors.xml")):
                         os.remove(errors_xml_fn)
