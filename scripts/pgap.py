@@ -511,7 +511,7 @@ class Pipeline:
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
                 if failed_step_generated:
-                    output_file.append( {"file": "cwltool.failed_step.log", "remove": False})
+                    output_files.append( {"file": "cwltool.failed_step.log", "remove": False})
                 self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
 
