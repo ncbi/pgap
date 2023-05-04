@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import print_function
 import sys
+
 min_python = (3,6)
 try:
     assert(sys.version_info >= min_python)
