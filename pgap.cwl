@@ -7,6 +7,8 @@ doc: |
   simple user input:  (FASTA + yaml only, no template)
 label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
+  - class: InlineJavascriptRequirement
+  - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: LoadListingRequirement
@@ -23,9 +25,6 @@ inputs:
   blast_hits_cache_data:
     type: Directory?
   fasta: File
-  gc_assm_name: 
-    type: string
-    default: my_gc_assm_name
   report_usage: boolean
   submol: File
   ignore_all_errors:
@@ -86,6 +85,9 @@ outputs:
   checkm_raw: 
     type: File
     outputSource: standard_pgap/checkm_raw
+  fastaval_errors:
+    type: File
+    outputSource: fastaval/out
     
 steps:
   passdata:
@@ -153,7 +155,7 @@ steps:
         check_internal_ns:
             default: true
         ignore_all_errors: ignore_all_errors
-    out: [success]
+    out: [success, out]
   vecscreen:
         run: vecscreen/vecscreen.cwl
         in:
@@ -171,7 +173,9 @@ steps:
       entries: prepare_input_template/output_entries
       seq_submit: prepare_input_template/output_seq_submit
       supplemental_data: supplemental_data
-      gc_assm_name: gc_assm_name
+      gc_assm_name: 
+        source: "#fasta"
+        valueFrom: $(inputs.gc_assm_name.basename)
       locus_tag_prefix: prepare_input_template/locus_tag_prefix
       report_usage: report_usage
       taxid: prepare_input_template/taxid

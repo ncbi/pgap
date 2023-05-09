@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import print_function
 import sys
+
 min_python = (3,6)
 try:
     assert(sys.version_info >= min_python)
@@ -128,9 +129,11 @@ def quiet_remove(filename):
     with contextlib.suppress(FileNotFoundError):
         os.remove(filename)
 
-def find_failed_step(filename):
+def find_failed_step(filename, output_file_name):
+
     r = "^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
     search = re.compile(r)
+    ofh = open(output_file_name, "w");
     lines = open(filename, "r").readlines()
     nameStarts = {}
     start = -1
@@ -145,16 +148,25 @@ def find_failed_step(filename):
                 start = nameStarts[name]
                 break
     if start > -1:
-        print("Printing log starting from failed job:\n")
+        print("Printing log starting from failed job:\n", file=ofh)
         for i in range(start, len(lines)):
-            print(lines[i], end="")
+            print(lines[i], end="", file=ofh)
     else:
-        print("Unable to find error in log file.")
+        print("Unable to find error in log file.", file=ofh)
 
-        
+def get_cpus(self):
+    if 'SLURM_CPUS_PER_TASK' in os.environ:
+        return int(os.environ['SLURM_CPUS_PER_TASK'])
+    elif 'NSLOTS' in os.environ:
+        return int(os.environ['NSLOTS'])
+    elif self.params.args.cpus:
+        return self.params.args.cpus 
+    else:
+        return 0 
+       
 class Pipeline:
 
-    def cleaunup(self):
+    def cleanup(self):
         for file in [self.yaml, self.submol]:
             if file != None and os.path.exists(file):
                 os.remove(file)
@@ -181,8 +193,9 @@ class Pipeline:
         else:
             self.make_docker_cmd()
 
-        if (self.params.args.cpus):
-            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(self.params.args.cpus-1)])
+        cpusEnv = get_cpus(self)
+        if (cpusEnv):
+            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(cpusEnv - 1)])
  
         self.cmd.extend(['cwltool',
                         '--timestamps',
@@ -481,6 +494,7 @@ class Pipeline:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
             finally:
+                failed_step_generated = False 
                 if proc.returncode == None:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
@@ -488,13 +502,17 @@ class Pipeline:
                     print(f'{self.pipename} completed successfully.')
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
-                    find_failed_step(cwllog)
+                    failed_step_log = self.params.args.output + '/cwltool.failed_step.log'
+                    find_failed_step(cwllog, failed_step_log)
+                    failed_step_generated = True
                 output_files = [
                         {"file": "final_asndisc_diag.xml", "remove": True},
                         {"file": "final_asnval_diag.xml", "remove": True},
                         {"file": "initial_asndisc_diag.xml", "remove": True},
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
+                if failed_step_generated:
+                    output_files.append( {"file": "cwltool.failed_step.log", "remove": False})
                 self.report_output_files(self.params.args.output, output_files)
         return proc.returncode
 
@@ -841,16 +859,50 @@ def remove_empty_files(rootdir):
         fullname = os.path.join(rootdir, f)
         if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
             quiet_remove(fullname)
-                
+
+def create_simple_input_yaml_file(fasta_location, genus_species, output_filename='input.yaml'):
+    # Note: The args are not validated here, as they are validated when the generated YAML files are ingested in the pipeline.
+    submol_content = f'''\
+organism:
+    genus_species: {genus_species}
+'''
+    with open('submol.yaml', 'w') as f:
+        f.write(submol_content)
+
+    yaml_content = f'''\
+fasta:
+    class: File
+    location: {fasta_location}
+submol:
+    class: File
+    location: submol.yaml
+'''
+    with open(output_filename, 'w') as f:
+        f.write(yaml_content)
+
+    return os.path.abspath(output_filename)
+       
 def main():
-    parser = argparse.ArgumentParser(description='Run PGAP.')
-    parser.add_argument('input', nargs='?',
-                        help='Input YAML file to process.')
+
+    parser = argparse.ArgumentParser(description="Input must be provided as:\n"
+                                                 " 1. a fasta/organism pair, e.g.\n"
+                                                 "    pgap.py ... -g input.fasta -s 'Escherichia coli'\n"
+                                                 "or\n"
+                                                 " 2. a YAML configuration file, e.g.\n"
+                                                 "    pgap.py ... input.yaml\n"
+                                                 , formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-g', '--genome', type=str, help='Path to genomic fasta')
+
+    parser.add_argument('-s', '--organism', type=str, help='Binomial name')
+    parser.add_argument('input', nargs='?', help=argparse.SUPPRESS)
+                        
+
     parser.add_argument('-V', '--version', action='store_true',
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-
+    
     version_group = parser.add_mutually_exclusive_group()
     version_group.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
     version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
@@ -859,7 +911,11 @@ def main():
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
     ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
-
+    
+    parser.add_argument("--auto-correct-tax", 
+                        dest='auto_correct_tax', 
+                        action='store_true',
+                        help='Use the ANI predicted organism instead of the user-provided organism; requires --taxcheck.')
     action_group = parser.add_mutually_exclusive_group()
     action_group.add_argument('-l', '--list', action='store_true', help='List available versions.')
     action_group.add_argument('-u', '--update', dest='update', action='store_true',
@@ -868,9 +924,9 @@ def main():
 
     report_group = parser.add_mutually_exclusive_group()
     report_group.add_argument('-r', '--report-usage-true', dest='report_usage_true', action='store_true',
-                        help='Set the report_usage flag in the YAML to true.')
+                        help='Report anonymized usage metadata to NCBI.')
     report_group.add_argument('-n', '--report-usage-false', dest='report_usage_false', action='store_true',
-                        help='Set the report_usage flag in the YAML to false.')
+                        help='Do not report anonymized usage metadata to NCBI.')
     parser.add_argument("--container-name", 
                         dest='container_name', 
                         help='Specify a container name that will be used instead of automatically generated.')
@@ -885,12 +941,6 @@ def main():
                         dest='no_internet', 
                         action='store_true',
                         help='Disable internet access for all programs in pipeline.')
-    parser.add_argument("--auto-correct-tax", 
-                        dest='auto_correct_tax', 
-                        action='store_true',
-                        help='''
-                        If flag is set, run  ANI first, then PGAP, overriding the organism name provided by the user in the input YAML with the value returned by ANI Predicted organism. Obviously both actions need to be requested for this flag to take effect
-                        ''')
     parser.add_argument('-D', '--docker', metavar='path',
                         help='Docker-compatible executable (e.g. docker, podman, apptainer), which may include a full path like /usr/bin/docker')
     parser.add_argument('-o', '--output', metavar='path', default='output',
@@ -912,6 +962,16 @@ def main():
                         
     args = parser.parse_args()
 
+    # Check for the different no_yaml_group arguments scenarios.
+    if (args.genome and not args.organism) or (not args.genome and args.organism):
+        parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
+    elif not args.input and args.genome and args.organism:
+        args.input = create_simple_input_yaml_file(args.genome, args.organism)
+    elif args.input and args.genome and args.organism:
+        parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
+            "in combination with either the -s/--organism or -g/--genome arguments. "
+            "The -s/--organism and the -g/--genome arguments replace the YAML file argument input.")
+
     retcode = 0
     try:
         params = Setup(args)
@@ -919,7 +979,7 @@ def main():
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
-                p.cleaunup()
+                p.cleanup()
                 # args.output for some reason not always available 
                 time.sleep(1) 
                 # analyze ani output here
@@ -963,7 +1023,7 @@ def main():
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
-                p.cleaunup()
+                p.cleanup()
                 if retcode == 0:
                     for errors_xml_fn in glob.glob(os.path.join(args.output, "errors.xml")):
                         os.remove(errors_xml_fn)
