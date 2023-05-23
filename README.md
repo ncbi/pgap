@@ -22,7 +22,6 @@ completeness of the annotated gene set is estimated with
 The workflow provided here also offers the option to confirm or correct the organism
 associated with the genome assembly prior to starting the annotation, using the 
 [Average Nucleotide Identity tool](https://pubmed.ncbi.nlm.nih.gov/29792589/).
-. 
 
 Get started by watching this [webinar](https://www.youtube.com/watch?v=pNn_-_46lpI)!
 
@@ -67,6 +66,7 @@ Genome Research. 2018; 28(7):1079-1089.
 [CheckM: assessing the quality of microbial genomes recovered from isolates, single cells, and metagenomes](https://pubmed.ncbi.nlm.nih.gov/25977477/)\
 Parks DH, Imelfort M, Skennerton CT, Hugenholtz P, Tyson GW.\
 Genome Research. 2015; 25(7):1043-1055.
+
 
 ### TIGRFAMs
 
