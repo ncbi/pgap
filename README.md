@@ -15,7 +15,13 @@ in 2001 and is regularly upgraded to improve structural and functional
 annotation quality ([Li W, O'Neill KR et al 2021](https://www.ncbi.nlm.nih.gov/pubmed/33270901)). Recent 
 improvements include utilization of curated protein profile hidden Markov models (HMMs), 
 and curated complex domain architectures for functional annotation of proteins and 
-annotation of Enzyme Commission numbers and Gene Ontology terms.
+annotation of Enzyme Commission numbers and Gene Ontology terms. Post-annotation, the 
+completeness of the annotated gene set is estimated with 
+[CheckM](https://pubmed.ncbi.nlm.nih.gov/25977477/).
+
+The workflow provided here also offers the option to confirm or correct the organism
+associated with the genome assembly prior to starting the annotation, using the 
+[Average Nucleotide Identity tool](https://pubmed.ncbi.nlm.nih.gov/29792589/).
 
 Get started by watching this [webinar](https://www.youtube.com/watch?v=pNn_-_46lpI)!
 
@@ -55,6 +61,12 @@ Int J Syst Evol Microbiol. 2018 Jul;68(7):2386-2392.
 [Modeling leaderless transcription and atypical genes results in more accurate gene prediction in prokaryotes](https://www.ncbi.nlm.nih.gov/pubmed/29773659/)\
 Lomsadze A, Gemayel K, Tang S, Borodovsky M.\
 Genome Research. 2018; 28(7):1079-1089.
+
+### CheckM
+[CheckM: assessing the quality of microbial genomes recovered from isolates, single cells, and metagenomes](https://pubmed.ncbi.nlm.nih.gov/25977477/)\
+Parks DH, Imelfort M, Skennerton CT, Hugenholtz P, Tyson GW.\
+Genome Research. 2015; 25(7):1043-1055.
+
 
 ### TIGRFAMs
 
@@ -106,6 +118,12 @@ licensing terms of the respective license holders.
 GeneMarkS-2+ is distributed as part of PGAP with limited rights of use
 and redistribution from the Georgia Tech Research Corporation. See the
 [full text of the license](GeneMarkS_Software_License.txt).
+
+### CheckM
+
+GNU General Public License v3.0
+
+Permissions of this strong copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights. See the [full text of the license](Check-M-license.txt).
 
 ### TIGRFAMs
 
