@@ -1050,6 +1050,9 @@ outputs:
   proc_annot_stats: 
     type: File
     outputSource:  Validate_Annotation_proc_annot_stats/var_proc_annot_stats_xml
+  all_proc_annot_stats: 
+    type: File
+    outputSource:  Validate_Annotation_collect_annot_stats/output
   initial_asndisc_error_diag:
     type: File?
     outputSource:  Prepare_Unannotated_Sequences_asndisc_evaluate/xml_output 
