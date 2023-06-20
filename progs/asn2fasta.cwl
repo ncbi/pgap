@@ -25,6 +25,10 @@ inputs:
     type: boolean?
     inputBinding:
         prefix: -prots-only
+  ignore_orig_id: 
+    type: boolean?
+    inputBinding:
+        prefix: -ignore-origid
   fasta_name:
     type: string?
     inputBinding:
