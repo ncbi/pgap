@@ -748,22 +748,11 @@ steps:
         nuc_fasta_name:
             default: annot.fna
     out: [nuc_fasta]
-  Generate_Annotation_Reports_nuc_non_NCBI_fasta:
-    run: progs/asn2fasta.cwl
-    in:
-        i: Final_Bacterial_Package_sqn2gbent/output
-        type:
-            default: seq-entry
-        nuc_fasta_name:
-            default: annot_non_NCBI.fna
-        ignore_orig_id: 
-            default: true 
-    out: [nuc_fasta]
   Generate_Annotation_Reports_gff_enhanced:
     run: progs/produce_enhanced_gff.cwl
     in:
         gff: Generate_Annotation_Reports_gff/output
-        fasta: Generate_Annotation_Reports_nuc_non_NCBI_fasta/nuc_fasta
+        fasta: Generate_Annotation_Reports_nuc_fasta/nuc_fasta
     out: [output]
   Generate_Annotation_Reports_prot_fasta:
     run: progs/asn2fasta.cwl
