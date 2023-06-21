@@ -17,7 +17,7 @@ inputs:
       position: 1
   separator:
     type: string?
-    default: '### FASTA'
+    default: '## FASTA'
   separator_file:
     type: string?
     default: 'separator.txt'
