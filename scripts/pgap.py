@@ -506,7 +506,7 @@ class Pipeline:
                         {"file": "initial_asndisc_diag.xml", "remove": True},
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
-                self.report_output_files(self.params.args.output, output_files)
+                self.report_output_files(self.params.outputdir, output_files)
         return proc.returncode
 
 class Setup:
@@ -976,14 +976,18 @@ def main():
                 # args.output for some reason not always available 
                 time.sleep(1) 
                 # analyze ani output here
-                if not os.path.exists(args.output):
-                    print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
+                print (f"DEBUG: args.output = {args.output}")
+                print (f"DEBUG: params.outputdir = {params.outputdir}")
+                outputdir = args.output # this does not work
+                outputdir = params.outputdir
+                if not os.path.exists(outputdir):
+                    print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(outputdir))
                     if  args.ignore_all_errors == False:
                         sys.exit(1)
                     else:
                         print("Ignoring")
-                params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
-                params.ani_hr_output = os.path.join(args.output, "ani-tax-report.txt")
+                params.ani_output = os.path.join(outputdir, "ani-tax-report.xml")
+                params.ani_hr_output = os.path.join(outputdir, "ani-tax-report.txt")
                 if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
                     True
                 else:
@@ -993,7 +997,7 @@ def main():
                 else:
                     params.ani_hr_output = None 
                 
-                errors_xml_fn = os.path.join(args.output, "errors.xml")
+                errors_xml_fn = os.path.join(outputdir, "errors.xml")
                 # if there are errors
                 # and we do not want to recover them when it is recoverable
                 #  then bail
@@ -1017,13 +1021,13 @@ def main():
                 retcode = p.launch()
                 p.cleanup()
                 if retcode == 0:
-                    for errors_xml_fn in glob.glob(os.path.join(args.output, "errors.xml")):
+                    for errors_xml_fn in glob.glob(os.path.join(outputdir, "errors.xml")):
                         os.remove(errors_xml_fn)
                     if(p.submol != None):
-                        submol_modified = os.path.join(args.output, p.submol)
+                        submol_modified = os.path.join(outputdir, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
-            remove_empty_files(args.output)
+            remove_empty_files(outputdir)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
