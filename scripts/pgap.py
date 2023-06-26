@@ -1011,7 +1011,6 @@ def main():
                         sys.exit(1)
                     else:
                         print("Ignoring")
-                    remove_empty_files(args.output)
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
@@ -1024,7 +1023,7 @@ def main():
                         submol_modified = os.path.join(args.output, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
-                remove_empty_files(args.output)
+            remove_empty_files(args.output)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
