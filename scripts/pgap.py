@@ -1020,6 +1020,7 @@ def main():
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
                 p.cleanup()
+                outputdir = p.params.outputdir 
                 if retcode == 0:
                     for errors_xml_fn in glob.glob(os.path.join(outputdir, "errors.xml")):
                         os.remove(errors_xml_fn)
