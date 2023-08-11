@@ -642,15 +642,9 @@ class Setup:
     def get_output_dir(self):
         outputdir = os.path.abspath(self.args.output)
         if os.path.exists(outputdir):
-            parent, base = os.path.split(outputdir)
-            counter = 0
-            for sibling in os.listdir(parent):
-                if sibling.startswith(base + '.'):
-                    ext = sibling[len(base)+1:]
-                    if ext.isdecimal():
-                       counter = max(counter, int(ext))
-            outputdir = os.path.join(parent, base+'.'+str(counter+1))
-        return outputdir
+            sys.exit(f"Output directory {outputdir} exists, exiting.")
+        else:
+            return outputdir
 
     def get_docker_info(self):
         docker_type_alternatives = ['docker', 'podman', 'singularity', 'apptainer']
