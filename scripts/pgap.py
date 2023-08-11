@@ -948,6 +948,9 @@ def main():
                         
     args = parser.parse_args()
 
+    if ( (not args.report_usage_true) and (not args.report_usage_false) ):
+        parser.error("One of -n/--report-usage-false or -r/--report-usage-true must be provided.")
+
     # Check for the different no_yaml_group arguments scenarios.
     if (args.genome and not args.organism) or (not args.genome and args.organism):
         parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
