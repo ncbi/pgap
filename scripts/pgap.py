@@ -889,11 +889,10 @@ def main():
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-    
-    version_group = parser.add_mutually_exclusive_group()
-    version_group.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
-    version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
-    version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
+
+    parser.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
+    parser.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
+    parser.add_argument('--prod', action='store_true', help=argparse.SUPPRESS) # help="Use a production candidate version. For internal testing."
 
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
