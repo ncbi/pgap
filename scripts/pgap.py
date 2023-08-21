@@ -547,7 +547,7 @@ class Setup:
             self.docker_image = "ncbi/{}:{}".format(self.repo, self.use_version)
         self.data_path = '{}/input-{}'.format(self.install_dir, self.use_version)
         self.test_genomes_path = '{}/test_genomes-{}'.format(self.install_dir, self.use_version)
-        self.outputdir = self.get_output_dir()
+        self.outputdir = self.args.output
         self.get_docker_info()
         if self.docker_type == 'podman':
             # see PGAPX-1073
@@ -556,12 +556,6 @@ class Setup:
         self.update_self()
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
-
-        # Create a work directory.
-        if args.input:
-            print("Output will be placed in:", self.outputdir)
-            os.mkdir(self.outputdir)
-        
 
     def get_branch(self):
         if (self.args.dev):
@@ -638,13 +632,6 @@ class Setup:
         if (self.local_version == None) or self.args.update:
             return self.get_latest_version()
         return self.local_version
-
-    def get_output_dir(self):
-        outputdir = os.path.abspath(self.args.output)
-        if os.path.exists(outputdir):
-            sys.exit(f"Output directory {outputdir} exists, exiting.")
-        else:
-            return outputdir
 
     def get_docker_info(self):
         docker_type_alternatives = ['docker', 'podman', 'singularity', 'apptainer']
@@ -847,27 +834,44 @@ def remove_empty_files(rootdir):
         if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
             quiet_remove(fullname)
 
-def create_simple_input_yaml_file(fasta_location, genus_species, output_filename='input.yaml'):
+def copy_fasta_to_output(fasta_path, output_dir):
+    if not os.path.exists(output_dir):
+        print("Error: The output directory does not exist!", file=sys.stderr)
+        sys.exit(1)  # This will terminate the program with an error code of 1
+    
+    output_path = os.path.join(output_dir, os.path.basename(fasta_path))
+    shutil.copy2(fasta_path, output_path)
+    return output_path
+
+def create_simple_input_yaml_file(fasta_location, genus_species, output_dir):
     # Note: The args are not validated here, as they are validated when the generated YAML files are ingested in the pipeline.
-    submol_content = f'''\
+    
+    # Correcting the path to be within the output directory
+    submol_filepath = os.path.join(output_dir, 'submol.yaml')
+    with open(submol_filepath, 'w') as f:
+        f.write(f'''\
 organism:
     genus_species: {genus_species}
-'''
-    with open('submol.yaml', 'w') as f:
-        f.write(submol_content)
+''')
 
-    yaml_content = f'''\
+    # Use only the filename for submol within the yaml content
+    rel_submol_filepath = os.path.basename(submol_filepath)
+    
+	
+    # Correcting the path to be within the output directory for the YAML content
+    yaml_filepath = os.path.join(output_dir, 'input.yaml')
+    fasta_file_name = os.path.basename(fasta_location)
+    with open(yaml_filepath, 'w') as f:
+        f.write(f'''\
 fasta:
     class: File
-    location: {fasta_location}
+    location: {fasta_file_name}
 submol:
     class: File
-    location: submol.yaml
-'''
-    with open(output_filename, 'w') as f:
-        f.write(yaml_content)
+    location: {rel_submol_filepath}
+''')
 
-    return os.path.abspath(output_filename)
+    return os.path.abspath(yaml_filepath)
        
 def main():
 
@@ -947,6 +951,15 @@ def main():
                         help='Debug mode')
                         
     args = parser.parse_args()
+    
+    # Create a work directory.
+    if args.input or (args.genome and args.organism):
+        output_dir = os.path.abspath(args.output)
+        if os.path.exists(output_dir):
+            sys.exit(f"Output directory {output_dir} exists, exiting.")
+        else:
+            print("Output will be placed in:", output_dir)
+            os.mkdir(output_dir, mode=0o777)
 
     if ( (args.input or args.genome) and (not args.report_usage_true) and (not args.report_usage_false) ):
         parser.error("One of -n/--report-usage-false or -r/--report-usage-true must be provided.")
@@ -955,7 +968,8 @@ def main():
     if (args.genome and not args.organism) or (not args.genome and args.organism):
         parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
-        args.input = create_simple_input_yaml_file(args.genome, args.organism)
+        args.genome = copy_fasta_to_output(args.genome, args.output)
+        args.input = create_simple_input_yaml_file(args.genome, args.organism, args.output) 
     elif args.input and args.genome and args.organism:
         parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
             "in combination with either the -s/--organism or -g/--genome arguments. "
