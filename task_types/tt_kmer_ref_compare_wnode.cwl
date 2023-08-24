@@ -43,7 +43,7 @@ steps:
             num_partitions: 
                 default: 1
             output: 
-                default: "distances.##"
+                default: "distances.##.gz"
             output_glob:
                 default: "distances.*.gz"
             unzip:
