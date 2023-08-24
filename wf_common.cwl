@@ -120,6 +120,7 @@ steps:
       - 23s_model_path
       - AntiFamLib
       - all_order_specific_blastdb_file
+      - amr_finder_plus_database
       - asn2pas_xsl
       - identification_db_dir
       - CDDdata2
@@ -561,8 +562,18 @@ steps:
     # # tasktype coded, input/output matches
     # # application not coded
   # ###############################################
-  # # AMR plane is for later stages skipping
+  # # AMR plane 
   # ###############################################
+  AMR_naming:
+    run: amr_naming/wf_amr_naming.cwl
+    in:
+      annotation: bacterial_annot_4/out_annotation
+      # aka Bacterial_Annot_Filter/out_annotation
+      database: passdata/amr_finder_plus_database
+      passdata: passdata/taxon_db
+      taxid: taxid
+    out: [amr_report]
+      
   bacterial_orthology_conditional:
     run: bacterial_orthology/wf_bacterial_orthology_conditional.cwl
     in:
@@ -1062,4 +1073,7 @@ outputs:
   checkm_results: 
     type: File
     outputSource: checkm/checkm_results
+  amr_report:
+    type: File
+    outputSource: AMR_naming/amr_report
   
