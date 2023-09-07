@@ -40,6 +40,14 @@ inputs:
     type: float
     inputBinding:
       prefix: -threshold
+  minN:
+    type: int
+    inputBinding:
+      prefix: -minN
+  strict:
+    type: boolean?
+    inputBinding:
+      prefix: -strict
 outputs:
     matches:
         type: File
