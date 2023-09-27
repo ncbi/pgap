@@ -258,8 +258,8 @@ class Pipeline:
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
-            if self.params.args.container_name:
-                self.cmd.extend(['--name', self.params.args.container_name])
+        if self.params.args.container_name:
+            self.cmd.extend(['--name', self.params.args.container_name])
         self.cmd.append(self.params.docker_image)
 
     def make_singularity_cmd(self):
