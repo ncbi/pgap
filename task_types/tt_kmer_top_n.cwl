@@ -23,8 +23,12 @@ steps:
         in:
             kmer_cache_sqlite: kmer_cache_sqlite
             N:    
-                default: 20
+                default: 40
             distances: distances
             threshold: 
-                default: 0.8
+                default: 0.995
+            minN:
+                default: 5
+            strict:
+                default: true
         out: [top_distances, matches]

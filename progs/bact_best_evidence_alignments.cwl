@@ -12,7 +12,7 @@ requirements:
         entry: ${var blob = '# annotation.mft created for bact_best_evidence_alignments from input annotation Array of Files\n'; for (var i = 0; i < inputs.annotation.length; i++) { blob += inputs.annotation[i].path + '\n'; } return blob; }
 
 baseCommand: bact_best_evidence_alignments
-arguments: [-support-threshold, "25.0",-weak-threshold, "20"]
+arguments: [-support-threshold, "25.0",-weak-threshold, "17"]
 inputs:
   annotation:
     type: File[]

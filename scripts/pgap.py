@@ -258,8 +258,8 @@ class Pipeline:
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
-            if self.params.args.container_name:
-                self.cmd.extend(['--name', self.params.args.container_name])
+        if self.params.args.container_name:
+            self.cmd.extend(['--name', self.params.args.container_name])
         self.cmd.append(self.params.docker_image)
 
     def make_singularity_cmd(self):
@@ -506,7 +506,7 @@ class Pipeline:
                         {"file": "initial_asndisc_diag.xml", "remove": True},
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
-                self.report_output_files(self.params.args.output, output_files)
+                self.report_output_files(self.params.outputdir, output_files)
         return proc.returncode
 
 class Setup:
@@ -642,15 +642,9 @@ class Setup:
     def get_output_dir(self):
         outputdir = os.path.abspath(self.args.output)
         if os.path.exists(outputdir):
-            parent, base = os.path.split(outputdir)
-            counter = 0
-            for sibling in os.listdir(parent):
-                if sibling.startswith(base + '.'):
-                    ext = sibling[len(base)+1:]
-                    if ext.isdecimal():
-                       counter = max(counter, int(ext))
-            outputdir = os.path.join(parent, base+'.'+str(counter+1))
-        return outputdir
+            sys.exit(f"Output directory {outputdir} exists, exiting.")
+        else:
+            return outputdir
 
     def get_docker_info(self):
         docker_type_alternatives = ['docker', 'podman', 'singularity', 'apptainer']
@@ -853,6 +847,29 @@ def remove_empty_files(rootdir):
         if os.path.isfile(fullname) and os.path.getsize(fullname) == 0:
             quiet_remove(fullname)
 
+def copy_genome_to_workspace(genome, original_workspace):
+    
+    # Check if the input file actually exists
+    if not os.path.exists(genome):
+        print(f"Error: The input genome file:{genome} does not exist.")
+        sys.exit(1)  # Exit the script with an error code
+    
+    filename = os.path.basename(genome)
+    new_genome_path = os.path.join(original_workspace, filename)
+    
+    # Check if the file with the same name already exists in the workspace
+    if os.path.exists(new_genome_path):
+        return filename
+    
+    try:
+        # Attempt to copy the file
+        shutil.copy2(genome, new_genome_path)
+    except FileNotFoundError:
+        print("Error: The genome file {genome} does not exist.")
+        sys.exit(1)  # Exit the script with an error code
+    
+    return filename
+
 def create_simple_input_yaml_file(fasta_location, genus_species, output_filename='input.yaml'):
     # Note: The args are not validated here, as they are validated when the generated YAML files are ingested in the pipeline.
     submol_content = f'''\
@@ -874,7 +891,7 @@ submol:
         f.write(yaml_content)
 
     return os.path.abspath(output_filename)
-       
+
 def main():
 
     parser = argparse.ArgumentParser(description="Input must be provided as:\n"
@@ -895,11 +912,10 @@ def main():
                         help='Print currently set up PGAP version')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose mode')
-    
-    version_group = parser.add_mutually_exclusive_group()
-    version_group.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
-    version_group.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
-    version_group.add_argument('--prod', action='store_true', help="Use a production candidate version. For internal testing.")
+
+    parser.add_argument('--dev',  action='store_true', help=argparse.SUPPRESS) # help="Set development mode")
+    parser.add_argument('--test', action='store_true', help=argparse.SUPPRESS) # help="Set test mode")
+    parser.add_argument('--prod', action='store_true', help=argparse.SUPPRESS) # help="Use a production candidate version. For internal testing."
 
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
@@ -955,10 +971,18 @@ def main():
                         
     args = parser.parse_args()
 
+    # const storing the initial working directory.
+    # Please do not modify this variable's value.
+    ORIGINAL_WORKSPACE = os.getcwd()
+
+    if ( (args.input or args.genome) and (not args.report_usage_true) and (not args.report_usage_false) ):
+        parser.error("One of -n/--report-usage-false or -r/--report-usage-true must be provided.")
+
     # Check for the different no_yaml_group arguments scenarios.
     if (args.genome and not args.organism) or (not args.genome and args.organism):
         parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
+        args.genome = copy_genome_to_workspace(args.genome, ORIGINAL_WORKSPACE)
         args.input = create_simple_input_yaml_file(args.genome, args.organism)
     elif args.input and args.genome and args.organism:
         parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
@@ -976,14 +1000,18 @@ def main():
                 # args.output for some reason not always available 
                 time.sleep(1) 
                 # analyze ani output here
-                if not os.path.exists(args.output):
-                    print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(args.output))
+                print (f"DEBUG: args.output = {args.output}")
+                print (f"DEBUG: params.outputdir = {params.outputdir}")
+                outputdir = args.output # this does not work
+                outputdir = params.outputdir
+                if not os.path.exists(outputdir):
+                    print("INTERNAL(SYSTEM)PROBLEM: abort: output directory does not exist: {}".format(outputdir))
                     if  args.ignore_all_errors == False:
                         sys.exit(1)
                     else:
                         print("Ignoring")
-                params.ani_output = os.path.join(args.output, "ani-tax-report.xml")
-                params.ani_hr_output = os.path.join(args.output, "ani-tax-report.txt")
+                params.ani_output = os.path.join(outputdir, "ani-tax-report.xml")
+                params.ani_hr_output = os.path.join(outputdir, "ani-tax-report.txt")
                 if os.path.exists(params.ani_output) and os.path.getsize(params.ani_output) > 0:
                     True
                 else:
@@ -993,7 +1021,7 @@ def main():
                 else:
                     params.ani_hr_output = None 
                 
-                errors_xml_fn = os.path.join(args.output, "errors.xml")
+                errors_xml_fn = os.path.join(outputdir, "errors.xml")
                 # if there are errors
                 # and we do not want to recover them when it is recoverable
                 #  then bail
@@ -1011,20 +1039,20 @@ def main():
                         sys.exit(1)
                     else:
                         print("Ignoring")
-                    remove_empty_files(args.output)
                     
             if not args.ani_only:
                 p = Pipeline(params, args.input, "pgap")
                 retcode = p.launch()
                 p.cleanup()
+                outputdir = p.params.outputdir 
                 if retcode == 0:
-                    for errors_xml_fn in glob.glob(os.path.join(args.output, "errors.xml")):
+                    for errors_xml_fn in glob.glob(os.path.join(outputdir, "errors.xml")):
                         os.remove(errors_xml_fn)
                     if(p.submol != None):
-                        submol_modified = os.path.join(args.output, p.submol)
+                        submol_modified = os.path.join(outputdir, p.submol)
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
-                remove_empty_files(args.output)
+            remove_empty_files(outputdir)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
