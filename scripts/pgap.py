@@ -892,6 +892,56 @@ submol:
 
     return os.path.abspath(output_filename)
 
+def validate_prefix(prefix):
+
+    """
+    Validates the given prefix to ensure it can be used in a filename on Linux, macOS, and Windows.
+    
+    Exits the program with an error message if the prefix is not valid.
+    
+    Valid Prefix:
+    - Contains only alphanumeric characters, underscores, or hyphens.
+    e.g., "my_prefix", "prefix123", "123_prefix", "prefix-123"
+    
+    Invalid Prefix:
+    - Contains any characters other than alphanumeric characters, underscores, or hyphens.
+    e.g., "my prefix", "prefix#", "prefix@", "prefix!"
+    
+    Note: This function is compatible with Linux, macOS, and Windows filenames.
+    """
+    if not re.match("^[a-zA-Z0-9_\-]+$", prefix):
+        sys.exit(f"The provided prefix '{prefix}' is invalid. A valid prefix should only contain alphanumeric characters, underscores, and hyphens.")
+    return True
+
+def apply_prefix_to_output_dir(output_dir, prefix):
+    """
+    Removes the default prefix "annot" and adds the given prefix to each file in the specified directory.
+
+    Parameters:
+    - output_dir (str): The path of the directory containing the files to rename.
+    - prefix (str): The prefix to add to each file name.
+
+    Returns:
+    - None
+    """
+    if not os.path.exists(output_dir):
+        print(f"The directory {output_dir} does not exist.")
+        return
+
+    for filename in os.listdir(output_dir):
+        file_path = os.path.join(output_dir, filename)
+        if os.path.isfile(file_path):
+            # Remove existing 'annot' prefix if present
+            new_filename = filename
+            if filename.startswith("annot"):
+                new_filename = filename[5:]
+
+            # Add the new prefix
+            new_file_path = os.path.join(output_dir, prefix + new_filename)
+            
+            # Rename the file
+            os.rename(file_path, new_file_path)
+
 def main():
 
     parser = argparse.ArgumentParser(description="Input must be provided as:\n"
@@ -958,6 +1008,8 @@ def main():
                         #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
+    parser.add_argument('--prefix', type=str,
+                        help='Set the prefix for output files (default: "annot")')
     parser.add_argument('--no-self-update', action='store_true',
                         dest='no_self_up',
                         help='Do not attempt to update this script')
@@ -970,6 +1022,10 @@ def main():
                         help='Debug mode')
                         
     args = parser.parse_args()
+
+    # Ensure that user provided prefix is valid.
+    if args.prefix:
+        validate_prefix(args.prefix) 
 
     # const storing the initial working directory.
     # Please do not modify this variable's value.
@@ -1053,6 +1109,10 @@ def main():
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
             remove_empty_files(outputdir)
+
+                       
+            if args.prefix:
+                apply_prefix_to_output_dir(outputdir, args.prefix)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
