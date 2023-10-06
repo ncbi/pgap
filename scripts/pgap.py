@@ -1110,7 +1110,6 @@ def main():
                             os.remove(submol_modified)
             remove_empty_files(outputdir)
 
-                       
             if args.prefix:
                 apply_prefix_to_output_dir(outputdir, args.prefix)
 
