@@ -954,7 +954,7 @@ def main():
 
     parser.add_argument('-g', '--genome', type=str, help='Path to genomic fasta')
 
-    parser.add_argument('-s', '--organism', type=str, help='Organism name: genus or any level below genus')
+    parser.add_argument('-s', '--organism', type=str, help='Organism name: genus, genus species, or more specific and known to NCBI Taxonomy, see https://github.com/ncbi/pgap/wiki/Input-Files#taxonomy-information for more information')
     parser.add_argument('input', nargs='?', help=argparse.SUPPRESS)
                         
 
