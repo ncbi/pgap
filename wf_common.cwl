@@ -120,6 +120,7 @@ steps:
       - 23s_model_path
       - AntiFamLib
       - all_order_specific_blastdb_file
+      - amr_finder_plus_database
       - asn2pas_xsl
       - identification_db_dir
       - CDDdata2
@@ -398,7 +399,7 @@ steps:
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: 
-        default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
+        default: /netmnt/vast01/gp/ThirdParty/GeneMark/
       thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
@@ -472,7 +473,7 @@ steps:
         wp_hashes: passdata/wp_hashes
         taxon_db: passdata/taxon_db
         genemark_path: 
-          default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
+          default: /netmnt/vast01/gp/ThirdParty/GeneMark/
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
@@ -561,8 +562,18 @@ steps:
     # # tasktype coded, input/output matches
     # # application not coded
   # ###############################################
-  # # AMR plane is for later stages skipping
+  # # AMR plane 
   # ###############################################
+  AMR_naming:
+    run: amr_naming/wf_amr_naming.cwl
+    in:
+      annotation: bacterial_annot_4/out_annotation
+      # aka Bacterial_Annot_Filter/out_annotation
+      database: passdata/amr_finder_plus_database
+      passdata: passdata/taxon_db
+      taxid: taxid
+    out: [amr_report]
+      
   bacterial_orthology_conditional:
     run: bacterial_orthology/wf_bacterial_orthology_conditional.cwl
     in:
@@ -1062,4 +1073,7 @@ outputs:
   checkm_results: 
     type: File
     outputSource: checkm/checkm_results
+  amr_report:
+    type: File
+    outputSource: AMR_naming/amr_report
   
