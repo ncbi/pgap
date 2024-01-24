@@ -398,7 +398,7 @@ steps:
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
       genemark_path: 
-        default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
+        default: /netmnt/vast01/gp/ThirdParty/GeneMark/
       thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
@@ -472,7 +472,7 @@ steps:
         wp_hashes: passdata/wp_hashes
         taxon_db: passdata/taxon_db
         genemark_path: 
-          default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/GeneMark/
+          default: /netmnt/vast01/gp/ThirdParty/GeneMark/
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
@@ -561,7 +561,7 @@ steps:
     # # tasktype coded, input/output matches
     # # application not coded
   # ###############################################
-  # # AMR plane is for later stages skipping
+  # # AMR plane is for later stages skipping 
   # ###############################################
   bacterial_orthology_conditional:
     run: bacterial_orthology/wf_bacterial_orthology_conditional.cwl
