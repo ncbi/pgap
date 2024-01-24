@@ -402,7 +402,7 @@ steps:
       thresholds: passdata/thresholds
     out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
 
-  spurious_annot_1: # PLANE
+  spurious_annot_prelim: # PLANE
     run: spurious_annot/wf_spurious_annot_pass1.cwl
     in:
       Extract_ORF_Proteins_proteins: bacterial_annot/proteins
@@ -413,14 +413,14 @@ steps:
       scatter_gather_nchunks: scatter_gather_nchunks
     out: [AntiFam_tainted_proteins_I___oseqids]
 
-  bacterial_annot_2: # PLANE
+  bacterial_annot_1st_pass: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass2.cwl
     in:
         lds2: bacterial_annot/lds2
         proteins: bacterial_annot/proteins
         prot_ids_A: bacterial_annot/seqids
         prot_ids_B1: bacterial_annot/prot_ids
-        prot_ids_B2: spurious_annot_1/AntiFam_tainted_proteins_I___oseqids
+        prot_ids_B2: spurious_annot_prelim/AntiFam_tainted_proteins_I___oseqids
         identification_db_dir: passdata/identification_db_dir
         blastdb: Get_Proteins/selected_blastdb
         annotation: bacterial_annot/outseqs
@@ -447,11 +447,11 @@ steps:
       taxid: taxid
       tax_sql_file: passdata/taxon_db
       gc_assembly: genomic_source/gencoll_asn
-      compartments: bacterial_annot_2/aligns
+      compartments: bacterial_annot_1st_pass/aligns
       all_prots: Get_Proteins/all_prots
     out: [align, align_non_match]
 
-  bacterial_annot_3:
+  bacterial_annot_misc:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
     in:
         AntiFamLib: passdata/AntiFamLib
@@ -484,35 +484,35 @@ steps:
         - id: Name_by_WPs_names
         - id: PGAP_plus_ab_initio_annotation
 
-  spurious_annot_2:
+  spurious_annot_final:
     run: spurious_annot/wf_spurious_annot_pass2.cwl
     in:
-      Extract_Model_Proteins_proteins: bacterial_annot_3/Extract_Model_Proteins_proteins
-      Extract_Model_Proteins_seqids: bacterial_annot_3/Extract_Model_Proteins_seqids
-      Extract_Model_Proteins_lds2: bacterial_annot_3/Extract_Model_Proteins_lds2
+      Extract_Model_Proteins_proteins: bacterial_annot_misc/Extract_Model_Proteins_proteins
+      Extract_Model_Proteins_seqids: bacterial_annot_misc/Extract_Model_Proteins_seqids
+      Extract_Model_Proteins_lds2: bacterial_annot_misc/Extract_Model_Proteins_lds2
       AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
-      input_models: bacterial_annot_3/PGAP_plus_ab_initio_annotation
+      input_models: bacterial_annot_misc/PGAP_plus_ab_initio_annotation
     out:
       - AntiFam_tainted_proteins___oseqids
       - Good_AntiFam_filtered_annotations_out
       - Good_AntiFam_filtered_proteins_output
 
-  bacterial_annot_4:
+  bacterial_annot_2nd_pass:
     run: bacterial_annot/wf_bacterial_annot_pass4.cwl
     in:
-        lds2: bacterial_annot_3/Extract_Model_Proteins_lds2
-        proteins: bacterial_annot_3/Extract_Model_Proteins_proteins
-        annotation: spurious_annot_2/Good_AntiFam_filtered_annotations_out
-        Good_AntiFam_filtered_proteins_gilist: spurious_annot_2/Good_AntiFam_filtered_proteins_output
+        lds2: bacterial_annot_misc/Extract_Model_Proteins_lds2
+        proteins: bacterial_annot_misc/Extract_Model_Proteins_proteins
+        annotation: spurious_annot_final/Good_AntiFam_filtered_annotations_out
+        Good_AntiFam_filtered_proteins_gilist: spurious_annot_final/Good_AntiFam_filtered_proteins_output
         sequence_cache: genomic_source/asncache
         uniColl_cache: passdata/uniColl_cache
         identification_db_dir: passdata/identification_db_dir
         naming_sqlite: passdata/naming_sqlite
-        hmm_assignments:  bacterial_annot_3/Assign_Naming_HMM_to_Proteins_assignments
-        wp_assignments:  bacterial_annot_3/Name_by_WPs_names
-        Extract_Model_Proteins_prot_ids: bacterial_annot_3/Extract_Model_Proteins_seqids
+        hmm_assignments:  bacterial_annot_misc/Assign_Naming_HMM_to_Proteins_assignments
+        wp_assignments:  bacterial_annot_misc/Name_by_WPs_names
+        Extract_Model_Proteins_prot_ids: bacterial_annot_misc/Extract_Model_Proteins_seqids
         CDDdata: passdata/CDDdata
         CDDdata2: passdata/CDDdata2
         thresholds: passdata/thresholds
@@ -584,7 +584,7 @@ steps:
   Add_Locus_Tags:
     run: progs/add_locus_tags.cwl
     in:
-        input: bacterial_annot_4/out_annotation
+        input: bacterial_annot_2nd_pass/out_annotation
         locus_tag_prefix: locus_tag_prefix
         dbname: dbname
     out: [output]
@@ -866,8 +866,8 @@ steps:
     in:
       annot_request_id:
         default: -1 # this is dummy annot_request_id
-      hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits
-      hmm_search_proteins: bacterial_annot_3/PGAP_plus_ab_initio_annotation
+      hmm_search: bacterial_annot_misc/Search_Naming_HMMs_hmm_hits
+      hmm_search_proteins: bacterial_annot_misc/PGAP_plus_ab_initio_annotation
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  passdata/univ_prot_xml
       val_res_den_xml:  passdata/val_res_den_xml

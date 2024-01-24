@@ -63,8 +63,8 @@ steps:
   cat:
     run: cat.cwl
     in:
-      file_in_1: Seed_Protein_Alignments/blast_align
-      file_in_2: Seed_Search_Compartments/blast_align
+      file_in_1st: Seed_Protein_Alignments/blast_align
+      file_in_2nd: Seed_Search_Compartments/blast_align
     out: [ file_out ]
 
   Sort_Seed_Hits:

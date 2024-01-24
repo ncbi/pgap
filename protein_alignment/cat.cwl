@@ -9,11 +9,11 @@ baseCommand: cat
 stdout: out.asn
 
 inputs:
-  file_in_1:
+  file_in_1st:
     type: File
     inputBinding:
       position: 1
-  file_in_2:
+  file_in_2nd:
     type: File
     inputBinding:
       position: 2
