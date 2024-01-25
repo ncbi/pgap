@@ -51,7 +51,7 @@ steps:
     out: [ blast_align ]
 
   Seed_Protein_Alignments:
-    run: wf_seed_1.cwl
+    run: wf_seed_seqids.cwl
     in:
       db_gencode: Compute_Gencode_int/value
       asn_cache: asn_cache
