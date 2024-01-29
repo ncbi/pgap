@@ -354,6 +354,10 @@ class Pipeline:
             if  has_authors == False:
                 fOut.write(u'authors:\n')
                 fOut.write(u'    - author:\n')
+                #
+                # note: do not change these defaults, they are coded now 
+                # in standard diagnostics asnvalidate tool, that's how GenBank detects that users did not provide correct names
+                #
                 fOut.write(u"        first_name: 'Firstname'\n")
                 fOut.write(u"        last_name: 'Lastname'\n")
             if  has_contact_info == False:
