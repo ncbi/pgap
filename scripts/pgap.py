@@ -185,7 +185,7 @@ class Pipeline:
             self.submol = None
         add_std_validation_exemptions = False
         args = self.params.args
-        if not args.input and args.genome and args.organism:
+        if args.genome and args.organism:
             add_std_validation_exemptions = True
         self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
         if self.params.docker_type in ['singularity', 'apptainer']:
