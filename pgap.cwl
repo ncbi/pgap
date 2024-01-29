@@ -36,6 +36,15 @@ inputs:
     default: true
   uuid_in:
     type: File?
+  xpath_fail_initial_asndisc: 
+      type: string?
+  xpath_fail_initial_asnvalidate: 
+      type: string?
+  xpath_fail_final_asndisc: 
+      type: string?
+  xpath_fail_final_asnvalidate: 
+      type: string?
+    
 outputs:
   calls:
     outputSource: vecscreen/calls
