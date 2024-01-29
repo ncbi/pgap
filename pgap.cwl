@@ -194,6 +194,10 @@ steps:
       make_uuid: make_uuid
       uuid_in: uuid_in
       blast_hits_cache_data: blast_hits_cache_data
+      xpath_fail_initial_asndisc: xpath_fail_initial_asndisc
+      xpath_fail_initial_asnvalidate: xpath_fail_initial_asnvalidate
+      xpath_fail_final_asndisc: xpath_fail_final_asndisc
+      xpath_fail_final_asnvalidate: xpath_fail_final_asnvalidate
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, cds_nucleotide_fasta, cds_protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
     run: wf_common.cwl
   Generate_Annotation_Reports_gff_enhanced:
