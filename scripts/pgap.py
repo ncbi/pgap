@@ -183,7 +183,11 @@ class Pipeline:
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
-        self.yaml = self.create_inputfile(local_input)
+        add_std_validation_exemptions = False
+        args = self.params.args
+        if args.genome and args.organism:
+            add_std_validation_exemptions = True
+        self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
         if self.params.docker_type in ['singularity', 'apptainer']:
             self.make_singularity_cmd()
         elif self.params.docker_type == 'podman':
@@ -350,6 +354,10 @@ class Pipeline:
             if  has_authors == False:
                 fOut.write(u'authors:\n')
                 fOut.write(u'    - author:\n')
+                #
+                # note: do not change these defaults, they are coded now 
+                # in standard diagnostics asnvalidate tool, that's how GenBank detects that users did not provide correct names
+                #
                 fOut.write(u"        first_name: 'Firstname'\n")
                 fOut.write(u"        last_name: 'Lastname'\n")
             if  has_contact_info == False:
@@ -368,7 +376,7 @@ class Pipeline:
         return yaml
             
         
-    def create_inputfile(self, local_input):
+    def create_inputfile(self, local_input, add_std_validation_exemptions):
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_input_",
@@ -398,6 +406,46 @@ class Pipeline:
             if os.path.exists(uuidfile) and os.stat(uuidfile).st_size != 0:
                 fOut.write(u'make_uuid: false\n')
                 fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
+            if add_std_validation_exemptions:
+                fOut.write(f"""
+xpath_fail_initial_asnvalidate: >
+        //*[
+            ( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+        ]
+xpath_fail_final_asnvalidate: >
+        //*[( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+        ]
+""")
             fOut.flush()
         return yaml
         

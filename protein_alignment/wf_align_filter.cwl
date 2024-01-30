@@ -23,8 +23,8 @@ steps:
   cat:
     run: cat.cwl
     in:
-      file_in_1: blast_full
-      file_in_2: prosplign
+      file_in_1st: blast_full
+      file_in_2nd: prosplign
     out: [ file_out ]
      
   align_filter:
