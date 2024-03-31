@@ -574,7 +574,6 @@ steps:
       asn_cache: 
         source: [passdata/uniColl_nuc_cache, genomic_source/asncache]
         linkMerge: merge_flattened
-      blast_hits_cache: blast_hits_cache_data_split_dir/blast_hits_cache
       genus_list: genus_list_file2ints/values
       blastdb:
         default: [blastdb]
