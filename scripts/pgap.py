@@ -219,6 +219,8 @@ class Pipeline:
 
     def make_docker_cmd(self):
         self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
+        self.cmd.extend(['--platform', 'linux/amd64'])
+
         if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
@@ -531,11 +533,13 @@ xpath_fail_final_asnvalidate: >
                 for line in fIn:
                     f.write(line)
             f.write("--- End YAML Input ---\n\n")
-            # Show runtime parameters in the log
-            f.write("--- Start Runtime Report ---\n")            
-            self.record_runtime(f)
-            f.write("\n--- End Runtime Report ---\n\n")            
-            f.flush()
+
+            if platform.system() != "Darwin":
+                # Show runtime parameters in the log
+                f.write("--- Start Runtime Report ---\n")
+                self.record_runtime(f)
+                f.write("\n--- End Runtime Report ---\n\n")
+
             try:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
