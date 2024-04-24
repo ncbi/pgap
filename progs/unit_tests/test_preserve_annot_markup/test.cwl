@@ -44,7 +44,7 @@ steps:
   Final_Bacterial_Package_asn_cleanup: # TESTED as part of "last couple of nodes" test
     run: progs/asn_cleanup.cwl
     in:
-      # inp_annotation: bacterial_annot_4/out_annotation 
+      # inp_annotation: bacterial_annot_2nd_pass/out_annotation 
       # inp_annotation: bacterial_annot_4_out_annotation_bypass # , this bypass does not work: SQD-4522
       # using oroginal input from official buildrun template (that is from fam_report output)
       inp_annotation: fam_report_bypass
@@ -177,10 +177,10 @@ steps:
     in:
       annot_request_id: 
         default: -1 # this is dummy annot_request_id
-      # hmm_search: bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
-      hmm_search: bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass # for bacterial_annot_3/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
-      # hmm_search_proteins: bacterial_annot_3/Run_GeneMark_Post_models # genemark models
-      hmm_search_proteins: bacterial_annot_3_Run_GeneMark_Post_models_bypass # for bacterial_annot_3/Run_GeneMark_Post_models # genemark models
+      # hmm_search: bacterial_annot_misc/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
+      hmm_search: bacterial_annot_3_Search_Naming_HMMs_hmm_hits_bypass # for bacterial_annot_misc/Search_Naming_HMMs_hmm_hits # Search Naming HMMs bacterial_annot 3       
+      # hmm_search_proteins: bacterial_annot_misc/Run_GeneMark_Post_models # genemark models
+      hmm_search_proteins: bacterial_annot_3_Run_GeneMark_Post_models_bypass # for bacterial_annot_misc/Run_GeneMark_Post_models # genemark models
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  univ_prot_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/universal.xml 
       val_res_den_xml:  val_res_den_xml # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/etc/validation-results.xml

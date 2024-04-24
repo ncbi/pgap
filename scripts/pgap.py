@@ -183,7 +183,11 @@ class Pipeline:
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
-        self.yaml = self.create_inputfile(local_input)
+        add_std_validation_exemptions = False
+        args = self.params.args
+        if args.genome and args.organism:
+            add_std_validation_exemptions = True
+        self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
         if self.params.docker_type in ['singularity', 'apptainer']:
             self.make_singularity_cmd()
         elif self.params.docker_type == 'podman':
@@ -215,6 +219,8 @@ class Pipeline:
 
     def make_docker_cmd(self):
         self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
+        self.cmd.extend(['--platform', 'linux/amd64'])
+
         if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
@@ -350,6 +356,10 @@ class Pipeline:
             if  has_authors == False:
                 fOut.write(u'authors:\n')
                 fOut.write(u'    - author:\n')
+                #
+                # note: do not change these defaults, they are coded now 
+                # in standard diagnostics asnvalidate tool, that's how GenBank detects that users did not provide correct names
+                #
                 fOut.write(u"        first_name: 'Firstname'\n")
                 fOut.write(u"        last_name: 'Lastname'\n")
             if  has_contact_info == False:
@@ -368,7 +378,7 @@ class Pipeline:
         return yaml
             
         
-    def create_inputfile(self, local_input):
+    def create_inputfile(self, local_input, add_std_validation_exemptions):
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_input_",
@@ -398,6 +408,46 @@ class Pipeline:
             if os.path.exists(uuidfile) and os.stat(uuidfile).st_size != 0:
                 fOut.write(u'make_uuid: false\n')
                 fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
+            if add_std_validation_exemptions:
+                fOut.write(f"""
+xpath_fail_initial_asnvalidate: >
+        //*[
+            ( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+        ]
+xpath_fail_final_asnvalidate: >
+        //*[( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+        ]
+""")
             fOut.flush()
         return yaml
         
@@ -483,11 +533,13 @@ class Pipeline:
                 for line in fIn:
                     f.write(line)
             f.write("--- End YAML Input ---\n\n")
-            # Show runtime parameters in the log
-            f.write("--- Start Runtime Report ---\n")            
-            self.record_runtime(f)
-            f.write("\n--- End Runtime Report ---\n\n")            
-            f.flush()
+
+            if platform.system() != "Darwin":
+                # Show runtime parameters in the log
+                f.write("--- Start Runtime Report ---\n")
+                self.record_runtime(f)
+                f.write("\n--- End Runtime Report ---\n\n")
+
             try:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
@@ -892,6 +944,56 @@ submol:
 
     return os.path.abspath(output_filename)
 
+def validate_prefix(prefix):
+
+    """
+    Validates the given prefix to ensure it can be used in a filename on Linux, macOS, and Windows.
+    
+    Exits the program with an error message if the prefix is not valid.
+    
+    Valid Prefix:
+    - Contains only alphanumeric characters, underscores, or hyphens.
+    e.g., "my_prefix", "prefix123", "123_prefix", "prefix-123"
+    
+    Invalid Prefix:
+    - Contains any characters other than alphanumeric characters, underscores, or hyphens.
+    e.g., "my prefix", "prefix#", "prefix@", "prefix!"
+    
+    Note: This function is compatible with Linux, macOS, and Windows filenames.
+    """
+    if not re.match("^[a-zA-Z0-9_\-]+$", prefix):
+        sys.exit(f"The provided prefix '{prefix}' is invalid. A valid prefix should only contain alphanumeric characters, underscores, and hyphens.")
+    return True
+
+def apply_prefix_to_output_dir(output_dir, prefix):
+    """
+    Removes the default prefix "annot" and adds the given prefix to each file in the specified directory.
+
+    Parameters:
+    - output_dir (str): The path of the directory containing the files to rename.
+    - prefix (str): The prefix to add to each file name.
+
+    Returns:
+    - None
+    """
+    if not os.path.exists(output_dir):
+        print(f"The directory {output_dir} does not exist.")
+        return
+
+    for filename in os.listdir(output_dir):
+        file_path = os.path.join(output_dir, filename)
+        if os.path.isfile(file_path):
+            # Remove existing 'annot' prefix if present
+            new_filename = filename
+            if filename.startswith("annot"):
+                new_filename = filename[5:]
+
+            # Add the new prefix
+            new_file_path = os.path.join(output_dir, prefix + new_filename)
+            
+            # Rename the file
+            os.rename(file_path, new_file_path)
+
 def main():
 
     parser = argparse.ArgumentParser(description="Input must be provided as:\n"
@@ -904,7 +1006,7 @@ def main():
 
     parser.add_argument('-g', '--genome', type=str, help='Path to genomic fasta')
 
-    parser.add_argument('-s', '--organism', type=str, help='Binomial name')
+    parser.add_argument('-s', '--organism', type=str, help='Organism name: genus, genus species, or more specific and known to NCBI Taxonomy, see https://github.com/ncbi/pgap/wiki/Input-Files#taxonomy-information for more information')
     parser.add_argument('input', nargs='?', help=argparse.SUPPRESS)
                         
 
@@ -958,6 +1060,8 @@ def main():
                         #help='Set a maximum time for pipeline to run, format is D:H:M:S, H:M:S, or M:S, or S (default: %(default)s)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Quiet mode, for scripts')
+    parser.add_argument('--prefix', type=str,
+                        help='Set the prefix for output files (default: "annot")')
     parser.add_argument('--no-self-update', action='store_true',
                         dest='no_self_up',
                         help='Do not attempt to update this script')
@@ -970,6 +1074,10 @@ def main():
                         help='Debug mode')
                         
     args = parser.parse_args()
+
+    # Ensure that user provided prefix is valid.
+    if args.prefix:
+        validate_prefix(args.prefix) 
 
     # const storing the initial working directory.
     # Please do not modify this variable's value.
@@ -1053,6 +1161,9 @@ def main():
                         if os.path.exists(submol_modified):
                             os.remove(submol_modified)
             remove_empty_files(outputdir)
+
+            if args.prefix:
+                apply_prefix_to_output_dir(outputdir, args.prefix)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:

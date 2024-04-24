@@ -40,7 +40,7 @@ inputs:
       prefix: -g
   binary:
     type: string?
-    default: /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/ThirdParty/tRNAscan-SE/production/bin/tRNAscan-SE
+    default: /netmnt/vast01/gp/ThirdParty/tRNAscan-SE/production/bin/tRNAscan-SE
     inputBinding:
       prefix: -tRNAscan
   taxid:

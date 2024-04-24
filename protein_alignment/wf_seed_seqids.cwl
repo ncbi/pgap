@@ -19,7 +19,7 @@ outputs:
 
 steps:
   gpx_qsubmit:
-    run: gpx_qsubmit_1.cwl
+    run: gpx_qsubmit_seqids.cwl
     in:
       asn_cache: asn_cache
       uniColl_asn_cache: uniColl_asn_cache
@@ -28,7 +28,7 @@ steps:
     out: [jobs]
   
   tblastn_wnode:
-    run: tblastn_wnode_1.cwl
+    run: tblastn_wnode_db.cwl
     in:
       db_gencode: db_gencode
       asn_cache: asn_cache
