@@ -130,7 +130,7 @@ def quiet_remove(filename):
         os.remove(filename)
 
 def find_failed_step(filename):
-    r = "^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
+    r = r"^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
     search = re.compile(r)
     lines = open(filename, "r").readlines()
     nameStarts = {}
@@ -961,7 +961,7 @@ def validate_prefix(prefix):
     
     Note: This function is compatible with Linux, macOS, and Windows filenames.
     """
-    if not re.match("^[a-zA-Z0-9_\-]+$", prefix):
+    if not re.match(r"^[a-zA-Z0-9_\-]+$", prefix):
         sys.exit(f"The provided prefix '{prefix}' is invalid. A valid prefix should only contain alphanumeric characters, underscores, and hyphens.")
     return True
 
@@ -1088,7 +1088,7 @@ def main():
 
     # Check for the different no_yaml_group arguments scenarios.
     if (args.genome and not args.organism) or (not args.genome and args.organism):
-        parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
+        parser.error(r"Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
         args.genome = copy_genome_to_workspace(args.genome, ORIGINAL_WORKSPACE)
         args.input = create_simple_input_yaml_file(args.genome, args.organism)
