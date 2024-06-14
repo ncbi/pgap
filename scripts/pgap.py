@@ -166,8 +166,11 @@ class Pipeline:
 
     def cleanup(self):
         for file in [self.yaml, self.submol]:
-            if file != None and os.path.exists(file):
-                os.remove(file)
+            if file != None:
+                base =  os.path.basename(file)
+                fullpath  = os.path.join(self.params.outputdir, base)
+                if os.path.exists(fullpath):
+                    os.remove(fullpath)
             
     def __init__(self, params, local_input, pipeline):
         self.params = params
@@ -176,8 +179,9 @@ class Pipeline:
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
+        
         # input file location inside docker instance:
-        self.input_file = '/pgap/user_input/pgap_input.yaml'
+        self.input_file = '/pgap/output/pgap_input.yaml'
         submol =  self.get_submol(local_input)
         if ( submol != None ):
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
@@ -341,7 +345,7 @@ class Pipeline:
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_submol_",
-                                         dir=self.input_dir,
+                                         dir=self.params.outputdir,
                                          delete=False) as fOut:
             yaml = os.path.basename(fOut.name)
             with open(local_submol, 'r') as fIn:
@@ -382,19 +386,34 @@ class Pipeline:
         with tempfile.NamedTemporaryFile(mode='w',
                                          suffix=".yaml",
                                          prefix="pgap_input_",
-                                         dir=self.input_dir,
+                                         dir=self.params.outputdir,
                                          delete=False) as fOut:
             yaml = fOut.name
             with open(local_input, 'r') as fIn:
                 processing_submol = False
+                processing_fasta = False
                 for line in fIn:
                     if line: # skip empty lines
                         if 'submol:' in line: # we need to replace submol/location with new file
                             processing_submol = True
-                        if 'location:' in line and processing_submol == True:
+                            processing_fasta = False
+                        if 'location:' in line and processing_submol:
                             processing_submol = False
                             pos = line.index('location: ')
                             line = ' ' * pos + u'location: '+self.submol + '\n'
+                        if 'fasta:' in line: # we need to copy fasta input to output_dir
+                            processing_submol = False
+                            processing_fasta = True
+                        if 'location:' in line and processing_fasta:
+                            processing_fasta = False
+                            input_fasta_location = None
+                            if self.params.args.genome:
+                                input_fasta_location = self.params.args.genome
+                            else: 
+                                match = re.search(r'location:\s+(\S+)', line)
+                                input_fasta_location = match.group(1)
+                            copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
+                        
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
             fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
@@ -609,10 +628,6 @@ class Setup:
         if (self.local_version != self.use_version) or not self.check_install_data():
             self.update()
 
-        # Create a work directory.
-        if args.input:
-            print("Output will be placed in:", self.outputdir)
-            os.mkdir(self.outputdir)
         
 
     def get_branch(self):
@@ -692,11 +707,7 @@ class Setup:
         return self.local_version
 
     def get_output_dir(self):
-        outputdir = os.path.abspath(self.args.output)
-        if os.path.exists(outputdir):
-            sys.exit(f"Output directory {outputdir} exists, exiting.")
-        else:
-            return outputdir
+        return os.path.abspath(self.args.output)
 
     def get_docker_info(self):
         docker_type_alternatives = ['docker', 'podman', 'singularity', 'apptainer']
@@ -900,7 +911,8 @@ def remove_empty_files(rootdir):
             quiet_remove(fullname)
 
 def copy_genome_to_workspace(genome, original_workspace):
-    
+    os.makedirs(original_workspace, exist_ok=True)    
+
     # Check if the input file actually exists
     if not os.path.exists(genome):
         print(f"Error: The input genome file:{genome} does not exist.")
@@ -917,21 +929,23 @@ def copy_genome_to_workspace(genome, original_workspace):
         # Attempt to copy the file
         shutil.copy2(genome, new_genome_path)
     except FileNotFoundError:
-        print("Error: The genome file {genome} does not exist.")
+        print(f"Error: The genome file {genome} does not exist. Can't copy it to {new_genome_path}")
         sys.exit(1)  # Exit the script with an error code
     
     return filename
 
-def create_simple_input_yaml_file(fasta_location, genus_species, output_filename='input.yaml'):
+def create_simple_yaml_files(fasta_location, genus_species, output_dir):
     # Note: The args are not validated here, as they are validated when the generated YAML files are ingested in the pipeline.
-    submol_content = f'''\
+    output_submol_yaml_filename=os.path.join(output_dir, 'submol.yaml')
+    with open(output_submol_yaml_filename, 'w') as f:
+        f.write(f'''\
 organism:
     genus_species: {genus_species}
 '''
-    with open('submol.yaml', 'w') as f:
-        f.write(submol_content)
-
-    yaml_content = f'''\
+        )
+    output_input_yaml_filename=os.path.join(output_dir, 'input.yaml')
+    with open(output_input_yaml_filename, 'w') as f:
+        f.write(f'''\
 fasta:
     class: File
     location: {fasta_location}
@@ -939,10 +953,9 @@ submol:
     class: File
     location: submol.yaml
 '''
-    with open(output_filename, 'w') as f:
-        f.write(yaml_content)
+        )
 
-    return os.path.abspath(output_filename)
+    return os.path.abspath(output_input_yaml_filename)
 
 def validate_prefix(prefix):
 
@@ -1074,14 +1087,18 @@ def main():
                         help='Debug mode')
                         
     args = parser.parse_args()
+    if args.input  or args.genome: # not installation
+        outputdir = os.path.abspath(args.output)
+        if os.path.exists(outputdir):
+            sys.exit(f"Output directory {outputdir} exists, exiting.")
+        # Create a work directory.
+        print(f"Output will be placed in: {outputdir}")
+        os.mkdir(outputdir)
+    
 
     # Ensure that user provided prefix is valid.
     if args.prefix:
         validate_prefix(args.prefix) 
-
-    # const storing the initial working directory.
-    # Please do not modify this variable's value.
-    ORIGINAL_WORKSPACE = os.getcwd()
 
     if ( (args.input or args.genome) and (not args.report_usage_true) and (not args.report_usage_false) ):
         parser.error("One of -n/--report-usage-false or -r/--report-usage-true must be provided.")
@@ -1090,8 +1107,9 @@ def main():
     if (args.genome and not args.organism) or (not args.genome and args.organism):
         parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
-        args.genome = copy_genome_to_workspace(args.genome, ORIGINAL_WORKSPACE)
-        args.input = create_simple_input_yaml_file(args.genome, args.organism)
+        args.genome = copy_genome_to_workspace(args.genome, args.output)
+        args.input = create_simple_yaml_files(args.genome, args.organism, args.output)
+        
     elif args.input and args.genome and args.organism:
         parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
             "in combination with either the -s/--organism or -g/--genome arguments. "
@@ -1105,8 +1123,10 @@ def main():
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
                 p.cleanup()
+
                 # args.output for some reason not always available 
                 time.sleep(1) 
+
                 # analyze ani output here
                 print (f"DEBUG: args.output = {args.output}")
                 print (f"DEBUG: params.outputdir = {params.outputdir}")
@@ -1153,17 +1173,28 @@ def main():
                 retcode = p.launch()
                 p.cleanup()
                 outputdir = p.params.outputdir 
-                if retcode == 0:
-                    for errors_xml_fn in glob.glob(os.path.join(outputdir, "errors.xml")):
+            if retcode == 0:
+                for errors_xml_fn in glob.glob(os.path.join(p.params.outputdir, "errors.xml")):
+                    if os.path.exists(errors_xml_fn):
                         os.remove(errors_xml_fn)
-                    if(p.submol != None):
-                        submol_modified = os.path.join(outputdir, p.submol)
-                        if os.path.exists(submol_modified):
-                            os.remove(submol_modified)
-            remove_empty_files(outputdir)
+                #
+                # although we had an intention of exporting input submol.yaml file
+                # inside pgap.cwl, on the higher level we decided not to do that
+                # see doubling down on it in previously exited def cleanup() method:
+                # 
+                list_to_delete = [args.input, 'input.yaml', 'pgap_input.yaml', 'submol.yaml']
+                if args.genome:
+                    list_to_delete.append()
+                for file in list_to_delete:
+                    if file != None:
+                        base =  os.path.basename(file)
+                        fullpath  = os.path.join(p.params.outputdir, base)
+                        if os.path.exists(fullpath):
+                            os.remove(fullpath)
+            remove_empty_files(p.params.outputdir)
 
             if args.prefix:
-                apply_prefix_to_output_dir(outputdir, args.prefix)
+                apply_prefix_to_output_dir(p.params.outputdir, args.prefix)
 
     except (Exception, KeyboardInterrupt) as exc:
         if args.debug:
