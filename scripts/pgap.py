@@ -1183,6 +1183,8 @@ def main():
                 # see doubling down on it in previously exited def cleanup() method:
                 # 
                 list_to_delete = [args.input, 'input.yaml', 'pgap_input.yaml', 'submol.yaml']
+                if args.genome:
+                    list_to_delete.append()
                 for file in list_to_delete:
                     if file != None:
                         base =  os.path.basename(file)
