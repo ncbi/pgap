@@ -33,6 +33,9 @@ expression: |
         case 'AntiFamLib':
           r['AntiFamLib'] = l[i];
           break;
+        case 'AMRFinderPlus':
+          r['amr_finder_plus_database'] = l[i];
+          break;
         case 'asn2pas.xsl':
           r['asn2pas_xsl'] = l[i];
           break;
@@ -145,6 +148,8 @@ outputs:
   AntiFamLib:
     type: Directory
   all_order_specific_blastdb_file:
+    type: File
+  amr_finder_plus_database:
     type: File
   asn2pas_xsl:
     type: File
