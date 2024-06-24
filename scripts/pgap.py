@@ -411,7 +411,8 @@ class Pipeline:
                                 input_fasta_location = self.params.args.genome
                             else: 
                                 match = re.search(r'location:\s+(\S+)', line)
-                                input_fasta_location = match.group(1)
+                                local_input_dir = os.path.dirname(os.path.abspath(local_input))
+                                input_fasta_location = os.path.join(local_input_dir, match.group(1))
                             copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
                         
                         fOut.write(line.rstrip())
