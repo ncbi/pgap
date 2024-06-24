@@ -1108,8 +1108,10 @@ def main():
     if (args.genome and not args.organism) or (not args.genome and args.organism):
         parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
-        args.genome = copy_genome_to_workspace(args.genome, args.output)
-        args.input = create_simple_yaml_files(args.genome, args.organism, args.output)
+        base_genome = copy_genome_to_workspace(args.genome, args.output)
+        args.input = create_simple_yaml_files(base_genome, args.organism, args.output)
+        # do we need this? I do not like it
+        # args.genome = base_genome
         
     elif args.input and args.genome and args.organism:
         parser.error("Invalid Command Line Argument Error: A YAML file argument cannot be used "
