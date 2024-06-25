@@ -230,9 +230,9 @@ class Pipeline:
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
+            '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
             '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
-            '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp")),
-            '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir)])
+            '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
 
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
@@ -256,9 +256,9 @@ class Pipeline:
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:Z'.format(self.input_dir),
+            '--volume', '{}:/pgap/output:rw,Z'.format(self.params.outputdir),
             '--volume', '{}:{}:ro,Z'.format(self.yaml, self.input_file ),
-            '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
-            '--volume', '{}:/pgap/output:rw,Z'.format(self.params.outputdir)])
+            '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
@@ -278,9 +278,9 @@ class Pipeline:
         self.cmd.extend([
             '--bind', '{}:/pgap/input:ro'.format(self.data_dir),
             '--bind', '{}:/pgap/user_input'.format(self.input_dir),
+            '--bind', '{}:/pgap/output:rw'.format(self.params.outputdir),
             '--bind', '{}:{}:ro'.format(self.yaml, self.input_file ),
-            '--bind', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp")),
-            '--bind', '{}:/pgap/output:rw'.format(self.params.outputdir)])
+            '--bind', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
         if self.params.args.debug:
