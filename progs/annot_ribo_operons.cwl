@@ -2,7 +2,7 @@ cwlVersion: v1.2
 class: CommandLineTool
 baseCommand: annot_ribo_operons
 label: annot_ribo_operons
-
+arguments: [ -nogenbank ]
 inputs:
   input_5S:
     type: File
@@ -30,8 +30,8 @@ inputs:
     type: string
     default: 23S.asn
     inputBinding:
-      prefix: '-output-23S'      
-outputs:  
+      prefix: '-output-23S'
+outputs:
   output_5S:
     type: File
     outputBinding:
