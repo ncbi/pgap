@@ -230,7 +230,7 @@ steps:
             proteins: Extract_Model_Proteins/proteins
             sequences: PGAP_plus_ab_initio/out_annotation # -input
             fast:
-                default: true
+                default: false
         out: [out_names] # -onames, there is also prot2wp, but it goes only to tax check, which we dropped in the first round
 outputs:
     # long output names are preliminary.
