@@ -941,7 +941,7 @@ def create_simple_yaml_files(fasta_location, genus_species, output_dir):
     with open(output_submol_yaml_filename, 'w') as f:
         f.write(f'''\
 organism:
-    genus_species: {genus_species}
+    genus_species: "{genus_species}"
 '''
         )
     output_input_yaml_filename=os.path.join(output_dir, 'input.yaml')
