@@ -43,6 +43,11 @@ inputs:
     default: /netmnt/vast01/gp/ThirdParty/tRNAscan-SE/production/bin/tRNAscan-SE
     inputBinding:
       prefix: -tRNAscan
+  library:
+    type: string?
+    default: /netmnt/vast01/gp/ThirdParty/tRNAscan-SE/production/lib
+    inputBinding:
+      prefix: -tRNAscan-lib
   taxid:
     type: int
     inputBinding:
