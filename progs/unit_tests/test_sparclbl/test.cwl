@@ -24,8 +24,6 @@ steps:
         default: 20
       n: 
         default: 500
-      x: 
-        default: 1
     out: [protein_assignments]
 
     
