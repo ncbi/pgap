@@ -26,7 +26,29 @@ inputs:
              # genetic_codes = "ystmito";
          # }
 expression: |
-  ${ var gc = inputs.gencode; var gc2 = ""; if( gc == 4 ) { gc2="othmito"; } else if ( gc==6 ) { gc2="cilnuc"; } else if ( gc == 9) { gc2 = "echdmito" } else if ( gc == 5) { gc2 = "invmito"  } else if ( gc == 2) { gc2 = "vertmito"  } else if ( gc == 3) { gc2 = "ystmito"  } ; if ( gc2 != "" ) { return { "output": "/netmnt/vast01/gp/ThirdParty/tRNAscan-SE/production/lib/tRNAscan-SE/gcode/gcode."+gc2 }; } else { return { "output": null }; } }
+  ${ 
+    var gc = inputs.gencode; 
+    var gc2 = ""; // this is for gc=11
+    
+    if (gc == 4) { 
+      gc2 = "othmito"; 
+    } else if (gc == 6) { 
+      gc2 = "cilnuc"; 
+    } else if (gc == 9) { 
+      gc2 = "echdmito"; 
+    } else if (gc == 5) { 
+      gc2 = "invmito"; 
+    } else if (gc == 2) { 
+      gc2 = "vertmito"; 
+    } else if (gc == 3) { 
+      gc2 = "ystmito"; 
+    } 
+    
+    return { 
+      "output": gc2 || null 
+    }; 
+  }
+
 
 outputs:
   output: string?
