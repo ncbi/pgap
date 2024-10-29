@@ -176,6 +176,7 @@ class Pipeline:
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
+        self.pipeline = pipeline
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
@@ -187,6 +188,7 @@ class Pipeline:
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
+        
         add_std_validation_exemptions = False
         args = self.params.args
         if args.genome and args.organism:
@@ -233,7 +235,6 @@ class Pipeline:
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
             '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
-
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
             
@@ -392,28 +393,57 @@ class Pipeline:
             with open(local_input, 'r') as fIn:
                 processing_submol = False
                 processing_fasta = False
+                processing_entries = False
+                processing_submol_json = False
                 for line in fIn:
                     if line: # skip empty lines
                         if 'submol:' in line: # we need to replace submol/location with new file
                             processing_submol = True
                             processing_fasta = False
+                            processing_entries = False
+                            processing_submol_json = False
                         if 'location:' in line and processing_submol:
                             processing_submol = False
+                            processing_entries = False
+                            processing_submol_json = False
                             pos = line.index('location: ')
                             line = ' ' * pos + u'location: '+self.submol + '\n'
                         if 'fasta:' in line: # we need to copy fasta input to output_dir
                             processing_submol = False
                             processing_fasta = True
-                        if 'location:' in line and processing_fasta:
+                            processing_entries = False
+                            processing_submol_json = False
+                        if 'entries:' in line: # we need to copy entries input to output_dir
+                            processing_submol = False
                             processing_fasta = False
-                            input_fasta_location = None
-                            if self.params.args.genome:
-                                input_fasta_location = self.params.args.genome
-                            else: 
+                            processing_submol_json = False
+                            processing_entries = True
+                        if 'submol_block_json:' in line: 
+                            processing_submol = False
+                            processing_fasta = False
+                            processing_submol_json = True
+                            processing_entries = False
+                        if 'location:' in line:
+                            local_input_dir = os.path.dirname(os.path.abspath(local_input))
+                            if processing_fasta:
+                                processing_fasta = False
+                                input_fasta_location = None
+                                if self.params.args.genome:
+                                    input_fasta_location = self.params.args.genome
+                                else: 
+                                    match = re.search(r'location:\s+(\S+)', line)
+                                    input_fasta_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
+                            elif processing_entries:
+                                processing_entries = False
                                 match = re.search(r'location:\s+(\S+)', line)
-                                local_input_dir = os.path.dirname(os.path.abspath(local_input))
-                                input_fasta_location = os.path.join(local_input_dir, match.group(1))
-                            copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
+                                input_entries_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_entries_location, self.params.outputdir)
+                            elif processing_submol_json:
+                                processing_submol_json = False
+                                match = re.search(r'location:\s+(\S+)', line)
+                                input_submol_json_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_submol_json_location, self.params.outputdir)
                         
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
@@ -1036,6 +1066,7 @@ def main():
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
     ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--asn1-input', dest='asn1_input', action='store_true', help=argparse.SUPPRESS) # help="For internal usage by PD group, ASN.1 input file, calling wf_common.cwl"
     
     parser.add_argument("--auto-correct-tax", 
                         dest='auto_correct_tax', 
@@ -1122,6 +1153,10 @@ def main():
     try:
         params = Setup(args)
         if args.input:
+            if args.asn1_input:
+                # this is special PD path
+                # make sure that we cancel all other ways
+                args.ani = args.ani_only = False
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
@@ -1171,8 +1206,13 @@ def main():
                     else:
                         print("Ignoring")
                     
-            if not args.ani_only:
+            if not args.ani_only and not args.asn1_input:
                 p = Pipeline(params, args.input, "pgap")
+                retcode = p.launch()
+                p.cleanup()
+                outputdir = p.params.outputdir 
+            if args.asn1_input:
+                p = Pipeline(params, args.input, "wf_common")
                 retcode = p.launch()
                 p.cleanup()
                 outputdir = p.params.outputdir 
