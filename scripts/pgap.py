@@ -598,7 +598,8 @@ xpath_fail_final_asnvalidate: >
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
-                    print(f'{self.pipename} completed successfully.')
+                    if self.pipename != "WF_COMMON":
+                        print(f'{self.pipename} completed successfully.')
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
