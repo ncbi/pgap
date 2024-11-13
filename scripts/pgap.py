@@ -191,7 +191,7 @@ class Pipeline:
         
         add_std_validation_exemptions = False
         args = self.params.args
-        if args.genome and args.organism:
+        if (args.genome and args.organism) or args.asn1_input:
             add_std_validation_exemptions = True
         self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
         if self.params.docker_type in ['singularity', 'apptainer']:
@@ -459,7 +459,37 @@ class Pipeline:
                 fOut.write(u'make_uuid: false\n')
                 fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
             if add_std_validation_exemptions:
-                fOut.write(f"""
+                if self.pipeline == 'wf_common':
+                    fOut.write(f"""
+xpath_fail_initial_asndisc: >
+    //*[@severity="FATAL"
+         and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
+    ]
+xpath_fail_initial_asnvalidate: >
+        //*[
+            ( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+        ]
+xpath_fail_final_asnvalidate: >
+        //*[( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement"))
+            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
+            and not(contains(@code, "SEQ_DESCR_MissingLineage"))
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
+            and not(contains(@code, "SEQ_FEAT_ShortIntron"))
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            
+        ]
+""")
+                else:
+                    fOut.write(f"""
 xpath_fail_initial_asnvalidate: >
         //*[
             ( @severity="ERROR" or @severity="REJECT" )
@@ -1167,8 +1197,6 @@ def main():
                 time.sleep(1) 
 
                 # analyze ani output here
-                print (f"DEBUG: args.output = {args.output}")
-                print (f"DEBUG: params.outputdir = {params.outputdir}")
                 outputdir = args.output # this does not work
                 outputdir = params.outputdir
                 if not os.path.exists(outputdir):
