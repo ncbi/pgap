@@ -3,6 +3,7 @@ label: "align_filter"
 
 class: CommandLineTool
     
+    
 baseCommand: align_filter
 requirements:
   - class: InlineJavascriptRequirement
