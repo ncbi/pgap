@@ -10,6 +10,17 @@ requirements:
     listing:
      - entryname: aligns.mft
        entry: ${var blob = '# aligns.mft created for align_filter from input "input" Array of Files\n'; for (var i = 0; i < inputs.input.length; i++) { blob += inputs.input[i].path + '\n'; } return blob; }
+     - entryname: compartments.mft
+       entry: |
+          ${
+            var blob = '# compartments.mft created for align_filter from input "compartments" Array of Files\n';
+            if (inputs.compartments) {  
+              for (var i = 0; i < inputs.compartments.length; i++) {
+                blob += inputs.compartments[i].path + '\n';
+              }
+            }
+            return blob;
+          }
      - entryname: subject_allowlist.mft
        entry: ${var blob = '# subject_allowlist.mft created for align_filter from input "subject_allowlist" File\n'; if ( inputs.subject_allowlist == null) { return blob; } else { blob += inputs.subject_allowlist.path + '\n';  return blob; }}
 
@@ -34,6 +45,13 @@ inputs:
     default: aligns.mft
     inputBinding:
       prefix: -input-manifest
+  compartments:
+    type: File[]?
+  compartments_mft:
+    type: string?
+    default: compartments.mft
+    inputBinding:
+      prefix: -compartments-manifest
   nogenbank:
     type: boolean
     default: true
