@@ -9,15 +9,17 @@ requirements:
   - class: MultipleInputFeatureRequirement
   
 inputs:
+  go: boolean[]
   asn_cache: Directory
   uniColl_asn_cache: Directory
-  all_prots: File # Get_Proteins/all_prots
-  genomic_ids: File
   blastdb_dir: Directory # genomic
-  compartments: File # Map_Naming_Hits/compartments
-
   taxid: int
   taxon_db: File
+  compartments: File # Map_Naming_Hits/compartments
+  all_prots: File # Get_Proteins/all_prots
+  
+  genomic_ids: File
+
 outputs:
   align:  
     type: File
@@ -55,7 +57,11 @@ steps:
       asn_cache: 
         source: [asn_cache]
         linkMerge: merge_flattened
-    out: [delta_seqs, fasta]
+      delta_seqs_name:
+        default: delta_sequences.asn
+      generic_output_name:
+        default: genomic.fa
+    out: [delta_seqs, generic_output]
   Filter_Short_Sequences:
     run: ../progs/seq_filter.cwl
     in:
@@ -69,27 +75,62 @@ steps:
           - asn_cache
           - uniColl_asn_cache
         linkMerge: merge_flattened
-      
     out: [match]
   Run_Miniprot_slow:
     run: ../progs/miniprot.cwl
     in:
-      genome: Get_Genomic_FASTA/fasta
+      genome: Get_Genomic_FASTA/generic_output
       proteins: Get_Protein_FASTA/fasta
-      miniprot_params: 
-        default: '-S -G 500 -e 500 -p 0.01 --outs 0.01 --outc 0.01 -B 0 -L 15 -k 5 -l 4 -n 2 -N 1000'
+      S: 
+        default: true 
+      G:
+        default: 500 
+      e:
+        default: 500
+      p:
+        default: 0.01
+      outs:
+        default: 0.01
+      outc:
+        default: 0.01
+      B: 
+        default: 0 
+      L:
+        default: 15 
+      k:
+        default: 5
+      l:
+        default: 4
+      n:
+        default: 2 
+      N:
+        default: 1000
       cpu_count: 
         default: 16
+      T: Compute_Gencode_int/value
     out: [paf]
   Run_Miniprot_fast:
     run: ../progs/miniprot.cwl
     in:
-      genome: Get_Genomic_FASTA/fasta
+      genome: Get_Genomic_FASTA/generic_output
       proteins: Get_Protein_FASTA/fasta
-      miniprot_params: 
-        default: '-p 0.01 --outs 0.01 --outc 0.01 -S -L 15 -n 2 -N 1000'
+      p: 
+         default: 0.01 
+      outs:
+        default: 0.01
+      outc:
+        default: 0.01
+      S: 
+        default: true 
+      L:
+        default: 15 
+      n:
+        default: 2
+      N:
+        default: 1000
       cpu_count: 
         default: 16
+      T: Compute_Gencode_int/value
     out: [paf]    
   Compute_Gencode:
     run: ../progs/compute_gencode.cwl
@@ -164,7 +205,9 @@ steps:
           - asn_cache
           - uniColl_asn_cache
         linkMerge: merge_flattened
-    out: [mapped_aligns]
+      generic_output_name:
+        default: remap_align.asn
+    out: [generic_output]
   Filter_Full_Coverage_Alignments:
   
     run: bacterial_protalign_filter.cwl
@@ -190,7 +233,7 @@ steps:
       input: 
         source:
           - Filter_Full_Coverage_Alignments/blast_full_cov
-          - Remap_cross_origin_alignments/mapped_aligns
+          - Remap_cross_origin_alignments/generic_output
         linkMerge: merge_flattened
       subject_allowlist: all_prots
 
