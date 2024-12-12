@@ -436,7 +436,7 @@ steps:
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
 
   protein_alignment: # PLANE
-    run: protein_alignment/wf_protein_alignment.cwl
+    run: protein_alignment/wf_protein_alignment_miniprot.cwl
     in:
       go: 
         - Prepare_Unannotated_Sequences_asndisc_evaluate/success
@@ -445,11 +445,12 @@ steps:
       uniColl_asn_cache: passdata/uniColl_cache
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
-      tax_sql_file: passdata/taxon_db
-      gc_assembly: genomic_source/gencoll_asn
+      taxon_db: passdata/taxon_db
+      
       compartments: bacterial_annot_1st_pass/aligns
       all_prots: Get_Proteins/all_prots
-    out: [align, align_non_match]
+      genomic_ids: genomic_source/seqid_list
+    out: [align]
 
   bacterial_annot_misc:
     run: bacterial_annot/wf_bacterial_annot_pass3.cwl
