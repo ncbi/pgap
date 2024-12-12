@@ -12,6 +12,11 @@ arguments: [-partial-intron-threshold, '100', -no-scores, -pack-parts, -split-in
 inputs:
   paf:
     type: File[]
+  paf_manifest:
+    type: string?
+    default: paf.mft
+    inputBinding:
+      prefix: -input-manifest
   asn_cache:
     type: Directory[]
     inputBinding:

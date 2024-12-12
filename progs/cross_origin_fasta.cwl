@@ -20,19 +20,13 @@ inputs:
     
   delta_seqs_name:
     type: string?
-    default: sequences.asn
     inputBinding:
       prefix: -odelta-seqs 
-  fasta_name:
+  generic_output_name:
     type: string?
-    default: genomic.fa       
+    # default: genomic.fa       
     inputBinding:
       prefix: -o
-  mapped_aligns_name:
-    type: string?
-    default: protein.fa          
-    inputBinding:
-      prefix: -out
       
   asn_cache:
     type: Directory[]
@@ -40,7 +34,9 @@ inputs:
       prefix: -asn-cache
       itemSeparator: ","
   action: 
-    type: string?
+    type: string
+    inputBinding:
+      prefix: -action
   min_pct_ident: 
     type: float?
     inputBinding:
@@ -55,14 +51,10 @@ inputs:
       
 outputs:
   delta_seqs:
-    type: File
+    type: File?
     outputBinding:
       glob: $(inputs.delta_seqs_name)      
-  fasta:
+  generic_output:
     type: File
     outputBinding:
-      glob: $(inputs.fasta_name)       
-  mapped_aligns:
-    type: File
-    outputBinding:
-      glob: $(inputs.mapped_aligns_name)             
+      glob: $(inputs.generic_output_name)       

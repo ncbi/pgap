@@ -13,17 +13,69 @@ inputs:
     type: File 
     inputBinding:
       position: 2
-  miniprot_params: 
-    type: string
-    inputBinding:
-      prefix: -miniprot-params
   cpu_count:
     type: int
     inputBinding:
       prefix: -t
   stdout_redir:
      type: string?
-     default: stdout
+     default: miniprot.paf
+  # other native 
+  T:
+    # genetic code
+    type: int?
+    inputBinding:
+        prefix: -T
+  outs:
+    type: float?
+    inputBinding:
+        prefix: --outs
+  outc:
+    type: float?
+    inputBinding:
+        prefix: --outc
+  S:
+    type: boolean?
+    inputBinding:
+        prefix: -S
+  G:
+    type: int?
+    inputBinding:
+        prefix: -G
+  L:
+    type: int?
+    inputBinding:
+        prefix: -L
+  N:
+    type: int?
+    inputBinding:
+        prefix: -N
+  B:
+    type: int?
+    inputBinding:
+        prefix: -B
+
+  n:
+    type: int?
+    inputBinding:
+        prefix: -n
+  p:
+    type: float?
+    inputBinding:
+        prefix: -p
+  e:
+    type: int?
+    inputBinding:
+        prefix: -e
+  k:
+    type: int?
+    inputBinding:
+        prefix: -k
+  l:
+    type: int?
+    inputBinding:
+        prefix: -l
+  
       
 
 outputs:

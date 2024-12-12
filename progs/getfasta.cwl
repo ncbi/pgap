@@ -26,7 +26,7 @@ inputs:
     type: string
     default: protein.fa
     inputBinding:
-      prefix: -out
+      prefix: -output
       
 outputs:
   fasta:

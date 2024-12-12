@@ -17,13 +17,13 @@ inputs:
     type: string?
     default: seqids.mft
     inputBinding:
-      prefix: -input
+      prefix: -input-manifest
 
   match_name:
     type: string?
     default: match       
     inputBinding:
-      prefix: -match
+      prefix: -output
   nomatch_name:
     type: string?
     default: no-match          
