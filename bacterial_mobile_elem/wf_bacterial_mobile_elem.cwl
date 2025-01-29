@@ -25,7 +25,7 @@ steps:
     out: [jobs]
   
   Execute_CRISPR_wnode:
-    run: ncbi_crisper_wnode.cwl
+    run: ccf_wnode.cwl
     in:
       asn_cache: asn_cache
       input_jobs: Execute_CRISPR_submit/jobs
