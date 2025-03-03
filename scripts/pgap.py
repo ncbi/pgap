@@ -230,6 +230,8 @@ class Pipeline:
         if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
+            '--volume', '/home/badrazat/github.pgap/dev:/pgap/pgap:ro,z',
+            '--volume', '/net/gpipedev21/export/home/badrazat/ncbi_cxx/src/internal/gpipe/protein_naming/scripts/CRISPRCasFinder.sh:/panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/bacterial_pipeline/system/current/bin/CRISPRCasFinder:ro,z',
             '--volume', '{}:/pgap/input:ro,z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
@@ -252,7 +254,7 @@ class Pipeline:
         self.cmd = [self.params.docker_cmd]
         if self.params.args.debug:
             self.cmd.extend(['--log-level',  'debug'])
-        self.cmd.extend(['run', '-i', '--rm' ])
+        self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
