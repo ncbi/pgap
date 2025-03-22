@@ -235,10 +235,7 @@ steps:
           - Filter_Full_Coverage_Alignments/blast_full_cov
           - Remap_cross_origin_alignments/generic_output
         linkMerge: merge_flattened
-      subject_allowlist: all_prots
-
-      filter:
-          default: 'subject_coverage >= 10'
+      query_allowlist: all_prots
       ifmt:
           default: seq-align
       nogenbank:

@@ -65,6 +65,13 @@ inputs:
     default: subject_allowlist.mft
     inputBinding:
       prefix: -subject-allowlist
+  query_allowlist:
+    type: File?
+  query_allowlist_mft:
+    type: string?
+    default: query_allowlist.mft
+    inputBinding:
+      prefix: -query-allowlist
   onon_match_name: 
     type: string
     default: align-nomatch.asn

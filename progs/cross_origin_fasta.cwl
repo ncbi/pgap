@@ -3,7 +3,7 @@ cwlVersion: v1.2
 label: cross_origin_fasta
 class: CommandLineTool
 baseCommand: cross_origin_fasta
-# arguments: [?]
+arguments: [-trim-low-quality, -uniquify]
 inputs:
   gilist:
     type: File?
