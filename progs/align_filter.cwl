@@ -24,6 +24,8 @@ requirements:
           }
      - entryname: subject_allowlist.mft
        entry: ${var blob = '# subject_allowlist.mft created for align_filter from input "subject_allowlist" File\n'; if ( inputs.subject_allowlist == null) { return blob; } else { blob += inputs.subject_allowlist.path + '\n';  return blob; }}
+     - entryname: query_allowlist.mft
+       entry: ${var blob = '# query_allowlist.mft created for align_filter from input "query_allowlist" File\n'; if ( inputs.query_allowlist  == null) { return blob; } else { blob += inputs.query_allowlist.path + '\n';  return blob; }}
 
 inputs:
   asn_cache:
