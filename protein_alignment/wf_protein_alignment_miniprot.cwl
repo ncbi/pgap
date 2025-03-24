@@ -76,60 +76,22 @@ steps:
           - uniColl_asn_cache
         linkMerge: merge_flattened
     out: [match]
+  #
+  # for two flavors of running miniprot we use two different CommandLineTools because order of arguments
+  # is important in miniprot and cwltool does not guarantee order preserved when supplied via in: parameters
+  #
   Run_Miniprot_slow:
-    run: ../progs/miniprot.cwl
+    run: ../progs/miniprot_slow.cwl
     in:
       genome: Get_Genomic_FASTA/generic_output
       proteins: Get_Protein_FASTA/fasta
-      S: 
-        default: true 
-      G:
-        default: 500 
-      e:
-        default: 500
-      p:
-        default: 0.01
-      outs:
-        default: 0.01
-      outc:
-        default: 0.01
-      B: 
-        default: 0 
-      L:
-        default: 15 
-      k:
-        default: 5
-      l:
-        default: 4
-      n:
-        default: 2 
-      N:
-        default: 1000
-      cpu_count: 
-        default: 16
       T: Compute_Gencode_int/value
     out: [paf]
   Run_Miniprot_fast:
-    run: ../progs/miniprot.cwl
+    run: ../progs/miniprot_fast.cwl
     in:
       genome: Get_Genomic_FASTA/generic_output
       proteins: Get_Protein_FASTA/fasta
-      p: 
-         default: 0.01 
-      outs:
-        default: 0.01
-      outc:
-        default: 0.01
-      S: 
-        default: true 
-      L:
-        default: 15 
-      n:
-        default: 2
-      N:
-        default: 1000
-      cpu_count: 
-        default: 16
       T: Compute_Gencode_int/value
     out: [paf]    
   Compute_Gencode:
