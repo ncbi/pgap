@@ -130,7 +130,7 @@ def quiet_remove(filename):
         os.remove(filename)
 
 def find_failed_step(filename):
-    r = "^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
+    r = r"^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
     search = re.compile(r)
     lines = open(filename, "r").readlines()
     nameStarts = {}
@@ -176,6 +176,7 @@ class Pipeline:
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
+        self.pipeline = pipeline
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
@@ -187,9 +188,10 @@ class Pipeline:
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
+        
         add_std_validation_exemptions = False
         args = self.params.args
-        if args.genome and args.organism:
+        if (args.genome and args.organism) or args.asn1_input:
             add_std_validation_exemptions = True
         self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
         if self.params.docker_type in ['singularity', 'apptainer']:
@@ -233,7 +235,6 @@ class Pipeline:
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
             '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
-
         if (self.params.args.memory):
             self.cmd.extend(['--memory', self.params.args.memory])
             
@@ -251,7 +252,7 @@ class Pipeline:
         self.cmd = [self.params.docker_cmd]
         if self.params.args.debug:
             self.cmd.extend(['--log-level',  'debug'])
-        self.cmd.extend(['run', '-i', '--rm' ])
+        self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
@@ -392,28 +393,57 @@ class Pipeline:
             with open(local_input, 'r') as fIn:
                 processing_submol = False
                 processing_fasta = False
+                processing_entries = False
+                processing_submol_json = False
                 for line in fIn:
                     if line: # skip empty lines
                         if 'submol:' in line: # we need to replace submol/location with new file
                             processing_submol = True
                             processing_fasta = False
+                            processing_entries = False
+                            processing_submol_json = False
                         if 'location:' in line and processing_submol:
                             processing_submol = False
+                            processing_entries = False
+                            processing_submol_json = False
                             pos = line.index('location: ')
                             line = ' ' * pos + u'location: '+self.submol + '\n'
                         if 'fasta:' in line: # we need to copy fasta input to output_dir
                             processing_submol = False
                             processing_fasta = True
-                        if 'location:' in line and processing_fasta:
+                            processing_entries = False
+                            processing_submol_json = False
+                        if 'entries:' in line: # we need to copy entries input to output_dir
+                            processing_submol = False
                             processing_fasta = False
-                            input_fasta_location = None
-                            if self.params.args.genome:
-                                input_fasta_location = self.params.args.genome
-                            else: 
+                            processing_submol_json = False
+                            processing_entries = True
+                        if 'submol_block_json:' in line: 
+                            processing_submol = False
+                            processing_fasta = False
+                            processing_submol_json = True
+                            processing_entries = False
+                        if 'location:' in line:
+                            local_input_dir = os.path.dirname(os.path.abspath(local_input))
+                            if processing_fasta:
+                                processing_fasta = False
+                                input_fasta_location = None
+                                if self.params.args.genome:
+                                    input_fasta_location = self.params.args.genome
+                                else: 
+                                    match = re.search(r'location:\s+(\S+)', line)
+                                    input_fasta_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
+                            elif processing_entries:
+                                processing_entries = False
                                 match = re.search(r'location:\s+(\S+)', line)
-                                local_input_dir = os.path.dirname(os.path.abspath(local_input))
-                                input_fasta_location = os.path.join(local_input_dir, match.group(1))
-                            copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
+                                input_entries_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_entries_location, self.params.outputdir)
+                            elif processing_submol_json:
+                                processing_submol_json = False
+                                match = re.search(r'location:\s+(\S+)', line)
+                                input_submol_json_location = os.path.join(local_input_dir, match.group(1))
+                                copy_genome_to_workspace(input_submol_json_location, self.params.outputdir)
                         
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
@@ -429,7 +459,37 @@ class Pipeline:
                 fOut.write(u'make_uuid: false\n')
                 fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
             if add_std_validation_exemptions:
-                fOut.write(f"""
+                if self.pipeline == 'wf_common':
+                    fOut.write(f"""
+xpath_fail_initial_asndisc: >
+    //*[@severity="FATAL"
+         and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
+    ]
+xpath_fail_initial_asnvalidate: >
+        //*[
+            ( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+        ]
+xpath_fail_final_asnvalidate: >
+        //*[( @severity="ERROR" or @severity="REJECT" )
+            and not(contains(@code, "GENERIC_MissingPubRequirement"))
+            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
+            and not(contains(@code, "SEQ_DESCR_MissingLineage"))
+            and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
+            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
+            and not(contains(@code, "SEQ_FEAT_ShortIntron"))
+            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
+            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
+            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
+            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            
+        ]
+""")
+                else:
+                    fOut.write(f"""
 xpath_fail_initial_asnvalidate: >
         //*[
             ( @severity="ERROR" or @severity="REJECT" )
@@ -568,7 +628,8 @@ xpath_fail_final_asnvalidate: >
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
-                    print(f'{self.pipename} completed successfully.')
+                    if self.pipename != "WF_COMMON":
+                        print(f'{self.pipename} completed successfully.')
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
@@ -975,7 +1036,7 @@ def validate_prefix(prefix):
     
     Note: This function is compatible with Linux, macOS, and Windows filenames.
     """
-    if not re.match("^[a-zA-Z0-9_\-]+$", prefix):
+    if not re.match(r"^[a-zA-Z0-9_\-]+$", prefix):
         sys.exit(f"The provided prefix '{prefix}' is invalid. A valid prefix should only contain alphanumeric characters, underscores, and hyphens.")
     return True
 
@@ -1036,6 +1097,7 @@ def main():
     ani_group = parser.add_mutually_exclusive_group()
     ani_group.add_argument('--taxcheck', dest='ani',  action='store_true', help="Also calculate the Average Nucleotide Identity")
     ani_group.add_argument('--taxcheck-only', dest='ani_only', action='store_true', help="Only calculate the Average Nucleotide Identity, do not run PGAP")
+    ani_group.add_argument('--asn1-input', dest='asn1_input', action='store_true', help=argparse.SUPPRESS) # help="For internal usage by PD group, ASN.1 input file, calling wf_common.cwl"
     
     parser.add_argument("--auto-correct-tax", 
                         dest='auto_correct_tax', 
@@ -1106,7 +1168,7 @@ def main():
 
     # Check for the different no_yaml_group arguments scenarios.
     if (args.genome and not args.organism) or (not args.genome and args.organism):
-        parser.error("Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
+        parser.error(r"Invalid Command Line Argument Error: Both arguments -s\--organism and -g\--genome must be provided if no YAML file is provided.")
     elif not args.input and args.genome and args.organism:
         base_genome = copy_genome_to_workspace(args.genome, args.output)
         args.input = create_simple_yaml_files(base_genome, args.organism, args.output)
@@ -1122,6 +1184,10 @@ def main():
     try:
         params = Setup(args)
         if args.input:
+            if args.asn1_input:
+                # this is special PD path
+                # make sure that we cancel all other ways
+                args.ani = args.ani_only = False
             if args.ani or args.ani_only:
                 p = Pipeline(params, args.input, "taxcheck")
                 retcode = p.launch()
@@ -1131,8 +1197,6 @@ def main():
                 time.sleep(1) 
 
                 # analyze ani output here
-                print (f"DEBUG: args.output = {args.output}")
-                print (f"DEBUG: params.outputdir = {params.outputdir}")
                 outputdir = args.output # this does not work
                 outputdir = params.outputdir
                 if not os.path.exists(outputdir):
@@ -1171,8 +1235,13 @@ def main():
                     else:
                         print("Ignoring")
                     
-            if not args.ani_only:
+            if not args.ani_only and not args.asn1_input:
                 p = Pipeline(params, args.input, "pgap")
+                retcode = p.launch()
+                p.cleanup()
+                outputdir = p.params.outputdir 
+            if args.asn1_input:
+                p = Pipeline(params, args.input, "wf_common")
                 retcode = p.launch()
                 p.cleanup()
                 outputdir = p.params.outputdir 

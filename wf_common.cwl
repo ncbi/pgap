@@ -375,39 +375,38 @@ steps:
       scatter_gather_nchunks: scatter_gather_nchunks
     out: [annots]
 
-  bacterial_annot: # PLANE
-    run: bacterial_annot/wf_bacterial_annot_pass1.cwl
+  ab_initio_training: 
+    run: bacterial_annot/wf_ab_initio_training.cwl
     in:
       go: 
         - Prepare_Unannotated_Sequences_asndisc_evaluate/success
         - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
-      asn_cache: genomic_source/asncache
-      inseq: Prepare_Unannotated_Sequences/sequences
-      hmm_path: passdata/hmm_path
-      hmms_tab: passdata/hmms_tab
       selenoproteins: passdata/selenoproteins
-      scatter_gather_nchunks: scatter_gather_nchunks
       uniColl_cache: passdata/uniColl_cache
       naming_sqlite: passdata/naming_sqlite
+      genemark_path: 
+        default: /netmnt/vast01/gp/ThirdParty/GeneMark/
+      thresholds: passdata/thresholds
+      
+      asn_cache: genomic_source/asncache
+      inseq: Prepare_Unannotated_Sequences/sequences
       trna_annots: bacterial_trna/annots
       ncrna_annots: bacterial_ncrna/annots
-      nogenbank:
-        default: true
       Execute_CRISPRs_annots: bacterial_mobile_elem/annots
       Generate_16S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_16s
       Generate_23S_rRNA_Annotation_annotation: bacterial_noncoding/annotations_23s
       Post_process_CMsearch_annotations_annots_5S: bacterial_noncoding/annotations_5s
-      genemark_path: 
-        default: /netmnt/vast01/gp/ThirdParty/GeneMark/
-      thresholds: passdata/thresholds
-    out: [lds2,seqids,proteins, aligns, annotation, out_hmm_params, outseqs, prot_ids, models1]
+      
+      nogenbank:
+        default: true
+    out: [annotation, out_hmm_params, models1]
 
   spurious_annot_prelim: # PLANE
     run: spurious_annot/wf_spurious_annot_pass1.cwl
     in:
-      Extract_ORF_Proteins_proteins: bacterial_annot/proteins
-      Extract_ORF_Proteins_seqids: bacterial_annot/seqids
-      Extract_ORF_Proteins_lds2: bacterial_annot/lds2
+      Extract_ORF_Proteins_proteins: orfs_hmms/proteins
+      Extract_ORF_Proteins_seqids: orfs_hmms/seqids
+      Extract_ORF_Proteins_lds2: orfs_hmms/lds2
       AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
@@ -416,14 +415,14 @@ steps:
   bacterial_annot_1st_pass: # PLANE
     run: bacterial_annot/wf_bacterial_annot_pass2.cwl
     in:
-        lds2: bacterial_annot/lds2
-        proteins: bacterial_annot/proteins
-        prot_ids_A: bacterial_annot/seqids
-        prot_ids_B1: bacterial_annot/prot_ids
+        lds2: orfs_hmms/lds2
+        proteins: orfs_hmms/proteins
+        prot_ids_A: orfs_hmms/seqids
+        prot_ids_B1: orfs_hmms/prot_ids
         prot_ids_B2: spurious_annot_prelim/AntiFam_tainted_proteins_I___oseqids
         identification_db_dir: passdata/identification_db_dir
         blastdb: Get_Proteins/selected_blastdb
-        annotation: bacterial_annot/outseqs
+        annotation: orfs_hmms/outseqs
         sequence_cache: genomic_source/asncache
         unicoll_cache: passdata/uniColl_cache
         raw_seqs: Prepare_Unannotated_Sequences/sequences
@@ -436,7 +435,7 @@ steps:
     out: [aligns] #   label: "goes to protein_alignment/Seed Search Compartments/compartments"
 
   protein_alignment: # PLANE
-    run: protein_alignment/wf_protein_alignment.cwl
+    run: protein_alignment/wf_protein_alignment_miniprot.cwl
     in:
       go: 
         - Prepare_Unannotated_Sequences_asndisc_evaluate/success
@@ -445,34 +444,48 @@ steps:
       uniColl_asn_cache: passdata/uniColl_cache
       blastdb_dir: Create_Genomic_BLASTdb/blastdb
       taxid: taxid
-      tax_sql_file: passdata/taxon_db
-      gc_assembly: genomic_source/gencoll_asn
+      taxon_db: passdata/taxon_db
+      
       compartments: bacterial_annot_1st_pass/aligns
       all_prots: Get_Proteins/all_prots
-    out: [align, align_non_match]
+      genomic_ids: genomic_source/seqid_list
+    out: [align]
 
-  bacterial_annot_misc:
-    run: bacterial_annot/wf_bacterial_annot_pass3.cwl
+  ab_initio_antifam:
+    run: bacterial_annot/wf_ab_initio_antifam.cwl
     in:
         AntiFamLib: passdata/AntiFamLib
-        uniColl_cache: passdata/uniColl_cache
+        
         sequence_cache: genomic_source/asncache
-        hmm_aligns: bacterial_annot/aligns
+        models1: ab_initio_training/models1
+        
         scatter_gather_nchunks: scatter_gather_nchunks
-        prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments/align"
-        annotation: bacterial_annot/annotation
-        models1: bacterial_annot/models1
-        raw_seqs: Prepare_Unannotated_Sequences/sequences
+    out: [out_annotation]
+        
+  bacterial_annot_2nd_pass_genemark:
+    run: bacterial_annot/wf_bacterial_annot_2nd_pass.cwl
+    in:
+        uniColl_cache: passdata/uniColl_cache
         thresholds: passdata/thresholds
         naming_sqlite: passdata/naming_sqlite
-        hmm_params: bacterial_annot/out_hmm_params # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
-        selenoproteins: passdata/selenoproteins
         naming_hmms_combined: passdata/naming_hmms_combined
         hmms_tab: passdata/naming_hmms_tab
         wp_hashes: passdata/wp_hashes
         taxon_db: passdata/taxon_db
+        selenoproteins: passdata/selenoproteins
         genemark_path: 
           default: /netmnt/vast01/gp/ThirdParty/GeneMark/
+        
+        sequence_cache: genomic_source/asncache
+        hmm_aligns: orfs_hmms/aligns
+        prot_aligns: protein_alignment/align  # label: "Filter Protein Alignments/align"
+        annotation: ab_initio_training/annotation
+        raw_seqs: Prepare_Unannotated_Sequences/sequences
+        hmm_params: ab_initio_training/out_hmm_params # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
+        good_ab_initio_annotations: ab_initio_antifam/out_annotation
+        
+        scatter_gather_nchunks: scatter_gather_nchunks
+        
     out:
         - id: Find_Best_Evidence_Alignments_aligns
         - id: Run_GeneMark_Post_models
@@ -484,35 +497,53 @@ steps:
         - id: Name_by_WPs_names
         - id: PGAP_plus_ab_initio_annotation
 
+  orfs_hmms: 
+    run: bacterial_annot/wf_orf_hmms.cwl
+    in:
+      go: 
+        - Prepare_Unannotated_Sequences_asndisc_evaluate/success
+        - Prepare_Unannotated_Sequences_asnvalidate_evaluate/success
+      uniColl_cache: passdata/uniColl_cache
+      asn_cache: genomic_source/asncache
+      inseq: Prepare_Unannotated_Sequences/sequences
+      hmm_path: passdata/hmm_path
+      hmms_tab: passdata/hmms_tab
+      nogenbank:
+        default: true
+      scatter_gather_nchunks: scatter_gather_nchunks
+      annotation: ab_initio_antifam/out_annotation
+      
+    out: [lds2, seqids, proteins, aligns, outseqs, prot_ids]
+
   spurious_annot_final:
     run: spurious_annot/wf_spurious_annot_pass2.cwl
     in:
-      Extract_Model_Proteins_proteins: bacterial_annot_misc/Extract_Model_Proteins_proteins
-      Extract_Model_Proteins_seqids: bacterial_annot_misc/Extract_Model_Proteins_seqids
-      Extract_Model_Proteins_lds2: bacterial_annot_misc/Extract_Model_Proteins_lds2
+      Extract_Model_Proteins_proteins: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_proteins
+      Extract_Model_Proteins_seqids: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_seqids
+      Extract_Model_Proteins_lds2: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_lds2
       AntiFamLib: passdata/AntiFamLib
       sequence_cache: genomic_source/asncache
       scatter_gather_nchunks: scatter_gather_nchunks
-      input_models: bacterial_annot_misc/PGAP_plus_ab_initio_annotation
+      input_models: bacterial_annot_2nd_pass_genemark/PGAP_plus_ab_initio_annotation
     out:
       - AntiFam_tainted_proteins___oseqids
       - Good_AntiFam_filtered_annotations_out
       - Good_AntiFam_filtered_proteins_output
 
-  bacterial_annot_2nd_pass:
+  bacterial_annot_2nd_pass_blastp:
     run: bacterial_annot/wf_bacterial_annot_pass4.cwl
     in:
-        lds2: bacterial_annot_misc/Extract_Model_Proteins_lds2
-        proteins: bacterial_annot_misc/Extract_Model_Proteins_proteins
+        lds2: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_lds2
+        proteins: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_proteins
         annotation: spurious_annot_final/Good_AntiFam_filtered_annotations_out
         Good_AntiFam_filtered_proteins_gilist: spurious_annot_final/Good_AntiFam_filtered_proteins_output
         sequence_cache: genomic_source/asncache
         uniColl_cache: passdata/uniColl_cache
         identification_db_dir: passdata/identification_db_dir
         naming_sqlite: passdata/naming_sqlite
-        hmm_assignments:  bacterial_annot_misc/Assign_Naming_HMM_to_Proteins_assignments
-        wp_assignments:  bacterial_annot_misc/Name_by_WPs_names
-        Extract_Model_Proteins_prot_ids: bacterial_annot_misc/Extract_Model_Proteins_seqids
+        hmm_assignments:  bacterial_annot_2nd_pass_genemark/Assign_Naming_HMM_to_Proteins_assignments
+        wp_assignments:  bacterial_annot_2nd_pass_genemark/Name_by_WPs_names
+        Extract_Model_Proteins_prot_ids: bacterial_annot_2nd_pass_genemark/Extract_Model_Proteins_seqids
         CDDdata: passdata/CDDdata
         CDDdata2: passdata/CDDdata2
         thresholds: passdata/thresholds
@@ -534,7 +565,7 @@ steps:
      # # asn_cache:
         # # source: [genomic_source/asncache]
         # # linkMerge: merge_flattened
-     # # input_annotation: bacterial_annot/annotation
+     # # input_annotation: ab_initio_training/annotation
      # # rfam_amendments: rfam_amendments
      # # no_ncRNA:
        # # default: true
@@ -583,7 +614,7 @@ steps:
   Add_Locus_Tags:
     run: progs/add_locus_tags.cwl
     in:
-        input: bacterial_annot_2nd_pass/out_annotation
+        input: bacterial_annot_2nd_pass_blastp/out_annotation
         locus_tag_prefix: locus_tag_prefix
         dbname: dbname
     out: [output]
@@ -865,8 +896,8 @@ steps:
     in:
       annot_request_id:
         default: -1 # this is dummy annot_request_id
-      hmm_search: bacterial_annot_misc/Search_Naming_HMMs_hmm_hits
-      hmm_search_proteins: bacterial_annot_misc/PGAP_plus_ab_initio_annotation
+      hmm_search: bacterial_annot_2nd_pass_genemark/Search_Naming_HMMs_hmm_hits
+      hmm_search_proteins: bacterial_annot_2nd_pass_genemark/PGAP_plus_ab_initio_annotation
       input:  Final_Bacterial_Package_final_bact_asn/outfull
       univ_prot_xml:  passdata/univ_prot_xml
       val_res_den_xml:  passdata/val_res_den_xml

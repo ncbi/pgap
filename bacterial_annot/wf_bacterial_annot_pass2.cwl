@@ -139,11 +139,11 @@ steps:
             soft_masking:
                 default: 'yes'
             threshold: 
-                default: 21
+                default: 20
             top_by_score: 
                 default: 10
             word_size: 
-                default: 6
+                default: 5
             taxid: taxid
             genus_list: genus_list
             blast_hits_cache: 
@@ -205,7 +205,7 @@ steps:
             top_by_score: 
                 default: 10
             word_size: 
-                default: 6
+                default: 5
             taxid: taxid
             genus_list: genus_list
             blast_hits_cache: 

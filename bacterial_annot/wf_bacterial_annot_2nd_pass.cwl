@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-label: "Bacterial Annotation, pass 3, structural annotation, functional annotation: ab initio GeneMark, by WP, by HMM (second pass)"
+label: "Bacterial Annotation, structural annotation, functional annotation: ab initio GeneMark, by WP, by HMM (second pass)"
 cwlVersion: v1.2
 class: Workflow
 requirements:
@@ -7,33 +7,13 @@ requirements:
     - class: MultipleInputFeatureRequirement
 
 inputs:
-    AntiFamLib:
-        type: Directory
+    # refdata input:
     uniColl_cache:
         type: Directory
-    sequence_cache:
-        type: Directory
-    hmm_aligns:
-        type: File
-        label: "Map HMM Hits/align"
-    prot_aligns:
-        type: File
-        label: "Filter Protein Alignments/align"
-    annotation:
-        type: File
-        label: "Resolve Annotation Conflicts/annotation"
-    models1:
-        type: File
-        label: "Run GeneMark Training/models"
-    raw_seqs: 
-        type: File
-        label: #Prepare Unannotated Sequences/raw_seqs"
     thresholds: # ${GP_HOME}/etc/thresholds.xml
         type: File
     naming_sqlite: # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/uniColl/ver-3.2/naming.sqlite
         type: File
-    hmm_params: # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
-        type: File?
     selenoproteins:  # /panfs/pan1.be-md.ncbi.nlm.nih.gov/gpipe/home/badrazat/local-install/2018-05-17/third-party/data/BacterialPipeline/Selenoproteins/selenoproteins
         type: Directory
     selenoproteins_db:
@@ -46,64 +26,69 @@ inputs:
     wp_hashes: File #    input/wp-hashes.sqlite
     taxon_db: File # input/taxonomy.sqlite3
     genemark_path: string
+        
+    # input from other workflows:
+    sequence_cache:
+        type: Directory
+    hmm_aligns:
+        type: File
+        label: "Map HMM Hits/align"
+    prot_aligns:
+        type: File
+        label: "Filter Protein Alignments/align"
+    annotation:
+        type: File
+        label: "Resolve Annotation Conflicts/annotation"
+    raw_seqs: 
+        type: File
+        label: #Prepare Unannotated Sequences/raw_seqs"
+    hmm_params: # Run GeneMark Training/hmm_params (EXTERNAL, put to input/
+        type: File?
+    good_ab_initio_annotations:
+        type: File
+        
+    # algorithmic parameters:
     scatter_gather_nchunks: string
+
+outputs:
+    Find_Best_Evidence_Alignments_aligns: 
+        # sink: Generate Annotation Reports/cluster_prot_aligns (EXTERNAL, put to output/)
+        # sink: Validate Annotation/cluster_best_mft (EXTERNAL, put to output/)
+        label: "goes to protein_alignment/Seed Search Compartments/compartments"
+        type: File
+        outputSource: Find_Best_Evidence_Alignments/out_align
+    Run_GeneMark_Post_models:
+        type: File
+        outputSource: Run_GeneMark_Post/models
+    Extract_Model_Proteins_seqids:
+        type: File
+        outputSource: Extract_Model_Proteins/seqids
+    Extract_Model_Proteins_lds2:
+        type: File
+        outputSource: Extract_Model_Proteins/lds2
+    Extract_Model_Proteins_proteins:
+        type: File
+        outputSource: Extract_Model_Proteins/proteins
+    Search_Naming_HMMs_hmm_hits:
+        type: File
+        outputSource: Search_Naming_HMMs/hmm_hits
+    Assign_Naming_HMM_to_Proteins_assignments:
+        type: File
+        outputSource: Assign_Naming_HMM_to_Proteins/assignments
+    Name_by_WPs_names:
+        type: File
+        outputSource: Name_by_WPs/out_names
+    PGAP_plus_ab_initio_annotation:
+        type: File
+        outputSource: PGAP_plus_ab_initio/out_annotation        
+
+
 steps:
-    Extract_ab_initio_Proteins:
-        label: "Extract ab initio Proteins"
-        run: ../progs/protein_extract.cwl  
-        in: 
-              input: models1
-              nogenbank: 
-                default: true
-        out: [proteins, lds2, seqids]
-    Search_ab_initio_for_AntiFam:
-        label: "Search ab initio for AntiFam"
-        run: ../task_types/tt_hmmsearch_wnode.cwl  
-        in:
-            # this comes always with lds2. LDS2 refers to proteins
-            proteins: Extract_ab_initio_Proteins/proteins
-            hmm_path: AntiFamLib
-            seqids: Extract_ab_initio_Proteins/seqids
-            lds2: Extract_ab_initio_Proteins/lds2
-            # hmms_tab: hmms_tab # goes eventually to -fam parameter -fam is empty here
-            asn_cache: sequence_cache
-            scatter_gather_nchunks: scatter_gather_nchunks
-        out: [hmm_hits]
-    ab_initio_AntiFam_tainted_proteins:
-        label: "ab initio AntiFam tainted proteins"
-        run: ../progs/reduce.cwl
-        in:
-            aligns: Search_ab_initio_for_AntiFam/hmm_hits
-        out: [oseqids] 
-    Good_ab_initio_proteins:
-        label: "Good ab initio proteins"
-        run: ../progs/set_operation.cwl
-        in:
-            A: 
-                source: [Extract_ab_initio_Proteins/seqids]
-                linkMerge: merge_flattened
-            B: 
-                source: [ab_initio_AntiFam_tainted_proteins/oseqids]
-                linkMerge: merge_flattened
-            operation:
-                default: '-' # subracts B from A
-        out: [output] 
-    Good_ab_initio_annotations:
-        label: "Good ab initio annotations"
-        run: ../progs/bact_filter_preserved.cwl
-        in:
-            annotation: models1 
-            ifmt:  
-                default: seq-entry
-            only_those_ids: Good_ab_initio_proteins/output 
-            nogenbank:
-                default: true
-        out: [out_annotation] # goes out -o
     Find_Best_Evidence_Alignments:
         label: "Find Best Evidence Alignments"
         run: ../progs/bact_best_evidence_alignments.cwl  
         in:
-            annotation: [annotation, Good_ab_initio_annotations/out_annotation]
+            annotation: [annotation, good_ab_initio_annotations]
             asn_cache: [uniColl_cache, sequence_cache]  # ${GP_cache_dir},${GP_HOME}/third-party/data/BacterialPipeline/uniColl/ver-3.2/cache
                 # type: Directory[]
             align:  [hmm_aligns, prot_aligns] # -input-manifest 
@@ -187,7 +172,7 @@ steps:
             linkMerge: merge_flattened
           ab_initio:
             source:
-              - Good_ab_initio_annotations/out_annotation
+              - good_ab_initio_annotations
             linkMerge: merge_flattened
         out: [out_annotation]
     Extract_Model_Proteins:
@@ -232,36 +217,3 @@ steps:
             fast:
                 default: false
         out: [out_names] # -onames, there is also prot2wp, but it goes only to tax check, which we dropped in the first round
-outputs:
-    # long output names are preliminary.
-    # after the list is complete, drop the long prefixes
-    Find_Best_Evidence_Alignments_aligns: 
-        # sink: Generate Annotation Reports/cluster_prot_aligns (EXTERNAL, put to output/)
-        # sink: Validate Annotation/cluster_best_mft (EXTERNAL, put to output/)
-        label: "goes to protein_alignment/Seed Search Compartments/compartments"
-        type: File
-        outputSource: Find_Best_Evidence_Alignments/out_align
-    Run_GeneMark_Post_models:
-        type: File
-        outputSource: Run_GeneMark_Post/models
-    Extract_Model_Proteins_seqids:
-        type: File
-        outputSource: Extract_Model_Proteins/seqids
-    Extract_Model_Proteins_lds2:
-        type: File
-        outputSource: Extract_Model_Proteins/lds2
-    Extract_Model_Proteins_proteins:
-        type: File
-        outputSource: Extract_Model_Proteins/proteins
-    Search_Naming_HMMs_hmm_hits:
-        type: File
-        outputSource: Search_Naming_HMMs/hmm_hits
-    Assign_Naming_HMM_to_Proteins_assignments:
-        type: File
-        outputSource: Assign_Naming_HMM_to_Proteins/assignments
-    Name_by_WPs_names:
-        type: File
-        outputSource: Name_by_WPs/out_names
-    PGAP_plus_ab_initio_annotation:
-        type: File
-        outputSource: PGAP_plus_ab_initio/out_annotation        

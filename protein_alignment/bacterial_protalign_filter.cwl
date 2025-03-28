@@ -18,7 +18,7 @@ requirements:
     
 baseCommand: bacterial_protalign_filter 
 
-arguments: [  -filter-accept, "pct_coverage = 100 AND qframe = 0 AND sframe = 0 AND cds_internal_stops = 0", -nogenbank ]
+arguments: [ -nogenbank ]
 
 inputs:
   asn_cache:
@@ -42,8 +42,15 @@ inputs:
     default: align_partial_cov.asn   
     inputBinding:
       prefix: -opartial
-
-
+  filter_accept:
+    type: string?
+    default: "pct_coverage = 100 AND qframe = 0 AND sframe = 0 AND cds_internal_stops = 0"
+    inputBinding:
+      prefix: -filter-accept   
+  max_extent:
+    type: int?
+    inputBinding:
+      prefix: -max_extent   
 outputs:
   blast_full_cov:
     type: File

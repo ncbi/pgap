@@ -1,0 +1,4 @@
+input:
+    class: File
+    location: genus-list
+        
