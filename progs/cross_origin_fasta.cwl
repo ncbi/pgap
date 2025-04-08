@@ -27,6 +27,16 @@ inputs:
     # default: genomic.fa       
     inputBinding:
       prefix: -o
+
+  trim_low_quality:
+    type: boolean?
+    inputBinding:
+      prefix: -trim-low-quality
+  uniquify:
+    type: boolean?
+    inputBinding:
+      prefix: -uniquify
+
       
   asn_cache:
     type: Directory[]
