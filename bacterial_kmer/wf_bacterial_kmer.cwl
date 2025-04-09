@@ -205,21 +205,31 @@ steps:
       gc_seq_cache: gc_seq_cache
       gc_cache: gc_cache
       evalue: 
-        default: 0.01
+        default: 0.0001
       gapextend: 
         default: 1
       gapopen: 
         default: 2
+      max_bases_per_call:
+        default: 500000000
+      merge_align_filter:
+        default: '((reciprocity = 3 AND align_length_ungap >= 5) OR align_length > 1000) AND pct_identity_gap > 25'
+      merge_engine: 
+        default: 'tree-merger'
       max_target_seqs: 
-        default: 250
+        default: 10000
       soft_masking:  
-        default: 'true'
+        default: true
       task:  
         default: megablast
       word_size:  
         default: 28
       workers_per_cpu:  
         default:  0.4
+      compart:
+        default: true
+      use_common_components:
+        default: true
     out: [blast_align]
   Identify_Top_N_ANI:
     doc: identify top N ANI
