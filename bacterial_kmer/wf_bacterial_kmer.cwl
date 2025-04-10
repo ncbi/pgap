@@ -219,7 +219,7 @@ steps:
       max_target_seqs: 
         default: 10000
       soft_masking:  
-        default: true
+        default: 'true'
       task:  
         default: megablast
       word_size:  
