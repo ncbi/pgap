@@ -224,6 +224,8 @@ steps:
         default: megablast
       word_size:  
         default: 28
+      window_size:
+        default: 150
       workers_per_cpu:  
         default:  0.4
       compart:
