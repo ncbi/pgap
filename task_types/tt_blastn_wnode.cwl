@@ -36,16 +36,16 @@ steps:
             contents: ''
       affinity: affinity
       asn_cache: 
-        source: asn_cache
-        valueFrom: "$( [self] )"   
+        source: [asn_cache]
+        linkMerge: merge_flattened
       max_batch_length: max_batch_length
       ids: 
-        source: ids_out
-        valueFrom: "$( [self] )"   
+        source: [ids_out]
+        linkMerge: merge_flattened
       blastdb_dir: blastdb_dir
       blastdb: 
-        source: blastdb
-        valueFrom: "$( [self] )"  
+        source: [blastdb]
+        linkMerge: merge_flattened
       nogenbank: 
         default: true
     out: [jobs]

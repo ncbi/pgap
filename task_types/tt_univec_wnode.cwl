@@ -27,15 +27,15 @@ steps:
             basename: 'null'
             contents: ''
       asn_cache:
-        source: asn_cache
-        valueFrom: "$( [self] )"  
+        source: [asn_cache]
+        linkMerge: merge_flattened
       blastdb:
-        source: blastdb
-        valueFrom: "$( [self] )" 
+        source: [blastdb]
+        linkMerge: merge_flattened
       blastdb_dir: blastdb_dir
       ids:
-        source: gilist
-        valueFrom: "$( [self] )"  
+        source: [gilist]
+        linkMerge: merge_flattened
     out: [jobs]
   univec_wnode:
     run: ../progs/univec_wnode.cwl
