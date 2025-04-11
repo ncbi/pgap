@@ -52,8 +52,8 @@ steps:
       lds2: lds2
       proteins: proteins
       ids: 
-        source: [ids]
-        linkMerge: merge_flattened
+        source: ids
+        valueFrom: "$( [self] ) "
       affinity: affinity
       asn_cache: asn_cache
       max_batch_length: max_batch_length
