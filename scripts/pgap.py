@@ -201,10 +201,6 @@ class Pipeline:
         else:
             self.make_docker_cmd()
 
-        cpusEnv = get_cpus(self)
-        if (cpusEnv):
-            self.cmd.extend(['/bin/taskset', '-c', '0-{}'.format(cpusEnv - 1)])
- 
         self.cmd.extend(['cwltool',
                         '--timestamps',
                         '--debug',
@@ -226,6 +222,13 @@ class Pipeline:
     def make_docker_cmd(self):
         self.cmd = [self.params.docker_cmd, 'run', '-i', '--rm' ]
         self.cmd.extend(['--platform', 'linux/amd64'])
+
+        cpusEnv = get_cpus(self)
+        if (cpusEnv):
+            self.cmd.extend(['--cpus', str(get_cpus(self))])
+
+        if self.params.no_internet:
+            self.cmd.extend(['--network=none'])
 
         if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
