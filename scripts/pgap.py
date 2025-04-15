@@ -534,57 +534,6 @@ xpath_fail_final_asnvalidate: >
             fOut.flush()
         return yaml
         
-    def record_runtime(self, f):
-        def check_runtime_setting(settings, value, min):
-            if settings[value] != 'unlimited' and settings[value] < min:
-                print('WARNING: {} is less than the recommended value of {}'.format(value, min))
-
-        if (self.params.docker_type in ['singularity', 'apptainer']):
-            singularity_docker_image = self.params.docker_image if self.params.args.container_path else "docker://"+self.params.docker_image
-            cmd = [self.params.docker_cmd, 'exec', '--bind', '{}:/cwd:ro'.format(os.getcwd()), singularity_docker_image,
-                   'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
-        else:
-            cmd = [self.params.docker_cmd, 'run', '-i', '-v', '{}:/cwd'.format(os.getcwd()), self.params.docker_image,
-                   'bash', '-c', 'df -k /cwd /tmp ; ulimit -a ; cat /proc/{meminfo,cpuinfo}']
-
-        result = subprocess.run(cmd, stdin=subprocess.DEVNULL, check=True, stdout=subprocess.PIPE)
-        if result.returncode != 0:
-            return
-        output = result.stdout.decode('utf-8')
-        settings = {'Docker image':self.params.docker_image}
-        for match in re.finditer(r'^(open files|max user processes|virtual memory) .* (\S+)\n', output, re.MULTILINE):
-            value = match.group(2)
-            if value != "unlimited":
-                value = int(value)
-            settings[match.group(1)] = value
-        match = re.search(r'^Filesystem.*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n\S+ +\d+ +\d+ +(\d+) +\S+ +/\S*\n', output, re.MULTILINE)
-        settings['work disk space (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-        settings['tmp disk space (GiB)'] = round(int(match.group(2))/1024/1024, 1)
-        match = re.search(r'^MemTotal:\s+(\d+) kB', output, re.MULTILINE)
-        settings['memory (GiB)'] = round(int(match.group(1))/1024/1024, 1)
-        cpus = 0
-        for match in re.finditer(r'^processor\s+:\s+(.*)\n', output, re.MULTILINE):
-            cpus += 1
-
-        match = re.search(r'^model name\s+:\s+(.*)\n', output, re.MULTILINE)
-        settings['cpu model'] = match.group(1)
-
-        match = re.search(r'^flags\s+:\s+(.*)\n', output, re.MULTILINE)
-        settings['cpu flags'] = match.group(1)
-        
-        settings['CPU cores'] = cpus
-        settings['memory per CPU core (GiB)'] = round(settings['memory (GiB)']/cpus, 1)
-        check_runtime_setting(settings, 'open files', 8000)
-        check_runtime_setting(settings, 'max user processes', 100)
-        check_runtime_setting(settings, 'work disk space (GiB)', 80)
-        check_runtime_setting(settings, 'tmp disk space (GiB)', 10)
-        check_runtime_setting(settings, 'memory (GiB)', 8)
-        check_runtime_setting(settings, 'memory per CPU core (GiB)', 2)
-        filename = self.params.outputdir + "/debug/RUNTIME.json"
-        #with open(filename, 'w', encoding='utf-8') as f:
-            #f.write(u'{}\n'.format(settings))
-        f.write(json.dumps(settings, sort_keys=True, indent=4))
-             
     def report_output_files(self, output, output_files):
         # output_files = [
         # {"file": "", "remove": True},
@@ -616,12 +565,6 @@ xpath_fail_final_asnvalidate: >
                 for line in fIn:
                     f.write(line)
             f.write("--- End YAML Input ---\n\n")
-
-            if platform.system() != "Darwin":
-                # Show runtime parameters in the log
-                f.write("--- Start Runtime Report ---\n")
-                self.record_runtime(f)
-                f.write("\n--- End Runtime Report ---\n\n")
 
             try:
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
