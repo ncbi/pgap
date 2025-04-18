@@ -473,6 +473,7 @@ xpath_fail_initial_asnvalidate: >
             ( @severity="ERROR" or @severity="REJECT" )
             and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
             and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
         ]
 xpath_fail_final_asnvalidate: >
         //*[( @severity="ERROR" or @severity="REJECT" )
