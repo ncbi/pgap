@@ -230,6 +230,9 @@ class Pipeline:
         if self.params.no_internet:
             self.cmd.extend(['--network=none'])
 
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+
         if self.params.docker_user_remap:
             self.cmd.extend(['--user', str(os.getuid()) + ":" + str(os.getgid())])
         self.cmd.extend([
@@ -238,9 +241,7 @@ class Pipeline:
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
             '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
-        if (self.params.args.memory):
-            self.cmd.extend(['--memory', self.params.args.memory])
-            
+
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
@@ -257,6 +258,16 @@ class Pipeline:
             self.cmd.extend(['--log-level',  'debug'])
         self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
+        cpusEnv = get_cpus(self)
+        if (cpusEnv):
+            self.cmd.extend(['--cpus', str(get_cpus(self))])
+
+        if self.params.no_internet:
+            self.cmd.extend(['--network=none'])
+
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+
         self.cmd.extend([
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:Z'.format(self.input_dir),
@@ -264,9 +275,6 @@ class Pipeline:
             '--volume', '{}:{}:ro,Z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
-        if (self.params.args.memory):
-            self.cmd.extend(['--memory', self.params.args.memory])
-            
         # Debug mount for docker image
         if self.params.args.debug:
             log_dir = self.params.outputdir + '/debug/log'
@@ -278,7 +286,17 @@ class Pipeline:
 
     def make_singularity_cmd(self):
         self.cmd = [self.params.docker_cmd, 'exec' ]
+
+        cpusEnv = get_cpus(self)
+        if (cpusEnv):
+            self.cmd.extend(['--cpus', str(get_cpus(self))])
+
+        if self.params.no_internet:
+            self.cmd.extend(['--network=none'])
         
+        if (self.params.args.memory):
+            self.cmd.extend(['--memory', self.params.args.memory])
+
         self.cmd.extend([
             '--bind', '{}:/pgap/input:ro'.format(self.data_dir),
             '--bind', '{}:/pgap/user_input'.format(self.input_dir),
