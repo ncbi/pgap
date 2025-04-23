@@ -33,6 +33,13 @@ requirements:
 
 baseCommand: gpx_qsubmit
 inputs:
+  ids:
+    type: File[]?
+  ids_manifest:
+    type: string?
+    default: ids.mft
+    inputBinding: 
+        prefix: -ids-manifest
   affinity:
     type: string?
     default: subject
@@ -55,21 +62,6 @@ inputs:
       valueFrom: ${ var blob = ''; for (var i = 0; i < inputs.blastdb.length; i++) { blob += inputs.blastdb_dir.path + '/' + inputs.blastdb[i]; if(i != inputs.blastdb.length-1) blob += ','; } return blob; }
   blastdb_dir:
     type: Directory?
-  # this won't work because we create manifest in requirement: section simultaneously with declaring input directories "stable"
-  # and "stability" is not achieved until we are done with requirements part (I guess)
-  # blastdb_manifest:
-  #   type: string?
-  #   inputBinding:
-  #     prefix: -db-manifest
-  #     valueFrom: blastdb.mft
-  # same here:
-  ids:
-    type: File[]?
-  ids_manifest:
-    type: string?
-    default: ids.mft
-    inputBinding: 
-        prefix: -ids-manifest
   queries_gc_id_list:
     type: File?
     inputBinding:

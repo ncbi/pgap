@@ -21,6 +21,13 @@ baseCommand: bacterial_prot_src
 arguments: [ -no-phage, -nogenbank ]
 
 inputs:
+  blastdb: # genomic
+    type: string[]
+  blastdb_dir:
+    type: Directory
+    inputBinding:
+      prefix: -blastdbs-manifest
+      valueFrom: blastdbs.mft
   uniColl_asn_cache:
     type: Directory
     inputBinding:
@@ -37,15 +44,8 @@ inputs:
     type: File
     inputBinding:
       prefix: -unicoll_sqlite
-  blastdb: # genomic
-    type: string[]
   all_order_specific_blastdb: # 
     type: string[]
-  blastdb_dir:
-    type: Directory
-    inputBinding:
-      prefix: -blastdbs-manifest
-      valueFrom: blastdbs.mft
     
   prot_output:
     type: string?
