@@ -803,6 +803,7 @@ class Setup:
         for thread in threads:
             thread.join()
             if thread.exitcode != 0:
+                print(f"Error: thread '{thread.name}' failed with exit code {thread.exitcode}", file=sys.stderr)
                 global_exit_value = thread.exitcode
         if global_exit_value != 0:
             raise Exception(f'installation of some or all of components failed. Please remove {self.data_path}, {self.install_dir}/test_genomes, {self.test_genomes_path} directories and try again.')
