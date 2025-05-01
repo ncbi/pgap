@@ -156,6 +156,10 @@ steps:
     in:
       align: Convert_PAF_Alignments/align
       delta_seqs_input: Get_Genomic_FASTA/delta_seqs
+      trim_low_quality:
+        default: true
+      uniquify:
+        default: true
       min_pct_ident:
         default: 0.3
       window:

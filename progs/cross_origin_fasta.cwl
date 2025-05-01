@@ -3,7 +3,6 @@ cwlVersion: v1.2
 label: cross_origin_fasta
 class: CommandLineTool
 baseCommand: cross_origin_fasta
-arguments: [-trim-low-quality, -uniquify]
 inputs:
   gilist:
     type: File?
@@ -27,6 +26,16 @@ inputs:
     # default: genomic.fa       
     inputBinding:
       prefix: -o
+
+  trim_low_quality:
+    type: boolean?
+    inputBinding:
+      prefix: -trim-low-quality
+  uniquify:
+    type: boolean?
+    inputBinding:
+      prefix: -uniquify
+
       
   asn_cache:
     type: Directory[]

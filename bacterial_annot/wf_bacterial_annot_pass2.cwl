@@ -94,6 +94,7 @@ steps:
         in:
             scatter_gather_nchunks: scatter_gather_nchunks
             ids: 
+              # do I need to flatten here? Yes. otherwise conversion to an Array of Files does not happen
               source: [Separate_Plasmid_ORFs/chomosome_orfs]
               linkMerge: merge_flattened
             lds2: lds2
@@ -201,7 +202,7 @@ steps:
             soft_masking:
                 default: 'yes'
             threshold: 
-                default: 21
+                default: 20
             top_by_score: 
                 default: 10
             word_size: 

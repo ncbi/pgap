@@ -21,7 +21,7 @@ inputs:
   merge_engine: string?
   soft_masking: string?
   task: string
-  use_common_components: boolean
+  use_common_components: boolean?
   window_size: int?
   word_size: int?
   workers_per_cpu: float?
