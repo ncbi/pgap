@@ -36,10 +36,6 @@ inputs:
     inputBinding:
         prefix: -b
         valueFrom: $(inputs.b.path)/$(inputs.blastdb)
-  x: 
-    type: int
-    inputBinding:
-        prefix: -x
   protein_assignments_name:
     type: string?
     default: proteins.xml

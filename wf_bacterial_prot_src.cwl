@@ -40,6 +40,15 @@ steps:
       all_order_specific_blastdb: all_order_specific_blastdb
     out: [ universal_clusters, all_prots, selected_blastdb ]
   File2Basenames:
+    # worth describing a trick here:
+    # Get_Proteins_app/selected_blastdb is a manifest File in Gpipe sense. It contains full absolute paths
+    # to order specific blastdb 
+    #
+    # file paths are transient and unreliable, but information here is in the basename of the selected blastdb, which is 
+    # a persistent name findable under the unicol reference data
+    #
+    # Bottom line: no, we cannot pass manifests from one step to another, we are just using a clever trick here
+    #
     run: progs/file2basenames.cwl
     in:
       input: Get_Proteins_app/selected_blastdb

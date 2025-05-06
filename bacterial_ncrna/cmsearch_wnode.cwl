@@ -11,7 +11,7 @@ requirements:
     ramMax: 3000
 
 baseCommand: cmsearch_wnode
-arguments: [ -nogenbank, -rfam-version, '14.4' ]
+arguments: [ -nogenbank, -rfam-version, '15.0' ]
 inputs:
   asn_cache:
     type: Directory

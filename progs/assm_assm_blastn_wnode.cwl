@@ -83,7 +83,7 @@ inputs:
     inputBinding:
       prefix: -task
   use_common_components:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: -use-common-components
   window_size:

@@ -12,7 +12,7 @@ requirements:
 
 
 baseCommand: cmsearch_wnode
-arguments: [ -nogenbank, -use-alignment-output, -rfam-version, '14.4' ]
+arguments: [ -nogenbank, -use-alignment-output, -rfam-version, '15.0' ]
 inputs:
   asn_cache:
     type: Directory

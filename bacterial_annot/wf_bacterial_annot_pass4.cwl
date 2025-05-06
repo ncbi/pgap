@@ -111,11 +111,11 @@ steps:
             soft_masking:
                 default: 'yes'
             threshold: 
-                default: 21
+                default: 20
             top_by_score: 
                 default: 10
             word_size: 
-                default: 6
+                default: 5
             taxid: taxid
             genus_list: genus_list
             blast_hits_cache: 
@@ -233,8 +233,6 @@ steps:
                 default: 500
             b: CDDdata
             d: CDDdata2
-            x:
-                default: 1
         out: [protein_assignments] # not go out of the workflow
     Add_Names_to_Proteins:
         label: "Add Names to Proteins"

@@ -204,34 +204,34 @@ steps:
       asn_cache: asn_cache
       gc_seq_cache: gc_seq_cache
       gc_cache: gc_cache
-      compart: 
-        default: true
       evalue: 
         default: 0.0001
       gapextend: 
         default: 1
       gapopen: 
         default: 2
-      max_bases_per_call: 
+      max_bases_per_call:
         default: 500000000
-      max_target_seqs: 
-        default: 250
-      merge_align_filter: 
-        default: "((reciprocity = 3 AND align_length_ungap >= 5) OR align_length > 1000) AND pct_identity_gap > 25"
+      merge_align_filter:
+        default: '((reciprocity = 3 AND align_length_ungap >= 5) OR align_length > 1000) AND pct_identity_gap > 25'
       merge_engine: 
-        default: "tree-merger"
+        default: 'tree-merger'
+      max_target_seqs: 
+        default: 10000
       soft_masking:  
         default: 'true'
       task:  
         default: megablast
-      use_common_components:  
-        default: true
-      window_size:  
-        default: 150
       word_size:  
         default: 28
+      window_size:
+        default: 150
       workers_per_cpu:  
         default:  0.4
+      compart:
+        default: true
+      use_common_components:
+        default: true
     out: [blast_align]
   Identify_Top_N_ANI:
     doc: identify top N ANI

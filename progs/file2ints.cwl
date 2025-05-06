@@ -19,6 +19,9 @@ expression: |
           if(lines[i].length == 0) {
             continue;
           }
+          if(lines[i].startsWith("#")) {
+            continue;
+          }
           var myint = parseInt(lines[i]);
           if(myint != null) {
             values.push(myint)  ;
