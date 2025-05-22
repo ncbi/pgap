@@ -624,7 +624,7 @@ class Setup:
             self.install_dir     = os.environ.get('PGAP_INPUT_DIR',os.environ['HOME']+'/.pgap')
 
         self.local_version   = self.get_local_version()
-        if self.args.no_internet:
+        if self.args.no_internet or self.args.no_self_up:
             self.remote_versions = [self.local_version]
         else:
             self.remote_versions = self.get_remote_versions()
@@ -708,6 +708,9 @@ class Setup:
             return False
         if self.args.no_internet:
             print("--no-internet flag enabled, not checking remote versions.")
+            return True
+        if self.args.no_self_up:
+            print("--no-self-update flag enabled, not checking remote versions.")
             return True
         if self.local_version == self.get_latest_version():
             if self.branch == "":
