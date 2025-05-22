@@ -709,6 +709,9 @@ class Setup:
         if self.args.no_internet:
             print("--no-internet flag enabled, not checking remote versions.")
             return True
+        if self.args.no_self_up:
+            print("--no-self-update flag enabled, not checking remote versions.")
+            return True
         if self.local_version == self.get_latest_version():
             if self.branch == "":
                 print("PGAP version {} is up to date.".format(self.local_version))
