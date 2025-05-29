@@ -227,7 +227,7 @@ class Pipeline:
         if (cpusEnv):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
-        if self.params.no_internet:
+        if self.params.args.no_internet:
             self.cmd.extend(['--network=none'])
 
         if (self.params.args.memory):
@@ -262,7 +262,7 @@ class Pipeline:
         if (cpusEnv):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
-        if self.params.no_internet:
+        if self.params.args.no_internet:
             self.cmd.extend(['--network=none'])
 
         if (self.params.args.memory):
@@ -291,7 +291,7 @@ class Pipeline:
         if (cpusEnv):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
-        if self.params.no_internet:
+        if self.params.args.no_internet:
             self.cmd.extend(['--network=none'])
         
         if (self.params.args.memory):
