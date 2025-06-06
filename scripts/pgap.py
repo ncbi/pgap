@@ -507,8 +507,8 @@ xpath_fail_final_asnvalidate: >
             and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
             and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
             and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            
         ]
+contact_as_author_possible: false
 """)
                 else:
                     fOut.write(f"""
