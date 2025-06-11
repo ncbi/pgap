@@ -21,23 +21,29 @@ inputs:
     inputBinding:
       position: 2
   state:
-    type: string 
+    type: string
     inputBinding:
       position: 3
       prefix: "state"
       itemSeparator: " "
   workflow:
-    type: string 
+    type: string
     inputBinding:
       position: 4
       prefix: "workflow"
+      itemSeparator: " "
+  os_version:  # New optional input
+    type: string?
+    inputBinding:
+      position: 5
+      prefix: "os_version"
       itemSeparator: " "
   instring:
     type: string?
     default: "dummyarg"
   infile:
     type: File[]?
-      
+
 outputs:
   stdout:
     type: stdout
