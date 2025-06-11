@@ -172,10 +172,29 @@ class Pipeline:
                 if os.path.exists(fullpath):
                     os.remove(fullpath)
             
+    @staticmethod
+    def get_os_version():
+        """
+        Retrieves the OS version as a string using platform module.
+        Returns None if the call fails.
+        """
+        try:
+            import platform
+            return f"{platform.system()} {platform.release()} {platform.machine()}"
+        except Exception:
+            return None
+    
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
+        
+        # Conditionally set os_version only if report_usage is true
+        if params.report_usage == 'true':
+            self.os_version = self.get_os_version()
+        else:
+            self.os_version = None
+
         self.pipeline = pipeline
         
         self.data_dir = os.path.abspath(self.params.data_path)
@@ -406,10 +425,10 @@ class Pipeline:
         
     def create_inputfile(self, local_input, add_std_validation_exemptions):
         with tempfile.NamedTemporaryFile(mode='w',
-                                         suffix=".yaml",
-                                         prefix="pgap_input_",
-                                         dir=self.params.outputdir,
-                                         delete=False) as fOut:
+                                        suffix=".yaml",
+                                        prefix="pgap_input_",
+                                        dir=self.params.outputdir,
+                                        delete=False) as fOut:
             yaml = fOut.name
             with open(local_input, 'r') as fIn:
                 processing_submol = False
@@ -417,8 +436,8 @@ class Pipeline:
                 processing_entries = False
                 processing_submol_json = False
                 for line in fIn:
-                    if line: # skip empty lines
-                        if 'submol:' in line: # we need to replace submol/location with new file
+                    if line:  # skip empty lines
+                        if 'submol:' in line:  # we need to replace submol/location with new file
                             processing_submol = True
                             processing_fasta = False
                             processing_entries = False
@@ -428,18 +447,18 @@ class Pipeline:
                             processing_entries = False
                             processing_submol_json = False
                             pos = line.index('location: ')
-                            line = ' ' * pos + u'location: '+self.submol + '\n'
-                        if 'fasta:' in line: # we need to copy fasta input to output_dir
+                            line = ' ' * pos + u'location: ' + self.submol + '\n'
+                        if 'fasta:' in line:  # we need to copy fasta input to output_dir
                             processing_submol = False
                             processing_fasta = True
                             processing_entries = False
                             processing_submol_json = False
-                        if 'entries:' in line: # we need to copy entries input to output_dir
+                        if 'entries:' in line:  # we need to copy entries input to output_dir
                             processing_submol = False
                             processing_fasta = False
                             processing_submol_json = False
                             processing_entries = True
-                        if 'submol_block_json:' in line: 
+                        if 'submol_block_json:' in line:
                             processing_submol = False
                             processing_fasta = False
                             processing_submol_json = True
@@ -451,7 +470,7 @@ class Pipeline:
                                 input_fasta_location = None
                                 if self.params.args.genome:
                                     input_fasta_location = self.params.args.genome
-                                else: 
+                                else:
                                     match = re.search(r'location:\s+(\S+)', line)
                                     input_fasta_location = os.path.join(local_input_dir, match.group(1))
                                 copy_genome_to_workspace(input_fasta_location, self.params.outputdir)
@@ -471,6 +490,8 @@ class Pipeline:
             fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                if self.os_version:  # Only include os_version if report_usage is true and os_version is not None
+                    fOut.write(u'os_version: {}\n'.format(self.os_version))
             if (self.params.ignore_all_errors == 'true'):
                 fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             if (self.params.no_internet == 'true'):
@@ -482,77 +503,77 @@ class Pipeline:
             if add_std_validation_exemptions:
                 if self.pipeline == 'wf_common':
                     fOut.write(f"""
-xpath_fail_initial_asndisc: >
-    //*[@severity="FATAL"
-         and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
-    ]
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+    xpath_fail_initial_asndisc: >
+        //*[@severity="FATAL"
+            and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
         ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement"))
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
-            and not(contains(@code, "SEQ_DESCR_MissingLineage"))
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
-            and not(contains(@code, "SEQ_FEAT_ShortIntron"))
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-contact_as_author_possible: false
-""")
+    xpath_fail_initial_asnvalidate: >
+            //*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+            ]
+    xpath_fail_final_asnvalidate: >
+            //*[( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "GENERIC_MissingPubRequirement"))
+                and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+                and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
+                and not(contains(@code, "SEQ_DESCR_MissingLineage"))
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
+                and not(contains(@code, "SEQ_FEAT_ShortIntron"))
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            ]
+    contact_as_author_possible: false
+    """)
                 else:
                     fOut.write(f"""
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-        ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-""")
+    xpath_fail_initial_asnvalidate: >
+            //*[
+                ( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+            ]
+    xpath_fail_final_asnvalidate: >
+            //*[( @severity="ERROR" or @severity="REJECT" )
+                and not(contains(@code, "GENERIC_MissingPubRequirement")) 
+                and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
+                and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
+                and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
+                and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
+                and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
+                and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
+                and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
+                and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
+                and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
+                and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
+                and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
+                and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
+                and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
+                and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
+            ]
+    """)
             fOut.flush()
-        return yaml
-        
+        return yaml 
+    
     def report_output_files(self, output, output_files):
         # output_files = [
         # {"file": "", "remove": True},
