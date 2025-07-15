@@ -188,14 +188,9 @@ class Pipeline:
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
-        
-        # Conditionally set os_version only if report_usage is true
-        if params.report_usage == 'true':
-            self.os_version = self.get_os_version()
-        else:
-            self.os_version = None
-
         self.pipeline = pipeline
+        
+        self.os_version = self.get_os_version()
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
