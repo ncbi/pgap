@@ -172,10 +172,29 @@ class Pipeline:
                 if os.path.exists(fullpath):
                     os.remove(fullpath)
             
+    @staticmethod
+    def get_os_version():
+        """
+        Retrieves the OS version as a string using platform module.
+        Returns None if the call fails.
+        """
+        try:
+            import platform
+            return f"{platform.system()} {platform.release()} {platform.machine()}"
+        except Exception:
+            return None
+    
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
+        
+        # Conditionally set os_version only if report_usage is true
+        if params.report_usage == 'true':
+            self.os_version = self.get_os_version()
+        else:
+            self.os_version = None
+
         self.pipeline = pipeline
         
         self.data_dir = os.path.abspath(self.params.data_path)
@@ -471,6 +490,8 @@ class Pipeline:
             fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
                 fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                if self.os_version:  # Only include os_version if report_usage is true and os_version is not None
+                    fOut.write(u'os_version: {}\n'.format(self.os_version))
             if (self.params.ignore_all_errors == 'true'):
                 fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             if (self.params.no_internet == 'true'):
