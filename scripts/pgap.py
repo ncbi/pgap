@@ -172,7 +172,7 @@ class Pipeline:
                 if os.path.exists(fullpath):
                     os.remove(fullpath)
             
-    staticmethod
+    @staticmethod
     def get_os_version():
         """
         Retrieves the OS version as a string using platform module.
