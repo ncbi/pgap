@@ -172,7 +172,7 @@ class Pipeline:
                 if os.path.exists(fullpath):
                     os.remove(fullpath)
             
-    @staticmethod
+    staticmethod
     def get_os_version():
         """
         Retrieves the OS version as a string using platform module.
@@ -180,7 +180,14 @@ class Pipeline:
         """
         try:
             import platform
-            return f"{platform.system()} {platform.release()} {platform.machine()}"
+            system = platform.system()
+            release = platform.release()
+            machine = platform.machine()
+            # Pre-sanitize: replace any unexpected special chars with underscores (unlikely in OS versions.
+            system = re.sub(r'[^a-zA-Z0-9_.,-]', '_', system)
+            release = re.sub(r'[^a-zA-Z0-9_.,-]', '_', release)
+            machine = re.sub(r'[^a-zA-Z0-9_.,-]', '_', machine)
+            return f"{system},{release},{machine}"
         except Exception:
             return None
     
