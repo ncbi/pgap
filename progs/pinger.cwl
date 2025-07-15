@@ -37,7 +37,6 @@ inputs:
     inputBinding:
       position: 5
       prefix: "os_version"
-      itemSeparator: " "
   instring:
     type: string?
     default: "dummyarg"
