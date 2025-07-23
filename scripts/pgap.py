@@ -122,7 +122,7 @@ ERROR: Failed to extract tarball; to install manually, try something like:
     tar xvf {}
 '''.format(url, basename))
         raise
-    if guard_file != None:
+    if guard_file is not None:
         open(guard_file, 'a').close()
 
 def quiet_remove(filename):
@@ -166,7 +166,7 @@ class Pipeline:
 
     def cleanup(self):
         for file in [self.yaml, self.submol]:
-            if file != None:
+            if file is not None:
                 base =  os.path.basename(file)
                 fullpath  = os.path.join(self.params.outputdir, base)
                 if os.path.exists(fullpath):
@@ -205,7 +205,7 @@ class Pipeline:
         # input file location inside docker instance:
         self.input_file = '/pgap/output/pgap_input.yaml'
         submol =  self.get_submol(local_input)
-        if ( submol != None ):
+        if ( submol is not None ):
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
@@ -373,12 +373,12 @@ class Pipeline:
         has_contact_info = self.regexp_file(local_submol, '^contact_info:')
         genus_species = None
         if auto_correct_tax:
-            if ani_output != None: 
+            if ani_output is not None: 
                 genus_species = self.get_genus_species(ani_output)
-                if genus_species != None:
+                if genus_species is not None:
                     print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
                 else:
-                    if ani_hr_output != None:
+                    if ani_hr_output is not None:
                         chosen_ani_output_type = ani_hr_output
                     else:
                         chosen_ani_output_type = ani_output
@@ -394,7 +394,7 @@ class Pipeline:
             with open(local_submol, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
-                        if auto_correct_tax and genus_species != None and re.match(r'\s+genus_species:', line):
+                        if auto_correct_tax and genus_species is not None and re.match(r'\s+genus_species:', line):
                             print('replacing organism in line: {}'.format(line.rstrip()))
                             line = re.sub(r'genus_species:.*', "genus_species: '{}'".format(genus_species), line)
                             print('with organism: {}'.format(genus_species))
@@ -612,7 +612,7 @@ xpath_fail_final_asnvalidate: >
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
             finally:
-                if proc.returncode == None:
+                if proc.returncode is None:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
@@ -726,7 +726,7 @@ class Setup:
         return versions
 
     def check_status(self):
-        if self.local_version == None:
+        if self.local_version is None:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return False
         if self.args.no_internet:
@@ -755,7 +755,7 @@ class Setup:
     def get_use_version(self):
         if self.args.use_version:
             return self.args.use_version
-        if (self.local_version == None) or self.args.update:
+        if (self.local_version is None) or self.args.update:
             return self.get_latest_version()
         return self.local_version
 
@@ -769,10 +769,14 @@ class Setup:
         else:
             for docker in docker_type_alternatives:
                 self.docker_cmd = shutil.which(docker)
-                if self.docker_cmd != None:
+                if self.docker_cmd is not None:
                     break
-        if self.docker_cmd == None:
-            sys.exit("Docker not found.")
+        if self.docker_cmd is None:
+            if self.args.docker:
+                sys.exit(f"{self.args.docker} not found.")
+            else:
+                alternatives = ", ".join(docker_type_alternatives)
+                sys.exit(f"None of {alternatives} were found.")
 
         version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL).stdout.decode('utf-8')
         self.docker_type = version.split(maxsplit=1)[0].lower()
@@ -1212,11 +1216,11 @@ def main():
                 # if there are errors
                 # and we do not want to recover them when it is recoverable
                 #  then bail
-                if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
+                if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output is not None ) :
                     error_file = None
-                    if params.ani_hr_output != None:
+                    if params.ani_hr_output is not None:
                         error_file = params.ani_hr_output
-                    elif params.ani_output != None:
+                    elif params.ani_output is not None:
                         error_file = params.ani_output
                     else: 
                         error_file = errors_xml_fn
@@ -1248,7 +1252,7 @@ def main():
                 # 
                 list_to_delete = [args.input, 'input.yaml', 'pgap_input.yaml', 'submol.yaml']
                 for file in list_to_delete:
-                    if file != None:
+                    if file is not None:
                         base =  os.path.basename(file)
                         fullpath  = os.path.join(p.params.outputdir, base)
                         if os.path.exists(fullpath):
