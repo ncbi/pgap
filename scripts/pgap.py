@@ -196,6 +196,7 @@ class Pipeline:
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
         self.pipeline = pipeline
+        self.has_authors = False;
         
         self.os_version = self.get_os_version()
         
@@ -369,7 +370,7 @@ class Pipeline:
         return genus_species
 
     def create_submolfile(self, local_submol, ani_output, ani_hr_output, auto_correct_tax):
-        has_authors = self.regexp_file(local_submol, '^authors:')
+        self.has_authors = self.regexp_file(local_submol, '^authors:')
         has_contact_info = self.regexp_file(local_submol, '^contact_info:')
         genus_species = None
         if auto_correct_tax:
@@ -400,7 +401,7 @@ class Pipeline:
                             print('with organism: {}'.format(genus_species))
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
-            if  has_authors == False:
+            if  self.has_authors == False:
                 fOut.write(u'authors:\n')
                 fOut.write(u'    - author:\n')
                 #
@@ -430,8 +431,8 @@ class Pipeline:
                                          suffix=".yaml",
                                          prefix="pgap_input_",
                                          dir=self.params.outputdir,
-                                         delete=False) as fOut:
-            yaml = fOut.name
+                                         delete=False) as fOutInputYaml:
+            yaml = fOutInputYaml.name
             with open(local_input, 'r') as fIn:
                 processing_submol = False
                 processing_fasta = False
@@ -487,93 +488,120 @@ class Pipeline:
                                 input_submol_json_location = os.path.join(local_input_dir, match.group(1))
                                 copy_genome_to_workspace(input_submol_json_location, self.params.outputdir)
                         
-                        fOut.write(line.rstrip())
-                        fOut.write(u'\n')
-            fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+                        fOutInputYaml.write(line.rstrip())
+                        fOutInputYaml.write(u'\n')
+            fOutInputYaml.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
-                fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                fOutInputYaml.write(u'report_usage: {}\n'.format(self.params.report_usage))
                 if self.os_version:  # Only include os_version if report_usage is true and os_version is not None
-                    fOut.write(u'os_version: {}\n'.format(self.os_version))
+                    fOutInputYaml.write(u'os_version: {}\n'.format(self.os_version))
             if (self.params.ignore_all_errors == 'true'):
-                fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
+                fOutInputYaml.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             if (self.params.no_internet == 'true'):
-                fOut.write(u'no_internet: {}\n'.format(self.params.no_internet))
+                fOutInputYaml.write(u'no_internet: {}\n'.format(self.params.no_internet))
             uuidfile = self.params.outputdir + "/uuid.txt"
             if os.path.exists(uuidfile) and os.stat(uuidfile).st_size != 0:
-                fOut.write(u'make_uuid: false\n')
-                fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
+                fOutInputYaml.write(u'make_uuid: false\n')
+                fOutInputYaml.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
             if add_std_validation_exemptions:
-                if self.pipeline == 'wf_common':
-                    fOut.write(f"""
-xpath_fail_initial_asndisc: >
-    //*[@severity="FATAL"
-         and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
-    ]
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-        ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement"))
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
-            and not(contains(@code, "SEQ_DESCR_MissingLineage"))
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
-            and not(contains(@code, "SEQ_FEAT_ShortIntron"))
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-contact_as_author_possible: false
-""")
-                else:
-                    fOut.write(f"""
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-        ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-""")
-            fOut.flush()
+                # --- Severities (unchanged) ---
+                SEVERITIES = {
+                    "xpath_fail_initial_asndisc":     '@severity="FATAL"',
+                    "xpath_fail_initial_asnvalidate": '(@severity="ERROR" or @severity="REJECT")',
+                    "xpath_fail_final_asnvalidate":   '(@severity="ERROR" or @severity="REJECT")',
+                }
+
+                # BASE = true intersection (shared by both pipelines)
+                BASE = {
+                    "xpath_fail_initial_asndisc": {"name": []},  # none shared
+
+                    # INITIAL intersection: only these two are common to both pipelines
+                    "xpath_fail_initial_asnvalidate": {
+                        "code": [
+                            "SEQ_DESCR_BacteriaMissingSourceQualifier",
+                            "SEQ_PKG_NucProtProblem",
+                        ],
+                    },
+
+                    # FINAL intersection (same for both pipelines)
+                    "xpath_fail_final_asnvalidate": {
+                        "code": [
+                            "GENERIC_MissingPubRequirement",
+                            "SEQ_DESCR_BacteriaMissingSourceQualifier",
+                            "SEQ_DESCR_MissingLineage",
+                            "SEQ_DESCR_NoTaxonID",
+                            "SEQ_DESCR_UnwantedCompleteFlag",
+                            "SEQ_FEAT_ShortIntron",
+                            "SEQ_INST_InternalNsInSeqRaw",
+                            "SEQ_INST_ProteinsHaveGeneralID",
+                            "SEQ_PKG_ComponentMissingTitle",
+                            "SEQ_PKG_NucProtProblem",
+                        ],
+                    },
+                }
+
+                # PATCHES = pipeline-specific adds only
+                PATCHES = {
+                    "wf_common": {
+                        "xpath_fail_initial_asndisc": {"+name": ["CITSUBAFFIL_CONFLICT"]},
+                        "xpath_fail_initial_asnvalidate": {
+                            "+code": ["SEQ_DESCR_BadOrgMod"],  # wf_common-only in INITIAL
+                        },
+                        "xpath_fail_final_asnvalidate": {
+                            "+code": [
+                                "SEQ_DESCR_BadOrgMod",      # wf_common-only in FINAL
+                                "SEQ_DESCR_Chromosomepath", # wf_common-only spelling
+                            ],
+                        },
+                        "_extra_yaml": {"contact_as_author_possible": False},
+                    },
+
+                    "default": {
+                        "xpath_fail_initial_asnvalidate": {
+                            "+code": [
+                                "GENERIC_MissingPubRequirement",
+                                "GENERIC_BadSubmissionAuthorName",
+                                "SEQ_DESCR_ChromosomeLocation",
+                                "SEQ_DESCR_MissingLineage",
+                                "SEQ_DESCR_NoTaxonID",
+                                "SEQ_DESCR_OrganismIsUndefinedSpecies",
+                                "SEQ_DESCR_StrainWithEnvironSample",
+                                "SEQ_DESCR_UnwantedCompleteFlag",
+                                "SEQ_FEAT_BadCharInAuthorLastName",
+                                "SEQ_FEAT_ShortIntron",
+                                "SEQ_INST_InternalNsInSeqRaw",
+                                "SEQ_INST_ProteinsHaveGeneralID",
+                                "SEQ_PKG_ComponentMissingTitle",
+                                # note: SEQ_PKG_NucProtProblem is already in BASE
+                            ],
+                        },
+                        "xpath_fail_final_asnvalidate": {
+                            "+code": [
+                                "GENERIC_BadSubmissionAuthorName",
+                                "SEQ_DESCR_ChromosomeLocation",
+                                "SEQ_DESCR_OrganismIsUndefinedSpecies",
+                                "SEQ_DESCR_StrainWithEnvironSample",
+                                "SEQ_FEAT_BadCharInAuthorLastName",
+                            ],
+                        },
+                        "_extra_yaml": {},
+                    },
+                }
+
+
+                if not self.has_authors and self.pipeline != 'wf_common':
+                    BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadFirstName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadFirstName");
+                self._write_validation_yaml(
+                        fOutInputYaml,
+                        self.pipeline,
+                        SEVERITIES,
+                        BASE,
+                        PATCHES,
+                    )
+
+
+            fOutInputYaml.flush()
         return yaml
         
     def report_output_files(self, output, output_files):
@@ -628,7 +656,69 @@ xpath_fail_final_asnvalidate: >
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
                 self.report_output_files(self.params.outputdir, output_files)
+                
         return proc.returncode
+        
+    @staticmethod
+    def _write_validation_yaml(fOutInputYaml, pipeline: str, SEVERITIES: dict, BASE: dict, PATCHES: dict) -> None:
+        """Emit YAML for the given pipeline from BASE + PATCHES."""
+        patches = PATCHES["wf_common"] if pipeline == "wf_common" else PATCHES["default"]
+
+        keys = []
+        if pipeline == "wf_common":
+            keys.append("xpath_fail_initial_asndisc")
+        keys += ["xpath_fail_initial_asnvalidate", "xpath_fail_final_asnvalidate"]
+
+        for key in keys:
+            sev = SEVERITIES[key]
+            merged = Pipeline._merged_exemptions(BASE.get(key, {}), patches.get(key))
+            xpath = Pipeline._build_xpath(sev, merged)
+            Pipeline._write_yaml_block(fOutInputYaml, key, xpath)
+
+        for k, v in (patches.get("_extra_yaml") or {}).items():
+            fOutInputYaml.write(f"{k}: {'true' if v is True else 'false' if v is False else v}\n")
+
+
+    @staticmethod    
+    def _merged_exemptions(base_for_key: dict, patch_for_key: dict | None) -> dict:
+        """Apply +bucket and -bucket patches to a base dict of lists."""
+        from collections import defaultdict
+        result = {k: list(v) for k, v in (base_for_key or {}).items()}
+        patch_for_key = patch_for_key or {}
+        buckets = set(result) | {k[1:] for k in patch_for_key if k.startswith(("+", "-"))}
+
+        for b in buckets:
+            add = set(patch_for_key.get(f"+{b}", []) or [])
+            rem = set(patch_for_key.get(f"-{b}", []) or [])
+            cur = set(result.get(b, []))
+            cur |= add
+            cur -= rem
+            if cur:
+                result[b] = sorted(cur)
+            elif b in result:
+                del result[b]
+        return result
+
+    @staticmethod
+    def _build_xpath(severity_expr: str, ex: dict) -> str:
+        """Return raw (unindented) XPath lines; YAML indentation handled elsewhere."""
+        lines = [f"//*[ {severity_expr}"]
+        for attr in ("code", "name"):
+            for token in ex.get(attr, []):
+                lines.append(f'and not(contains(@{attr}, "{token}"))')
+        lines.append("]")
+        return "\n".join(lines)
+
+    @staticmethod
+    def _write_yaml_block(f, key: str, xpath: str) -> None:
+        """Write a folded YAML block with uniform 4-space indentation."""
+        f.write(f"{key}: >\n")
+        for line in xpath.splitlines():
+            f.write(f"    {line}\n")
+
+
+
+        
 
 class Setup:
 
