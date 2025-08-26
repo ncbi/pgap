@@ -592,6 +592,8 @@ class Pipeline:
                 if not self.has_authors and self.pipeline != 'wf_common':
                     BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadFirstName");
                     BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadFirstName");
+                    BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadLastName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadLastName");
                 self._write_validation_yaml(
                         fOutInputYaml,
                         self.pipeline,
