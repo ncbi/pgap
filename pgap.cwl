@@ -4,7 +4,7 @@ class: Workflow
 cwlVersion: v1.2
 doc: |
   PGAP pipeline for external usage, powered via containers,
-  simple user input:  (FASTA + yaml only, no template)
+  simple user input: (FASTA + yaml only, no template)
 label: 'PGAP Pipeline, simple user input, PGAPX-134'
 requirements:
   - class: InlineJavascriptRequirement
@@ -25,10 +25,12 @@ inputs:
   blast_hits_cache_data:
     type: Directory?
   fasta: File
-  report_usage: boolean
+  report_usage:
+    type: boolean
+    default: false  # Default to false if omitted
   submol: File
   ignore_all_errors:
-        type: boolean?
+    type: boolean?
   no_internet:
     type: boolean?
   make_uuid:
@@ -37,14 +39,16 @@ inputs:
   uuid_in:
     type: File?
   xpath_fail_initial_asndisc: 
-      type: string?
+    type: string?
   xpath_fail_initial_asnvalidate: 
-      type: string?
+    type: string?
   xpath_fail_final_asndisc: 
-      type: string?
+    type: string?
   xpath_fail_final_asnvalidate: 
-      type: string?
-    
+    type: string?
+  os_version:  # New optional input
+    type: string?
+
 outputs:
   calls:
     outputSource: vecscreen/calls
@@ -71,13 +75,13 @@ outputs:
     outputSource: standard_pgap/nucleotide_fasta
     type: File?
   protein_fasta:
-    outputSource:  standard_pgap/protein_fasta
+    outputSource: standard_pgap/protein_fasta
     type: File?
   cds_nucleotide_fasta:
     outputSource: standard_pgap/cds_nucleotide_fasta
     type: File?
   cds_protein_fasta:
-    outputSource:  standard_pgap/cds_protein_fasta
+    outputSource: standard_pgap/cds_protein_fasta
     type: File?
   initial_asndisc_error_diag:
     type: File?
@@ -137,13 +141,13 @@ steps:
         taxon_db:
           type: File
         adaptor_fasta:
-                type: File
+          type: File
         contam_in_prok_blastdb_dir:
-                type: Directory
+          type: Directory
     out: 
-        - taxon_db
-        - adaptor_fasta 
-        - contam_in_prok_blastdb_dir
+      - taxon_db
+      - adaptor_fasta 
+      - contam_in_prok_blastdb_dir
 
   prepare_input_template:
     run: prepare_user_input2.cwl
@@ -158,21 +162,21 @@ steps:
   fastaval:
     run: progs/fastaval.cwl
     in:
-        in: fasta
-        check_min_seqlen:
-            default: 200
-        check_internal_ns:
-            default: true
-        ignore_all_errors: ignore_all_errors
+      in: fasta
+      check_min_seqlen:
+        default: 200
+      check_internal_ns:
+        default: true
+      ignore_all_errors: ignore_all_errors
     out: [success, out]
   vecscreen:
-        run: vecscreen/vecscreen.cwl
-        in:
-            contig_fasta:   fasta
-            adaptor_fasta:  passdata/adaptor_fasta
-            contam_in_prok_blastdb_dir: passdata/contam_in_prok_blastdb_dir
-            ignore_all_errors: ignore_all_errors
-        out: [success, calls]
+    run: vecscreen/vecscreen.cwl
+    in:
+      contig_fasta: fasta
+      adaptor_fasta: passdata/adaptor_fasta
+      contam_in_prok_blastdb_dir: passdata/contam_in_prok_blastdb_dir
+      ignore_all_errors: ignore_all_errors
+    out: [success, calls]
   standard_pgap:
     label: PGAP Pipeline
     in:
@@ -198,12 +202,12 @@ steps:
       xpath_fail_initial_asnvalidate: xpath_fail_initial_asnvalidate
       xpath_fail_final_asndisc: xpath_fail_final_asndisc
       xpath_fail_final_asnvalidate: xpath_fail_final_asnvalidate
+      os_version: os_version  # Pass optional os_version
     out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, cds_nucleotide_fasta, cds_protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
     run: wf_common.cwl
   Generate_Annotation_Reports_gff_enhanced:
     run: progs/produce_enhanced_gff.cwl
     in:
-        gff: standard_pgap/gff
-        fasta: fasta
+      gff: standard_pgap/gff
+      fasta: fasta
     out: [output]
-  
