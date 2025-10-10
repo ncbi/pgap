@@ -594,6 +594,7 @@ class Pipeline:
                     BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadFirstName");
                     BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadLastName");
                     BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadLastName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("SEQ_INST_BadSeqIdFormat");
                 self._write_validation_yaml(
                         fOutInputYaml,
                         self.pipeline,
