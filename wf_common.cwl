@@ -135,6 +135,7 @@ steps:
       - filter_for_raw_checkm
       - gc_cache
       - gene_master_ini
+      - go_hierarchy
       - hmm_path
       - hmms_tab
       - naming_hmms_combined
@@ -775,6 +776,13 @@ steps:
         gbload:
             default: false
     out: [output]
+  Generate_Annotation_Reports_gaf:
+    run: progs/asn2gaf.cwl
+    in:
+        input: Final_Bacterial_Package_sqn2gbent/output
+        go_hierarchy: passdata/go_hierarchy
+        taxid: taxid
+    out: [output]
   Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
     in:
@@ -1058,6 +1066,9 @@ outputs:
   gbk:
     type: File
     outputSource:  Generate_Annotation_Reports_gbk/output
+  gaf:
+    type: File
+    outputSource:  Generate_Annotation_Reports_gaf/output
   nucleotide_fasta:
     type: File?
     outputSource: Generate_Annotation_Reports_nuc_fasta/nuc_fasta

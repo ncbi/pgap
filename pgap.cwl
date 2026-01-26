@@ -56,6 +56,9 @@ outputs:
   gbk:
     outputSource: standard_pgap/gbk
     type: File
+  gaf:
+    outputSource: standard_pgap/gaf
+    type: File
   gff:
     outputSource: standard_pgap/gff
     type: File
@@ -203,7 +206,7 @@ steps:
       xpath_fail_final_asndisc: xpath_fail_final_asndisc
       xpath_fail_final_asnvalidate: xpath_fail_final_asnvalidate
       os_version: os_version  # Pass optional os_version
-    out: [gbent, gbk, gff, nucleotide_fasta, protein_fasta, cds_nucleotide_fasta, cds_protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
+    out: [gbent, gbk, gaf, gff, nucleotide_fasta, protein_fasta, cds_nucleotide_fasta, cds_protein_fasta, sqn, initial_asndisc_error_diag, initial_asnval_error_diag, final_asndisc_error_diag, final_asnval_error_diag, checkm_raw, checkm_results]
     run: wf_common.cwl
   Generate_Annotation_Reports_gff_enhanced:
     run: progs/produce_enhanced_gff.cwl
