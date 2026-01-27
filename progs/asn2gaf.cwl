@@ -3,7 +3,7 @@ label: "asn2flat"
 
 class: CommandLineTool
 
-baseCommand: ./asn2gaf
+baseCommand: asn2gaf
 
 inputs:
   input:
