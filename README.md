@@ -1,5 +1,3 @@
-Because of a lapse in government funding, effective as of 1/31/2026, the information on this website may not be up to date and the agency may not be able to respond to inquiries until appropriations are enacted.
-
 # PGAP
 
 NCBI Prokaryotic Genome Annotation Pipeline
