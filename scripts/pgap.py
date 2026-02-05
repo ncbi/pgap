@@ -161,6 +161,12 @@ def get_cpus(self):
         return self.params.args.cpus 
     else:
         return 0 
+
+def has_cgroup2(self):
+    if ( (platform.system()=='Linux') and (subprocess.getoutput('stat -fc %T /sys/fs/cgroup')=='cgroup2fs') ):
+        return True;
+    else:
+        return False;
        
 class Pipeline:
 
@@ -246,7 +252,7 @@ class Pipeline:
         self.cmd.extend(['--platform', 'linux/amd64'])
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
@@ -281,7 +287,7 @@ class Pipeline:
         self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
@@ -310,7 +316,7 @@ class Pipeline:
         self.cmd = [self.params.docker_cmd, 'exec' ]
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
