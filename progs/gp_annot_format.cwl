@@ -3,6 +3,7 @@ label: "gp_annot_format"
 
 class: CommandLineTool
 baseCommand: gp_annot_format
+arguments: [ -nogenbank ]
 inputs:
   input:
     type: File

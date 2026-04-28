@@ -122,7 +122,7 @@ ERROR: Failed to extract tarball; to install manually, try something like:
     tar xvf {}
 '''.format(url, basename))
         raise
-    if guard_file != None:
+    if guard_file is not None:
         open(guard_file, 'a').close()
 
 def quiet_remove(filename):
@@ -161,22 +161,50 @@ def get_cpus(self):
         return self.params.args.cpus 
     else:
         return 0 
+
+def has_cgroup2(self):
+    if ( (platform.system()=='Linux') and (subprocess.getoutput('stat -fc %T /sys/fs/cgroup')=='cgroup2fs') ):
+        return True;
+    else:
+        return False;
        
 class Pipeline:
 
     def cleanup(self):
         for file in [self.yaml, self.submol]:
-            if file != None:
+            if file is not None:
                 base =  os.path.basename(file)
                 fullpath  = os.path.join(self.params.outputdir, base)
                 if os.path.exists(fullpath):
                     os.remove(fullpath)
             
+    @staticmethod
+    def get_os_version():
+        """
+        Retrieves the OS version as a string using platform module.
+        Returns None if the call fails.
+        """
+        try:
+            import platform
+            system = platform.system()
+            release = platform.release()
+            machine = platform.machine()
+            # Pre-sanitize: replace any unexpected special chars with underscores (unlikely in OS versions.
+            system = re.sub(r'[^a-zA-Z0-9_.,-]', '_', system)
+            release = re.sub(r'[^a-zA-Z0-9_.,-]', '_', release)
+            machine = re.sub(r'[^a-zA-Z0-9_.,-]', '_', machine)
+            return f"{system},{release},{machine}"
+        except Exception:
+            return None
+    
     def __init__(self, params, local_input, pipeline):
         self.params = params
         self.cwlfile = f"pgap/{pipeline}.cwl"
         self.pipename = pipeline.upper()
         self.pipeline = pipeline
+        self.has_authors = False;
+        
+        self.os_version = self.get_os_version()
         
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
@@ -184,7 +212,7 @@ class Pipeline:
         # input file location inside docker instance:
         self.input_file = '/pgap/output/pgap_input.yaml'
         submol =  self.get_submol(local_input)
-        if ( submol != None ):
+        if ( submol is not None ):
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
@@ -224,7 +252,7 @@ class Pipeline:
         self.cmd.extend(['--platform', 'linux/amd64'])
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
@@ -259,7 +287,7 @@ class Pipeline:
         self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
@@ -288,7 +316,7 @@ class Pipeline:
         self.cmd = [self.params.docker_cmd, 'exec' ]
 
         cpusEnv = get_cpus(self)
-        if (cpusEnv):
+        if cpusEnv and has_cgroup2(self):
             self.cmd.extend(['--cpus', str(get_cpus(self))])
 
         if self.params.args.no_internet:
@@ -348,16 +376,16 @@ class Pipeline:
         return genus_species
 
     def create_submolfile(self, local_submol, ani_output, ani_hr_output, auto_correct_tax):
-        has_authors = self.regexp_file(local_submol, '^authors:')
+        self.has_authors = self.regexp_file(local_submol, '^authors:')
         has_contact_info = self.regexp_file(local_submol, '^contact_info:')
         genus_species = None
         if auto_correct_tax:
-            if ani_output != None: 
+            if ani_output is not None: 
                 genus_species = self.get_genus_species(ani_output)
-                if genus_species != None:
+                if genus_species is not None:
                     print('ANI analysis detected species "{}", and we will use it for PGAP'.format(genus_species))
                 else:
-                    if ani_hr_output != None:
+                    if ani_hr_output is not None:
                         chosen_ani_output_type = ani_hr_output
                     else:
                         chosen_ani_output_type = ani_output
@@ -373,13 +401,13 @@ class Pipeline:
             with open(local_submol, 'r') as fIn:
                 for line in fIn:
                     if line: # skip empty lines
-                        if auto_correct_tax and genus_species != None and re.match(r'\s+genus_species:', line):
+                        if auto_correct_tax and genus_species is not None and re.match(r'\s+genus_species:', line):
                             print('replacing organism in line: {}'.format(line.rstrip()))
                             line = re.sub(r'genus_species:.*', "genus_species: '{}'".format(genus_species), line)
                             print('with organism: {}'.format(genus_species))
                         fOut.write(line.rstrip())
                         fOut.write(u'\n')
-            if  has_authors == False:
+            if  self.has_authors == False:
                 fOut.write(u'authors:\n')
                 fOut.write(u'    - author:\n')
                 #
@@ -409,8 +437,8 @@ class Pipeline:
                                          suffix=".yaml",
                                          prefix="pgap_input_",
                                          dir=self.params.outputdir,
-                                         delete=False) as fOut:
-            yaml = fOut.name
+                                         delete=False) as fOutInputYaml:
+            yaml = fOutInputYaml.name
             with open(local_input, 'r') as fIn:
                 processing_submol = False
                 processing_fasta = False
@@ -466,91 +494,123 @@ class Pipeline:
                                 input_submol_json_location = os.path.join(local_input_dir, match.group(1))
                                 copy_genome_to_workspace(input_submol_json_location, self.params.outputdir)
                         
-                        fOut.write(line.rstrip())
-                        fOut.write(u'\n')
-            fOut.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
+                        fOutInputYaml.write(line.rstrip())
+                        fOutInputYaml.write(u'\n')
+            fOutInputYaml.write(u'supplemental_data: { class: Directory, location: /pgap/input }\n')
             if (self.params.report_usage != 'none'):
-                fOut.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                fOutInputYaml.write(u'report_usage: {}\n'.format(self.params.report_usage))
+                if self.os_version:  # Only include os_version if report_usage is true and os_version is not None
+                    fOutInputYaml.write(u'os_version: {}\n'.format(self.os_version))
             if (self.params.ignore_all_errors == 'true'):
-                fOut.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
+                fOutInputYaml.write(u'ignore_all_errors: {}\n'.format(self.params.ignore_all_errors))
             if (self.params.no_internet == 'true'):
-                fOut.write(u'no_internet: {}\n'.format(self.params.no_internet))
+                fOutInputYaml.write(u'no_internet: {}\n'.format(self.params.no_internet))
             uuidfile = self.params.outputdir + "/uuid.txt"
             if os.path.exists(uuidfile) and os.stat(uuidfile).st_size != 0:
-                fOut.write(u'make_uuid: false\n')
-                fOut.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
+                fOutInputYaml.write(u'make_uuid: false\n')
+                fOutInputYaml.write(u'uuid_in: { class: File, location: /pgap/output/uuid.txt }\n')
             if add_std_validation_exemptions:
-                if self.pipeline == 'wf_common':
-                    fOut.write(f"""
-xpath_fail_initial_asndisc: >
-    //*[@severity="FATAL"
-         and not(contains(@name, "CITSUBAFFIL_CONFLICT"))
-    ]
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-        ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement"))
-            and not(contains(@code, "SEQ_DESCR_BadOrgMod")) 
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_Chromosomepath"))
-            and not(contains(@code, "SEQ_DESCR_MissingLineage"))
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag"))
-            and not(contains(@code, "SEQ_FEAT_ShortIntron"))
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw"))
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID"))
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle"))
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-contact_as_author_possible: false
-""")
-                else:
-                    fOut.write(f"""
-xpath_fail_initial_asnvalidate: >
-        //*[
-            ( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-        ]
-xpath_fail_final_asnvalidate: >
-        //*[( @severity="ERROR" or @severity="REJECT" )
-            and not(contains(@code, "GENERIC_MissingPubRequirement")) 
-            and not(contains(@code, "GENERIC_BadSubmissionAuthorName")) 
-            and not(contains(@code, "SEQ_DESCR_ChromosomeLocation")) 
-            and not(contains(@code, "SEQ_DESCR_MissingLineage")) 
-            and not(contains(@code, "SEQ_DESCR_NoTaxonID")) 
-            and not(contains(@code, "SEQ_DESCR_OrganismIsUndefinedSpecies"))
-            and not(contains(@code, "SEQ_DESCR_StrainWithEnvironSample"))
-            and not(contains(@code, "SEQ_DESCR_BacteriaMissingSourceQualifier"))
-            and not(contains(@code, "SEQ_DESCR_UnwantedCompleteFlag")) 
-            and not(contains(@code, "SEQ_FEAT_BadCharInAuthorLastName")) 
-            and not(contains(@code, "SEQ_FEAT_ShortIntron")) 
-            and not(contains(@code, "SEQ_INST_InternalNsInSeqRaw")) 
-            and not(contains(@code, "SEQ_INST_ProteinsHaveGeneralID")) 
-            and not(contains(@code, "SEQ_PKG_ComponentMissingTitle")) 
-            and not(contains(@code, "SEQ_PKG_NucProtProblem")) 
-        ]
-""")
-            fOut.flush()
+                # --- Severities (unchanged) ---
+                SEVERITIES = {
+                    "xpath_fail_initial_asndisc":     '@severity="FATAL"',
+                    "xpath_fail_initial_asnvalidate": '(@severity="ERROR" or @severity="REJECT")',
+                    "xpath_fail_final_asnvalidate":   '(@severity="ERROR" or @severity="REJECT")',
+                }
+
+                # BASE = true intersection (shared by both pipelines)
+                BASE = {
+                    "xpath_fail_initial_asndisc": {"name": []},  # none shared
+
+                    # INITIAL intersection: only these two are common to both pipelines
+                    "xpath_fail_initial_asnvalidate": {
+                        "code": [
+                            "SEQ_DESCR_BacteriaMissingSourceQualifier",
+                            "SEQ_PKG_NucProtProblem",
+                        ],
+                    },
+
+                    # FINAL intersection (same for both pipelines)
+                    "xpath_fail_final_asnvalidate": {
+                        "code": [
+                            "GENERIC_MissingPubRequirement",
+                            "SEQ_DESCR_BacteriaMissingSourceQualifier",
+                            "SEQ_DESCR_MissingLineage",
+                            "SEQ_DESCR_NoTaxonID",
+                            "SEQ_DESCR_UnwantedCompleteFlag",
+                            "SEQ_FEAT_ShortIntron",
+                            "SEQ_INST_InternalNsInSeqRaw",
+                            "SEQ_INST_ProteinsHaveGeneralID",
+                            "SEQ_PKG_ComponentMissingTitle",
+                            "SEQ_PKG_NucProtProblem",
+                        ],
+                    },
+                }
+
+                # PATCHES = pipeline-specific adds only
+                PATCHES = {
+                    "wf_common": {
+                        "xpath_fail_initial_asndisc": {"+name": ["CITSUBAFFIL_CONFLICT"]},
+                        "xpath_fail_initial_asnvalidate": {
+                            "+code": ["SEQ_DESCR_BadOrgMod"],  # wf_common-only in INITIAL
+                        },
+                        "xpath_fail_final_asnvalidate": {
+                            "+code": [
+                                "SEQ_DESCR_BadOrgMod",      # wf_common-only in FINAL
+                                "SEQ_DESCR_Chromosomepath", # wf_common-only spelling
+                            ],
+                        },
+                        "_extra_yaml": {"contact_as_author_possible": False},
+                    },
+
+                    "default": {
+                        "xpath_fail_initial_asnvalidate": {
+                            "+code": [
+                                "GENERIC_MissingPubRequirement",
+                                "GENERIC_BadSubmissionAuthorName",
+                                "SEQ_DESCR_ChromosomeLocation",
+                                "SEQ_DESCR_MissingLineage",
+                                "SEQ_DESCR_NoTaxonID",
+                                "SEQ_DESCR_OrganismIsUndefinedSpecies",
+                                "SEQ_DESCR_StrainWithEnvironSample",
+                                "SEQ_DESCR_UnwantedCompleteFlag",
+                                "SEQ_FEAT_BadCharInAuthorLastName",
+                                "SEQ_FEAT_ShortIntron",
+                                "SEQ_INST_InternalNsInSeqRaw",
+                                "SEQ_INST_ProteinsHaveGeneralID",
+                                "SEQ_PKG_ComponentMissingTitle",
+                                # note: SEQ_PKG_NucProtProblem is already in BASE
+                            ],
+                        },
+                        "xpath_fail_final_asnvalidate": {
+                            "+code": [
+                                "GENERIC_BadSubmissionAuthorName",
+                                "SEQ_DESCR_ChromosomeLocation",
+                                "SEQ_DESCR_OrganismIsUndefinedSpecies",
+                                "SEQ_DESCR_StrainWithEnvironSample",
+                                "SEQ_FEAT_BadCharInAuthorLastName",
+                            ],
+                        },
+                        "_extra_yaml": {},
+                    },
+                }
+
+
+                if not self.has_authors and self.pipeline != 'wf_common':
+                    BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadFirstName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadFirstName");
+                    BASE["xpath_fail_initial_asnvalidate"]["code"].append("GENERIC_BadLastName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("GENERIC_BadLastName");
+                    BASE["xpath_fail_final_asnvalidate"]["code"].append("SEQ_INST_BadSeqIdFormat");
+                self._write_validation_yaml(
+                        fOutInputYaml,
+                        self.pipeline,
+                        SEVERITIES,
+                        BASE,
+                        PATCHES,
+                    )
+
+
+            fOutInputYaml.flush()
         return yaml
         
     def report_output_files(self, output, output_files):
@@ -589,7 +649,7 @@ xpath_fail_final_asnvalidate: >
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
             finally:
-                if proc.returncode == None:
+                if proc.returncode is None:
                     print('\nAbnormal termination, stopping all processes.')
                     proc.terminate()
                 elif proc.returncode == 0:
@@ -605,7 +665,69 @@ xpath_fail_final_asnvalidate: >
                         {"file": "initial_asnval_diag.xml", "remove": True}
                     ]
                 self.report_output_files(self.params.outputdir, output_files)
+                
         return proc.returncode
+        
+    @staticmethod
+    def _write_validation_yaml(fOutInputYaml, pipeline: str, SEVERITIES: dict, BASE: dict, PATCHES: dict) -> None:
+        """Emit YAML for the given pipeline from BASE + PATCHES."""
+        patches = PATCHES["wf_common"] if pipeline == "wf_common" else PATCHES["default"]
+
+        keys = []
+        if pipeline == "wf_common":
+            keys.append("xpath_fail_initial_asndisc")
+        keys += ["xpath_fail_initial_asnvalidate", "xpath_fail_final_asnvalidate"]
+
+        for key in keys:
+            sev = SEVERITIES[key]
+            merged = Pipeline._merged_exemptions(BASE.get(key, {}), patches.get(key))
+            xpath = Pipeline._build_xpath(sev, merged)
+            Pipeline._write_yaml_block(fOutInputYaml, key, xpath)
+
+        for k, v in (patches.get("_extra_yaml") or {}).items():
+            fOutInputYaml.write(f"{k}: {'true' if v is True else 'false' if v is False else v}\n")
+
+
+    @staticmethod    
+    def _merged_exemptions(base_for_key: dict, patch_for_key: dict | None) -> dict:
+        """Apply +bucket and -bucket patches to a base dict of lists."""
+        from collections import defaultdict
+        result = {k: list(v) for k, v in (base_for_key or {}).items()}
+        patch_for_key = patch_for_key or {}
+        buckets = set(result) | {k[1:] for k in patch_for_key if k.startswith(("+", "-"))}
+
+        for b in buckets:
+            add = set(patch_for_key.get(f"+{b}", []) or [])
+            rem = set(patch_for_key.get(f"-{b}", []) or [])
+            cur = set(result.get(b, []))
+            cur |= add
+            cur -= rem
+            if cur:
+                result[b] = sorted(cur)
+            elif b in result:
+                del result[b]
+        return result
+
+    @staticmethod
+    def _build_xpath(severity_expr: str, ex: dict) -> str:
+        """Return raw (unindented) XPath lines; YAML indentation handled elsewhere."""
+        lines = [f"//*[ {severity_expr}"]
+        for attr in ("code", "name"):
+            for token in ex.get(attr, []):
+                lines.append(f'and not(contains(@{attr}, "{token}"))')
+        lines.append("]")
+        return "\n".join(lines)
+
+    @staticmethod
+    def _write_yaml_block(f, key: str, xpath: str) -> None:
+        """Write a folded YAML block with uniform 4-space indentation."""
+        f.write(f"{key}: >\n")
+        for line in xpath.splitlines():
+            f.write(f"    {line}\n")
+
+
+
+        
 
 class Setup:
 
@@ -703,7 +825,7 @@ class Setup:
         return versions
 
     def check_status(self):
-        if self.local_version == None:
+        if self.local_version is None:
             print("The latest version of PGAP is {}, you have nothing installed locally.".format(self.get_latest_version()))
             return False
         if self.args.no_internet:
@@ -732,7 +854,7 @@ class Setup:
     def get_use_version(self):
         if self.args.use_version:
             return self.args.use_version
-        if (self.local_version == None) or self.args.update:
+        if (self.local_version is None) or self.args.update:
             return self.get_latest_version()
         return self.local_version
 
@@ -746,10 +868,14 @@ class Setup:
         else:
             for docker in docker_type_alternatives:
                 self.docker_cmd = shutil.which(docker)
-                if self.docker_cmd != None:
+                if self.docker_cmd is not None:
                     break
-        if self.docker_cmd == None:
-            sys.exit("Docker not found.")
+        if self.docker_cmd is None:
+            if self.args.docker:
+                sys.exit(f"{self.args.docker} not found.")
+            else:
+                alternatives = ", ".join(docker_type_alternatives)
+                sys.exit(f"None of {alternatives} were found.")
 
         version = subprocess.run([self.docker_cmd, '--version'], check=True, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL).stdout.decode('utf-8')
         self.docker_type = version.split(maxsplit=1)[0].lower()
@@ -1189,11 +1315,11 @@ def main():
                 # if there are errors
                 # and we do not want to recover them when it is recoverable
                 #  then bail
-                if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output != None ) :
+                if os.path.exists(errors_xml_fn) and os.path.getsize(errors_xml_fn) > 0 and not ( args.auto_correct_tax and  params.ani_output is not None ) :
                     error_file = None
-                    if params.ani_hr_output != None:
+                    if params.ani_hr_output is not None:
                         error_file = params.ani_hr_output
-                    elif params.ani_output != None:
+                    elif params.ani_output is not None:
                         error_file = params.ani_output
                     else: 
                         error_file = errors_xml_fn
@@ -1225,7 +1351,7 @@ def main():
                 # 
                 list_to_delete = [args.input, 'input.yaml', 'pgap_input.yaml', 'submol.yaml']
                 for file in list_to_delete:
-                    if file != None:
+                    if file is not None:
                         base =  os.path.basename(file)
                         fullpath  = os.path.join(p.params.outputdir, base)
                         if os.path.exists(fullpath):

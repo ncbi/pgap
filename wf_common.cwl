@@ -24,7 +24,9 @@ inputs:
     gc_assm_name: string
     locus_tag_prefix: string?
     dbname: string?
-    report_usage: boolean
+    report_usage:
+        type: boolean
+        default: false  # Default to false
 
     #
     # User independent, static input
@@ -95,7 +97,10 @@ inputs:
       default: true
     uuid_in:
       type: File?
-    
+    os_version:  # New optional input
+        type: string?
+
+ 
 steps:
   ping_start:
     run: progs/pinger.cwl
@@ -108,6 +113,7 @@ steps:
       workflow:
         default: "pgap"
       instring: gc_assm_name
+      os_version: os_version  # Pass optional os_version
     out: [stdout, outstring, uuid_out]
 
   passdata:
@@ -129,6 +135,7 @@ steps:
       - filter_for_raw_checkm
       - gc_cache
       - gene_master_ini
+      - go_hierarchy
       - hmm_path
       - hmms_tab
       - naming_hmms_combined
@@ -769,6 +776,13 @@ steps:
         gbload:
             default: false
     out: [output]
+  Generate_Annotation_Reports_gaf:
+    run: progs/asn2gaf.cwl
+    in:
+        input: Final_Bacterial_Package_sqn2gbent/output
+        go_hierarchy: passdata/go_hierarchy
+        taxid: taxid
+    out: [output]
   Generate_Annotation_Reports_nuc_fasta:
     run: progs/asn2fasta.cwl
     in:
@@ -968,14 +982,13 @@ steps:
         default: "stop"
       workflow:
         default: "pgap"
-      # Note: the input on the following line should be the same as all of the outputs
-      # for this workflow, so we ensure this is the final step.
       infile:
         - Final_Bacterial_Package_sqn2gbent/output
         - Generate_Annotation_Reports_gff/output
         - Generate_Annotation_Reports_gbk/output
         - Generate_Annotation_Reports_nuc_fasta/nuc_fasta
         - Generate_Annotation_Reports_prot_fasta/prot_fasta
+      os_version: os_version  # Pass optional os_version
     out: [stdout]
 
   #
@@ -1053,6 +1066,9 @@ outputs:
   gbk:
     type: File
     outputSource:  Generate_Annotation_Reports_gbk/output
+  gaf:
+    type: File
+    outputSource:  Generate_Annotation_Reports_gaf/output
   nucleotide_fasta:
     type: File?
     outputSource: Generate_Annotation_Reports_nuc_fasta/nuc_fasta

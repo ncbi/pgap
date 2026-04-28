@@ -50,7 +50,10 @@ expression: |
           break;
         case 'gencoll.sqlite':
           r['gc_cache'] = l[i];
-          break;    
+          break;
+        case 'go-basic.obo':
+          r['go_hierarchy'] = l[i];
+          break;
         case 'product_rules.prt':
           r['defline_cleanup_rules'] = l[i];
           break;
@@ -166,6 +169,8 @@ outputs:
   gc_cache:
     type: File
   gene_master_ini:
+    type: File
+  go_hierarchy:
     type: File
   hmm_path:
     type: Directory
