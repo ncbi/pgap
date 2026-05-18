@@ -646,6 +646,10 @@ class Pipeline:
             f.write("--- End YAML Input ---\n\n")
 
             try:
+                # Docker will create a directory rather than a file for binding if the
+                # file does not already exist, so create the file before running the Docker
+                # command
+                subprocess.run(["touch", self.yaml, self.input_dir + "/pgap_input.yaml"])
                 proc = subprocess.Popen(self.cmd, stdout=f, stderr=subprocess.STDOUT)
                 proc.wait()
             finally:
