@@ -209,19 +209,19 @@ class Pipeline:
         self.data_dir = os.path.abspath(self.params.data_path)
         self.input_dir = os.path.dirname(os.path.abspath(local_input))
         
-        # input file location inside docker instance:
-        self.input_file = '/pgap/output/pgap_input.yaml'
         submol =  self.get_submol(local_input)
         if ( submol is not None ):
             self.submol = self.create_submolfile(submol, params.ani_output, params.ani_hr_output, params.args.auto_correct_tax)
         else:
             self.submol = None
-        
+
         add_std_validation_exemptions = False
         args = self.params.args
         if (args.genome and args.organism) or args.asn1_input:
             add_std_validation_exemptions = True
         self.yaml = self.create_inputfile(local_input, add_std_validation_exemptions)
+        # Tempfile lives in outputdir, which is mounted at /pgap/output, so no per-file bind is needed.
+        self.input_file = '/pgap/output/' + os.path.basename(self.yaml)
         if self.params.docker_type in ['singularity', 'apptainer']:
             self.make_singularity_cmd()
         elif self.params.docker_type == 'podman':
@@ -267,7 +267,6 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro,z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:z'.format(self.input_dir),
             '--volume', '{}:/pgap/output:rw,z'.format(self.params.outputdir),
-            '--volume', '{}:{}:ro,z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
@@ -300,7 +299,6 @@ class Pipeline:
             '--volume', '{}:/pgap/input:ro,Z'.format(self.data_dir),
             '--volume', '{}:/pgap/user_input:Z'.format(self.input_dir),
             '--volume', '{}:/pgap/output:rw,Z'.format(self.params.outputdir),
-            '--volume', '{}:{}:ro,Z'.format(self.yaml, self.input_file ),
             '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
@@ -329,7 +327,6 @@ class Pipeline:
             '--bind', '{}:/pgap/input:ro'.format(self.data_dir),
             '--bind', '{}:/pgap/user_input'.format(self.input_dir),
             '--bind', '{}:/pgap/output:rw'.format(self.params.outputdir),
-            '--bind', '{}:{}:ro'.format(self.yaml, self.input_file ),
             '--bind', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
