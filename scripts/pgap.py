@@ -986,9 +986,9 @@ class Setup:
         for package in packages:
             guard_file = f"{self.install_dir}/input-{self.use_version}/.{package}_complete"
             if package == "pgap":
-                remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}tgz"
+                remote_path = f"https://ncbi-pgap.s3.amazonaws.com/input_data/input-{self.use_version}.{suffix}tgz"
             else:
-                remote_path = f"https://s3.amazonaws.com/pgap/input-{self.use_version}.{suffix}{package}.tgz"
+                remote_path = f"https://ncbi-pgap.s3.amazonaws.com/input_data/input-{self.use_version}.{suffix}{package}.tgz"
             if not os.path.isfile(guard_file):
                 url_thread = mp.Process(target = install_url, name='{package} installation',args=(remote_path, self.install_dir, self.args.quiet, self.args.teamcity, guard_file, ))
                 url_thread.start()
@@ -1005,7 +1005,7 @@ class Setup:
         guard_file = f"{self.test_genomes_path}/.complete"
         if not os.path.isfile(guard_file):
             quiet_remove("test_genomes")
-            URL = 'https://s3.amazonaws.com/pgap-data/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
+            URL = 'https://ncbi-pgap.s3.amazonaws.com/test_genomes/test_genomes-{}{}.tgz'.format(self.use_version,get_suffix(self.branch))
             print('Installing PGAP test genomes')
             print(self.test_genomes_path)
             print(URL)
