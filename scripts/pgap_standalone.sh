@@ -37,8 +37,8 @@ case "${1:---help}" in
         echo "Updating the NCBI Prokaryotic Genome Annotation Pipeline (PGAP) to version $VERSION..."
         echo "- Fetching Docker image"
         docker pull ncbi/pgap:"$VERSION"
-        fetch-file "reference data" https://s3.amazonaws.com/pgap-data/input-"$VERSION".tgz
-        fetch-file "test genomes" https://s3.amazonaws.com/pgap-data/test_genomes.tgz
+        fetch-file "reference data" https://ncbi-pgap.s3.amazonaws.com/input_data/input-"$VERSION".tgz
+        fetch-file "test genomes" https://ncbi-pgap.s3.amazonaws.com/test_genomes/test_genomes.tgz
         echo "- Extracting reference data and test genomes"
         tar xzvf input-"$VERSION".tgz
         tar xzvf test_genomes.tgz

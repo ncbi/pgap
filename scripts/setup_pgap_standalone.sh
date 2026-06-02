@@ -6,12 +6,12 @@ VERSION=`cat VERSION`
 
 wget https://github.com/ncbi/pgap/raw/master/scripts/run_pgap_standalone.sh
 
-wget -nc https://s3.amazonaws.com/pgap-data/input-${VERSION}.tgz
+wget -nc https://ncbi-pgap.s3.amazonaws.com/input_data/input-${VERSION}.tgz
 echo -n "Unpacking test_genomes..."
 tar xzf input-${VERSION}.tgz
 echo "done!"
 
-wget -nc https://s3.amazonaws.com/pgap-data/test_genomes.tgz
+wget -nc https://ncbi-pgap.s3.amazonaws.com/test_genomes/test_genomes.tgz
 echo -n "Unpacking test_genomes..."
 tar xzf test_genomes.tgz
 echo "done!"
