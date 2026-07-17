@@ -554,6 +554,7 @@ class Pipeline:
                             "+code": [
                                 "SEQ_DESCR_BadOrgMod",      # wf_common-only in FINAL
                                 "SEQ_DESCR_Chromosomepath", # wf_common-only spelling
+                                "SEQ_INST_BadSeqIdFormat",
                             ],
                         },
                         "_extra_yaml": {"contact_as_author_possible": False},
