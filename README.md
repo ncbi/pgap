@@ -37,6 +37,20 @@ instructions here for running under the CWL reference implementation,
 cwltool. Full instructions for installing, running, and interpreting
 the results may be found in our [wiki](https://github.com/ncbi/pgap/wiki).
 
+## Debug artifact retention
+
+`pgap.py` accepts three lowercase debug-retention levels:
+
+| Option | Retained debug artifacts |
+| --- | --- |
+| `--debug none` | No additional debug files |
+| `--debug failed` | Evidence for failed workflow jobs only |
+| `--debug all` | The complete debug tree |
+
+`failed` is the default. It keeps failure evidence without keeping the full
+debug tree after a successful run. For backward compatibility, bare `-d` or
+`--debug` is equivalent to `--debug all`. Values are lowercase.
+
 ## References
 
 ### NCBI
