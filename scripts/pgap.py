@@ -129,6 +129,133 @@ def quiet_remove(filename):
     with contextlib.suppress(FileNotFoundError):
         os.remove(filename)
 
+
+def normalize_debug_argv(arguments, debug_levels):
+    """Keep bare -d/--debug compatible without consuming the input file."""
+    normalized = list(arguments)
+    for index, argument in enumerate(normalized):
+        if argument == "--":
+            break
+        if argument in ("-d", "--debug"):
+            following = normalized[index + 1] if index + 1 < len(normalized) else None
+            if following not in debug_levels:
+                normalized[index] = "--debug=all"
+        elif argument.startswith("-d="):
+            normalized[index] = "--debug={}".format(argument[3:])
+    return normalized
+
+
+def _parse_cwl_event(line):
+    if not line.startswith("["):
+        return None
+    try:
+        _, remainder = line.split("] ", 1)
+        _, remainder = remainder.split(" [", 1)
+        event, status = remainder.split("] ", 1)
+        source, name = event.split(" ", 1)
+    except ValueError:
+        return None
+    return source, name, status.strip()
+
+
+def _find_debug_paths(line):
+    paths = []
+    for kind in ("tmpdir", "tmp-outdir"):
+        prefix = "/pgap/output/debug/{}/".format(kind)
+        offset = 0
+        while True:
+            start = line.find(prefix, offset)
+            if start < 0:
+                break
+            start += len(prefix)
+            end = start
+            while end < len(line) and (line[end].isalnum() or line[end] in "._-"):
+                end += 1
+            if end > start:
+                paths.append((kind, line[start:end]))
+            offset = max(end, start + 1)
+    return paths
+
+
+def _remove_debug_path(path):
+    if os.path.islink(path) or not os.path.isdir(path):
+        os.unlink(path)
+    else:
+        shutil.rmtree(path)
+
+
+def finalize_debug_artifacts(outputdir, cwllog, returncode, debug_level):
+    """Keep failed-job evidence, or everything when selection is uncertain."""
+    if debug_level != "failed":
+        return
+    try:
+        output = os.path.abspath(outputdir)
+        if output == os.path.abspath(os.sep):
+            raise ValueError("invalid debug directory")
+        debug_root = os.path.join(output, "debug")
+
+        if returncode == 0:
+            if os.path.lexists(debug_root):
+                _remove_debug_path(debug_root)
+            return
+
+        failed_jobs = set()
+        paths_by_job = {}
+        current_job = None
+        with open(cwllog, "r", encoding="utf-8", errors="replace") as log:
+            for line in log:
+                event = _parse_cwl_event(line)
+                if event is not None:
+                    source, name, status = event
+                    current_job = name if source in ("job", "step") else None
+                    if (source == "job"
+                            and status in ("completed permanentFail", "completed temporaryFail")):
+                        failed_jobs.add(name)
+                if current_job is not None:
+                    paths_by_job.setdefault(current_job, set()).update(
+                        _find_debug_paths(line)
+                    )
+
+        unmapped_jobs = {
+            job for job in failed_jobs
+            if not any(path[0] == "tmp-outdir" for path in paths_by_job.get(job, ()))
+        }
+        if not failed_jobs or unmapped_jobs:
+            raise ValueError(
+                "failed CWL job could not be mapped to its output directory: {}".format(
+                    ", ".join(sorted(unmapped_jobs or failed_jobs))
+                )
+            )
+        keep = set().union(*(paths_by_job[job] for job in failed_jobs))
+        if not os.path.lexists(debug_root):
+            return
+        if os.path.islink(debug_root) or not os.path.isdir(debug_root):
+            raise ValueError("debug path is not a real directory")
+
+        remove = []
+        for kind in ("tmpdir", "tmp-outdir"):
+            kind_root = os.path.join(debug_root, kind)
+            if not os.path.lexists(kind_root):
+                continue
+            if os.path.islink(kind_root) or not os.path.isdir(kind_root):
+                raise ValueError("{} path is not a real directory".format(kind))
+            with os.scandir(kind_root) as children:
+                for child in children:
+                    if (kind, child.name) not in keep:
+                        remove.append(child.path)
+
+        # Validate all paths before deleting anything.
+        for candidate in remove:
+            if os.path.lexists(candidate):
+                _remove_debug_path(candidate)
+    except Exception as exc:
+        print(
+            "WARNING: Unable to safely select failed-step debug files; "
+            "retaining all debug evidence: {}".format(exc),
+            file=sys.stderr,
+        )
+
+
 def find_failed_step(filename):
     r = r"^\[(?P<time>[^\]]+)\] (?P<level>[^ ]+) \[(?P<source>[^ ]*) (?P<name>[^\]]*)\] (?P<status>.*)"
     search = re.compile(r)
@@ -237,13 +364,13 @@ class Pipeline:
                         '--outdir', '/pgap/output'
                         ])
 
-        # Debug flags for cwltool
-        if self.params.args.debug:
+        if self.params.args.debug in ("failed", "all"):
             self.cmd.extend([
                 '--tmpdir-prefix', '/pgap/output/debug/tmpdir/',
                 '--leave-tmpdir',
-                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/',
-                '--copy-outputs'])
+                '--tmp-outdir-prefix', '/pgap/output/debug/tmp-outdir/'])
+            if self.params.args.debug == "all":
+                self.cmd.append('--copy-outputs')
 
         self.cmd.extend([self.cwlfile, self.input_file])
 
@@ -270,7 +397,7 @@ class Pipeline:
             '--volume', '{}:/tmp:rw,z'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
-        if self.params.args.debug:
+        if self.params.args.debug == "all":
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv:z'.format(log_dir)])
@@ -281,7 +408,7 @@ class Pipeline:
 
     def make_podman_cmd(self):
         self.cmd = [self.params.docker_cmd]
-        if self.params.args.debug:
+        if self.params.args.debug == "all":
             self.cmd.extend(['--log-level',  'debug'])
         self.cmd.extend(['run', '-i', '--rm', '--privileged' ])
 
@@ -302,7 +429,7 @@ class Pipeline:
             '--volume', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
-        if self.params.args.debug:
+        if self.params.args.debug == "all":
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--volume', '{}:/log/srv'.format(log_dir)])
@@ -330,7 +457,7 @@ class Pipeline:
             '--bind', '{}:/tmp:rw'.format(os.getenv("TMPDIR", "/tmp"))])
 
         # Debug mount for docker image
-        if self.params.args.debug:
+        if self.params.args.debug == "all":
             log_dir = self.params.outputdir + '/debug/log'
             os.makedirs(log_dir, exist_ok=True)
             self.cmd.extend(['--bind', '{}:/log/srv'.format(log_dir)])
@@ -656,11 +783,20 @@ class Pipeline:
                 else:
                     print(f'{self.pipename} failed, docker exited with rc =', proc.returncode)
                     find_failed_step(cwllog)
+
+                f.flush()
+                finalize_debug_artifacts(
+                    self.params.outputdir, cwllog, proc.returncode, self.params.args.debug
+                )
+                remove_diagnostics = not (
+                    proc.returncode != 0
+                    and self.params.args.debug in ("failed", "all")
+                )
                 output_files = [
-                        {"file": "final_asndisc_diag.xml", "remove": True},
-                        {"file": "final_asnval_diag.xml", "remove": True},
-                        {"file": "initial_asndisc_diag.xml", "remove": True},
-                        {"file": "initial_asnval_diag.xml", "remove": True}
+                        {"file": "final_asndisc_diag.xml", "remove": remove_diagnostics},
+                        {"file": "final_asnval_diag.xml", "remove": remove_diagnostics},
+                        {"file": "initial_asndisc_diag.xml", "remove": remove_diagnostics},
+                        {"file": "initial_asnval_diag.xml", "remove": remove_diagnostics}
                     ]
                 self.report_output_files(self.params.outputdir, output_files)
                 
@@ -1239,10 +1375,19 @@ def main():
     parser.add_argument('-m', '--memory',
                         help='Memory limit (Docker and PodMan only, ignored on Singularity); may add an optional suffix which can be one of b, k, m, or g')
     parser.add_argument('--teamcity', action='store_true', help=argparse.SUPPRESS)
-    parser.add_argument('-d', '--debug', action='store_true',
-                        help='Debug mode')
-                        
-    args = parser.parse_args()
+    debug_levels = ("none", "failed", "all")
+    parser.add_argument(
+        '-d', '--debug',
+        nargs='?',
+        const='all',
+        default='failed',
+        choices=debug_levels,
+        metavar='{none,failed,all}',
+        help=('Debug file retention: none keeps no extra debug files; failed '
+              'keeps failed-step evidence; all keeps full debug output '
+              '(default: failed; bare -d/--debug means all).'),
+    )
+    args = parser.parse_args(normalize_debug_argv(sys.argv[1:], debug_levels))
     if args.input  or args.genome: # not installation
         outputdir = os.path.abspath(args.output)
         if os.path.exists(outputdir):
@@ -1360,7 +1505,7 @@ def main():
                 apply_prefix_to_output_dir(p.params.outputdir, args.prefix)
 
     except (Exception, KeyboardInterrupt) as exc:
-        if args.debug:
+        if args.debug == "all":
             raise
         retcode = 1
         import traceback
