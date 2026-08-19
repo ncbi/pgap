@@ -1382,10 +1382,12 @@ def main():
         const='all',
         default='failed',
         choices=debug_levels,
-        metavar='{none,failed,all}',
-        help=('Debug file retention: none keeps no extra debug files; failed '
-              'keeps failed-step evidence; all keeps full debug output '
-              '(default: failed; bare -d/--debug means all).'),
+        metavar='LEVEL',
+        help=('[none, failed, all]:\n'
+              '  --debug all    - save debug data for all nodes.\n'
+              '  --debug failed - save debug data only for failed nodes (default).\n'
+              '  --debug none   - do not save any debug data.\n'
+              '  Default (no -d/--debug): failed. -d or --debug alone means all.'),
     )
     args = parser.parse_args(normalize_debug_argv(sys.argv[1:], debug_levels))
     if args.input  or args.genome: # not installation
