@@ -46,9 +46,9 @@ class DebugCommandLineTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(0, help_result.returncode)
-        self.assertIn("--debug [{none,failed,all}]", help_result.stdout)
-        self.assertIn("default: failed", help_result.stdout)
-        self.assertIn("bare -d/--debug means all", help_result.stdout)
+        self.assertIn("--debug [LEVEL]", help_result.stdout)
+        self.assertIn("Default (no -d/--debug): failed", help_result.stdout)
+        self.assertIn("-d or --debug alone means all", help_result.stdout)
 
         invalid = subprocess.run(
             [sys.executable, str(PGAP_PATH), "--debug=everything"],
